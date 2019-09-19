@@ -1,7 +1,7 @@
 #include <project.h>
 #include "Codec.h"
 #include "AudioControl.h"
-#include "sinewaves.h"
+#include "waves.h"
 
 extern uint8 outBuffer[];
 

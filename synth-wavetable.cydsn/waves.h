@@ -6,14 +6,15 @@
 #include <AudioControl.h>
     
 #define FS 48000 // samples/second
-#define BASE_FREQ 80 // Hz
+#define BASE_FREQ 20 // Hz
 #define N (FS / BASE_FREQ)
+#define AMPLITUDE 127
     
-double base_sine[N];
-double base_pos_saw[N];
-double base_neg_saw[N];
-double base_tri[N];
-double base_sq[N];
+//double base_sine[(int)N];
+//double base_pos_saw[(int)N];
+//double base_neg_saw[(int)N];
+//double base_tri[(int)N];
+double base_sq[(int)N];
 
 void init_wavetable(void);
 void generate_base_sine(double*);

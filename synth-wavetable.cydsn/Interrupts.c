@@ -42,7 +42,7 @@
 #include <Config.h>
 #include <project.h>
 #include <Interrupts.h>
-#include "sinewaves.h"
+#include "waves.h"
 
 extern uint16 inCnt;
 extern uint16 inLevel;

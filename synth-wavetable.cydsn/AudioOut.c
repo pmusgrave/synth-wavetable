@@ -46,7 +46,7 @@
 #include <project.h>
 #include <Codec.h>
 #include <math.h>
-#include "sinewaves.h"
+#include "waves.h"
 
 extern uint8 outBuffer[];
 
@@ -87,9 +87,6 @@ void InitializeAudioOutPath(void)
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
     
-    for(int i = 0; i < OUT_BUFSIZE; i++){
-        outBuffer[i] = base_sine[i];
-    }
     /* Start interrupts */
     isr_TxDMADone_StartEx(TxDMADone_Interrupt);
     isr_TxDMADone_Enable();
@@ -118,12 +115,9 @@ void ProcessAudioOut(void)
     static int index;
     
     for(int i = 0; i < OUT_BUFSIZE; i++){
-        index = index + 1;
-        if(index >= N - 1){
-          index = 0;
-        }
-        outBuffer[i] = base_sine[(int)index];
-        //outBuffer[OUT_BUFSIZE + i] = base_sine[(int)index];
+        index = (index + 1) % (int)(N-1);
+        
+        outBuffer[i] = base_sq[(int)index];
         
         //char string[30];
         //sprintf(string, "%d\n",outBuffer[i]);

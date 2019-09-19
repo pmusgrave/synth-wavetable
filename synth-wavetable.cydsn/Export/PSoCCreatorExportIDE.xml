@@ -39,14 +39,14 @@
           <File BuildType="BUILD" Toolchain="">main.c</File>
           <File BuildType="BUILD" Toolchain="">Codec.c</File>
           <File BuildType="BUILD" Toolchain="">Interrupts.c</File>
-          <File BuildType="BUILD" Toolchain="">sinewaves.c</File>
+          <File BuildType="BUILD" Toolchain="">waves.c</File>
           <File BuildType="BUILD" Toolchain="">AudioControl.c</File>
           <File BuildType="BUILD" Toolchain="">AudioOut.c</File>
           <File BuildType="BUILD" Toolchain="">cyapicallbacks.h</File>
           <File BuildType="BUILD" Toolchain="">Codec.h</File>
           <File BuildType="BUILD" Toolchain="">Config.h</File>
           <File BuildType="BUILD" Toolchain="">Interrupts.h</File>
-          <File BuildType="BUILD" Toolchain="">sinewaves.h</File>
+          <File BuildType="BUILD" Toolchain="">waves.h</File>
           <File BuildType="BUILD" Toolchain="">AudioControl.h</File>
           <File BuildType="BUILD" Toolchain="">AudioOut.h</File>
         </Files>
