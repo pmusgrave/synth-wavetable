@@ -1,25 +1,56 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
-#include "project.h"
+#include <project.h>
+#include "Codec.h"
+#include "AudioControl.h"
+#include "sinewaves.h"
 
-int main(void)
+extern uint8 outBuffer[];
+
+int main()
 {
-    CyGlobalIntEnable; /* Enable global interrupts. */
-
-    /* Place your initialization/startup code here (e.g. MyInst_Start()) */
-
+    UART_Start();
+    LED_Write(1);
+    
+    UART_UartPutString("********************\r\n");
+    UART_UartPutString("PMA Wavetable Synth\r\n");
+    UART_UartPutString("********************\r\n");
+	InitAudioPath();
+    UART_UartPutString("Audio path initialized...\r\n");
+    
+    init_wavetable();
+    UART_UartPutString("Wavetable initialized...\r\n");
+    
+    /* Configure CPU/DMA to be in round robin mode while accessing memory */
+	CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
+	
+    CyGlobalIntEnable;
+    CodecI2CM_Start();	
+	if(Codec_Init() == 0)
+	{
+    	UART_UartPutString("Codec comm works!... \r\n");
+	}
+	else
+	{
+		UART_UartPutString("Codec comm DOESN'T work!... \r\n");
+	}
+    
+	CyIntSetPriority(CYDMA_INTR_NUMBER, 0);
+	I2S_Start();	
+    	
     for(;;)
     {
-        /* Place your application code here. */
+        /*
+        if(DMA_tr_status_Read()){
+            static int index;
+
+            for(int i = 0; i < OUT_BUFSIZE; i++){
+                index = index + 100;
+                if(index >= N - 1){
+                  index = 0;
+                }
+                outBuffer[i] = base_sine[(int)index];
+            }
+        }
+        */
     }
 }
 

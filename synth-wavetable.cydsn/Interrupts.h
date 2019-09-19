@@ -1,10 +1,10 @@
-/*****************************************************************************
-* File Name		: cyapicallbacks.h
-* Version		: 1.0 
+/*******************************************************************************
+* File Name: Interrupts.h
 *
-* Description:
-*  This file contains API callback macros and API mapping of all the callback
-*	APIs used across components in the current project.
+* Version 1.0
+*
+*  Description: Interrupts.h provides prototype for all the external interrupt 
+*               service routines present in the project
 *
 *******************************************************************************
 * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
@@ -37,26 +37,17 @@
 * system or application assumes all risk of such use and in doing so agrees to 
 * indemnify Cypress against all liability.
 *******************************************************************************/
-#ifndef CYAPICALLBACKS_H
-#define CYAPICALLBACKS_H
-    extern void ProcessAudioOut(void);
-    extern void ProcessAudioIn(void);
-    extern void processAsyncFeedbackTransfer(unsigned long clearFlag);
-    extern void UpdateFeedbackCount(void);
-	
-    /*Define your macro callbacks here */
-    /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-    #define USBFS_EP_1_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_1_ISR_EntryCallback()	ProcessAudioOut()
-	
-	#define USBFS_EP_2_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_2_ISR_EntryCallback()	ProcessAudioIn()
-	
-	#define USBFS_EP_3_ISR_ENTRY_CALLBACK
-	#define USBFS_EP_3_ISR_EntryCallback()	processAsyncFeedbackTransfer(1)
-	
-	#define USBFS_SOF_ISR_ENTRY_CALLBACK	
-	#define USBFS_SOF_ISR_EntryCallback()	UpdateFeedbackCount()
-	
-#endif /* CYAPICALLBACKS_H */   
-/* [] */
+
+#ifndef INTERRUPTS_H
+	#define INTERRUPTS_H
+		
+	#include "cytypes.h"
+
+	CY_ISR_PROTO(InDMADone_Interrupt);
+	CY_ISR_PROTO(RxDMADone_Interrupt);
+	CY_ISR_PROTO(Tick_Interrupt);
+	CY_ISR_PROTO(TxDMADone_Interrupt);
+
+#endif
+
+/* [] END OF FILE */

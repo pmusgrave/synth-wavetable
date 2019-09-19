@@ -1,10 +1,10 @@
-/*****************************************************************************
-* File Name		: cyapicallbacks.h
-* Version		: 1.0 
+/*******************************************************************************
+* File Name: Interrupts.c
 *
-* Description:
-*  This file contains API callback macros and API mapping of all the callback
-*	APIs used across components in the current project.
+* Version 1.0
+*
+*  Description: This file contains interrupt service routines for all the interrupts
+*               in the system
 *
 *******************************************************************************
 * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
@@ -37,26 +37,68 @@
 * system or application assumes all risk of such use and in doing so agrees to 
 * indemnify Cypress against all liability.
 *******************************************************************************/
-#ifndef CYAPICALLBACKS_H
-#define CYAPICALLBACKS_H
-    extern void ProcessAudioOut(void);
-    extern void ProcessAudioIn(void);
-    extern void processAsyncFeedbackTransfer(unsigned long clearFlag);
-    extern void UpdateFeedbackCount(void);
+#include <AudioControl.h>
+#include <AudioOut.h>
+#include <Config.h>
+#include <project.h>
+#include <Interrupts.h>
+
+extern uint16 inCnt;
+extern uint16 inLevel;
+extern uint16 inUsbCount;
+extern uint16 inUsbShadow;
+extern uint16 outLevel;
+extern uint16 outUsbCount;
+extern uint16 outUsbShadow;
+
+
+/*******************************************************************************
+* Function Name: TxDMADone_Interrupt
+********************************************************************************
+* Summary:
+*   The Interrupt Service Routine for isr_TxDMADone. This handles the AUDIO Out
+*	buffer pointers and detects underflow of the buffer to stop AUDIO out.
+*
+* Parameters:  
+*	TxDMADone interrupt vector
+*
+* Return:
+*   void.
+*
+*******************************************************************************/
+CY_ISR(TxDMADone_Interrupt)
+{
+
+	uint16 added;
+
+	/* Note: Care must be taken in the application code to update outUsbCount atomically
+	 * Code is currently implemented with both updater of this value in interrupts that are
+	 * the same priority so the code will not execute at the same time, but the code
+	 * has been written so that this is not a requirement. */
+    
+	added = outUsbCount - outUsbShadow;
+    
+	outLevel += added;
+            
+	outUsbShadow = outUsbCount;
 	
-    /*Define your macro callbacks here */
-    /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-    #define USBFS_EP_1_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_1_ISR_EntryCallback()	ProcessAudioOut()
+	if (outLevel <= AUDIOMAXPKT) 
+	{
+		/* Underflow, so disable the DMA, disable I2S TX and tell the main task to reset all its structures */
+		Stop_I2S_Tx();
+	}
+	else
+	{
+		outLevel -= OUT_TRANS_SIZE;
+	}
 	
-	#define USBFS_EP_2_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_2_ISR_EntryCallback()	ProcessAudioIn()
-	
-	#define USBFS_EP_3_ISR_ENTRY_CALLBACK
-	#define USBFS_EP_3_ISR_EntryCallback()	processAsyncFeedbackTransfer(1)
-	
-	#define USBFS_SOF_ISR_ENTRY_CALLBACK	
-	#define USBFS_SOF_ISR_EntryCallback()	UpdateFeedbackCount()
-	
-#endif /* CYAPICALLBACKS_H */   
-/* [] */
+	if (outLevel > (OUT_BUFSIZE + MAX_AUDIO_SAMPLE_SIZE)) 
+	{		
+		/* Stop I2S till the overflow condition is present - this provides USB enough time to correct the overflow
+			Disable the DMA, mute and tell the main task to reset all its structures Stop DMA */
+		Stop_I2S_Tx();
+	}
+}
+
+
+/* [] END OF FILE */

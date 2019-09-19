@@ -1,10 +1,10 @@
-/*****************************************************************************
-* File Name		: cyapicallbacks.h
-* Version		: 1.0 
+/*******************************************************************************
+* File Name: AudioControl.h
 *
-* Description:
-*  This file contains API callback macros and API mapping of all the callback
-*	APIs used across components in the current project.
+* Version 1.0
+*
+*  Description:  This file contains the Audio signal path configuration routine
+*                declarations and constants.
 *
 *******************************************************************************
 * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
@@ -37,26 +37,59 @@
 * system or application assumes all risk of such use and in doing so agrees to 
 * indemnify Cypress against all liability.
 *******************************************************************************/
-#ifndef CYAPICALLBACKS_H
-#define CYAPICALLBACKS_H
-    extern void ProcessAudioOut(void);
-    extern void ProcessAudioIn(void);
-    extern void processAsyncFeedbackTransfer(unsigned long clearFlag);
-    extern void UpdateFeedbackCount(void);
+
+#ifndef AUDIOCONTROL_H
+	#define AUDIOCONTROL_H
+
+	#include <Config.h>
+	#include <cytypes.h>
+
+	#define FREQUENCY_NOT_SET	0xFF
+
+	#if(USBFS_EP_MM != USBFS__EP_DMAAUTO) 
+		#define NUM_TDS 8
+		#define TRANS_SIZE 96
+		#define BUFSIZE (TRANS_SIZE*NUM_TDS)
+		#define HALF (BUFSIZE/2)
+	#else
+		#define NUM_TDS 8
+		#define OUT_TRANS_SIZE 144
+		#define OUT_BUFSIZE (OUT_TRANS_SIZE*NUM_TDS)
+		#define OUT_HALF (OUT_BUFSIZE/2)
+		#define IN_TRANS_SIZE 144
+		#define IN_BUFSIZE (IN_TRANS_SIZE*NUM_TDS)
+		#define IN_HALF (IN_BUFSIZE/2)
+	#endif
+
+	#define AUDIOMAXPKT (IN_BUFSIZE/4)
+	#define MAX_AUDIO_SAMPLE_SIZE                6	
+	#define IN_AUDIOMAXPKT  (AUDIOMAXPKT + MAX_AUDIO_SAMPLE_SIZE)
+	#define OUT_AUDIOMAXPKT (AUDIOMAXPKT + MAX_AUDIO_SAMPLE_SIZE)
+
+	/* Clock Rates */
+	#define RATE_48KHZ                                   0
+	#define RATE_44KHZ                                   1	
+
+	#define BUS_CLOCK_DIVIDE_BY_8                        0x07
+	#define BUS_CLOCK_DIVIDE_BY_16                       0x0F
+	#define BUS_CLOCK_DIVIDE_BY_2                        0x01
+
+	#define ANALOG_AUX_INPUT                             0
+
+	#define SAMPLING_RATE_48KHZ                          48000	
+	#define SAMPLING_RATE_44KHZ                          44100
+
+	#define FIFO_HALF_EMPTY_MASK                         0x0C
 	
-    /*Define your macro callbacks here */
-    /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-    #define USBFS_EP_1_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_1_ISR_EntryCallback()	ProcessAudioOut()
+	extern uint8 audioClkConfigured;
 	
-	#define USBFS_EP_2_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_2_ISR_EntryCallback()	ProcessAudioIn()
-	
-	#define USBFS_EP_3_ISR_ENTRY_CALLBACK
-	#define USBFS_EP_3_ISR_EntryCallback()	processAsyncFeedbackTransfer(1)
-	
-	#define USBFS_SOF_ISR_ENTRY_CALLBACK	
-	#define USBFS_SOF_ISR_EntryCallback()	UpdateFeedbackCount()
-	
-#endif /* CYAPICALLBACKS_H */   
-/* [] */
+	void InitAudioPath(void);
+	//void ProcessAudioIn(void);
+	void SetClockRate(uint8 newRate);
+	//void Stop_I2S_Rx(void);	
+	void Stop_I2S_Tx(void);	
+	//void HandleSamplingFrequencyChangeRequest(void);	
+	//void HandleAudioInBuffer(void);
+#endif /* #ifndef AUDIOCONTROL_H */
+
+/* [] END OF FILE */

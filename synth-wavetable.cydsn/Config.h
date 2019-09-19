@@ -1,10 +1,9 @@
 /*****************************************************************************
-* File Name		: cyapicallbacks.h
+* File Name		: Config.h
 * Version		: 1.0 
 *
 * Description:
-*  This file contains API callback macros and API mapping of all the callback
-*	APIs used across components in the current project.
+*  This file contains macros relevant to configuration of the entire project
 *
 *******************************************************************************
 * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
@@ -37,26 +36,21 @@
 * system or application assumes all risk of such use and in doing so agrees to 
 * indemnify Cypress against all liability.
 *******************************************************************************/
-#ifndef CYAPICALLBACKS_H
-#define CYAPICALLBACKS_H
-    extern void ProcessAudioOut(void);
-    extern void ProcessAudioIn(void);
-    extern void processAsyncFeedbackTransfer(unsigned long clearFlag);
-    extern void UpdateFeedbackCount(void);
+#ifndef CONFIG_H
+	#define CONFIG_H
+
+	#define TXDEBUG
+		
+	/* Constants for explicit and implicit async audio */	
+	#define EXPLICIT_FEEDBACK                      1
+	#define IMPLICIT_FEEDBACK                      0 
 	
-    /*Define your macro callbacks here */
-    /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-    #define USBFS_EP_1_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_1_ISR_EntryCallback()	ProcessAudioOut()
+	/* Selection of OS for Volume control module */
+	#define WINDOWS_7_VOLUME_CTL					0
+	#define WINDOWS_10_VOLUME_CTL					1
+	#define MAC_VOLUME_CTL							2
+	#define VOLUME_CTRL								WINDOWS_7_VOLUME_CTL
 	
-	#define USBFS_EP_2_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_2_ISR_EntryCallback()	ProcessAudioIn()
-	
-	#define USBFS_EP_3_ISR_ENTRY_CALLBACK
-	#define USBFS_EP_3_ISR_EntryCallback()	processAsyncFeedbackTransfer(1)
-	
-	#define USBFS_SOF_ISR_ENTRY_CALLBACK	
-	#define USBFS_SOF_ISR_EntryCallback()	UpdateFeedbackCount()
-	
-#endif /* CYAPICALLBACKS_H */   
-/* [] */
+#endif /* #ifndef CONFIG_H */	
+
+/* [] END OF FILE */

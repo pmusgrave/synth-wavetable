@@ -1,10 +1,10 @@
-/*****************************************************************************
-* File Name		: cyapicallbacks.h
-* Version		: 1.0 
+/*******************************************************************************
+* File Name: AudioControl.c
 *
-* Description:
-*  This file contains API callback macros and API mapping of all the callback
-*	APIs used across components in the current project.
+* Version 1.0
+*
+*  Description: This file contains the Audio signal path configuration and 
+*               processing code
 *
 *******************************************************************************
 * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
@@ -37,26 +37,56 @@
 * system or application assumes all risk of such use and in doing so agrees to 
 * indemnify Cypress against all liability.
 *******************************************************************************/
-#ifndef CYAPICALLBACKS_H
-#define CYAPICALLBACKS_H
-    extern void ProcessAudioOut(void);
-    extern void ProcessAudioIn(void);
-    extern void processAsyncFeedbackTransfer(unsigned long clearFlag);
-    extern void UpdateFeedbackCount(void);
+#include <AudioControl.h>
+#include <AudioOut.h>
+#include <Codec.h>
+#include <Config.h>
+#include <project.h>
+#include <Interrupts.h>
+
+uint8 newRate = RATE_48KHZ;
+extern uint8 asyncready;
+
+
+extern CYBIT outPlaying;
+
+extern CYBIT inPlaying;
+
+
+
+uint8 audioClkConfigured = 0;
+uint8 setRate = FREQUENCY_NOT_SET; 
+uint8 newRate;
+
+/*******************************************************************************
+* Function Name: InitAudioPath
+********************************************************************************
+* Summary:
+*       This function sets up the XTAL, DMA and starts USB, I2S and interrupts
+*        to get the part configured for the audio signal paths
+*
+* Parameters:
+*  void
+*
+* Return:
+*  void
+*
+*******************************************************************************/
+void InitAudioPath(void)
+{    
+    /* Set the default Audio clock rate to 48 kHz */
+	AudioClkSel_Write(RATE_48KHZ);
+    
+	/* Enable DMA */
+	CyDmaEnable();
 	
-    /*Define your macro callbacks here */
-    /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-    #define USBFS_EP_1_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_1_ISR_EntryCallback()	ProcessAudioOut()
-	
-	#define USBFS_EP_2_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_2_ISR_EntryCallback()	ProcessAudioIn()
-	
-	#define USBFS_EP_3_ISR_ENTRY_CALLBACK
-	#define USBFS_EP_3_ISR_EntryCallback()	processAsyncFeedbackTransfer(1)
-	
-	#define USBFS_SOF_ISR_ENTRY_CALLBACK	
-	#define USBFS_SOF_ISR_EntryCallback()	UpdateFeedbackCount()
-	
-#endif /* CYAPICALLBACKS_H */   
-/* [] */
+	InitializeAudioOutPath();
+
+	/* Set TX FIFO trigger to 2 bytes (half-empty) to increase timing margin */
+    I2S_TX_AUX_CONTROL_REG = I2S_TX_AUX_CONTROL_REG | FIFO_HALF_EMPTY_MASK;
+    
+    /* Set RX FIFO trigger to 2 bytes (half-empty) to increase timing margin */
+    //I2S_RX_AUX_CONTROL_REG = I2S_RX_AUX_CONTROL_REG | FIFO_HALF_EMPTY_MASK;
+}
+ 
+/* [] END OF FILE */
