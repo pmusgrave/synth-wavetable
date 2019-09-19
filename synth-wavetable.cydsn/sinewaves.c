@@ -18,7 +18,7 @@ void init_wavetable(){
 }
 
 void generate_base_sine(double* buffer){
-  double amplitude = 128;
+  double amplitude = 127;
 
   for(int i = 0; i < N; i++){
     double delta = 2*M_PI/N;

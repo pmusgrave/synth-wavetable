@@ -76,7 +76,7 @@ uint8 Codec_Init(void)
 	ret = Codec_ResetOverI2C();
 	CyDelay(CODEC_RESET_WAIT_DELAY);
 	
-	ret = Codec_AdjustBothHeadphoneVolume(CODEC_HP_DEFAULT_VOLUME);
+	ret = Codec_AdjustBothHeadphoneVolume(CODEC_HP_VOLUME_MAX);
 	ret = Codec_SendData(CODEC_REG_ANALOG_CTRL, CODEC_DEF_ANALOG_CTRL);
 	ret = Codec_SendData(CODEC_REG_DIGITAL_CTRL, CODEC_DEF_DIGITAL_CTRL);
 	ret = Codec_SendData(CODEC_REG_POWER_CTRL, CODEC_DEF_POWER_CTRL);
@@ -192,7 +192,7 @@ uint8 Codec_AdjustBothHeadphoneVolume(uint8 volume)
 		volume = CODEC_HP_VOLUME_MAX;
 	}
 	
-	return Codec_SendData(CODEC_REG_LHPOUT, (volume + (CODEC_LHPOUT_BOTH + CODEC_LHPOUT_LZCEN + CODEC_HP_MUTE_VALUE)));
+	return Codec_SendData(CODEC_REG_LHPOUT, (volume + (CODEC_LHPOUT_BOTH + CODEC_LHPOUT_LZCEN)));
 }
 
 /*******************************************************************************

@@ -42,6 +42,7 @@
 #include <Config.h>
 #include <project.h>
 #include <Interrupts.h>
+#include "sinewaves.h"
 
 extern uint16 inCnt;
 extern uint16 inLevel;
@@ -50,6 +51,8 @@ extern uint16 inUsbShadow;
 extern uint16 outLevel;
 extern uint16 outUsbCount;
 extern uint16 outUsbShadow;
+
+extern uint8 outBuffer[];
 
 
 /*******************************************************************************
@@ -68,36 +71,8 @@ extern uint16 outUsbShadow;
 *******************************************************************************/
 CY_ISR(TxDMADone_Interrupt)
 {
-
-	uint16 added;
-
-	/* Note: Care must be taken in the application code to update outUsbCount atomically
-	 * Code is currently implemented with both updater of this value in interrupts that are
-	 * the same priority so the code will not execute at the same time, but the code
-	 * has been written so that this is not a requirement. */
-    
-	added = outUsbCount - outUsbShadow;
-    
-	outLevel += added;
-            
-	outUsbShadow = outUsbCount;
-	
-	if (outLevel <= AUDIOMAXPKT) 
-	{
-		/* Underflow, so disable the DMA, disable I2S TX and tell the main task to reset all its structures */
-		Stop_I2S_Tx();
-	}
-	else
-	{
-		outLevel -= OUT_TRANS_SIZE;
-	}
-	
-	if (outLevel > (OUT_BUFSIZE + MAX_AUDIO_SAMPLE_SIZE)) 
-	{		
-		/* Stop I2S till the overflow condition is present - this provides USB enough time to correct the overflow
-			Disable the DMA, mute and tell the main task to reset all its structures Stop DMA */
-		Stop_I2S_Tx();
-	}
+    ProcessAudioOut();
+    LED_Write(~LED_Read());
 }
 
 

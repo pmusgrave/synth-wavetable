@@ -43,9 +43,6 @@
 		
 	#include "cytypes.h"
 
-	CY_ISR_PROTO(InDMADone_Interrupt);
-	CY_ISR_PROTO(RxDMADone_Interrupt);
-	CY_ISR_PROTO(Tick_Interrupt);
 	CY_ISR_PROTO(TxDMADone_Interrupt);
 
 #endif

@@ -10,7 +10,7 @@ int main()
     UART_Start();
     LED_Write(1);
     
-    UART_UartPutString("********************\r\n");
+    UART_UartPutString("\r\n\r\n\r\n********************\r\n");
     UART_UartPutString("PMA Wavetable Synth\r\n");
     UART_UartPutString("********************\r\n");
 	InitAudioPath();
@@ -22,35 +22,23 @@ int main()
     /* Configure CPU/DMA to be in round robin mode while accessing memory */
 	CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
 	
-    CyGlobalIntEnable;
     CodecI2CM_Start();	
 	if(Codec_Init() == 0)
 	{
     	UART_UartPutString("Codec comm works!... \r\n");
+        Codec_Activate();
 	}
 	else
 	{
 		UART_UartPutString("Codec comm DOESN'T work!... \r\n");
 	}
-    
+    I2S_Start();
+    CyGlobalIntEnable;
 	CyIntSetPriority(CYDMA_INTR_NUMBER, 0);
-	I2S_Start();	
     	
     for(;;)
     {
-        /*
-        if(DMA_tr_status_Read()){
-            static int index;
-
-            for(int i = 0; i < OUT_BUFSIZE; i++){
-                index = index + 100;
-                if(index >= N - 1){
-                  index = 0;
-                }
-                outBuffer[i] = base_sine[(int)index];
-            }
-        }
-        */
+        
     }
 }
 

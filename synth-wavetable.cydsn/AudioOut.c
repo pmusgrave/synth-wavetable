@@ -59,8 +59,6 @@ uint8 outBuffer[OUT_BUFSIZE];
 uint16 outBufIndex = 0;
 extern CYBIT audioClkConfigured;
 
-
-
 #if(USBFS_EP_MM == USBFS__EP_DMAAUTO)   
 	extern uint8 outRam[];  
 #endif
@@ -88,6 +86,13 @@ void InitializeAudioOutPath(void)
     
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
+    
+    for(int i = 0; i < OUT_BUFSIZE; i++){
+        outBuffer[i] = base_sine[i];
+    }
+    /* Start interrupts */
+    isr_TxDMADone_StartEx(TxDMADone_Interrupt);
+    isr_TxDMADone_Enable();
 }
 
 /*******************************************************************************
@@ -109,7 +114,21 @@ void InitializeAudioOutPath(void)
 
 void ProcessAudioOut(void) 
 {
+    //UART_UartPutString("Processing audio output...\r\n");
+    static int index;
     
+    for(int i = 0; i < OUT_BUFSIZE; i++){
+        index = index + 1;
+        if(index >= N - 1){
+          index = 0;
+        }
+        outBuffer[i] = base_sine[(int)index];
+        //outBuffer[OUT_BUFSIZE + i] = base_sine[(int)index];
+        
+        //char string[30];
+        //sprintf(string, "%d\n",outBuffer[i]);
+        //UART_UartPutString(string);
+    }
             
 	/* Enable power to speaker output */
     Codec_PowerOnControl(CODEC_POWER_CTRL_OUTPD);
@@ -136,6 +155,7 @@ void ProcessAudioOut(void)
 *******************************************************************************/
 void Stop_I2S_Tx(void) CYREENTRANT
 {
+    UART_UartPutString("Stopping I2S\r\n");
     if(outPlaying)
     {       
         I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */

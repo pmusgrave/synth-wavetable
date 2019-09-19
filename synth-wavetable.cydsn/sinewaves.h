@@ -6,7 +6,7 @@
 #include <AudioControl.h>
     
 #define FS 48000 // samples/second
-#define BASE_FREQ 100 // Hz
+#define BASE_FREQ 80 // Hz
 #define N (FS / BASE_FREQ)
     
 double base_sine[N];
