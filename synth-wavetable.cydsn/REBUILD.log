@@ -1,16 +1,3 @@
---------------- Rebuild Started: 09/19/2019 13:53:58 Project: AudioOut.c, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 09/20/2019 21:45:38 Project: AudioOut.c, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/AudioOut.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c AudioOut.c -o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o
-AudioOut.c: In function 'ProcessAudioOut':
-AudioOut.c:120:5: warning: implicit declaration of function 'sprintf' [-Wimplicit-function-declaration]
-     sprintf(string, "%d\n",index);
-     ^
-AudioOut.c:120:5: warning: incompatible implicit declaration of built-in function 'sprintf'
-AudioOut.c:120:5: note: include '<stdio.h>' or provide a declaration of 'sprintf'
-AudioOut.c: In function 'InitializeAudioOutPath':
-AudioOut.c:91:33: warning: iteration 48u invokes undefined behavior [-Waggressive-loop-optimizations]
-         outBuffer[i] = base_sine[i];
-                                 ^
-AudioOut.c:90:5: note: containing loop
-     for(int i = 0; i < OUT_BUFSIZE; i++){
-     ^
---------------- Rebuild Succeeded: 09/19/2019 13:53:59 ---------------
+--------------- Rebuild Succeeded: 09/20/2019 21:45:38 ---------------

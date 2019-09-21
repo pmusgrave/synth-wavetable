@@ -54,26 +54,19 @@ extern uint16 outUsbShadow;
 
 extern uint8 outBuffer[];
 
-
-/*******************************************************************************
-* Function Name: TxDMADone_Interrupt
-********************************************************************************
-* Summary:
-*   The Interrupt Service Routine for isr_TxDMADone. This handles the AUDIO Out
-*	buffer pointers and detects underflow of the buffer to stop AUDIO out.
-*
-* Parameters:  
-*	TxDMADone interrupt vector
-*
-* Return:
-*   void.
-*
-*******************************************************************************/
-CY_ISR(TxDMADone_Interrupt)
-{
+CY_ISR(TxBufferDMADone_Interrupt){
+    Stop_I2S_Tx();
     ProcessAudioOut();
-    LED_Write(~LED_Read());
+    UART_UartPutString("DMA buffer\r\n");
 }
 
+CY_ISR(TxDMADone_Interrupt)
+{
+    UART_UartPutString("No FIFO\r\n");
+}
+
+CY_ISR(I2SUnderflow){
+    UART_UartPutString("I2S undeflow\r\n");    
+}
 
 /* [] END OF FILE */

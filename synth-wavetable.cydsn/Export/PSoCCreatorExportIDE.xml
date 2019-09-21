@@ -148,10 +148,6 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareimport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareexport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareimport.scat</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\DMA_tr_status.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\DMA_tr_status.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_1.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_1.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED_aliases.h</File>
@@ -177,36 +173,10 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\UART_tx_PM.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_TxDMADone.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_TxDMADone.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_audio.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_audio.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_boot.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_cdc.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_cdc.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_cls.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_descr.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_drv.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_episr.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_hid.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_hid.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_pm.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_std.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_vnd.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_midi.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_midi.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_pvt.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_cydmac.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_msc.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_msc.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dp.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dp.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dp_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dp_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dm.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dm.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dm_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\USBFS_1_Dm_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2S_underflow.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2S_underflow.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxBufferDMA.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxBufferDMA.c</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">

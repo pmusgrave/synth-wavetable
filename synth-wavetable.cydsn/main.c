@@ -2,6 +2,8 @@
 #include "Codec.h"
 #include "AudioControl.h"
 #include "waves.h"
+#include "Interrupts.h"
+#include "AudioOut.h"
 
 extern uint8 outBuffer[];
 
@@ -20,7 +22,7 @@ int main()
     UART_UartPutString("Wavetable initialized...\r\n");
     
     /* Configure CPU/DMA to be in round robin mode while accessing memory */
-	CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
+	//CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
 	
     CodecI2CM_Start();	
 	if(Codec_Init() == 0)
@@ -32,10 +34,15 @@ int main()
 	{
 		UART_UartPutString("Codec comm DOESN'T work!... \r\n");
 	}
+    
     I2S_Start();
+    isr_I2S_underflow_StartEx(I2SUnderflow);
     CyGlobalIntEnable;
 	CyIntSetPriority(CYDMA_INTR_NUMBER, 0);
     	
+    //int index = 0;
+    ProcessAudioOut();
+    
     for(;;)
     {
         
