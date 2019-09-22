@@ -47,10 +47,11 @@
 #include <Codec.h>
 #include <math.h>
 #include "waves.h"
+#include "globals.h"
 
 extern uint8 outBuffer[];
-
 void TxDMAFromBuf2ToI2S();
+int32_t freq;
 
 CYBIT resetTx = 0;
 CYBIT outPlaying = 0;
@@ -102,10 +103,12 @@ void InitializeAudioOutPath(void)
     isr_TxDMADone_StartEx(TxDMADone_Interrupt);
     isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
+    
+    freq = 1;
 }
 
 void TxDMAFromBuf2ToI2S(){
-    UART_UartPutString("To FIFO\r\n");
+    //UART_UartPutString("To FIFO\r\n");
     //Stop_I2S_Tx();
 }
 
@@ -131,15 +134,14 @@ void ProcessAudioOut(void)
     CyGlobalIntDisable;
     //UART_UartPutString("Processing audio output...\r\n");
     static int index;
-    int freq = 1;
     
     //char string[30];
-    //sprintf(string, "%d\n",base_sine[index]);
+    //sprintf(string, "%d\n",freq);
     //UART_UartPutString(string);
    
     int i = 0;
     while(i < OUT_BUFSIZE){
-        index = (index + freq) % (int)(N);
+        index = (index + freq/400) % (int)(N);
         outBuffer[i] = base_sine[(int)index];
         i++;
     }

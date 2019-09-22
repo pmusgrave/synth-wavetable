@@ -43,6 +43,7 @@
 #include <project.h>
 #include <Interrupts.h>
 #include "waves.h"
+#include "globals.h"
 
 extern uint16 inCnt;
 extern uint16 inLevel;
@@ -53,16 +54,23 @@ extern uint16 outUsbCount;
 extern uint16 outUsbShadow;
 
 extern uint8 outBuffer[];
+extern int32_t freq;
+extern int32_t pot_value;
+
+CY_ISR(ADC_EOC){
+    //UART_UartPutString("ADC EOC\r\n");
+    freq = ADC_GetResult16(0);
+}
 
 CY_ISR(TxBufferDMADone_Interrupt){
     Stop_I2S_Tx();
     ProcessAudioOut();
-    UART_UartPutString("DMA buffer\r\n");
+    //UART_UartPutString("DMA buffer\r\n");
 }
 
 CY_ISR(TxDMADone_Interrupt)
 {
-    UART_UartPutString("No FIFO\r\n");
+    //UART_UartPutString("No FIFO\r\n");
 }
 
 CY_ISR(I2SUnderflow){

@@ -6,7 +6,7 @@
 #include <AudioControl.h>
     
 #define FS 48000 // samples/second
-#define BASE_FREQ 40 // Hz
+#define BASE_FREQ 20 // Hz
 #define N (FS / BASE_FREQ)
 #define AMPLITUDE 127
     

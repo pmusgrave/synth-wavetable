@@ -43,6 +43,7 @@
 		
 	#include "cytypes.h"
 
+    CY_ISR_PROTO(ADC_EOC);
 	CY_ISR_PROTO(TxDMADone_Interrupt);
     CY_ISR_PROTO(TxBufferDMADone_Interrupt);
     CY_ISR_PROTO(I2SUnderflow);
