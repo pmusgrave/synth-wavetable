@@ -142,8 +142,10 @@ void ProcessAudioOut(void)
     int i = 0;
     while(i < OUT_BUFSIZE){
         index = (index + freq/400) % (int)(N);
-        outBuffer[i] = base_sine[(int)index];
+        outBuffer[i] = base_tri[(int)index];
         i++;
+        
+        
     }
     
     /* Enable power to speaker output */

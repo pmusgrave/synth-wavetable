@@ -10,10 +10,10 @@ void init_wavetable(){
     //double * base_tri = malloc(((int)N) * sizeof(double));
     //double * base_sq = malloc(((int)N) * sizeof(double)); // probably makes no sense to store this many samples of a square wave
     
-    generate_base_sine(base_sine);
+    //generate_base_sine(base_sine);
     //generate_base_pos_saw(base_pos_saw);
     //generate_base_neg_saw(base_neg_saw);
-    //generate_base_tri(base_tri);
+    generate_base_tri(base_tri);
     //generate_base_sq(base_sq);
 }
 
@@ -25,34 +25,34 @@ void generate_base_sine(int8_t* buffer){
   }
 }
 
-void generate_base_pos_saw(uint8_t* buffer){
+void generate_base_pos_saw(int8_t* buffer){
   for(int i = 0; i < N; i++){
-    buffer[i] = AMPLITUDE * (i/N);
+    buffer[i] = (AMPLITUDE * i)/N;
   }
 }
 
-void generate_base_neg_saw(uint8_t* buffer){
+void generate_base_neg_saw(int8_t* buffer){
   for(int i = 0; i < N; i++){
-    buffer[(int)N-i-1] = AMPLITUDE * (i/N);
+    buffer[(int)N-i-1] = (AMPLITUDE * i)/N;
   }
 }
 
-void generate_base_tri(uint8_t* buffer){
+void generate_base_tri(int8_t* buffer){
   for(int i = 0; i < N/2; i++){
-    buffer[i] = AMPLITUDE * (2*i/N);
+    buffer[i] = (AMPLITUDE * 2*i)/N;
   }
   for(int i = N/2; i < N; i++){
-    buffer[i] = AMPLITUDE * (2*(N-i)/N);
+    buffer[i] = (AMPLITUDE * 2*(N-i))/N;
   }
 }
 
-void generate_base_sq(uint8_t* buffer){
+void generate_base_sq(int8_t* buffer){
   for(int i = 0; i < N; i++){
     if(i < N/2){
       buffer[i] = AMPLITUDE;
     }
     else{
-      buffer[i] = 0;
+      buffer[i] = -AMPLITUDE;
     }
   }
 }

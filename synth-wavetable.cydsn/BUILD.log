@@ -1,5 +1,16 @@
---------------- Build Started: 09/21/2019 22:23:11 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 09/21/2019 22:34:47 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 The code generation step is up to date.
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM0\ARM_GCC_541\Debug\main.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/Interrupts.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Interrupts.c -o .\CortexM0\ARM_GCC_541\Debug\Interrupts.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/waves.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c waves.c -o .\CortexM0\ARM_GCC_541\Debug\waves.o
+waves.c: In function 'init_wavetable':
+waves.c:16:23: warning: pointer targets in passing argument 1 of 'generate_base_tri' differ in signedness [-Wpointer-sign]
+     generate_base_tri(base_tri);
+                       ^
+In file included from waves.c:3:0:
+waves.h:23:6: note: expected 'int8_t * {aka signed char *}' but argument is of type 'uint8_t * {aka unsigned char *}'
+ void generate_base_tri(int8_t*);
+      ^
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/AudioOut.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c AudioOut.c -o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o
 arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a .\CortexM0\ARM_GCC_541\Debug\CodecI2CM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_INT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_BOOT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_MASTER.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_BOOT.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\TxDMA.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC_PM.o .\CortexM0\ARM_GCC_541\Debug\I2S.o .\CortexM0\ARM_GCC_541\Debug\I2S_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\CyFlash.o .\CortexM0\ARM_GCC_541\Debug\CyLib.o .\CortexM0\ARM_GCC_541\Debug\cyPm.o .\CortexM0\ARM_GCC_541\Debug\cyutils.o .\CortexM0\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM0\ARM_GCC_541\Debug\CyDMA.o .\CortexM0\ARM_GCC_541\Debug\CyLFClk.o .\CortexM0\ARM_GCC_541\Debug\LED.o .\CortexM0\ARM_GCC_541\Debug\LED_PM.o .\CortexM0\ARM_GCC_541\Debug\UART.o .\CortexM0\ARM_GCC_541\Debug\UART_SPI_UART.o .\CortexM0\ARM_GCC_541\Debug\UART_SPI_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\UART_PM.o .\CortexM0\ARM_GCC_541\Debug\UART_UART.o .\CortexM0\ARM_GCC_541\Debug\UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\UART_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\UART_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\UART_tx.o .\CortexM0\ARM_GCC_541\Debug\UART_tx_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_TxDMADone.o .\CortexM0\ARM_GCC_541\Debug\isr_I2S_underflow.o .\CortexM0\ARM_GCC_541\Debug\TxBufferDMA.o .\CortexM0\ARM_GCC_541\Debug\ADC.o .\CortexM0\ARM_GCC_541\Debug\ADC_PM.o .\CortexM0\ARM_GCC_541\Debug\ADC_INT.o .\CortexM0\ARM_GCC_541\Debug\pot1.o .\CortexM0\ARM_GCC_541\Debug\pot1_PM.o .\CortexM0\ARM_GCC_541\Debug\pot2.o .\CortexM0\ARM_GCC_541\Debug\pot2_PM.o .\CortexM0\ARM_GCC_541\Debug\pot3.o .\CortexM0\ARM_GCC_541\Debug\pot3_PM.o .\CortexM0\ARM_GCC_541\Debug\pot4.o .\CortexM0\ARM_GCC_541\Debug\pot4_PM.o .\CortexM0\ARM_GCC_541\Debug\ADC_IRQ.o .\CortexM0\ARM_GCC_541\Debug\ADC_intClock.o .\CortexM0\ARM_GCC_541\Debug\isr_ADC_EOC.o .\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o
 arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a
@@ -9,6 +20,6 @@ No ELF section .cychecksum found, creating one
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S E:\Documents\Engineering\Code\synth-wavetable\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf
-Flash used: 20824 of 262144 bytes (7.9%).
+Flash used: 9896 of 262144 bytes (3.8%).
 SRAM used: 30216 of 32768 bytes (92.2%). Stack: 2048 bytes. Heap: 2048 bytes.
---------------- Build Succeeded: 09/21/2019 22:23:12 ---------------
+--------------- Build Succeeded: 09/21/2019 22:34:48 ---------------

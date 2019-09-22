@@ -10,18 +10,18 @@
 #define N (FS / BASE_FREQ)
 #define AMPLITUDE 127
     
-int8_t base_sine[(int)N];
+//int8_t base_sine[(int)N];
 //uint8_t base_pos_saw[(int)N];
 //uint8_t base_neg_saw[(int)N];
-//uint8_t base_tri[(int)N];
+uint8_t base_tri[(int)N];
 //uint8_t base_sq[(int)N];
 
 void init_wavetable(void);
 void generate_base_sine(int8_t*);
-void generate_base_pos_saw(uint8_t*);
-void generate_base_neg_saw(uint8_t*);
-void generate_base_tri(uint8_t*);
-void generate_base_sq(uint8_t*);
+void generate_base_pos_saw(int8_t*);
+void generate_base_neg_saw(int8_t*);
+void generate_base_tri(int8_t*);
+void generate_base_sq(int8_t*);
 
 #endif
 /* [] END OF FILE */
