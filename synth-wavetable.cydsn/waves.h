@@ -11,10 +11,10 @@
 #define AMPLITUDE 127
     
 //int8_t base_sine[(int)N];
-//uint8_t base_pos_saw[(int)N];
-//uint8_t base_neg_saw[(int)N];
-uint8_t base_tri[(int)N];
-//uint8_t base_sq[(int)N];
+//int8_t base_pos_saw[(int)N];
+//int8_t base_neg_saw[(int)N];
+int8_t base_tri[(int)N];
+//int8_t base_sq[(int)N];
 
 void init_wavetable(void);
 void generate_base_sine(int8_t*);

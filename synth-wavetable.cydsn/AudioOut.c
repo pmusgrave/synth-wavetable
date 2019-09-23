@@ -134,6 +134,7 @@ void ProcessAudioOut(void)
     CyGlobalIntDisable;
     //UART_UartPutString("Processing audio output...\r\n");
     static int index;
+    static int index2;
     
     //char string[30];
     //sprintf(string, "%d\n",freq);
@@ -142,10 +143,9 @@ void ProcessAudioOut(void)
     int i = 0;
     while(i < OUT_BUFSIZE){
         index = (index + freq/400) % (int)(N);
-        outBuffer[i] = base_tri[(int)index];
+        index2 = (index2 + freq/500) % (int)N;
+        outBuffer[i] = base_tri[(int)index]/2 + base_tri[(int)index2]/2;
         i++;
-        
-        
     }
     
     /* Enable power to speaker output */
