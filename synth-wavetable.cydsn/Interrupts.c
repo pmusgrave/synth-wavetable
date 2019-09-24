@@ -59,8 +59,8 @@ extern int32_t pot_value;
 
 CY_ISR(ADC_EOC){
     //UART_UartPutString("ADC EOC\r\n");
-    //freq = ADC_GetResult16(0);
-    freq = 2000;
+    freq = ADC_GetResult16(0);
+    //freq = 2000;
 }
 
 CY_ISR(TxBufferDMADone_Interrupt){

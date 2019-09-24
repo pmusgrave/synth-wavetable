@@ -49,7 +49,7 @@
 #include "waves.h"
 #include "globals.h"
 
-extern uint8 outBuffer[];
+extern int8_t outBuffer[];
 void TxDMAFromBuf2ToI2S();
 int32_t freq;
 
@@ -58,8 +58,8 @@ CYBIT outPlaying = 0;
 uint16 outLevel = 0;
 uint16 outUsbCount = 0;
 uint16 outUsbShadow = 0;
-uint8 outBuffer[OUT_BUFSIZE];
-uint8 outBuffer2[OUT_BUFSIZE];
+int8_t outBuffer[OUT_BUFSIZE];
+int8_t outBuffer2[OUT_BUFSIZE];
 uint16 outBufIndex = 0;
 extern CYBIT audioClkConfigured;
 
@@ -133,8 +133,8 @@ void ProcessAudioOut(void)
 {
     CyGlobalIntDisable;
     //UART_UartPutString("Processing audio output...\r\n");
-    static int index;
-    static int index2;
+    static uint32_t index;
+    static uint32_t index2;
     
     //char string[30];
     //sprintf(string, "%d\n",freq);
@@ -142,9 +142,8 @@ void ProcessAudioOut(void)
    
     int i = 0;
     while(i < OUT_BUFSIZE){
-        index = (index + freq/400) % (int)(N);
-        index2 = (index2 + freq/500) % (int)N;
-        outBuffer[i] = base_tri[(int)index]/2 + base_tri[(int)index2]/2;
+        index = index + (int)freq;
+        outBuffer[i] = base_sine[(index>>12)%N];
         i++;
     }
     
