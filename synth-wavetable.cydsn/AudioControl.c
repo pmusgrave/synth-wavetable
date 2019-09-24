@@ -52,8 +52,6 @@ extern CYBIT outPlaying;
 
 extern CYBIT inPlaying;
 
-
-
 uint8 audioClkConfigured = 0;
 uint8 setRate = FREQUENCY_NOT_SET; 
 uint8 newRate;
@@ -75,7 +73,7 @@ uint8 newRate;
 void InitAudioPath(void)
 {    
     /* Set the default Audio clock rate to 48 kHz */
-	AudioClkSel_Write(RATE_48KHZ);
+	AudioClkSel_Write(RATE_44KHZ);
     
 	/* Enable DMA */
 	CyDmaEnable();

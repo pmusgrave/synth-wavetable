@@ -49,12 +49,13 @@
 #include "waves.h"
 #include "globals.h"
 
-void TxDMAFromBuf2ToI2S();
 int32_t freq;
 
 CYBIT outPlaying = 0;
 int8_t outBuffer[OUT_BUFSIZE];
-int8_t outBuffer2[OUT_BUFSIZE];
+//int8_t outBuffer2[OUT_BUFSIZE];
+uint32_t buffer_index;
+uint32_t buffer_index2;
 extern CYBIT audioClkConfigured;
 
 /*******************************************************************************
@@ -77,29 +78,26 @@ void InitializeAudioOutPath(void)
 	TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
     TxDMA_SetSrcAddress(0, (void *) outBuffer);
 	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
+    //TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
     
-    TxBufferDMA_Init();
-    TxBufferDMA_SetNumDataElements(0, OUT_BUFSIZE);
-    TxBufferDMA_SetSrcAddress(0, (void *) outBuffer);
-	TxBufferDMA_SetDstAddress(0, (void *) outBuffer2);
+    /*
+    TxDMA_1_Init();
+	TxDMA_1_SetNumDataElements(0, OUT_BUFSIZE);
+    TxDMA_1_SetSrcAddress(0, (void *) outBuffer2);
+	TxDMA_1_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
+    TxDMA_SetInterruptCallback(TxDMA_1_Done_Interrupt);
+    */
     
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
-    TxBufferDMA_ValidateDescriptor(0);
+    //TxDMA_1_ValidateDescriptor(0);
     
     /* Start interrupts */
-    TxBufferDMA_SetInterruptCallback(TxBufferDMADone_Interrupt);
-    TxDMA_SetInterruptCallback(TxDMAFromBuf2ToI2S);
-    isr_TxDMADone_StartEx(TxDMADone_Interrupt);
+    isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
     isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1;
-}
-
-void TxDMAFromBuf2ToI2S(){
-    //UART_UartPutString("To FIFO complete\r\n");
-    //Stop_I2S_Tx();
 }
 
 /*******************************************************************************
@@ -119,13 +117,11 @@ void TxDMAFromBuf2ToI2S(){
 *
 *******************************************************************************/
 
-void ProcessAudioOut(void) 
+void ProcessAudioOut(int8_t* buffer, uint32_t* index) 
 {
     //Stop_I2S_Tx();
     CyGlobalIntDisable;
     //UART_UartPutString("Processing audio output...\r\n");
-    static uint32_t index;
-    static uint32_t index2;
     
     //char string[30];
     //sprintf(string, "%d\n",freq);
@@ -133,17 +129,16 @@ void ProcessAudioOut(void)
    
     int i = 0;
     while(i < OUT_BUFSIZE){
-        index = index + (int)freq;
-        outBuffer[i] = base_sine[(index>>12)%N]/2 + base_sine[(index>>13)%N]/2;
+        *index = *index + (int)freq;
+        buffer[i] = base_sine[((*index)>>10)%N];///2 + base_sine[(index>>13)%N]/2;
         i++;
     }
     
     /* Enable power to speaker output */
     Codec_PowerOnControl(CODEC_POWER_CTRL_OUTPD);
     
-	TxDMA_ChEnable();    
-    TxBufferDMA_ChEnable();
-    TxBufferDMA_Trigger();
+	TxDMA_ChEnable();  
+    //TxDMA_1_ChEnable();  
     
     I2S_EnableTx(); /* Unmute the TX output */ 
     CyGlobalIntEnable;
@@ -169,14 +164,13 @@ void Stop_I2S_Tx(void) CYREENTRANT
     //
     //if(outPlaying)
     //{       
-        UART_UartPutString("Stopping I2S\r\n");
+        //UART_UartPutString("Stopping I2S\r\n");
         I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
         
         CyDelayUs(20); /* Provide enough time for DMA to transfer the last audio samples completely to I2S TX FIFO */
    
         /* Stop / Disable DMA - Needed to reset to start of chain */
         TxDMA_ChDisable();
-        TxBufferDMA_ChDisable();
 		
 		/* Make DMA transaction count zero */ 
         CYDMA_DESCR_BASE.descriptor[TxDMA_CHANNEL][0].status &= 0xFFFF0000;

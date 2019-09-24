@@ -45,19 +45,43 @@
 #include "waves.h"
 #include "globals.h"
 
+volatile uint8_t DMA_done_flag = 0;
+volatile uint8_t DMA_counter = 0;
+volatile uint8_t FIFO_DMA_REQ_FLAG = 0;
+volatile uint8_t update_ADC_flag = 0;
+
 CY_ISR(ADC_EOC) {
     //UART_UartPutString("ADC EOC\r\n");
-    freq = ADC_GetResult16(0);
+    update_ADC_flag = 1;
     //freq = 2000;
 }
 
 CY_ISR(TxBufferDMADone_Interrupt) {
-    ProcessAudioOut();
+    //ProcessAudioOut(outBuffer, buffer_index);
     //UART_UartPutString("DMA buffer\r\n");
 }
 
-CY_ISR(TxDMADone_Interrupt) {
-    //UART_UartPutString("No FIFO\r\n");
+CY_ISR(I2S_FIFO_DMA_REQ) {
+    //UART_UartPutString("FIFO req\r\n");
+    //FIFO_DMA_REQ_FLAG = 1;
+    
+    //TxDMA_ChDisable();
+    //TxDMA_1_ChDisable();
+    
+    //CyGlobalIntDisable;
+    //Stop_I2S_Tx();
+}
+
+CY_ISR(TxDMA_Done_Interrupt){
+    //UART_UartPutString("DMA done\r\n");
+    DMA_done_flag = 1;
+    DMA_counter++;
+}
+
+CY_ISR(TxDMA_1_Done_Interrupt){
+    UART_UartPutString("DMA 2 done\r\n");
+    DMA_done_flag = 1;
+    DMA_counter++;
 }
 
 CY_ISR(I2SUnderflow) {

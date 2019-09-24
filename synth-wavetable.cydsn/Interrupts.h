@@ -44,9 +44,11 @@
 	#include "cytypes.h"
 
     CY_ISR_PROTO(ADC_EOC);
-	CY_ISR_PROTO(TxDMADone_Interrupt);
+	CY_ISR_PROTO(I2S_FIFO_DMA_REQ);
     CY_ISR_PROTO(TxBufferDMADone_Interrupt);
     CY_ISR_PROTO(I2SUnderflow);
+    CY_ISR_PROTO(TxDMA_Done_Interrupt);
+    CY_ISR_PROTO(TxDMA_1_Done_Interrupt);
 
 #endif
 

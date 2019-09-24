@@ -52,19 +52,15 @@
 		#define BUFSIZE (TRANS_SIZE*NUM_TDS)
 		#define HALF (BUFSIZE/2)
 	#else
-		#define NUM_TDS 8
+		#define NUM_TDS 2
 		#define OUT_TRANS_SIZE 1440
 		#define OUT_BUFSIZE (OUT_TRANS_SIZE*NUM_TDS)
 		#define OUT_HALF (OUT_BUFSIZE/2)
-		#define IN_TRANS_SIZE 144
-		#define IN_BUFSIZE (IN_TRANS_SIZE*NUM_TDS)
-		#define IN_HALF (IN_BUFSIZE/2)
 	#endif
 
 	#define AUDIOMAXPKT (IN_BUFSIZE/4)
 	#define MAX_AUDIO_SAMPLE_SIZE                6	
 	#define IN_AUDIOMAXPKT  (AUDIOMAXPKT + MAX_AUDIO_SAMPLE_SIZE)
-	#define OUT_AUDIOMAXPKT (AUDIOMAXPKT + MAX_AUDIO_SAMPLE_SIZE)
 
 	/* Clock Rates */
 	#define RATE_48KHZ                                   0
@@ -84,9 +80,7 @@
 	extern uint8 audioClkConfigured;
 	
 	void InitAudioPath(void);
-	//void ProcessAudioIn(void);
 	void SetClockRate(uint8 newRate);
-	//void Stop_I2S_Rx(void);	
 	void Stop_I2S_Tx(void);	
 	//void HandleSamplingFrequencyChangeRequest(void);	
 	//void HandleAudioInBuffer(void);

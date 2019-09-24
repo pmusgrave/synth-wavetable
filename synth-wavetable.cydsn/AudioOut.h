@@ -37,9 +37,10 @@
 * system or application assumes all risk of such use and in doing so agrees to 
 * indemnify Cypress against all liability.
 *******************************************************************************/
+#include <project.h>
 
 void InitializeAudioOutPath(void);
-void ProcessAudioOut(void); 
+void ProcessAudioOut(int8_t*, uint32_t*);
 void Stop_I2S_Tx(void);
 
 /* [] END OF FILE */
