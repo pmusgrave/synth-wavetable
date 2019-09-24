@@ -49,23 +49,13 @@
 #include "waves.h"
 #include "globals.h"
 
-extern int8_t outBuffer[];
 void TxDMAFromBuf2ToI2S();
 int32_t freq;
 
-CYBIT resetTx = 0;
 CYBIT outPlaying = 0;
-uint16 outLevel = 0;
-uint16 outUsbCount = 0;
-uint16 outUsbShadow = 0;
 int8_t outBuffer[OUT_BUFSIZE];
 int8_t outBuffer2[OUT_BUFSIZE];
-uint16 outBufIndex = 0;
 extern CYBIT audioClkConfigured;
-
-#if(USBFS_EP_MM == USBFS__EP_DMAAUTO)   
-	extern uint8 outRam[];  
-#endif
 
 /*******************************************************************************
 * Function Name: InitializeAudioOutPath
@@ -108,7 +98,7 @@ void InitializeAudioOutPath(void)
 }
 
 void TxDMAFromBuf2ToI2S(){
-    //UART_UartPutString("To FIFO\r\n");
+    //UART_UartPutString("To FIFO complete\r\n");
     //Stop_I2S_Tx();
 }
 
@@ -131,6 +121,7 @@ void TxDMAFromBuf2ToI2S(){
 
 void ProcessAudioOut(void) 
 {
+    //Stop_I2S_Tx();
     CyGlobalIntDisable;
     //UART_UartPutString("Processing audio output...\r\n");
     static uint32_t index;
@@ -143,7 +134,7 @@ void ProcessAudioOut(void)
     int i = 0;
     while(i < OUT_BUFSIZE){
         index = index + (int)freq;
-        outBuffer[i] = base_sine[(index>>12)%N];
+        outBuffer[i] = base_sine[(index>>12)%N]/2 + base_sine[(index>>13)%N]/2;
         i++;
     }
     
@@ -175,10 +166,11 @@ void ProcessAudioOut(void)
 *******************************************************************************/
 void Stop_I2S_Tx(void) CYREENTRANT
 {
-    //UART_UartPutString("Stopping I2S\r\n");
-    if(outPlaying)
-    {       
-        //I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
+    //
+    //if(outPlaying)
+    //{       
+        UART_UartPutString("Stopping I2S\r\n");
+        I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
         
         CyDelayUs(20); /* Provide enough time for DMA to transfer the last audio samples completely to I2S TX FIFO */
    
@@ -191,12 +183,7 @@ void Stop_I2S_Tx(void) CYREENTRANT
 		
         /* Disable power to speaker output */
         Codec_PowerOffControl(CODEC_POWER_CTRL_OUTPD);
-        
-        resetTx = 1;
-        outLevel = 0;
-        outUsbShadow = 0;
-        outPlaying = 0;
-    }    
+    //}    
 }
 
 /* [] END OF FILE */

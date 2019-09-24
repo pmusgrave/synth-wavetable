@@ -45,36 +45,22 @@
 #include "waves.h"
 #include "globals.h"
 
-extern uint16 inCnt;
-extern uint16 inLevel;
-extern uint16 inUsbCount;
-extern uint16 inUsbShadow;
-extern uint16 outLevel;
-extern uint16 outUsbCount;
-extern uint16 outUsbShadow;
-
-extern uint8 outBuffer[];
-extern int32_t freq;
-extern int32_t pot_value;
-
-CY_ISR(ADC_EOC){
+CY_ISR(ADC_EOC) {
     //UART_UartPutString("ADC EOC\r\n");
     freq = ADC_GetResult16(0);
     //freq = 2000;
 }
 
-CY_ISR(TxBufferDMADone_Interrupt){
-    Stop_I2S_Tx();
+CY_ISR(TxBufferDMADone_Interrupt) {
     ProcessAudioOut();
     //UART_UartPutString("DMA buffer\r\n");
 }
 
-CY_ISR(TxDMADone_Interrupt)
-{
+CY_ISR(TxDMADone_Interrupt) {
     //UART_UartPutString("No FIFO\r\n");
 }
 
-CY_ISR(I2SUnderflow){
+CY_ISR(I2SUnderflow) {
     UART_UartPutString("I2S undeflow\r\n");    
 }
 
