@@ -52,8 +52,8 @@
 		#define BUFSIZE (TRANS_SIZE*NUM_TDS)
 		#define HALF (BUFSIZE/2)
 	#else
-		#define NUM_TDS 1
-		#define OUT_TRANS_SIZE 2048
+		#define NUM_TDS 8
+		#define OUT_TRANS_SIZE 144
 		#define OUT_BUFSIZE (OUT_TRANS_SIZE*NUM_TDS)
 		#define OUT_HALF (OUT_BUFSIZE/2)
 	#endif

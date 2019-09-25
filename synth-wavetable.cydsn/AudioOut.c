@@ -74,19 +74,25 @@ extern CYBIT audioClkConfigured;
 *******************************************************************************/
 void InitializeAudioOutPath(void)
 {
-    /*
     TxDMA_Init();
 	TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
+    TxDMA_SetNumDataElements(1, OUT_BUFSIZE);
     TxDMA_SetSrcAddress(0, (void *) output_buffer);
 	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
+    TxDMA_SetSrcAddress(1, (void *) output_buffer2);
+	TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
+    TxDMA_ChEnable();
     
+    /*
     TxDMA_1_Init();
     TxDMA_1_SetNumDataElements(0, OUT_BUFSIZE);
     TxDMA_1_SetSrcAddress(0, (void *) output_buffer2);
 	TxDMA_1_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
     */
-    TxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
-    TxDMA_1_Start(output_buffer2, (void *)I2S_TX_FIFO_0_PTR);
+    
+    //TxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
+    //TxDMA_1_Start(output_buffer2, (void *)I2S_TX_FIFO_0_PTR);
+    
     /*
     TxDMA_1_Init();
 	TxDMA_1_SetNumDataElements(0, OUT_BUFSIZE);
@@ -97,6 +103,7 @@ void InitializeAudioOutPath(void)
     
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
+    TxDMA_ValidateDescriptor(1);
     TxDMA_1_ValidateDescriptor(0);
     
     /* Start interrupts */
@@ -134,12 +141,12 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
     //sprintf(string, "%d\n",buffer);
     //UART_UartPutString(string);
    
-    //*index = *index + (int)freq;
-    //buffer[0] = base_sine[((*index)>>10)%N];
-    int i = 0;
+    *index = *index + (int)freq;
+    buffer[0] = base_sine[((*index)>>10)%N];
+    int i = 1;
     while(i < OUT_BUFSIZE){
         *index = *index + (int)freq;
-        buffer[i] = base_sine[((*index)>>10)%N];///2 + buffer[i-1]/2;// + buffer[i-2]/3;
+        buffer[i] = base_sine[((*index)>>10)%N]/2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
     }
         

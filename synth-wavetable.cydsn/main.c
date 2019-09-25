@@ -8,7 +8,7 @@
 
 int main() {
     UART_Start();
-    LED_Write(1);
+    //LED_Write(1);
     TxByteCounter_Start();
     
     UART_UartPutString("\r\n\r\n\r\n********************\r\n");
@@ -49,13 +49,18 @@ int main() {
     
     for(;;) {
         if(DMA_done_flag){
+            //Tx_DMA_ctrl_Write(~Tx_DMA_ctrl_Read());
             DMA_done_flag = 0;
             if(DMA_counter % 2 == 0){
-                Tx_DMA_ctrl_Write(0);
+                //Tx_DMA_ctrl_Write(0);
+                CyGlobalIntEnable;
+                UART_UartPutString("0\r\n");
                 ProcessAudioOut(output_buffer2, &buffer_index);
             }
             else {
-                Tx_DMA_ctrl_Write(1);
+                //Tx_DMA_ctrl_Write(1);
+                CyGlobalIntEnable;
+                UART_UartPutString("1\r\n");
                 ProcessAudioOut(output_buffer, &buffer_index);
             }
         }

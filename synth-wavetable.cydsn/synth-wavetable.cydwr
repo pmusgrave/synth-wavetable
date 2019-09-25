@@ -24,6 +24,7 @@
       <Data key="3dbba19d-7851-4a83-b204-a0a386fe8d68/22863ebe-a37b-476f-b252-6e49a8c00b12" value="CodecI2CM_scl" />
       <Data key="6d3e2ed7-e163-4ece-b53b-9f4deeb678ca/8b77a6c4-10a0-4390-971c-672353e2a49c" value="USBFS_1_Dm" />
       <Data key="6d3e2ed7-e163-4ece-b53b-9f4deeb678ca/618a72fc-5ddd-4df5-958f-a3d55102db42" value="USBFS_1_Dp" />
+      <Data key="15c910bf-7a74-4802-ba5e-e3c6d6f9142e" value="pot2" />
       <Data key="43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/23b8206d-1c77-4e61-be4a-b4037d5de5fc" value="UART_tx" />
       <Data key="5711f6e8-cb8a-4621-9e37-afae2646afe9" value="pot3" />
       <Data key="8843558f-8028-4242-b419-20e93446a62f" value="Codec_MCLK" />
@@ -3782,6 +3783,11 @@
     <Group key="3dbba19d-7851-4a83-b204-a0a386fe8d68/22863ebe-a37b-476f-b252-6e49a8c00b12">
       <Group key="0">
         <Data key="Port Format" value="4,0" />
+      </Group>
+    </Group>
+    <Group key="15c910bf-7a74-4802-ba5e-e3c6d6f9142e">
+      <Group key="0">
+        <Data key="Port Format" value="2,1" />
       </Group>
     </Group>
     <Group key="43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/23b8206d-1c77-4e61-be4a-b4037d5de5fc">
