@@ -52,8 +52,8 @@
 int32_t freq;
 
 CYBIT outPlaying = 0;
-int8_t outBuffer[OUT_BUFSIZE];
-//int8_t outBuffer2[OUT_BUFSIZE];
+int8_t output_buffer[OUT_BUFSIZE];
+int8_t output_buffer2[OUT_BUFSIZE];
 uint32_t buffer_index;
 uint32_t buffer_index2;
 extern CYBIT audioClkConfigured;
@@ -76,9 +76,13 @@ void InitializeAudioOutPath(void)
 {
     TxDMA_Init();
 	TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
-    TxDMA_SetSrcAddress(0, (void *) outBuffer);
+    TxDMA_SetSrcAddress(0, (void *) output_buffer);
 	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
-    //TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
+    
+    TxDMA_1_Init();
+    TxDMA_1_SetNumDataElements(0, OUT_BUFSIZE);
+    TxDMA_1_SetSrcAddress(0, (void *) output_buffer2);
+	TxDMA_1_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
     
     /*
     TxDMA_1_Init();
@@ -90,7 +94,7 @@ void InitializeAudioOutPath(void)
     
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
-    //TxDMA_1_ValidateDescriptor(0);
+    TxDMA_1_ValidateDescriptor(0);
     
     /* Start interrupts */
     isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
@@ -127,18 +131,20 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
     //sprintf(string, "%d\n",freq);
     //UART_UartPutString(string);
    
-    int i = 0;
+    *index = *index + (int)freq;
+    buffer[0] = base_sine[((*index)>>10)%N];
+    int i = 1;
     while(i < OUT_BUFSIZE){
         *index = *index + (int)freq;
-        buffer[i] = base_sine[((*index)>>10)%N];///2 + base_sine[(index>>13)%N]/2;
+        buffer[i] = base_sine[((*index)>>10)%N]/2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
     }
-    
+        
     /* Enable power to speaker output */
     Codec_PowerOnControl(CODEC_POWER_CTRL_OUTPD);
     
 	TxDMA_ChEnable();  
-    //TxDMA_1_ChEnable();  
+    TxDMA_1_ChEnable();  
     
     I2S_EnableTx(); /* Unmute the TX output */ 
     CyGlobalIntEnable;

@@ -56,30 +56,13 @@ CY_ISR(ADC_EOC) {
     //freq = 2000;
 }
 
-CY_ISR(TxBufferDMADone_Interrupt) {
-    //ProcessAudioOut(outBuffer, buffer_index);
-    //UART_UartPutString("DMA buffer\r\n");
-}
-
 CY_ISR(I2S_FIFO_DMA_REQ) {
     //UART_UartPutString("FIFO req\r\n");
     //FIFO_DMA_REQ_FLAG = 1;
-    
-    //TxDMA_ChDisable();
-    //TxDMA_1_ChDisable();
-    
-    //CyGlobalIntDisable;
-    //Stop_I2S_Tx();
 }
 
 CY_ISR(TxDMA_Done_Interrupt){
     //UART_UartPutString("DMA done\r\n");
-    DMA_done_flag = 1;
-    DMA_counter++;
-}
-
-CY_ISR(TxDMA_1_Done_Interrupt){
-    UART_UartPutString("DMA 2 done\r\n");
     DMA_done_flag = 1;
     DMA_counter++;
 }

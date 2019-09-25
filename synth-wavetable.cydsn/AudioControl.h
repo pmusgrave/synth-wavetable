@@ -53,7 +53,7 @@
 		#define HALF (BUFSIZE/2)
 	#else
 		#define NUM_TDS 2
-		#define OUT_TRANS_SIZE 1440
+		#define OUT_TRANS_SIZE 2048
 		#define OUT_BUFSIZE (OUT_TRANS_SIZE*NUM_TDS)
 		#define OUT_HALF (OUT_BUFSIZE/2)
 	#endif

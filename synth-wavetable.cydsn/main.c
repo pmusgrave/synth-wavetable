@@ -25,7 +25,7 @@ int main() {
     isr_ADC_EOC_StartEx(ADC_EOC);
     
     /* Configure CPU/DMA to be in round robin mode while accessing memory */
-	CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
+	//CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
 	
     CodecI2CM_Start();	
 	if(Codec_Init() == 0) {
@@ -37,46 +37,33 @@ int main() {
 	}
     
     I2S_Start();
-    I2S_TX_CH0_ACTL_REG |= I2S_FIFO0_LVL;
+    //I2S_TX_CH0_ACTL_REG |= I2S_FIFO0_LVL;
     isr_I2S_underflow_StartEx(I2SUnderflow);
     
     CyGlobalIntEnable;
 	CyIntSetPriority(CYDMA_INTR_NUMBER, 0);
     
-    //TxDMA_ctrl_Write(0);
-    ProcessAudioOut(outBuffer, &buffer_index);
+    ProcessAudioOut(output_buffer, &buffer_index);
+    ProcessAudioOut(output_buffer2, &buffer_index);
+    Tx_DMA_ctrl_Write(0);
     
     for(;;) {
-        //char string[30];
-        //sprintf(string, "%lu\n",TxByteCounter_ReadCounter());
-        //UART_UartPutString(string);
-        
-        if(FIFO_DMA_REQ_FLAG){
-            FIFO_DMA_REQ_FLAG = 0;
-        }
-        
         if(DMA_done_flag){
-            //TxDMA_ctrl_Write(~TxDMA_ctrl_Read());
-            //TxDMA_count_ctrl_Write(~TxDMA_count_ctrl_Read());
-            
-            
-            
-            //if(DMA_counter % 2 != 0){
-                DMA_done_flag = 0;
-                ProcessAudioOut(outBuffer, &buffer_index);
-                //TxDMA_ChEnable();
-                //LED_Write(~LED_Read());
-            //}
-            //else{
-            //    DMA_done_flag = 0;
-            //    TxDMA_ChEnable();
-            //    ProcessAudioOut(outBuffer2, &buffer_index2);
-            //}
+            DMA_done_flag = 0;
+            if(DMA_counter % 2 == 0){
+                Tx_DMA_ctrl_Write(1);
+                ProcessAudioOut(output_buffer2, &buffer_index);
+            }
+            else {
+                Tx_DMA_ctrl_Write(1);
+                ProcessAudioOut(output_buffer, &buffer_index);
+            }
         }
         
         if(update_ADC_flag){
             freq = ADC_GetResult16(0);
         }
+        
     }
 }
 

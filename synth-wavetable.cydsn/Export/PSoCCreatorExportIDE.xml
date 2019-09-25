@@ -192,9 +192,14 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\ADC_intClock.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_ADC_EOC.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_ADC_EOC.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxDMA_1.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxDMA_1.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Tx_DMA_ctrl.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Tx_DMA_ctrl.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Tx_DMA_ctrl_PM.c</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">
