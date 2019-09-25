@@ -56,13 +56,9 @@ CY_ISR(ADC_EOC) {
     //freq = 2000;
 }
 
-CY_ISR(I2S_FIFO_DMA_REQ) {
-    //UART_UartPutString("FIFO req\r\n");
-    //FIFO_DMA_REQ_FLAG = 1;
-}
-
 CY_ISR(TxDMA_Done_Interrupt){
     //UART_UartPutString("DMA done\r\n");
+    Tx_DMA_ctrl_Write(3);
     DMA_done_flag = 1;
     DMA_counter++;
 }

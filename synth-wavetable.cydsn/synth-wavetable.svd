@@ -26433,7 +26433,7 @@
         <register>
           <name>Tx_DMA_ctrl_CONTROL_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0073</addressOffset>
+          <addressOffset>0x400F0072</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -28871,7 +28871,7 @@
         <register>
           <name>AudioClkSel_CONTROL_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0072</addressOffset>
+          <addressOffset>0x400F0073</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
