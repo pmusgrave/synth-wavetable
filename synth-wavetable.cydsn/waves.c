@@ -59,11 +59,11 @@ void generate_base_sq(int8_t* buffer){
   }
 }
 
-void generate_lfo_sine(int8_t* buffer){
-    for(int i = 0; i < N/16; i++){
-        double delta = 2*M_PI/(N/16);
+void generate_lfo_sine(uint8_t* buffer){
+    for(int i = 0; i < 256; i++){
+        double delta = 2*M_PI/256;
         double x = delta * i;
-        buffer[i] = sin(x) * 127 + 127;
+        buffer[i] = sin(x) * 120 + 120;
     }
 }
 /* [] END OF FILE */

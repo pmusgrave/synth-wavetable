@@ -142,7 +142,7 @@ void ProcessAudioOut(int8_t* buffer)
     
     static uint32_t lfo_index;
     lfo_index += lfo_freq;
-    lfo_multiplier = lfo_sine[(lfo_index>>8) & 0xFF];
+    lfo_multiplier = lfo_sine[(lfo_index>>8) % 255];
     
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
