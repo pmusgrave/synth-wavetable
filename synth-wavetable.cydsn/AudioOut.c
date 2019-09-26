@@ -49,7 +49,7 @@
 #include "waves.h"
 #include "globals.h"
 
-int32_t freq;
+uint32_t freq;
 
 CYBIT outPlaying = 0;
 int8_t output_buffer[OUT_BUFSIZE];
@@ -81,6 +81,7 @@ void InitializeAudioOutPath(void)
 	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
     TxDMA_SetSrcAddress(1, (void *) output_buffer2);
 	TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
+    TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
     TxDMA_ChEnable();
     
     /*
@@ -104,11 +105,11 @@ void InitializeAudioOutPath(void)
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
     TxDMA_ValidateDescriptor(1);
-    TxDMA_1_ValidateDescriptor(0);
+    //TxDMA_1_ValidateDescriptor(0);
     
     /* Start interrupts */
-    isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
-    isr_TxDMADone_Enable();
+    //isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
+    //isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1;
@@ -141,11 +142,11 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
     //sprintf(string, "%d\n",buffer);
     //UART_UartPutString(string);
    
-    *index = *index + (int)freq;
+    *index = *index + freq;
     buffer[0] = base_sine[((*index)>>10)%N];
     int i = 1;
     while(i < OUT_BUFSIZE){
-        *index = *index + (int)freq;
+        *index = *index + freq;
         buffer[i] = base_sine[((*index)>>10)%N]/2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
     }

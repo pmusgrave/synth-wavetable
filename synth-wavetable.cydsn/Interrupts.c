@@ -58,13 +58,8 @@ CY_ISR(ADC_EOC) {
 
 CY_ISR(TxDMA_Done_Interrupt){
     //UART_UartPutString("DMA done\r\n");
-    //Tx_DMA_ctrl_Write(3);
     //LED_Write(~LED_Read()&0b0001);
     CyGlobalIntDisable;
-    /*CyDmaChDisable(0);
-    CyDmaChFree(0);
-    CyDmaChDisable(1);
-    CyDmaChFree(1);*/
     DMA_done_flag = 1;
     DMA_counter++;
 }

@@ -25,7 +25,7 @@ int main() {
     isr_ADC_EOC_StartEx(ADC_EOC);
     
     /* Configure CPU/DMA to be in round robin mode while accessing memory */
-	CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
+	//CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
 	
     CodecI2CM_Start();	
 	if(Codec_Init() == 0) {
@@ -45,22 +45,19 @@ int main() {
     
     ProcessAudioOut(output_buffer, &buffer_index);
     ProcessAudioOut(output_buffer2, &buffer_index);
-    Tx_DMA_ctrl_Write(0);
+    //Tx_DMA_ctrl_Write(0);
     
     for(;;) {
         if(DMA_done_flag){
-            //Tx_DMA_ctrl_Write(~Tx_DMA_ctrl_Read());
             DMA_done_flag = 0;
             if(DMA_counter % 2 == 0){
-                //Tx_DMA_ctrl_Write(0);
                 CyGlobalIntEnable;
-                UART_UartPutString("0\r\n");
+                //UART_UartPutString("0\r\n");
                 ProcessAudioOut(output_buffer2, &buffer_index);
             }
             else {
-                //Tx_DMA_ctrl_Write(1);
                 CyGlobalIntEnable;
-                UART_UartPutString("1\r\n");
+                //UART_UartPutString("1\r\n");
                 ProcessAudioOut(output_buffer, &buffer_index);
             }
         }
@@ -68,7 +65,6 @@ int main() {
         if(update_ADC_flag){
             freq = ADC_GetResult16(0);
         }
-        
     }
 }
 

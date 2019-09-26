@@ -5,9 +5,9 @@
 #include <project.h>
 #include <AudioControl.h>
     
-#define FS 44100 // samples/second
+#define FS 48000 // samples/second
 #define BASE_FREQ 80 // Hz
-#define N (FS / BASE_FREQ)
+#define N 512
 #define AMPLITUDE 126
     
 int8_t base_sine[(int)N];

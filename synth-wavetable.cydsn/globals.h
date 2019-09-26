@@ -1,6 +1,6 @@
 #include <project.h>
 
-extern int32_t freq;
+extern uint32_t freq;
 extern volatile uint8_t DMA_done_flag;
 extern volatile uint8_t DMA_counter;
 extern volatile uint8_t FIFO_DMA_REQ_FLAG;
