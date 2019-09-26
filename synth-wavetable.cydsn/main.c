@@ -8,7 +8,6 @@
 
 int main() {
     UART_Start();
-    //LED_Write(1);
     TxByteCounter_Start();
     
     UART_UartPutString("\r\n\r\n\r\n********************\r\n");
@@ -24,9 +23,6 @@ int main() {
     ADC_StartConvert();
     isr_ADC_EOC_StartEx(ADC_EOC);
     
-    /* Configure CPU/DMA to be in round robin mode while accessing memory */
-	//CY_SET_REG32((void *) 0x40100038, CY_GET_REG32((void *) 0x40100038) | 0x22222222);     
-	
     CodecI2CM_Start();	
 	if(Codec_Init() == 0) {
     	UART_UartPutString("Codec comm works!... \r\n");
@@ -41,11 +37,9 @@ int main() {
     isr_I2S_underflow_StartEx(I2SUnderflow);
     
     CyGlobalIntEnable;
-	//CyIntSetPriority(CYDMA_INTR_NUMBER, 0);
     
     ProcessAudioOut(output_buffer, &buffer_index);
     ProcessAudioOut(output_buffer2, &buffer_index);
-    //Tx_DMA_ctrl_Write(0);
     
     for(;;) {
         if(DMA_done_flag){

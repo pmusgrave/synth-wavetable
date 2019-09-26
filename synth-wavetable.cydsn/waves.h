@@ -7,7 +7,7 @@
     
 #define FS 48000 // samples/second
 #define BASE_FREQ 80 // Hz
-#define N 512
+#define N 1024
 #define AMPLITUDE 126
     
 int8_t base_sine[(int)N];

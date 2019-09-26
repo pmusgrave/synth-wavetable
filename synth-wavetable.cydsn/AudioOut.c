@@ -83,29 +83,10 @@ void InitializeAudioOutPath(void)
 	TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
     TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
     TxDMA_ChEnable();
-    
-    /*
-    TxDMA_1_Init();
-    TxDMA_1_SetNumDataElements(0, OUT_BUFSIZE);
-    TxDMA_1_SetSrcAddress(0, (void *) output_buffer2);
-	TxDMA_1_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
-    */
-    
-    //TxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
-    //TxDMA_1_Start(output_buffer2, (void *)I2S_TX_FIFO_0_PTR);
-    
-    /*
-    TxDMA_1_Init();
-	TxDMA_1_SetNumDataElements(0, OUT_BUFSIZE);
-    TxDMA_1_SetSrcAddress(0, (void *) outBuffer2);
-	TxDMA_1_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
-    TxDMA_SetInterruptCallback(TxDMA_1_Done_Interrupt);
-    */
-    
+
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
     TxDMA_ValidateDescriptor(1);
-    //TxDMA_1_ValidateDescriptor(0);
     
     /* Start interrupts */
     //isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
@@ -134,31 +115,18 @@ void InitializeAudioOutPath(void)
 
 void ProcessAudioOut(int8_t* buffer, uint32_t* index) 
 {
-    //Stop_I2S_Tx();
-    //CyGlobalIntDisable;
-    //UART_UartPutString("Processing audio output...\r\n");
-    
     //char string[30];
     //sprintf(string, "%d\n",buffer);
     //UART_UartPutString(string);
    
-    *index = *index + freq;
-    buffer[0] = base_sine[((*index)>>10)%N];
-    int i = 1;
+    //*index = *index + freq;
+    //buffer[0] = base_sine[((*index)>>10)%N];
+    int i = 0;
     while(i < OUT_BUFSIZE){
         *index = *index + freq;
-        buffer[i] = base_sine[((*index)>>10)%N]/2 + buffer[i-1]/2;// + buffer[i-2]/3;
+        buffer[i] = base_sine[((*index)>>10)%N];///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
     }
-        
-    /* Enable power to speaker output */
-    //Codec_PowerOnControl(CODEC_POWER_CTRL_OUTPD);
-    
-	//TxDMA_ChEnable();  
-    //TxDMA_1_ChEnable();  
-    
-    
-    //CyGlobalIntEnable;
 }
 
 
