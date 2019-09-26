@@ -49,7 +49,8 @@
 #include "waves.h"
 #include "globals.h"
 
-uint32_t freq;
+uint16_t freq;
+uint16_t freq2;
 
 CYBIT outPlaying = 0;
 int8_t output_buffer[OUT_BUFSIZE];
@@ -119,12 +120,14 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
     //sprintf(string, "%d\n",buffer);
     //UART_UartPutString(string);
    
+    static uint32_t index2;
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     int i = 0;
     while(i < OUT_BUFSIZE){
         *index = *index + freq;
-        buffer[i] = base_sine[((*index)>>10)%N];///2 + buffer[i-1]/2;// + buffer[i-2]/3;
+        index2 += freq2;
+        buffer[i] = base_sine[((*index)>>8)%N]/2 + base_sine[(index2>>8)%N]/2;///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
     }
 }

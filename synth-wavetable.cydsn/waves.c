@@ -17,7 +17,7 @@ void init_wavetable(){
     //generate_base_sq(base_sq);
 }
 
-void generate_base_sine(int8_t* buffer){
+void generate_base_sine(int16_t* buffer){
   for(int i = 0; i < N; i++){
     double delta = 2*M_PI/N;
     double x = delta * i;

@@ -58,6 +58,7 @@ int main() {
 
         if(update_ADC_flag){
             freq = ADC_GetResult16(0);
+            freq2 = ADC_GetResult16(1);
         }
     }
 }
