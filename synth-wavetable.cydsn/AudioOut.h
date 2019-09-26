@@ -41,6 +41,7 @@
 
 void InitializeAudioOutPath(void);
 void ProcessAudioOut(int8_t*);
+void ProcessLFO(uint32_t);
 void Stop_I2S_Tx(void);
 
 /* [] END OF FILE */
