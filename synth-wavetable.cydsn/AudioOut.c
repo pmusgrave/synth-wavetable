@@ -51,6 +51,12 @@
 
 uint16_t freq;
 uint16_t freq2;
+uint16_t freq3;
+uint16_t freq4;
+uint16_t freq5;
+uint16_t freq6;
+uint16_t freq7;
+uint16_t freq8;
 
 CYBIT outPlaying = 0;
 int8_t output_buffer[OUT_BUFSIZE];
@@ -94,7 +100,14 @@ void InitializeAudioOutPath(void)
     //isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
-    freq = 1;
+    freq = 1000;
+    freq2 = 999;
+    freq3 = 1001;
+    freq4 = 1003;
+    freq5 = 1000;
+    freq6 = 2000;
+    freq7 = 3000;
+    freq8 = 4000;
 }
 
 /*******************************************************************************
@@ -121,13 +134,37 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
     //UART_UartPutString(string);
    
     static uint32_t index2;
+    static uint32_t index3;
+    static uint32_t index4;
+    static uint32_t index5;
+    static uint32_t index6;
+    static uint32_t index7;
+    static uint32_t index8;
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     int i = 0;
     while(i < OUT_BUFSIZE){
         *index = *index + freq;
         index2 += freq2;
-        buffer[i] = base_sine[((*index)>>8)%N]/2 + base_sine[(index2>>8)%N]/2;///2 + buffer[i-1]/2;// + buffer[i-2]/3;
+        index3 += freq3;
+        index4 += freq4;
+        index5 += freq5;
+        index6 += freq6;
+        index7 += freq7;
+        index8 += freq8;
+        
+        int32_t value = base_sine[((*index)>>8)%N]
+        + base_sine[(index2>>8)%N]
+        + base_sine[(index3>>8)%N]
+        + base_sine[(index4>>8)%N]
+        + base_sine[(index5>>8)%N]
+        + base_sine[(index6>>8)%N]
+        + base_sine[(index7>>8)%N]
+        + base_sine[(index8>>8)%N];
+        
+        buffer[i] = ((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        
+        ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
     }
 }
