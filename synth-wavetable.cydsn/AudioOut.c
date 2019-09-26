@@ -147,7 +147,7 @@ void ProcessAudioOut(int8_t* buffer)
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     for(int i = 0; i < OUT_BUFSIZE; i++){
-        index += freq;/*
+        index += (freq * lfo_multiplier)>>8;/*
         index2 += freq2;
         index3 += freq3;
         index4 += freq4;
@@ -167,10 +167,11 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
-        int8_t sine_portion = (value * lfo_multiplier)>>8;
-        uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;
+        buffer[i] = value;
         
-        buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        //int8_t sine_portion = (value * lfo_multiplier)>>8;
+        //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;
+        //buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         
