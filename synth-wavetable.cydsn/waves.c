@@ -15,8 +15,6 @@ void init_wavetable(){
     //generate_base_neg_saw(base_neg_saw);
     //generate_base_tri(base_tri);
     //generate_base_sq(base_sq);
-    
-    generate_lfo_sine(lfo_sine);
 }
 
 void generate_base_sine(int16_t* buffer){
@@ -57,13 +55,5 @@ void generate_base_sq(int8_t* buffer){
       buffer[i] = -AMPLITUDE;
     }
   }
-}
-
-void generate_lfo_sine(int8_t* buffer){
-    for(int i = 0; i < N/16; i++){
-        double delta = 2*M_PI/(N/16);
-        double x = delta * i;
-        buffer[i] = sin(x) * 127 + 127;
-    }
 }
 /* [] END OF FILE */

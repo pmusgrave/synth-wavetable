@@ -1,31 +1,6 @@
---------------- Build Started: 09/26/2019 15:16:54 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 09/26/2019 15:37:10 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 The code generation step is up to date.
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM0\ARM_GCC_541\Debug\main.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/Interrupts.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Interrupts.c -o .\CortexM0\ARM_GCC_541\Debug\Interrupts.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/waves.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c waves.c -o .\CortexM0\ARM_GCC_541\Debug\waves.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/AudioOut.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c AudioOut.c -o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o
-AudioOut.c: In function 'ProcessAudioOut':
-AudioOut.c:141:21: warning: unused variable 'index8' [-Wunused-variable]
-     static uint32_t index8;
-                     ^
-AudioOut.c:140:21: warning: unused variable 'index7' [-Wunused-variable]
-     static uint32_t index7;
-                     ^
-AudioOut.c:139:21: warning: unused variable 'index6' [-Wunused-variable]
-     static uint32_t index6;
-                     ^
-AudioOut.c:138:21: warning: unused variable 'index5' [-Wunused-variable]
-     static uint32_t index5;
-                     ^
-AudioOut.c:137:21: warning: unused variable 'index4' [-Wunused-variable]
-     static uint32_t index4;
-                     ^
-AudioOut.c:136:21: warning: unused variable 'index3' [-Wunused-variable]
-     static uint32_t index3;
-                     ^
-AudioOut.c:135:21: warning: unused variable 'index2' [-Wunused-variable]
-     static uint32_t index2;
-                     ^
 arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a .\CortexM0\ARM_GCC_541\Debug\CodecI2CM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_INT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_BOOT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_MASTER.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_BOOT.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\TxDMA.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC_PM.o .\CortexM0\ARM_GCC_541\Debug\I2S.o .\CortexM0\ARM_GCC_541\Debug\I2S_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\CyFlash.o .\CortexM0\ARM_GCC_541\Debug\CyLib.o .\CortexM0\ARM_GCC_541\Debug\cyPm.o .\CortexM0\ARM_GCC_541\Debug\cyutils.o .\CortexM0\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM0\ARM_GCC_541\Debug\CyDMA.o .\CortexM0\ARM_GCC_541\Debug\CyLFClk.o .\CortexM0\ARM_GCC_541\Debug\Clock_1.o .\CortexM0\ARM_GCC_541\Debug\LED.o .\CortexM0\ARM_GCC_541\Debug\LED_PM.o .\CortexM0\ARM_GCC_541\Debug\UART.o .\CortexM0\ARM_GCC_541\Debug\UART_SPI_UART.o .\CortexM0\ARM_GCC_541\Debug\UART_SPI_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\UART_PM.o .\CortexM0\ARM_GCC_541\Debug\UART_UART.o .\CortexM0\ARM_GCC_541\Debug\UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\UART_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\UART_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\UART_tx.o .\CortexM0\ARM_GCC_541\Debug\UART_tx_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_TxDMADone.o .\CortexM0\ARM_GCC_541\Debug\isr_I2S_underflow.o .\CortexM0\ARM_GCC_541\Debug\ADC.o .\CortexM0\ARM_GCC_541\Debug\ADC_PM.o .\CortexM0\ARM_GCC_541\Debug\ADC_INT.o .\CortexM0\ARM_GCC_541\Debug\pot1.o .\CortexM0\ARM_GCC_541\Debug\pot1_PM.o .\CortexM0\ARM_GCC_541\Debug\pot2.o .\CortexM0\ARM_GCC_541\Debug\pot2_PM.o .\CortexM0\ARM_GCC_541\Debug\pot3.o .\CortexM0\ARM_GCC_541\Debug\pot3_PM.o .\CortexM0\ARM_GCC_541\Debug\pot4.o .\CortexM0\ARM_GCC_541\Debug\pot4_PM.o .\CortexM0\ARM_GCC_541\Debug\ADC_IRQ.o .\CortexM0\ARM_GCC_541\Debug\ADC_intClock.o .\CortexM0\ARM_GCC_541\Debug\isr_ADC_EOC.o .\CortexM0\ARM_GCC_541\Debug\TxByteCounter.o .\CortexM0\ARM_GCC_541\Debug\TxByteCounter_PM.o .\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o
 arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a
 arm-none-eabi-gcc.exe -Wl,--start-group -o E:\Documents\Engineering\Code\synth-wavetable\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf .\CortexM0\ARM_GCC_541\Debug\main.o .\CortexM0\ARM_GCC_541\Debug\Codec.o .\CortexM0\ARM_GCC_541\Debug\Interrupts.o .\CortexM0\ARM_GCC_541\Debug\waves.o .\CortexM0\ARM_GCC_541\Debug\AudioControl.o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM0\ARM_GCC_541\Debug\cymetadata.o .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a -mcpu=cortex-m0 -mthumb -l m -L Generated_Source\PSoC4 -Wl,-Map,.\CortexM0\ARM_GCC_541\Debug/synth-wavetable.map -T Generated_Source\PSoC4\cm0gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
@@ -34,6 +9,6 @@ No ELF section .cychecksum found, creating one
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S E:\Documents\Engineering\Code\synth-wavetable\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf
-Flash used: 20792 of 262144 bytes (7.9%).
-SRAM used: 21248 of 32768 bytes (64.8%). Stack: 2048 bytes. Heap: 2048 bytes.
---------------- Build Succeeded: 09/26/2019 15:16:55 ---------------
+Flash used: 20880 of 262144 bytes (8.0%).
+SRAM used: 21000 of 32768 bytes (64.1%). Stack: 2048 bytes. Heap: 2048 bytes.
+--------------- Build Succeeded: 09/26/2019 15:37:11 ---------------

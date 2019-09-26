@@ -57,8 +57,6 @@ uint16_t freq5;
 uint16_t freq6;
 uint16_t freq7;
 uint16_t freq8;
-uint32_t lfo_freq;
-uint16_t lfo_multiplier = 1;
 
 CYBIT outPlaying = 0;
 int8_t output_buffer[OUT_BUFSIZE];
@@ -140,34 +138,30 @@ void ProcessAudioOut(int8_t* buffer)
     static uint32_t index7;
     static uint32_t index8;
     
-    static uint32_t lfo_index;
-    lfo_index += lfo_freq;
-    lfo_multiplier = lfo_sine[(lfo_index>>8) & 0xFF];
-    
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     for(int i = 0; i < OUT_BUFSIZE; i++){
-        index += freq;/*
+        index += freq;
         index2 += freq2;
         index3 += freq3;
         index4 += freq4;
         index5 += freq5;
         index6 += freq6;
         index7 += freq7;
-        index8 += freq8;
+        index8 += freq8;/*
         */
         
-        int32_t value = base_sine[((index)>>8) & 0xFFF];/*
+        int32_t value = base_sine[((index)>>8) & 0xFFF]
         + ((base_sine[(index2>>8) & 0xFFF]))
         + (base_sine[(index3>>8) & 0xFFF])
         + (base_sine[(index4>>8) & 0xFFF])
         + (base_sine[(index5>>8) & 0xFFF])
         + (base_sine[(index6>>8) & 0xFFF])
         + (base_sine[(index7>>8) & 0xFFF])
-        + (base_sine[(index8>>8) & 0xFFF])
+        + (base_sine[(index8>>8) & 0xFFF]);/*
         */
         
-        buffer[i] = (value * lfo_multiplier)>>8;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        buffer[i] = value;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         
@@ -175,11 +169,6 @@ void ProcessAudioOut(int8_t* buffer)
         //sprintf(string, "%d\n",lfo_multiplier);
         //UART_UartPutString(string);
     }
-}
-
-void ProcessLFO(uint32_t lfo_freq) 
-{
-    
 }
 
 /*******************************************************************************
