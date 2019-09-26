@@ -19,9 +19,9 @@ int main() {
     init_wavetable();
     UART_UartPutString("Wavetable initialized...\r\n");
     
-    //ADC_Start();
-    //ADC_StartConvert();
-    //isr_ADC_EOC_StartEx(ADC_EOC);
+    ADC_Start();
+    ADC_StartConvert();
+    isr_ADC_EOC_StartEx(ADC_EOC);
     
     CodecI2CM_Start();	
 	if(Codec_Init() == 0) {
@@ -57,10 +57,10 @@ int main() {
         }
 
         if(update_ADC_flag){
-            //freq = ADC_GetResult16(0);
-            //freq2 = ADC_GetResult16(1);
-            //freq3 = ADC_GetResult16(2);
-            //freq4 = ADC_GetResult16(3);
+            freq = ADC_GetResult16(0);
+            freq2 = ADC_GetResult16(1);
+            freq3 = ADC_GetResult16(2);
+            freq4 = ADC_GetResult16(3);
         }
     }
 }

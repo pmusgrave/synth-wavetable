@@ -8,7 +8,7 @@
 #define FS 48000 // samples/second
 #define BASE_FREQ 80 // Hz
 #define N 4096
-#define AMPLITUDE 126
+#define AMPLITUDE 126/8 // divide by number of voices here?
     
 int16_t base_sine[(int)N];
 //int8_t base_pos_saw[(int)N];

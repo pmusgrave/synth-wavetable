@@ -100,14 +100,14 @@ void InitializeAudioOutPath(void)
     //isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
-    freq = 1000;
-    freq2 = 2000;
-    freq3 = 3000;
-    freq4 = 4000;
-    freq5 = 5000;
-    freq6 = 6000;
-    freq7 = 7000;
-    freq8 = 8000;
+    freq = 100;
+    freq2 = 200;
+    freq3 = 300;
+    freq4 = 400;
+    freq5 = 500;
+    freq6 = 600;
+    freq7 = 700;
+    freq8 = 800;
 }
 
 /*******************************************************************************
@@ -153,14 +153,14 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
         index7 += freq7;
         index8 += freq8;
         
-        int32_t value = base_sine[((*index)>>8) & 0xFFF]/8
-        + ((base_sine[(index2>>8) & 0xFFF])/8)
-        + (base_sine[(index3>>8) & 0xFFF]/8)
-        + (base_sine[(index4>>8) & 0xFFF]/8);/*
-        + (base_sine[(index5>>8) & 0xFFF]/8)
-        + (base_sine[(index6>>8) & 0xFFF]/8)
-        + (base_sine[(index7>>8) & 0xFFF]/8)
-        + (base_sine[(index8>>8) & 0xFFF]/8);
+        int32_t value = base_sine[((*index)>>8) & 0xFFF]
+        + ((base_sine[(index2>>8) & 0xFFF]))
+        + (base_sine[(index3>>8) & 0xFFF])
+        + (base_sine[(index4>>8) & 0xFFF])
+        + (base_sine[(index5>>8) & 0xFFF])
+        + (base_sine[(index6>>8) & 0xFFF])
+        + (base_sine[(index7>>8) & 0xFFF])
+        + (base_sine[(index8>>8) & 0xFFF]);/*
         */
         
         buffer[i] = value;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
