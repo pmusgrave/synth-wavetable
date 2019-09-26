@@ -101,13 +101,13 @@ void InitializeAudioOutPath(void)
     CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1000;
-    freq2 = 999;
-    freq3 = 1001;
-    freq4 = 1003;
-    freq5 = 1000;
-    freq6 = 2000;
-    freq7 = 3000;
-    freq8 = 4000;
+    freq2 = 2000;
+    freq3 = 3000;
+    freq4 = 4000;
+    freq5 = 5000;
+    freq6 = 6000;
+    freq7 = 7000;
+    freq8 = 8000;
 }
 
 /*******************************************************************************
@@ -153,16 +153,17 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
         index7 += freq7;
         index8 += freq8;
         
-        int32_t value = base_sine[((*index)>>8)%N]
-        + base_sine[(index2>>8)%N]
-        + base_sine[(index3>>8)%N]
-        + base_sine[(index4>>8)%N]
-        + base_sine[(index5>>8)%N]
-        + base_sine[(index6>>8)%N]
-        + base_sine[(index7>>8)%N]
-        + base_sine[(index8>>8)%N];
+        int32_t value = base_sine[((*index)>>8) & 0xFFF]/8
+        + ((base_sine[(index2>>8) & 0xFFF])/8)
+        + (base_sine[(index3>>8) & 0xFFF]/8)
+        + (base_sine[(index4>>8) & 0xFFF]/8);/*
+        + (base_sine[(index5>>8) & 0xFFF]/8)
+        + (base_sine[(index6>>8) & 0xFFF]/8)
+        + (base_sine[(index7>>8) & 0xFFF]/8)
+        + (base_sine[(index8>>8) & 0xFFF]/8);
+        */
         
-        buffer[i] = ((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        buffer[i] = value;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         i++;
