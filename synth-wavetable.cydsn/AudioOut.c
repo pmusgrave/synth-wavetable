@@ -127,12 +127,13 @@ void InitializeAudioOutPath(void)
 *
 *******************************************************************************/
 
-void ProcessAudioOut(int8_t* buffer, uint32_t* index) 
+void ProcessAudioOut(int8_t* buffer) 
 {
     //char string[30];
     //sprintf(string, "%d\n",buffer);
     //UART_UartPutString(string);
    
+    static uint32_t index;
     static uint32_t index2;
     static uint32_t index3;
     static uint32_t index4;
@@ -140,11 +141,12 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
     static uint32_t index6;
     static uint32_t index7;
     static uint32_t index8;
+    
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     int i = 0;
     while(i < OUT_BUFSIZE){
-        *index = *index + freq;
+        index += freq;
         index2 += freq2;
         index3 += freq3;
         index4 += freq4;
@@ -153,7 +155,7 @@ void ProcessAudioOut(int8_t* buffer, uint32_t* index)
         index7 += freq7;
         index8 += freq8;
         
-        int32_t value = base_sine[((*index)>>8) & 0xFFF]
+        int32_t value = base_sine[((index)>>8) & 0xFFF]
         + ((base_sine[(index2>>8) & 0xFFF]))
         + (base_sine[(index3>>8) & 0xFFF])
         + (base_sine[(index4>>8) & 0xFFF])

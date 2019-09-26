@@ -38,8 +38,8 @@ int main() {
     
     CyGlobalIntEnable;
     
-    ProcessAudioOut(output_buffer, &buffer_index);
-    ProcessAudioOut(output_buffer2, &buffer_index);
+    ProcessAudioOut(output_buffer);
+    ProcessAudioOut(output_buffer2);
     
     for(;;) {
         if(DMA_done_flag){
@@ -47,12 +47,12 @@ int main() {
             if(DMA_counter % 2 == 0){
                 CyGlobalIntEnable;
                 //UART_UartPutString("0\r\n");
-                ProcessAudioOut(output_buffer2, &buffer_index);
+                ProcessAudioOut(output_buffer2);
             }
             else {
                 CyGlobalIntEnable;
                 //UART_UartPutString("1\r\n");
-                ProcessAudioOut(output_buffer, &buffer_index);
+                ProcessAudioOut(output_buffer);
             }
         }
 
