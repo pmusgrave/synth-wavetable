@@ -1,8 +1,5 @@
---------------- Build Started: 09/26/2019 15:52:38 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 09/26/2019 16:20:19 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 The code generation step is up to date.
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM0\ARM_GCC_541\Debug\main.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/Interrupts.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Interrupts.c -o .\CortexM0\ARM_GCC_541\Debug\Interrupts.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/waves.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c waves.c -o .\CortexM0\ARM_GCC_541\Debug\waves.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/AudioOut.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c AudioOut.c -o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o
 AudioOut.c: In function 'ProcessAudioOut':
 AudioOut.c:141:21: warning: unused variable 'index8' [-Wunused-variable]
@@ -34,6 +31,6 @@ No ELF section .cychecksum found, creating one
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S E:\Documents\Engineering\Code\synth-wavetable\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf
-Flash used: 21128 of 262144 bytes (8.1%).
-SRAM used: 21440 of 32768 bytes (65.4%). Stack: 2048 bytes. Heap: 2048 bytes.
---------------- Build Succeeded: 09/26/2019 15:52:39 ---------------
+Flash used: 20964 of 262144 bytes (8.0%).
+SRAM used: 29632 of 32768 bytes (90.4%). Stack: 2048 bytes. Heap: 2048 bytes.
+--------------- Build Succeeded: 09/26/2019 16:20:20 ---------------

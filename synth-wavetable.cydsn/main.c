@@ -62,8 +62,6 @@ int main() {
             freq3 = ADC_GetResult16(2);
             lfo_freq = ADC_GetResult16(3);
         }
-        
-        //ProcessLFO(lfo_freq);
     }
 }
 

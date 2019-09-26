@@ -142,7 +142,7 @@ void ProcessAudioOut(int8_t* buffer)
     
     static uint32_t lfo_index;
     lfo_index += lfo_freq;
-    lfo_multiplier = lfo_sine[(lfo_index>>8) % 255];
+    lfo_multiplier = lfo_sine[(lfo_index>>8) % 256];
     
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
@@ -167,7 +167,10 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
-        buffer[i] = (value * lfo_multiplier)>>8;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        int8_t sine_portion = (value * lfo_multiplier)>>8;
+        uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;
+        
+        buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         
@@ -175,11 +178,6 @@ void ProcessAudioOut(int8_t* buffer)
         //sprintf(string, "%d\n",lfo_multiplier);
         //UART_UartPutString(string);
     }
-}
-
-void ProcessLFO(uint32_t lfo_freq) 
-{
-    
 }
 
 /*******************************************************************************
