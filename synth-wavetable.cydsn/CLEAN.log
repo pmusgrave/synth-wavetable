@@ -1,0 +1,6 @@
+--------------- Clean Started: 09/27/2019 14:17:29 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+Deleting file ".\synth-wavetable.cycdx"
+Deleting file ".\synth-wavetable.svd"
+Deleting file ".\synth-wavetable.rpt"
+Deleting file ".\synth-wavetable_timing.html"
+--------------- Clean Succeeded: 09/27/2019 14:17:29 ---------------

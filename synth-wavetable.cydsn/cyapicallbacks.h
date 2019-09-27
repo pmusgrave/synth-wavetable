@@ -39,24 +39,18 @@
 *******************************************************************************/
 #ifndef CYAPICALLBACKS_H
 #define CYAPICALLBACKS_H
-    extern void ProcessAudioOut(void);
-    extern void ProcessAudioIn(void);
-    extern void processAsyncFeedbackTransfer(unsigned long clearFlag);
-    extern void UpdateFeedbackCount(void);
-	
-    /*Define your macro callbacks here */
-    /*For more information, refer to the Macro Callbacks topic in the PSoC Creator Help.*/
-    #define USBFS_EP_1_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_1_ISR_EntryCallback()	ProcessAudioOut()
-	
-	#define USBFS_EP_2_ISR_ENTRY_CALLBACK	
-	#define USBFS_EP_2_ISR_EntryCallback()	ProcessAudioIn()
-	
-	#define USBFS_EP_3_ISR_ENTRY_CALLBACK
-	#define USBFS_EP_3_ISR_EntryCallback()	processAsyncFeedbackTransfer(1)
-	
-	#define USBFS_SOF_ISR_ENTRY_CALLBACK	
-	#define USBFS_SOF_ISR_EntryCallback()	UpdateFeedbackCount()
-	
+    
+#define USB_MIDI1_PROCESS_USB_OUT_ENTRY_CALLBACK
+void USB_MIDI1_ProcessUsbOut_EntryCallback(void);
+
+#define USB_MIDI1_PROCESS_USB_OUT_EXIT_CALLBACK
+void USB_MIDI1_ProcessUsbOut_ExitCallback(void);
+
+#define MIDI1_UART_RXISR_ENTRY_CALLBACK
+void MIDI1_UART_RXISR_EntryCallback(void);
+
+#define MIDI1_UART_RXISR_EXIT_CALLBACK
+void MIDI1_UART_RXISR_ExitCallback(void);
+
 #endif /* CYAPICALLBACKS_H */   
 /* [] */
