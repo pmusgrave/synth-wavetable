@@ -42,6 +42,7 @@
           <File BuildType="BUILD" Toolchain="">waves.c</File>
           <File BuildType="BUILD" Toolchain="">AudioControl.c</File>
           <File BuildType="BUILD" Toolchain="">AudioOut.c</File>
+          <File BuildType="BUILD" Toolchain="">oscillator.c</File>
           <File BuildType="BUILD" Toolchain="">cyapicallbacks.h</File>
           <File BuildType="BUILD" Toolchain="">Codec.h</File>
           <File BuildType="BUILD" Toolchain="">Config.h</File>
@@ -50,6 +51,7 @@
           <File BuildType="BUILD" Toolchain="">AudioControl.h</File>
           <File BuildType="BUILD" Toolchain="">AudioOut.h</File>
           <File BuildType="BUILD" Toolchain="">globals.h</File>
+          <File BuildType="BUILD" Toolchain="">oscillator.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="E:\Documents\Engineering\Code\synth-wavetable\synth-wavetable.cydsn\Generated_Source\PSoC4">

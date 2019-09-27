@@ -6,6 +6,9 @@
 #include "AudioOut.h"
 #include "globals.h"
 
+#include "oscillator.h"
+
+
 uint8_t current_env_mode = 0;
 
 /*******************************************************************************
@@ -124,7 +127,7 @@ int main() {
         static uint32_t env_index;
         if(trigger_flag && current_env_mode == ATTACK_MODE){
             env_index += attack_freq;
-            envelope_multiplier = base_pos_saw[(env_index>>20) & 0xFFF]; // using pos saw wave here, but should rename to linear ramp or something
+            envelope_multiplier = base_pos_saw[(env_index>>18) & 0xFFF]; // using pos saw wave here, but should rename to linear ramp or something
             if(envelope_multiplier > 120) {
                 envelope_multiplier = 127;
                 current_env_mode = DECAY_MODE;
@@ -132,7 +135,7 @@ int main() {
         }
         else if(trigger_flag && current_env_mode == DECAY_MODE){
             env_index -= decay_freq;
-            envelope_multiplier = base_pos_saw[(env_index>>20) & 0xFFF];
+            envelope_multiplier = base_pos_saw[(env_index>>18) & 0xFFF];
             if(envelope_multiplier < base_pos_saw[(sustain_freq) & 0xFFF]) {
                 envelope_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
                 current_env_mode = SUSTAIN_MODE;
@@ -143,7 +146,7 @@ int main() {
         }
         else if(trigger_flag && current_env_mode == RELEASE_MODE){
             env_index -= release_freq;
-            envelope_multiplier = base_pos_saw[(env_index>>20) & 0xFFF];
+            envelope_multiplier = base_pos_saw[(env_index>>18) & 0xFFF];
             if(envelope_multiplier < 10) {
                 envelope_multiplier = 0;
                 env_index = 0;
@@ -190,7 +193,7 @@ int main() {
             }
         }
         
-        CyDelayUs(5);
+        //CyDelayUs(5);
         //char string[30];
         //sprintf(string, "%d\n",envelope_multiplier);
         //UART_UartPutString(string);
@@ -232,14 +235,22 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
     {
         note = midiMsg[USB_EVENT_BYTE1];
-        //DispatchNote(note);
+        DispatchNote(note);
         UART_UartPutString("note on\r\n");
+        
+        trigger_flag = 1;
+        current_env_mode = SUSTAIN_MODE;
+        LED_Write(1);
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
         note = midiMsg[USB_EVENT_BYTE1];
         //NoteOff(note);
         UART_UartPutString("note off\r\n");
+        
+        trigger_flag = 0;
+        current_env_mode = NOT_TRIGGERED;
+        LED_Write(0);
     }
 }    
 

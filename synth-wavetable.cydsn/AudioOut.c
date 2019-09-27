@@ -159,7 +159,7 @@ void ProcessAudioOut(int8_t* buffer)
         index8 += freq8;
         */
         
-        int32_t value = base_sine[((index)>>8) & 0xFFF];/*
+        int32_t value = base_pos_saw[((index)>>8) & 0xFFF];/*
         + ((base_sine[(index2>>8) & 0xFFF]))
         + (base_sine[(index3>>8) & 0xFFF])
         + (base_sine[(index4>>8) & 0xFFF])

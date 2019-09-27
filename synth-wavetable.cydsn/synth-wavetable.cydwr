@@ -23,6 +23,8 @@
       <Data key="f90b7d00-ddf7-4198-827a-dcf6ed5cd416" value="Clock_2" />
     </Group>
     <Group key="Pin">
+      <Data key="0d776c25-0fda-4bff-af2b-9962432af301/8b77a6c4-10a0-4390-971c-672353e2a49c" value="USB_Dm" />
+      <Data key="0d776c25-0fda-4bff-af2b-9962432af301/618a72fc-5ddd-4df5-958f-a3d55102db42" value="USB_Dp" />
       <Data key="2e1e8d66-1e7e-4cfe-bf79-eae640f97731" value="Codec_LRC" />
       <Data key="3dbba19d-7851-4a83-b204-a0a386fe8d68/5382e105-1382-4a2e-b9f4-3bb2feba71e0" value="CodecI2CM_sda" />
       <Data key="3dbba19d-7851-4a83-b204-a0a386fe8d68/22863ebe-a37b-476f-b252-6e49a8c00b12" value="CodecI2CM_scl" />
@@ -34,11 +36,13 @@
       <Data key="43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/23b8206d-1c77-4e61-be4a-b4037d5de5fc" value="UART_tx" />
       <Data key="92b3b3ef-4dfe-4e74-81f8-0a8f40d7dd48" value="pot4" />
       <Data key="5711f6e8-cb8a-4621-9e37-afae2646afe9" value="pot3" />
+      <Data key="1425177d-0d0e-4468-8bcc-e638e5509a9b" value="MIDI_IN1" />
       <Data key="8843558f-8028-4242-b419-20e93446a62f" value="Codec_MCLK" />
       <Data key="77715107-f8d5-47e5-a629-0fb83101ac6b" value="pot1" />
       <Data key="cf25cc6f-d208-4020-b61a-99a306f71ed4" value="pot4" />
       <Data key="de616092-3627-4d1c-9049-719cec881e0a" value="Codec_ADCDAT" />
       <Data key="e851a3b9-efb8-48be-bbb8-b303b216c393" value="LED" />
+      <Data key="ed092b9b-d398-4703-be89-cebf998501f6" value="MIDI_OUT1" />
       <Data key="ed020367-5e5a-452b-b4f2-1b5e077384d9" value="pot2" />
       <Data key="f7d2f3aa-d23d-4113-af4d-7ad57d266155" value="Codec_DACDAT" />
       <Data key="f110f600-1aee-49c0-bbad-738496221ccc" value="Codec_BCLK" />
@@ -3936,7 +3940,7 @@
     </Group>
     <Group key="e851a3b9-efb8-48be-bbb8-b303b216c393">
       <Group key="0">
-        <Data key="Port Format" value="5,6" />
+        <Data key="Port Format" value="5,4" />
       </Group>
     </Group>
     <Group key="ed020367-5e5a-452b-b4f2-1b5e077384d9">
