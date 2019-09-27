@@ -27,4 +27,13 @@ extern int8_t output_buffer2[];
 extern uint32_t buffer_index;
 extern uint32_t buffer_index2;
 
+
+// move these into envelope header file later
+#define NOT_TRIGGERED 0
+#define ATTACK_MODE 1
+#define DECAY_MODE 2
+#define SUSTAIN_MODE 3
+#define RELEASE_MODE 4
+extern uint8_t current_env_mode;
+
 /* [] END OF FILE */
