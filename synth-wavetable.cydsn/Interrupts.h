@@ -49,6 +49,7 @@
     CY_ISR_PROTO(I2SUnderflow);
     CY_ISR_PROTO(TxDMA_Done_Interrupt);
     CY_ISR_PROTO(TxDMA_1_Done_Interrupt);
+    CY_ISR_PROTO(envelope_trigger_interrupt);
 
 #endif
 

@@ -59,6 +59,7 @@ uint16_t freq7;
 uint16_t freq8;
 uint32_t lfo_freq;
 uint16_t lfo_multiplier = 1;
+uint16_t envelope_multiplier = 0;
 
 CYBIT outPlaying = 0;
 int8_t output_buffer[OUT_BUFSIZE];
@@ -102,7 +103,7 @@ void InitializeAudioOutPath(void)
     //isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
-    freq = 100;
+    freq = 1000;
     freq2 = 200;
     freq3 = 300;
     freq4 = 400;
@@ -131,7 +132,7 @@ void InitializeAudioOutPath(void)
 
 void ProcessAudioOut(int8_t* buffer) 
 {
-    static uint32_t index;
+    static uint32_t index;/*
     static uint32_t index2;
     static uint32_t index3;
     static uint32_t index4;
@@ -139,6 +140,7 @@ void ProcessAudioOut(int8_t* buffer)
     static uint32_t index6;
     static uint32_t index7;
     static uint32_t index8;
+    */
     
     static uint32_t lfo_index;
     lfo_index += lfo_freq;
@@ -147,7 +149,7 @@ void ProcessAudioOut(int8_t* buffer)
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     for(int i = 0; i < OUT_BUFSIZE; i++){
-        index += (freq * lfo_multiplier)>>8;/*
+        index += freq; /** lfo_multiplier)>>8;
         index2 += freq2;
         index3 += freq3;
         index4 += freq4;
@@ -167,7 +169,7 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
-        buffer[i] = value;
+        buffer[i] = (value * envelope_multiplier)>>8;
         
         //int8_t sine_portion = (value * lfo_multiplier)>>8;
         //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;
@@ -176,7 +178,7 @@ void ProcessAudioOut(int8_t* buffer)
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
         
         //char string[30];
-        //sprintf(string, "%d\n",lfo_multiplier);
+        //sprintf(string, "%d\n",envelope_multiplier);
         //UART_UartPutString(string);
     }
 }

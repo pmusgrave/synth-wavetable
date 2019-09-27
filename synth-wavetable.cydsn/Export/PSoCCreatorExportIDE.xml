@@ -207,6 +207,14 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger_PM.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_trigger.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_trigger.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_2.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_2.h</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">

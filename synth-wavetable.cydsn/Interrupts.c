@@ -49,6 +49,7 @@ volatile uint8_t DMA_done_flag = 0;
 volatile uint8_t DMA_counter = 0;
 volatile uint8_t FIFO_DMA_REQ_FLAG = 0;
 volatile uint8_t update_ADC_flag = 0;
+volatile uint8_t trigger_flag = 0;
 
 CY_ISR(ADC_EOC) {
     //UART_UartPutString("ADC EOC\r\n");
@@ -65,6 +66,17 @@ CY_ISR(TxDMA_Done_Interrupt){
 
 CY_ISR(I2SUnderflow) {
     UART_UartPutString("I2S undeflow\r\n");    
+}
+
+CY_ISR(envelope_trigger_interrupt){
+    UART_UartPutString("env trig\r\n");
+    if(trigger_flag){
+        trigger_flag = 0;
+    }
+    else{
+        trigger_flag = 1;
+        attack_mode = 1;
+    }
 }
 
 /* [] END OF FILE */
