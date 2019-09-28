@@ -132,10 +132,10 @@ void InitializeAudioOutPath(void)
 
 void ProcessAudioOut(int8_t* buffer) 
 {
-    static uint32_t index;/*
+    static uint32_t index;
     static uint32_t index2;
     static uint32_t index3;
-    static uint32_t index4;
+    static uint32_t index4;/*
     static uint32_t index5;
     static uint32_t index6;
     static uint32_t index7;
@@ -149,17 +149,17 @@ void ProcessAudioOut(int8_t* buffer)
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
     for(int i = 0; i < OUT_BUFSIZE; i++){
-        index += freq; /** lfo_multiplier)>>8;
-        index2 += freq2;
-        index3 += freq3;
-        index4 += freq4;
+        index += v1.freq; //* lfo_multiplier)>>8;
+        index2 += v2.freq;
+        index3 += v3.freq;
+        index4 += v4.freq;/*
         index5 += freq5;
         index6 += freq6;
         index7 += freq7;
         index8 += freq8;
         */
         
-        int32_t value = base_pos_saw[((index)>>8) & 0xFFF];/*
+        /*int32_t value = base_sq[((index)>>8) & 0xFFF];
         + ((base_sine[(index2>>8) & 0xFFF]))
         + (base_sine[(index3>>8) & 0xFFF])
         + (base_sine[(index4>>8) & 0xFFF])
@@ -169,7 +169,11 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
-        buffer[i] = (value * envelope_multiplier)>>8;
+        int32_t value = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8)
+        + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8)
+        + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8)
+        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8);
+        buffer[i] = value;
         
         //int8_t sine_portion = (value * lfo_multiplier)>>8;
         //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;

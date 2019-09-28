@@ -1,5 +1,6 @@
 #include "project.h"
 #include "oscillator.h"
+#include "waves.h"
 #include "globals.h"
 
 double music_notes[99] = {
@@ -105,124 +106,86 @@ double music_notes[99] = {
 };
 
 
-// this is a square wave with 50% duty cycle
-//main_osc_PWM_WriteCompare((uint16) (65535/freq)/2);
 
-// this is pulse width modulation, although the 2000 does not make any sense.
-// wasn't getting good results with 65535/pulse_width?
-// fix this later
-
-void EnableAllOscillators(){
-    
-}
-
-void DisableAllOscillators(){
-    
-}
-
-
-// I don't think these have to be separate functions,
-// unless I want to do something more complicated than execute the function pointer.
-// It might be good to check the state of the oscillator before calling the
-// enable function? Otherwise, I could probably get rid of this function
-// and the disable single oscillator function.
-void EnableSingleOscillator(void (*osc_enable_function)(void)){
-    (*osc_enable_function)();
-}
-
-void DisableSingleOscillator(void (*osc_disable_function)(void)){
-    (*osc_disable_function)();
-}
-
-double Quantize(float unquantized_freq){
-    // music_notes frequencies are based on 
-    // the equal tempered scale found here:
-    // http://pages.mtu.edu/~suits/notefreqs.html
-    
-    // These are converted from music note frequencies 
-    // to the appropriate ADC values: 
-    // 65535/(200000/music_note)
-    
-    // This is done ahead of time to reduce computation.
-    
-    double quantized_freq = 0;
-
-    for (int i = 0; i < 99; i++){
-        if(unquantized_freq >= music_notes[i]){
-            quantized_freq = music_notes[i];
+void ProcessVoice(struct voice* v) {
+    switch((*v).current_env_mode){
+    case ATTACK_MODE:
+        (*v).env_index += attack_freq;
+        (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF]; // using pos saw wave here, but should rename to linear ramp or something
+        if((*v).env_multiplier > 120) {
+            (*v).env_multiplier  = 127;
+            (*v).current_env_mode = DECAY_MODE;
         }
+        break;
+    case DECAY_MODE:
+        (*v).env_index -= decay_freq;
+        (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF];
+        if((*v).env_multiplier < base_pos_saw[(sustain_freq) & 0xFFF]) {
+            (*v).env_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
+            (*v).current_env_mode = SUSTAIN_MODE;
+        }
+        break;
+    case SUSTAIN_MODE:
+        (*v).env_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
+        break;
+    case RELEASE_MODE:
+        (*v).env_index -= release_freq;
+        (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF];
+        if((*v).env_multiplier < 10) {
+            (*v).env_multiplier = 0;
+            (*v).env_index = 0;
+            (*v).current_env_mode = NOT_TRIGGERED;
+        }
+        break;
     }
-    
-    return quantized_freq;
 }
 
-void DispatchNote(uint8 note){
-    // MIDI note values correspond to the music_notes array offset
-    // by 21. So MIDI note 21 should use music_notes[0].
-
-    /*
-    struct button buttons[4] = {Osc_0_Button, Osc_1_Button, Osc_2_Button, Osc_3_Button};
-    struct oscillator oscillators[4] = {Osc_0, Osc_1, Osc_2, Osc_3};
+void DispatchNote(uint8 note) {
+    freq = music_notes[note-21] * 20;
     
-    for(int i = 0; i < 4; i++){
-        if (buttons[i].MIDI_triggered == 0){
-            oscillators[i].freq = Quantize(note - 21);
-            buttons[i].MIDI_triggered = 1;
-            return;
-        }
+    if(v1.current_env_mode == NOT_TRIGGERED){
+        v1.freq = freq;
+        v1.note_index = note;
+        v1.current_env_mode = SUSTAIN_MODE;
+        return;
     }
-    */
-    
-    /*
-    if (Osc_2_Button.MIDI_triggered == 1 && Osc_3_Button.MIDI_triggered == 0){
-        Osc_3.freq = music_notes[note - 21];
-        Osc_3_Button.MIDI_triggered = 1;
+    else if(v2.current_env_mode == NOT_TRIGGERED){
+        v2.freq = freq;
+        v2.note_index = note;
+        v2.current_env_mode = SUSTAIN_MODE;
+        return;
     }
-    
-    if (Osc_1_Button.MIDI_triggered == 1 && Osc_2_Button.MIDI_triggered == 0){
-        Osc_2.freq = music_notes[note - 21];
-        Osc_2_Button.MIDI_triggered = 1;
+    else if(v3.current_env_mode == NOT_TRIGGERED){
+        v3.freq = freq;
+        v3.note_index = note;
+        v3.current_env_mode = SUSTAIN_MODE;
+        return;
     }
-    
-    if (Osc_0_Button.MIDI_triggered == 1 && Osc_1_Button.MIDI_triggered == 0){
-        Osc_1.freq = music_notes[note - 21];
-        Osc_1_Button.MIDI_triggered = 1;
+    else if(v4.current_env_mode == NOT_TRIGGERED){
+        v4.freq = freq;
+        v4.note_index = note;
+        v4.current_env_mode = SUSTAIN_MODE;
+        return;
     }
-    
-    if (Osc_0_Button.MIDI_triggered == 0){
-        Osc_0.freq = music_notes[note - 21];
-        Osc_0_Button.MIDI_triggered = 1;
-    }
-    */
-    freq = music_notes[note-21] * 100;
 }
 
 void NoteOff(uint8 note){
-    //struct button buttons[4] = {Osc_0_Button, Osc_1_Button, Osc_2_Button, Osc_3_Button};
-    //struct oscillator oscillators[4] = {Osc_0, Osc_1, Osc_2, Osc_3};
-    /*
-    for(int i = 0; i < 4; i++){
-        if (oscillators[i].freq == Quantize(note - 21)){
-            buttons[i].MIDI_triggered = 0;
-            return;
-        }
+    if(v1.note_index == note){
+        v1.current_env_mode = NOT_TRIGGERED;
+        v1.env_multiplier = 0;
     }
-    */
-    
-    /*
-    if ((int)Osc_3.freq == (int)music_notes[note - 21]){
-        Osc_3_Button.MIDI_triggered = 0;
+    else if(v2.note_index == note){
+        v2.current_env_mode = NOT_TRIGGERED;
+        v2.env_multiplier = 0;
     }
-    if ((int)Osc_2.freq == (int)music_notes[note - 21]){
-        Osc_2_Button.MIDI_triggered = 0;
+    else if(v3.note_index == note){
+        v3.current_env_mode = NOT_TRIGGERED;
+        v3.env_multiplier = 0;
     }
-    if ((int)Osc_1.freq == (int)music_notes[note - 21]){
-        Osc_1_Button.MIDI_triggered = 0;
+    else if(v4.note_index == note){
+        v4.current_env_mode = NOT_TRIGGERED;
+        v4.env_multiplier = 0;
     }
-    if ((int)Osc_0.freq == (int)music_notes[note - 21]){
-        Osc_0_Button.MIDI_triggered = 0;
-    }
-    */
 }
 
 /* [] END OF FILE */

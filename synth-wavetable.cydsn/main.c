@@ -10,6 +10,15 @@
 
 
 uint8_t current_env_mode = 0;
+uint16_t attack_freq = 0;
+uint16_t decay_freq = 0;
+uint16_t sustain_freq = 0;
+uint16_t release_freq = 0;
+    
+struct voice v1 = {0,0,0,0,0};
+struct voice v2 = {0,0,0,0,0};
+struct voice v3 = {0,0,0,0,0};
+struct voice v4 = {0,0,0,0,0};
 
 /*******************************************************************************
 * USB and MIDI stuff
@@ -53,10 +62,7 @@ int main() {
     UART_Start();
     TxByteCounter_Start();
     isr_trigger_StartEx(envelope_trigger_interrupt);
-    uint16_t attack_freq = 0;
-    uint16_t decay_freq = 0;
-    uint16_t sustain_freq = 0;
-    uint16_t release_freq = 0;
+    
     
     UART_UartPutString("\r\n\r\n\r\n********************\r\n");
     UART_UartPutString("PMA Wavetable Synth\r\n");
@@ -96,6 +102,8 @@ int main() {
     ProcessAudioOut(output_buffer);
     ProcessAudioOut(output_buffer2);
     
+    
+    
     for(;;) {
         if(DMA_done_flag){
             DMA_done_flag = 0;
@@ -115,49 +123,19 @@ int main() {
             /*
             freq = ADC_GetResult16(0);
             freq2 = ADC_GetResult16(1);
-            freq3 = ADC_GetResult16(2);
+            freq3 = ADC_GetResult16(2);*/
             lfo_freq = ADC_GetResult16(3);
-            */
+            
             attack_freq = 65535 - ADC_GetResult16(0);
             decay_freq = 65535 - ADC_GetResult16(1);
             sustain_freq = ADC_GetResult16(2);
             release_freq = 65535 - ADC_GetResult16(3);
         }
         
-        static uint32_t env_index;
-        if(trigger_flag && current_env_mode == ATTACK_MODE){
-            env_index += attack_freq;
-            envelope_multiplier = base_pos_saw[(env_index>>18) & 0xFFF]; // using pos saw wave here, but should rename to linear ramp or something
-            if(envelope_multiplier > 120) {
-                envelope_multiplier = 127;
-                current_env_mode = DECAY_MODE;
-            }
-        }
-        else if(trigger_flag && current_env_mode == DECAY_MODE){
-            env_index -= decay_freq;
-            envelope_multiplier = base_pos_saw[(env_index>>18) & 0xFFF];
-            if(envelope_multiplier < base_pos_saw[(sustain_freq) & 0xFFF]) {
-                envelope_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
-                current_env_mode = SUSTAIN_MODE;
-            }
-        }
-        else if(trigger_flag && current_env_mode == SUSTAIN_MODE){
-            envelope_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
-        }
-        else if(trigger_flag && current_env_mode == RELEASE_MODE){
-            env_index -= release_freq;
-            envelope_multiplier = base_pos_saw[(env_index>>18) & 0xFFF];
-            if(envelope_multiplier < 10) {
-                envelope_multiplier = 0;
-                env_index = 0;
-                current_env_mode = NOT_TRIGGERED;
-                trigger_flag = 0;
-            }
-        }
-        else if (!trigger_flag){
-            envelope_multiplier = 0;
-            env_index = 0;
-        }
+        ProcessVoice(&v1);
+        ProcessVoice(&v2);
+        ProcessVoice(&v3);
+        ProcessVoice(&v4);
         
         /*******************************************************************************
         * USB AND MIDI STUFF
@@ -237,20 +215,23 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         note = midiMsg[USB_EVENT_BYTE1];
         DispatchNote(note);
         UART_UartPutString("note on\r\n");
-        
-        trigger_flag = 1;
-        current_env_mode = SUSTAIN_MODE;
-        LED_Write(1);
+        LED_Write(0);
+        char string[30];
+        sprintf(string, "%d\n",note);
+        UART_UartPutString(string);
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
         note = midiMsg[USB_EVENT_BYTE1];
-        //NoteOff(note);
+        NoteOff(note);
         UART_UartPutString("note off\r\n");
+        char string[30];
+        sprintf(string, "%d\n",note);
+        UART_UartPutString(string);
         
-        trigger_flag = 0;
-        current_env_mode = NOT_TRIGGERED;
-        LED_Write(0);
+        //trigger_flag = 0;
+        //current_env_mode = RELEASE_MODE;
+        LED_Write(1);
     }
 }    
 

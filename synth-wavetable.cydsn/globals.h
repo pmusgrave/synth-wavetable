@@ -1,4 +1,5 @@
 #include <project.h>
+#include "oscillator.h"
 
 extern uint16_t freq;
 extern uint16_t freq2;
@@ -11,10 +12,15 @@ extern uint16_t freq8;
 extern uint32_t lfo_freq;
 extern uint16_t lfo_multiplier;
 extern uint16_t envelope_multiplier;
-extern uint8_t attack_mode;
-extern uint8_t decay_mode;
-extern uint8_t sustain_mode;
-extern uint8_t release_mode;
+extern uint16_t attack_freq;
+extern uint16_t decay_freq;
+extern uint16_t sustain_freq;
+extern uint16_t release_freq;
+
+struct voice v1;
+struct voice v2;
+struct voice v3;
+struct voice v4;
 
 extern volatile uint8_t DMA_done_flag;
 extern volatile uint8_t DMA_counter;
