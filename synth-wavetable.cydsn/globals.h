@@ -21,6 +21,10 @@ struct voice v1;
 struct voice v2;
 struct voice v3;
 struct voice v4;
+struct voice v5;
+struct voice v6;
+struct voice v7;
+struct voice v8;
 
 extern volatile uint8_t DMA_done_flag;
 extern volatile uint8_t DMA_counter;

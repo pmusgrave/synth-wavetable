@@ -135,12 +135,11 @@ void ProcessAudioOut(int8_t* buffer)
     static uint32_t index;
     static uint32_t index2;
     static uint32_t index3;
-    static uint32_t index4;/*
+    static uint32_t index4;
     static uint32_t index5;
     static uint32_t index6;
     static uint32_t index7;
     static uint32_t index8;
-    */
     
     static uint32_t lfo_index;
     lfo_index += lfo_freq;
@@ -152,12 +151,11 @@ void ProcessAudioOut(int8_t* buffer)
         index += v1.freq; //* lfo_multiplier)>>8;
         index2 += v2.freq;
         index3 += v3.freq;
-        index4 += v4.freq;/*
-        index5 += freq5;
-        index6 += freq6;
-        index7 += freq7;
-        index8 += freq8;
-        */
+        index4 += v4.freq;
+        index5 += v5.freq;
+        index6 += v6.freq;
+        index7 += v7.freq;
+        index8 += v8.freq;
         
         /*int32_t value = base_sq[((index)>>8) & 0xFFF];
         + ((base_sine[(index2>>8) & 0xFFF]))
@@ -172,7 +170,11 @@ void ProcessAudioOut(int8_t* buffer)
         int32_t value = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8)
         + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8)
         + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8)
-        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8);
+        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8)
+        + ((base_sq[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8)
+        + ((base_sq[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8)
+        + ((base_sq[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8)
+        + ((base_sq[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8);
         buffer[i] = value;
         
         //int8_t sine_portion = (value * lfo_multiplier)>>8;

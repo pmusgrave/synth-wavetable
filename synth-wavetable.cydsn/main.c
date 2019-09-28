@@ -19,6 +19,10 @@ struct voice v1 = {0,0,0,0,0};
 struct voice v2 = {0,0,0,0,0};
 struct voice v3 = {0,0,0,0,0};
 struct voice v4 = {0,0,0,0,0};
+struct voice v5 = {0,0,0,0,0};
+struct voice v6 = {0,0,0,0,0};
+struct voice v7 = {0,0,0,0,0};
+struct voice v8 = {0,0,0,0,0};
 
 /*******************************************************************************
 * USB and MIDI stuff
@@ -57,12 +61,12 @@ uint8 midiMsg[MIDI_MSG_SIZE];
 char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
+void ProcessUSBMIDI();
 
 int main() {
     UART_Start();
     TxByteCounter_Start();
-    isr_trigger_StartEx(envelope_trigger_interrupt);
-    
+    //isr_trigger_StartEx(envelope_trigger_interrupt);
     
     UART_UartPutString("\r\n\r\n\r\n********************\r\n");
     UART_UartPutString("PMA Wavetable Synth\r\n");
@@ -72,13 +76,6 @@ int main() {
     
     init_wavetable();
     UART_UartPutString("Wavetable initialized...\r\n");
-    
-    // Init USB and MIDI
-    // references Cypress USB MIDI code example
-    USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
-    //MIDI1_UART_Start();
-    //MIDI_RX_StartEx(MIDI_RX_VECT);
-    UART_UartPutString("USB MIDI initialized...\r\n");
     
     ADC_Start();
     ADC_StartConvert();
@@ -97,28 +94,52 @@ int main() {
     I2S_EnableTx(); /* Unmute the TX output */ 
     isr_I2S_underflow_StartEx(I2SUnderflow);
     
+    // Init USB and MIDI
+    // references Cypress USB MIDI code example
+    USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
+    //MIDI1_UART_Start();
+    //MIDI_RX_StartEx(MIDI_RX_VECT);
+    UART_UartPutString("USB MIDI initialized...\r\n");
+    
+    
+    for(uint32_t i = 0; i < 10000; i++){
+        CyGlobalIntDisable;
+        ProcessUSBMIDI();
+        CyGlobalIntEnable;
+        CyDelayUs(100);
+    }
+    
     CyGlobalIntEnable;
     
-    ProcessAudioOut(output_buffer);
-    ProcessAudioOut(output_buffer2);
-    
-    
-    
     for(;;) {
+        ProcessUSBMIDI();
+        
+        /*******************************************************************************
+        * PROCESS AUDIO
+        *******************************************************************************/
         if(DMA_done_flag){
             DMA_done_flag = 0;
             if(DMA_counter % 2 == 0){
                 CyGlobalIntEnable;
-                //UART_UartPutString("0\r\n");
                 ProcessAudioOut(output_buffer2);
             }
             else {
                 CyGlobalIntEnable;
-                //UART_UartPutString("1\r\n");
                 ProcessAudioOut(output_buffer);
             }
         }
-
+        ProcessVoice(&v1);
+        ProcessVoice(&v2);
+        ProcessVoice(&v3);
+        ProcessVoice(&v4);
+        ProcessVoice(&v5);
+        ProcessVoice(&v6);
+        ProcessVoice(&v7);
+        ProcessVoice(&v8);
+        
+        /*******************************************************************************
+        * PROCESS ADC
+        *******************************************************************************/
         if(update_ADC_flag){
             /*
             freq = ADC_GetResult16(0);
@@ -131,50 +152,44 @@ int main() {
             sustain_freq = ADC_GetResult16(2);
             release_freq = 65535 - ADC_GetResult16(3);
         }
-        
-        ProcessVoice(&v1);
-        ProcessVoice(&v2);
-        ProcessVoice(&v3);
-        ProcessVoice(&v4);
-        
-        /*******************************************************************************
-        * USB AND MIDI STUFF
-        * references Cypress USB MIDI code examples
-        *******************************************************************************/
-        if(0u != USB_IsConfigurationChanged()){
-            if(0u != USB_GetConfiguration())   // Initialize IN endpoints when device configured
-            {
-                USB_MIDI_Init(); // Enable output endpoint
-            }
-        }            
-        
-        /* Service USB MIDI when device is configured */
-        if(0u != USB_GetConfiguration())    
-        {
-            /* Call this API from UART RX ISR for Auto DMA mode */
-            #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
-                USB_MIDI_IN_Service();
-            #endif
-            /* In Manual EP Memory Management mode OUT_EP_Service() 
-            *  may have to be called from main foreground or from OUT EP ISR
-            */
-            #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
-                USB_MIDI_OUT_Service();
-            #endif
+    }
+}
 
-            /* Sending Identity Reply Universal System Exclusive message 
-             * back to computer */
-            if(0u != (USB_MIDI1_InqFlags & USB_INQ_IDENTITY_REQ_FLAG))
-            {
-                USB_PutUsbMidiIn(sizeof(MIDI_IDENTITY_REPLY), (uint8 *)MIDI_IDENTITY_REPLY, USB_MIDI_CABLE_00);
-                USB_MIDI1_InqFlags &= ~USB_INQ_IDENTITY_REQ_FLAG;
-            }
+
+void ProcessUSBMIDI(){
+    /*******************************************************************************
+    * USB AND MIDI STUFF
+    * references Cypress USB MIDI code examples
+    *******************************************************************************/
+    
+    if(0u != USB_IsConfigurationChanged()){
+        if(0u != USB_GetConfiguration())   // Initialize IN endpoints when device configured
+        {
+            USB_MIDI_Init(); // Enable output endpoint
         }
-        
-        //CyDelayUs(5);
-        //char string[30];
-        //sprintf(string, "%d\n",envelope_multiplier);
-        //UART_UartPutString(string);
+    }            
+    
+    /* Service USB MIDI when device is configured */
+    if(0u != USB_GetConfiguration())    
+    {
+        /* Call this API from UART RX ISR for Auto DMA mode */
+        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
+            USB_MIDI_IN_Service();
+        #endif
+        /* In Manual EP Memory Management mode OUT_EP_Service() 
+        *  may have to be called from main foreground or from OUT EP ISR
+        */
+        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
+            USB_MIDI_OUT_Service();
+        #endif
+
+        /* Sending Identity Reply Universal System Exclusive message 
+         * back to computer */
+        if(0u != (USB_MIDI1_InqFlags & USB_INQ_IDENTITY_REQ_FLAG))
+        {
+            USB_PutUsbMidiIn(sizeof(MIDI_IDENTITY_REPLY), (uint8 *)MIDI_IDENTITY_REPLY, USB_MIDI_CABLE_00);
+            USB_MIDI1_InqFlags &= ~USB_INQ_IDENTITY_REQ_FLAG;
+        }
     }
 }
 
@@ -214,20 +229,12 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     {
         note = midiMsg[USB_EVENT_BYTE1];
         DispatchNote(note);
-        UART_UartPutString("note on\r\n");
         LED_Write(0);
-        char string[30];
-        sprintf(string, "%d\n",note);
-        UART_UartPutString(string);
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
         note = midiMsg[USB_EVENT_BYTE1];
         NoteOff(note);
-        UART_UartPutString("note off\r\n");
-        char string[30];
-        sprintf(string, "%d\n",note);
-        UART_UartPutString(string);
         
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;

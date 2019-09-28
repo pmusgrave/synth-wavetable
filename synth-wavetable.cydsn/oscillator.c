@@ -167,6 +167,30 @@ void DispatchNote(uint8 note) {
         v4.current_env_mode = SUSTAIN_MODE;
         return;
     }
+    else if(v5.current_env_mode == NOT_TRIGGERED){
+        v5.freq = freq;
+        v5.note_index = note;
+        v5.current_env_mode = SUSTAIN_MODE;
+        return;
+    }
+    else if(v6.current_env_mode == NOT_TRIGGERED){
+        v6.freq = freq;
+        v6.note_index = note;
+        v6.current_env_mode = SUSTAIN_MODE;
+        return;
+    }
+    else if(v7.current_env_mode == NOT_TRIGGERED){
+        v7.freq = freq;
+        v7.note_index = note;
+        v7.current_env_mode = SUSTAIN_MODE;
+        return;
+    }
+    else if(v8.current_env_mode == NOT_TRIGGERED){
+        v8.freq = freq;
+        v8.note_index = note;
+        v8.current_env_mode = SUSTAIN_MODE;
+        return;
+    }
 }
 
 void NoteOff(uint8 note){
@@ -185,6 +209,22 @@ void NoteOff(uint8 note){
     else if(v4.note_index == note){
         v4.current_env_mode = NOT_TRIGGERED;
         v4.env_multiplier = 0;
+    }
+    else if(v5.note_index == note){
+        v5.current_env_mode = NOT_TRIGGERED;
+        v5.env_multiplier = 0;
+    }
+    else if(v6.note_index == note){
+        v6.current_env_mode = NOT_TRIGGERED;
+        v6.env_multiplier = 0;
+    }
+    else if(v7.note_index == note){
+        v7.current_env_mode = NOT_TRIGGERED;
+        v7.env_multiplier = 0;
+    }
+    else if(v8.note_index == note){
+        v8.current_env_mode = NOT_TRIGGERED;
+        v8.env_multiplier = 0;
     }
 }
 
