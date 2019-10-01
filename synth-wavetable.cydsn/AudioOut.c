@@ -87,10 +87,10 @@ void InitializeAudioOutPath(void)
     TxDMA_Init();
 	TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
     TxDMA_SetNumDataElements(1, OUT_BUFSIZE);
-    TxDMA_SetSrcAddress(0, (void *) output_buffer);
+    TxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
 	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
-    TxDMA_SetSrcAddress(1, (void *) output_buffer2);
-	TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
+    //TxDMA_SetSrcAddress(1, (void *) output_buffer2);
+	//TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
     TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
     TxDMA_ChEnable();
 
@@ -167,25 +167,30 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
-        int32_t value = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8)
-        + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8)
-        + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8)
-        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8)
-        + ((base_sq[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8)
-        + ((base_sq[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8)
-        + ((base_sq[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8)
-        + ((base_sq[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8);
-        buffer[i] = value;
+        uint32_t sq_portion = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * ((65535-waveshape)>>8);
         
-        //int8_t sine_portion = (value * lfo_multiplier)>>8;
-        //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;
-        //buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        uint32_t sine_portion = ((base_sine[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * (waveshape>>8);
+        //buffer[i] = value;
+        
+        //int8_t sine_portion = (base_sine[(index>>8) & 0xFFF] * waveshape>>6)>>8;
+        //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (65535-waveshape)>>6)>>8;
+        buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
-        
-        //char string[30];
-        //sprintf(string, "%d\n",envelope_multiplier);
-        //UART_UartPutString(string);
     }
 }
 

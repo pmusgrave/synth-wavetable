@@ -14,6 +14,7 @@ uint16_t attack_freq = 0;
 uint16_t decay_freq = 0;
 uint16_t sustain_freq = 0;
 uint16_t release_freq = 0;
+uint16_t waveshape = 0;
     
 struct voice v1 = {0,0,0,0,0};
 struct voice v2 = {0,0,0,0,0};
@@ -62,6 +63,7 @@ char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
 void ProcessUSBMIDI();
+void UART_PrintNumber(int32_t);
 
 int main() {
     UART_Start();
@@ -80,6 +82,9 @@ int main() {
     ADC_Start();
     ADC_StartConvert();
     isr_ADC_EOC_StartEx(ADC_EOC);
+    
+    I2S_Start();
+    UART_UartPutString("SPI initialized... \r\n");
     
     CodecI2CM_Start();	
 	if(Codec_Init() == 0) {
@@ -151,8 +156,16 @@ int main() {
             decay_freq = 65535 - ADC_GetResult16(1);
             sustain_freq = ADC_GetResult16(2);
             release_freq = 65535 - ADC_GetResult16(3);
+            
+            waveshape = ADC_GetResult16(0);
         }
     }
+}
+
+void UART_PrintNumber(int32_t number){
+    char string[30];
+    sprintf(string, "%d\n",number);
+    UART_UartPutString(string);
 }
 
 

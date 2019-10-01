@@ -16,6 +16,7 @@ extern uint16_t attack_freq;
 extern uint16_t decay_freq;
 extern uint16_t sustain_freq;
 extern uint16_t release_freq;
+extern uint16_t waveshape;
 
 struct voice v1;
 struct voice v2;
