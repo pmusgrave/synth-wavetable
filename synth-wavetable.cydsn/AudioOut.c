@@ -87,7 +87,8 @@ void InitializeAudioOutPath(void)
     TxDMA_Init();
 	TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
     TxDMA_SetNumDataElements(1, OUT_BUFSIZE);
-    TxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
+    //TxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
+    TxDMA_SetSrcAddress(0, (void *) output_buffer);
 	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
     //TxDMA_SetSrcAddress(1, (void *) output_buffer2);
 	//TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
@@ -96,11 +97,11 @@ void InitializeAudioOutPath(void)
 
 	/* Validate descriptor */
     TxDMA_ValidateDescriptor(0);
-    TxDMA_ValidateDescriptor(1);
+    //TxDMA_ValidateDescriptor(1);
     
     /* Start interrupts */
-    //isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
-    //isr_TxDMADone_Enable();
+    isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
+    isr_TxDMADone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1000;

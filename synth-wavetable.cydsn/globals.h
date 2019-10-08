@@ -1,6 +1,10 @@
 #include <project.h>
 #include "oscillator.h"
 
+extern uint32_t sample;
+
+
+
 extern uint16_t freq;
 extern uint16_t freq2;
 extern uint16_t freq3;

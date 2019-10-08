@@ -8,6 +8,7 @@
 
 #include "oscillator.h"
 
+uint32_t sample;
 
 uint8_t current_env_mode = 0;
 uint16_t attack_freq = 0;
@@ -65,6 +66,8 @@ char buff[32];//output UART buffer
 void ProcessUSBMIDI();
 void UART_PrintNumber(int32_t);
 
+void FillBufferFromFPGA();
+
 int main() {
     UART_Start();
     TxByteCounter_Start();
@@ -83,7 +86,7 @@ int main() {
     ADC_StartConvert();
     isr_ADC_EOC_StartEx(ADC_EOC);
     
-    I2S_Start();
+    SPI_Start();
     UART_UartPutString("SPI initialized... \r\n");
     
     CodecI2CM_Start();	
@@ -101,15 +104,14 @@ int main() {
     
     // Init USB and MIDI
     // references Cypress USB MIDI code example
-    USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
+    //USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
     //MIDI1_UART_Start();
     //MIDI_RX_StartEx(MIDI_RX_VECT);
     UART_UartPutString("USB MIDI initialized...\r\n");
     
-    
     for(uint32_t i = 0; i < 10000; i++){
         CyGlobalIntDisable;
-        ProcessUSBMIDI();
+        //ProcessUSBMIDI();
         CyGlobalIntEnable;
         CyDelayUs(100);
     }
@@ -117,49 +119,65 @@ int main() {
     CyGlobalIntEnable;
     
     for(;;) {
-        ProcessUSBMIDI();
-        
-        /*******************************************************************************
-        * PROCESS AUDIO
-        *******************************************************************************/
         if(DMA_done_flag){
             DMA_done_flag = 0;
-            if(DMA_counter % 2 == 0){
-                CyGlobalIntEnable;
-                ProcessAudioOut(output_buffer2);
-            }
-            else {
-                CyGlobalIntEnable;
-                ProcessAudioOut(output_buffer);
-            }
-        }
-        ProcessVoice(&v1);
-        ProcessVoice(&v2);
-        ProcessVoice(&v3);
-        ProcessVoice(&v4);
-        ProcessVoice(&v5);
-        ProcessVoice(&v6);
-        ProcessVoice(&v7);
-        ProcessVoice(&v8);
-        
-        /*******************************************************************************
-        * PROCESS ADC
-        *******************************************************************************/
-        if(update_ADC_flag){
-            /*
-            freq = ADC_GetResult16(0);
-            freq2 = ADC_GetResult16(1);
-            freq3 = ADC_GetResult16(2);*/
-            lfo_freq = ADC_GetResult16(3);
-            
-            attack_freq = 65535 - ADC_GetResult16(0);
-            decay_freq = 65535 - ADC_GetResult16(1);
-            sustain_freq = ADC_GetResult16(2);
-            release_freq = 65535 - ADC_GetResult16(3);
-            
-            waveshape = ADC_GetResult16(0);
+            FillBufferFromFPGA();
         }
     }
+}
+
+void FillBufferFromFPGA(){
+    uint8_t buffer;
+    uint32_t counter = 0;
+    uint8_t wr_en;
+    uint8_t new_sample;
+    wr_en = wr_en_Read();
+    new_sample = new_sample_Read();
+    uint8_t temp_gpio_read;
+    
+    uint16_t byte_counter = 0;
+    
+    CyGlobalIntDisable;
+    cts_Write(1);
+    
+    for(int i = 0; i < OUT_BUFSIZE; i++){
+        temp_gpio_read = wr_en_Read();
+        if(wr_en != temp_gpio_read){
+            counter++;
+            wr_en = temp_gpio_read;
+            buffer = spi_miso_testing_Read();
+            sample = sample<<1 | (buffer&0b1);
+            
+            if(buffer == 1){
+                //UART_UartPutString("1");
+            }
+            else {
+                //UART_UartPutString("0");
+            }
+            
+            //if(counter == 8){
+            temp_gpio_read = new_sample_Read();
+            if(new_sample != temp_gpio_read){
+                cts_Write(0);
+                counter = 0;
+                
+                new_sample = temp_gpio_read;
+                //UART_UartPutString("\n");
+                
+                
+                if(sample != 0){
+                    //char string[30];
+                    //sprintf(string, "%d\n",sample>>8);
+                    //UART_UartPutString(string);
+                    byte_counter++;
+                    output_buffer[i] = sample>>8;
+                }
+                sample = 0;
+            }
+            
+        }
+    }   
+    CyGlobalIntEnable;
 }
 
 void UART_PrintNumber(int32_t number){
@@ -169,42 +187,7 @@ void UART_PrintNumber(int32_t number){
 }
 
 
-void ProcessUSBMIDI(){
-    /*******************************************************************************
-    * USB AND MIDI STUFF
-    * references Cypress USB MIDI code examples
-    *******************************************************************************/
-    
-    if(0u != USB_IsConfigurationChanged()){
-        if(0u != USB_GetConfiguration())   // Initialize IN endpoints when device configured
-        {
-            USB_MIDI_Init(); // Enable output endpoint
-        }
-    }            
-    
-    /* Service USB MIDI when device is configured */
-    if(0u != USB_GetConfiguration())    
-    {
-        /* Call this API from UART RX ISR for Auto DMA mode */
-        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
-            USB_MIDI_IN_Service();
-        #endif
-        /* In Manual EP Memory Management mode OUT_EP_Service() 
-        *  may have to be called from main foreground or from OUT EP ISR
-        */
-        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
-            USB_MIDI_OUT_Service();
-        #endif
 
-        /* Sending Identity Reply Universal System Exclusive message 
-         * back to computer */
-        if(0u != (USB_MIDI1_InqFlags & USB_INQ_IDENTITY_REQ_FLAG))
-        {
-            USB_PutUsbMidiIn(sizeof(MIDI_IDENTITY_REPLY), (uint8 *)MIDI_IDENTITY_REPLY, USB_MIDI_CABLE_00);
-            USB_MIDI1_InqFlags &= ~USB_INQ_IDENTITY_REQ_FLAG;
-        }
-    }
-}
 
 /*******************************************************************************
 * Function Name: USB_callbackLocalMidiEvent
@@ -238,6 +221,7 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     inqFlagsOld = USB_MIDI1_InqFlags;
     cable = cable;
     
+    /*
     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
     {
         note = midiMsg[USB_EVENT_BYTE1];
@@ -253,6 +237,7 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         //current_env_mode = RELEASE_MODE;
         LED_Write(1);
     }
+    */
 }    
 
 
