@@ -10,6 +10,7 @@
 extern uint32_t sample;
 extern const int8 CYCODE masterTxBuffer[BUFFER_SIZE];
 extern int8 masterRxBuffer[BUFFER_SIZE];
+extern volatile int8_t* current_buffer;
 
 extern uint16_t freq;
 extern uint16_t freq2;

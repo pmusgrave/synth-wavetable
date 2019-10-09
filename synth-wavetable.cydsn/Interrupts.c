@@ -47,6 +47,7 @@
 
 volatile uint8_t DMA_done_flag = 0;
 volatile uint8_t DMA_counter = 0;
+volatile int8_t* current_buffer;
 volatile uint8_t FIFO_DMA_REQ_FLAG = 0;
 volatile uint8_t update_ADC_flag = 0;
 volatile uint8_t trigger_flag = 0;
@@ -68,7 +69,7 @@ CY_ISR(I2STxDone){
 
 CY_ISR(SPI_RxDMA_Done_Interrupt){
     /* Reset receive buffers. */
-    memcpy(output_buffer, masterRxBuffer, BUFFER_SIZE);
+    memcpy((void *)current_buffer, masterRxBuffer, BUFFER_SIZE);
     
     /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
     * to the slave and correspondingly the number of bytes returned by the

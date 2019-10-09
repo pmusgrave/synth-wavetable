@@ -84,27 +84,24 @@ extern CYBIT audioClkConfigured;
 *******************************************************************************/
 void InitializeAudioOutPath(void)
 {
-    //TxDMA_Init();
-	//TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
-    //TxDMA_SetNumDataElements(1, OUT_BUFSIZE);
-    //TxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
-    //TxDMA_SetSrcAddress(0, (void *) output_buffer);
-	//TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
-    //TxDMA_SetSrcAddress(1, (void *) output_buffer2);
-	//TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
-    //TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
-    //TxDMA_ChEnable();
+    I2STxDMA_Init();
+	I2STxDMA_SetNumDataElements(0, OUT_BUFSIZE);
+    I2STxDMA_SetNumDataElements(1, OUT_BUFSIZE);
+    I2STxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
+    I2STxDMA_SetSrcAddress(0, (void *) output_buffer);
+	I2STxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
+    I2STxDMA_SetSrcAddress(1, (void *) output_buffer2);
+	I2STxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
+    I2STxDMA_SetInterruptCallback(I2STxDone);
+    I2STxDMA_ChEnable();
     
-    
-
     
     /* Start other DMA channels to begin data transfer. */
     
     
-    
 	/* Validate descriptor */
-    //TxDMA_ValidateDescriptor(0);
-    //TxDMA_ValidateDescriptor(1);
+    I2STxDMA_ValidateDescriptor(0);
+    I2STxDMA_ValidateDescriptor(1);
     //SPI_RxDMA_ValidateDescriptor(0);
     
     /* Start interrupts */

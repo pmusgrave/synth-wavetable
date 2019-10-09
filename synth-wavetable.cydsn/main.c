@@ -135,10 +135,23 @@ int main() {
     SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
     SPI_RxDMA_SetInterruptCallback(SPI_RxDMA_Done_Interrupt);
     SPI_TxDMA_SetInterruptCallback(SPI_TxDMA_Done_Interrupt);
-    I2STxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
+    //I2STxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
         
     for(;;) {
-        
+        if(DMA_done_flag){
+            DMA_done_flag = 0;
+            
+            if(DMA_counter % 2 == 0){
+                current_buffer = output_buffer2;
+                CyGlobalIntEnable;
+                //FillBufferFromFPGA(output_buffer2);
+            }
+            else {
+                CyGlobalIntEnable;
+                current_buffer = output_buffer;
+                //FillBufferFromFPGA(output_buffer);
+            }
+        }
     }
 }
 
