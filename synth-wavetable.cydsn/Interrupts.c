@@ -58,20 +58,30 @@ CY_ISR(ADC_EOC) {
 }
 
 CY_ISR(TxDMA_Done_Interrupt){
-    UART_UartPutString("DMA done\r\n");
-    CyGlobalIntDisable;
-    DMA_done_flag = 1;
-    DMA_counter++;
+    //UART_UartPutString("DMA done\r\n");
+    //CyGlobalIntDisable;
+    //DMA_done_flag = 1;
+    //DMA_counter++;
     
     LED_Write(~LED_Read());
 }
 
+CY_ISR(SPI_RxDMA_Done_Interrupt){
+    //LED_Write(~LED_Read());
+    //SPI_reset_Write(~SPI_reset_Read());
+}
+
+CY_ISR(SPI_TxDMA_Done_Interrupt){
+    //LED_Write(~LED_Read());
+    //SPI_reset_Write(~SPI_reset_Read());
+}
+
 CY_ISR(I2SUnderflow) {
-    UART_UartPutString("I2S undeflow\r\n");    
+    //UART_UartPutString("I2S undeflow\r\n");    
 }
 
 CY_ISR(envelope_trigger_interrupt){
-    UART_UartPutString("env trig\r\n");
+    //UART_UartPutString("env trig\r\n");
 }
 
 /* [] END OF FILE */

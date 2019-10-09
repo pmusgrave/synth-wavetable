@@ -66,36 +66,58 @@ char buff[32];//output UART buffer
 void ProcessUSBMIDI();
 void UART_PrintNumber(int32_t);
 
-void FillBufferFromFPGA();
+
+
+
+
+
+
+static const int8 CYCODE masterTxBuffer[BUFFER_SIZE] = {"Data to transmit by SPI Master !"};
+static int8 masterRxBuffer[BUFFER_SIZE] = {0};
+void FillBufferFromFPGA(int8_t* buffer);
+
+
+
+
+
+
+
 
 int main() {
-    UART_Start();
+    //UART_Start();
     TxByteCounter_Start();
     //isr_trigger_StartEx(envelope_trigger_interrupt);
     
-    UART_UartPutString("\r\n\r\n\r\n********************\r\n");
-    UART_UartPutString("PMA Wavetable Synth\r\n");
-    UART_UartPutString("********************\r\n");
+    //UART_UartPutString("\r\n\r\n\r\n********************\r\n");
+    //UART_UartPutString("PMA Wavetable Synth\r\n");
+    //UART_UartPutString("********************\r\n");
 	InitAudioPath();
-    UART_UartPutString("Audio path initialized...\r\n");
+    //UART_UartPutString("Audio path initialized...\r\n");
     
     init_wavetable();
-    UART_UartPutString("Wavetable initialized...\r\n");
+    //UART_UartPutString("Wavetable initialized...\r\n");
     
     ADC_Start();
     ADC_StartConvert();
     isr_ADC_EOC_StartEx(ADC_EOC);
     
     SPI_Start();
-    UART_UartPutString("SPI initialized... \r\n");
+    SPI_SpiUartWriteTxData(0u);
+
+    while(0u == SPI_SpiUartGetRxBufferSize())
+    {
+        /* Wait for the first byte exchange. */
+    }
+    SPI_SpiUartClearRxBuffer();
+    //UART_UartPutString("SPI initialized... \r\n");
     
     CodecI2CM_Start();	
 	if(Codec_Init() == 0) {
-    	UART_UartPutString("Codec comm works!... \r\n");
+    	//UART_UartPutString("Codec comm works!... \r\n");
         Codec_Activate();
 	}
 	else {
-		UART_UartPutString("Codec comm DOESN'T work!... \r\n");
+		//UART_UartPutString("Codec comm DOESN'T work!... \r\n");
 	}
     
     I2S_Start();
@@ -107,7 +129,7 @@ int main() {
     //USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
     //MIDI1_UART_Start();
     //MIDI_RX_StartEx(MIDI_RX_VECT);
-    UART_UartPutString("USB MIDI initialized...\r\n");
+    //UART_UartPutString("USB MIDI initialized...\r\n");
     
     for(uint32_t i = 0; i < 10000; i++){
         CyGlobalIntDisable;
@@ -116,39 +138,86 @@ int main() {
         CyDelayUs(100);
     }
     
-    CyGlobalIntEnable;
     
+    //FillBufferFromFPGA(output_buffer);
+    CyGlobalIntEnable;
+    LED_Write(1);
+
+    SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
+    SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
+    SPI_RxDMA_SetInterruptCallback(SPI_RxDMA_Done_Interrupt);
+    SPI_TxDMA_SetInterruptCallback(SPI_TxDMA_Done_Interrupt);
+    
+    //TxDMA_Start(masterRxBuffer, (void *)I2S_TX_FIFO_0_PTR);
+        
     for(;;) {
+        /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
+        * configured to set an interrupt when they finish transferring all data
+        * elements.
+        */
+        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
+        {
+            /* Once asserted, interrupt bits remain high until cleared. */
+            CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
+
+            /* Clear previous transfer complete status. */
+            //SUCCESS_Write(LED_OFF);
+
+            /* Set transfer complete status. */
+            //SUCCESS_Write(LED_ON);
+
+            /* Reset receive buffers. */
+            memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
+            //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
+            
+            /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+            * to the slave and correspondingly the number of bytes returned by the
+            * slave. Therefore it is configured to be invalidated when it
+            * finishes a transfer.
+            */
+            SPI_TxDMA_ValidateDescriptor(0);
+            SPI_TxDMA_ChEnable();
+        }
+                
         if(DMA_done_flag){
             DMA_done_flag = 0;
-            FillBufferFromFPGA();
+            if(DMA_counter % 2 == 0){
+                //CyGlobalIntEnable;
+//                FillBufferFromFPGA(output_buffer2);
+            }
+            else {
+                //CyGlobalIntEnable;
+//                FillBufferFromFPGA(output_buffer);
+            }
+            
         }
     }
 }
 
-void FillBufferFromFPGA(){
-    uint8_t buffer;
+void FillBufferFromFPGA(int8_t* buffer){
+    /*
+    uint8_t val;
     uint32_t counter = 0;
-    uint8_t wr_en;
+    uint8_t wren;
     uint8_t new_sample;
-    wr_en = wr_en_Read();
+    wren = wr_en_Read();
     new_sample = new_sample_Read();
     uint8_t temp_gpio_read;
     
     uint16_t byte_counter = 0;
     
     CyGlobalIntDisable;
-    cts_Write(1);
     
     for(int i = 0; i < OUT_BUFSIZE; i++){
+        cts_Write(1);
         temp_gpio_read = wr_en_Read();
-        if(wr_en != temp_gpio_read){
+        if(wren != temp_gpio_read){
             counter++;
-            wr_en = temp_gpio_read;
-            buffer = spi_miso_testing_Read();
-            sample = sample<<1 | (buffer&0b1);
-            
-            if(buffer == 1){
+            wren = temp_gpio_read;
+            val = spi_miso_testing_Read();
+            sample = sample<<1 | (val&0b1);
+            cts_Write(0);
+            if(val == 1){
                 //UART_UartPutString("1");
             }
             else {
@@ -158,26 +227,29 @@ void FillBufferFromFPGA(){
             //if(counter == 8){
             temp_gpio_read = new_sample_Read();
             if(new_sample != temp_gpio_read){
-                cts_Write(0);
+                
                 counter = 0;
                 
                 new_sample = temp_gpio_read;
                 //UART_UartPutString("\n");
                 
                 
-                if(sample != 0){
-                    //char string[30];
-                    //sprintf(string, "%d\n",sample>>8);
-                    //UART_UartPutString(string);
-                    byte_counter++;
-                    output_buffer[i] = sample>>8;
-                }
+                
+                //char string[30];
+                //sprintf(string, "%d\n",(sample>>19));
+                //UART_UartPutString(string);
+                byte_counter++;
+                buffer[i] = (sample>>19) & 0xFF;
+                
                 sample = 0;
+                
             }
             
         }
     }   
+    cts_Write(0);
     CyGlobalIntEnable;
+    */
 }
 
 void UART_PrintNumber(int32_t number){

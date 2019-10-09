@@ -1,8 +1,13 @@
 #include <project.h>
 #include "oscillator.h"
 
-extern uint32_t sample;
+#define     BUFFER_SIZE        32
 
+/* LED control defines. LED is active low. */
+#define     LED_ON              0
+#define     LED_OFF             1
+
+extern uint32_t sample;
 
 
 extern uint16_t freq;
