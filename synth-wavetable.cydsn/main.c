@@ -9,6 +9,9 @@
 #include "oscillator.h"
 
 uint32_t sample;
+const int8 CYCODE masterTxBuffer[BUFFER_SIZE] = {"Data to transmit by SPI Master !"};
+int8 masterRxBuffer[BUFFER_SIZE] = {0};
+//void FillBufferFromFPGA(int8_t* buffer);
 
 uint8_t current_env_mode = 0;
 uint16_t attack_freq = 0;
@@ -66,24 +69,11 @@ char buff[32];//output UART buffer
 void ProcessUSBMIDI();
 void UART_PrintNumber(int32_t);
 
-
-
-
-
-
-
-static const int8 CYCODE masterTxBuffer[BUFFER_SIZE] = {"Data to transmit by SPI Master !"};
-static int8 masterRxBuffer[BUFFER_SIZE] = {0};
-void FillBufferFromFPGA(int8_t* buffer);
-
-
-
-
-
-
-
-
+/*******************************************************************************
+* main
+*******************************************************************************/
 int main() {
+    LED_Write(1);
     //UART_Start();
     TxByteCounter_Start();
     //isr_trigger_StartEx(envelope_trigger_interrupt);
@@ -108,7 +98,7 @@ int main() {
     {
         /* Wait for the first byte exchange. */
     }
-    SPI_SpiUartClearRxBuffer();
+    //SPI_SpiUartClearRxBuffer();
     //UART_UartPutString("SPI initialized... \r\n");
     
     CodecI2CM_Start();	
@@ -138,63 +128,21 @@ int main() {
         CyDelayUs(100);
     }
     
-    
     //FillBufferFromFPGA(output_buffer);
     CyGlobalIntEnable;
-    LED_Write(1);
 
     SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
     SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
     SPI_RxDMA_SetInterruptCallback(SPI_RxDMA_Done_Interrupt);
     SPI_TxDMA_SetInterruptCallback(SPI_TxDMA_Done_Interrupt);
-    
-    //TxDMA_Start(masterRxBuffer, (void *)I2S_TX_FIFO_0_PTR);
+    I2STxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
         
     for(;;) {
-        /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
-        * configured to set an interrupt when they finish transferring all data
-        * elements.
-        */
-        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
-        {
-            /* Once asserted, interrupt bits remain high until cleared. */
-            CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
-
-            /* Clear previous transfer complete status. */
-            //SUCCESS_Write(LED_OFF);
-
-            /* Set transfer complete status. */
-            //SUCCESS_Write(LED_ON);
-
-            /* Reset receive buffers. */
-            memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
-            //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
-            
-            /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
-            * to the slave and correspondingly the number of bytes returned by the
-            * slave. Therefore it is configured to be invalidated when it
-            * finishes a transfer.
-            */
-            SPI_TxDMA_ValidateDescriptor(0);
-            SPI_TxDMA_ChEnable();
-        }
-                
-        if(DMA_done_flag){
-            DMA_done_flag = 0;
-            if(DMA_counter % 2 == 0){
-                //CyGlobalIntEnable;
-//                FillBufferFromFPGA(output_buffer2);
-            }
-            else {
-                //CyGlobalIntEnable;
-//                FillBufferFromFPGA(output_buffer);
-            }
-            
-        }
+        
     }
 }
 
-void FillBufferFromFPGA(int8_t* buffer){
+//void FillBufferFromFPGA(int8_t* buffer){
     /*
     uint8_t val;
     uint32_t counter = 0;
@@ -250,13 +198,13 @@ void FillBufferFromFPGA(int8_t* buffer){
     cts_Write(0);
     CyGlobalIntEnable;
     */
-}
+//}
 
-void UART_PrintNumber(int32_t number){
-    char string[30];
-    sprintf(string, "%d\n",number);
-    UART_UartPutString(string);
-}
+//void UART_PrintNumber(int32_t number){
+    //char string[30];
+    //sprintf(string, "%d\n",number);
+    //UART_UartPutString(string);
+//}
 
 
 
@@ -270,7 +218,7 @@ void UART_PrintNumber(int32_t number){
 *******************************************************************************/
 void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
 {
-    uint8 note;
+    //uint8 note;
     
     /* Support General System On/Off Message. */
     /*

@@ -85,8 +85,6 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxDMA.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxDMA.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC_aliases.h</File>
@@ -157,8 +155,6 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_TxDMADone.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_TxDMADone.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2S_underflow.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2S_underflow.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\ADC.c</File>
@@ -239,6 +235,10 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_RxDMA.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_SCBCLK.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_SCBCLK.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2STxDMA.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2STxDMA.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2STxDone.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2STxDone.h</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">

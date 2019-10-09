@@ -108,9 +108,9 @@ void InitializeAudioOutPath(void)
     //SPI_RxDMA_ValidateDescriptor(0);
     
     /* Start interrupts */
-    isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
-    isr_TxDMADone_Enable();
-    //CyIntEnable(CYDMA_INTR_NUMBER);
+    isr_I2STxDone_StartEx(I2STxDone);
+    isr_I2STxDone_Enable();
+    CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1000;
     freq2 = 200;
@@ -223,18 +223,18 @@ void Stop_I2S_Tx(void) CYREENTRANT
     //if(outPlaying)
     //{       
         //UART_UartPutString("Stopping I2S\r\n");
-        I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
+        //I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
         
-        CyDelayUs(20); /* Provide enough time for DMA to transfer the last audio samples completely to I2S TX FIFO */
+        //CyDelayUs(20); /* Provide enough time for DMA to transfer the last audio samples completely to I2S TX FIFO */
    
         /* Stop / Disable DMA - Needed to reset to start of chain */
-        TxDMA_ChDisable();
+        //I2STxDMA_ChDisable();
 		
 		/* Make DMA transaction count zero */ 
-        CYDMA_DESCR_BASE.descriptor[TxDMA_CHANNEL][0].status &= 0xFFFF0000;
+        //CYDMA_DESCR_BASE.descriptor[I2STxDMA_CHANNEL][0].status &= 0xFFFF0000;
 		
         /* Disable power to speaker output */
-        Codec_PowerOffControl(CODEC_POWER_CTRL_OUTPD);
+        //Codec_PowerOffControl(CODEC_POWER_CTRL_OUTPD);
     //}    
 }
 

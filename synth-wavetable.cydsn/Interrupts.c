@@ -57,16 +57,29 @@ CY_ISR(ADC_EOC) {
     //freq = 2000;
 }
 
-CY_ISR(TxDMA_Done_Interrupt){
+CY_ISR(I2STxDone){
     //UART_UartPutString("DMA done\r\n");
     //CyGlobalIntDisable;
-    //DMA_done_flag = 1;
-    //DMA_counter++;
+    DMA_done_flag = 1;
+    DMA_counter++;
     
-    LED_Write(~LED_Read());
+    LED_Write(0);
 }
 
 CY_ISR(SPI_RxDMA_Done_Interrupt){
+    /* Reset receive buffers. */
+    memcpy(output_buffer, masterRxBuffer, BUFFER_SIZE);
+    
+    /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+    * to the slave and correspondingly the number of bytes returned by the
+    * slave. Therefore it is configured to be invalidated when it
+    * finishes a transfer.
+    */
+    SPI_TxDMA_ValidateDescriptor(0);
+    SPI_TxDMA_ChEnable();
+    I2STxDMA_ValidateDescriptor(0);
+    I2STxDMA_ChEnable();
+    
     //LED_Write(~LED_Read());
     //SPI_reset_Write(~SPI_reset_Read());
 }
