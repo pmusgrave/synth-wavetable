@@ -19,8 +19,10 @@
 /* USER CODE END Header */
 
 /* Includes ------------------------------------------------------------------*/
+#include <stdint.h>
 #include "main.h"
-
+#include "waves.h"
+#include "BlinkLed.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -33,7 +35,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+# define OUT_BUFSIZE 4096
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,13 +54,11 @@ SPI_HandleTypeDef hspi5;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
+void ProcessAudioOut(int8_t* buffer);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int16_t freq = 0;
 /* USER CODE END 0 */
 
 /**
@@ -67,11 +67,6 @@ static void MX_SPI5_Init(void);
   */
 int main(void)
 {
-  /* USER CODE BEGIN 1 */
-
-  /* USER CODE END 1 */
-  
-
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
@@ -92,19 +87,43 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
-
+  init_wavetable();
+  freq = 10;
+  int8_t audio_out_buffer[OUT_BUFSIZE];
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+    blink_led_off();
+    ProcessAudioOut(audio_out_buffer);
+    for(int i = 0; i < OUT_BUFSIZE; i++){
+      if(audio_out_buffer[i] > 50) {
+        blink_led_on();
+      }
+      else {
+        blink_led_off();
+      }
+    }
   }
-  /* USER CODE END 3 */
 }
+
+void ProcessAudioOut(int8_t* buffer)
+{
+    static uint32_t index;
+    // static uint32_t lfo_index;
+    // lfo_index += lfo_freq;
+    // lfo_multiplier = lfo_sine[(lfo_index>>8) % 256];
+
+    //*index = *index + freq;
+    //buffer[0] = base_sine[((*index)>>10)%N];
+    for(int i = 0; i < OUT_BUFSIZE; i++){
+        index += freq;
+        buffer[i] = base_sine[(index>>8) & 0xFFF];
+    }
+}
+
 
 /**
   * @brief System Clock Configuration
@@ -169,7 +188,7 @@ static void MX_SPI5_Init(void)
   hspi5.Init.Mode = SPI_MODE_SLAVE;
   hspi5.Init.Direction = SPI_DIRECTION_2LINES;
   hspi5.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi5.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi5.Init.NSS = SPI_NSS_HARD_INPUT;
   hspi5.Init.FirstBit = SPI_FIRSTBIT_MSB;
