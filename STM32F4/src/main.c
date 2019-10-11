@@ -89,6 +89,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   init_wavetable();
   freq = 10;
+  uint16_t index = 0;
   int8_t audio_out_buffer[OUT_BUFSIZE];
   /* USER CODE END 2 */
 
@@ -96,14 +97,21 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    blink_led_off();
-    ProcessAudioOut(audio_out_buffer);
-    for(int i = 0; i < OUT_BUFSIZE; i++){
-      if(audio_out_buffer[i] > 50) {
-        blink_led_on();
-      }
-      else {
-        blink_led_off();
+    SPI_HandleTypeDef* hspi;
+    hspi = &hspi5;
+    if(HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
+      HAL_SPI_Transmit(hspi, &audio_out_buffer[index&OUT_BUFSIZE],8,20);
+      index++;
+    }
+    else {
+      ProcessAudioOut(audio_out_buffer);
+      for(int i = 0; i < OUT_BUFSIZE; i++){
+        if(audio_out_buffer[i] > 50) {
+          //blink_led_on();
+        }
+        else {
+          //blink_led_off();
+        }
       }
     }
   }
@@ -134,11 +142,11 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage 
+  /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
-  /** Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the CPU, AHB and APB busses clocks
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
@@ -153,7 +161,7 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /** Initializes the CPU, AHB and APB busses clocks 
+  /** Initializes the CPU, AHB and APB busses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -195,10 +203,10 @@ static void MX_SPI5_Init(void)
   hspi5.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi5.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
   hspi5.Init.CRCPolynomial = 10;
-//  if (HAL_SPI_Init(&hspi5) != HAL_OK)
-//  {
-//    Error_Handler();
-//  }
+ if (HAL_SPI_Init(&hspi5) != HAL_OK)
+ {
+   Error_Handler();
+ }
   /* USER CODE BEGIN SPI5_Init 2 */
 
   /* USER CODE END SPI5_Init 2 */
@@ -236,11 +244,11 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOG, LD3_Pin|LD4_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : A0_Pin A1_Pin A2_Pin A3_Pin 
-                           A4_Pin A5_Pin SDNRAS_Pin A6_Pin 
+  /*Configure GPIO pins : A0_Pin A1_Pin A2_Pin A3_Pin
+                           A4_Pin A5_Pin SDNRAS_Pin A6_Pin
                            A7_Pin A8_Pin A9_Pin */
-  GPIO_InitStruct.Pin = A0_Pin|A1_Pin|A2_Pin|A3_Pin 
-                          |A4_Pin|A5_Pin|SDNRAS_Pin|A6_Pin 
+  GPIO_InitStruct.Pin = A0_Pin|A1_Pin|A2_Pin|A3_Pin
+                          |A4_Pin|A5_Pin|SDNRAS_Pin|A6_Pin
                           |A7_Pin|A8_Pin|A9_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -277,9 +285,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : B5_Pin VSYNC_Pin G2_Pin R4_Pin 
+  /*Configure GPIO pins : B5_Pin VSYNC_Pin G2_Pin R4_Pin
                            R5_Pin */
-  GPIO_InitStruct.Pin = B5_Pin|VSYNC_Pin|G2_Pin|R4_Pin 
+  GPIO_InitStruct.Pin = B5_Pin|VSYNC_Pin|G2_Pin|R4_Pin
                           |R5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -314,9 +322,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BOOT1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : A10_Pin A11_Pin BA0_Pin BA1_Pin 
+  /*Configure GPIO pins : A10_Pin A11_Pin BA0_Pin BA1_Pin
                            SDCLK_Pin SDNCAS_Pin */
-  GPIO_InitStruct.Pin = A10_Pin|A11_Pin|BA0_Pin|BA1_Pin 
+  GPIO_InitStruct.Pin = A10_Pin|A11_Pin|BA0_Pin|BA1_Pin
                           |SDCLK_Pin|SDNCAS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -324,11 +332,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D4_Pin D5_Pin D6_Pin D7_Pin 
-                           D8_Pin D9_Pin D10_Pin D11_Pin 
+  /*Configure GPIO pins : D4_Pin D5_Pin D6_Pin D7_Pin
+                           D8_Pin D9_Pin D10_Pin D11_Pin
                            D12_Pin NBL0_Pin NBL1_Pin */
-  GPIO_InitStruct.Pin = D4_Pin|D5_Pin|D6_Pin|D7_Pin 
-                          |D8_Pin|D9_Pin|D10_Pin|D11_Pin 
+  GPIO_InitStruct.Pin = D4_Pin|D5_Pin|D6_Pin|D7_Pin
+                          |D8_Pin|D9_Pin|D10_Pin|D11_Pin
                           |D12_Pin|NBL0_Pin|NBL1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -358,9 +366,9 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(VBUS_HS_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : D13_Pin D14_Pin D15_Pin D0_Pin 
+  /*Configure GPIO pins : D13_Pin D14_Pin D15_Pin D0_Pin
                            D1_Pin D2_Pin D3_Pin */
-  GPIO_InitStruct.Pin = D13_Pin|D14_Pin|D15_Pin|D0_Pin 
+  GPIO_InitStruct.Pin = D13_Pin|D14_Pin|D15_Pin|D0_Pin
                           |D1_Pin|D2_Pin|D3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -479,7 +487,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(uint8_t *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
