@@ -47,6 +47,7 @@
 
 volatile uint8_t DMA_done_flag = 0;
 volatile uint8_t DMA_counter = 0;
+volatile int8_t* current_buffer;
 volatile uint8_t FIFO_DMA_REQ_FLAG = 0;
 volatile uint8_t update_ADC_flag = 0;
 volatile uint8_t trigger_flag = 0;
@@ -57,19 +58,46 @@ CY_ISR(ADC_EOC) {
     //freq = 2000;
 }
 
-CY_ISR(TxDMA_Done_Interrupt){
+CY_ISR(I2STxDone){
     //UART_UartPutString("DMA done\r\n");
-    CyGlobalIntDisable;
+    //CyGlobalIntDisable;
     DMA_done_flag = 1;
     DMA_counter++;
 }
 
+CY_ISR(SPIDone){
+    LED_Write(0);
+    /* Reset receive buffers. */
+    //memcpy((void *)current_buffer, masterRxBuffer, BUFFER_SIZE);
+    memcpy((void *)output_buffer, masterRxBuffer, BUFFER_SIZE);
+    
+    /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+    * to the slave and correspondingly the number of bytes returned by the
+    * slave. Therefore it is configured to be invalidated when it
+    * finishes a transfer.
+    */
+    SPI_TxDMA_ValidateDescriptor(0);
+    SPI_TxDMA_ChEnable();
+    I2STxDMA_ValidateDescriptor(0);
+    I2STxDMA_ChEnable();
+}
+
+CY_ISR(SPI_RxDMA_Done_Interrupt){
+    //LED_Write(~LED_Read());
+    //SPI_reset_Write(~SPI_reset_Read());
+}
+
+CY_ISR(SPI_TxDMA_Done_Interrupt){
+    //LED_Write(~LED_Read());
+    //SPI_reset_Write(~SPI_reset_Read());
+}
+
 CY_ISR(I2SUnderflow) {
-    UART_UartPutString("I2S undeflow\r\n");    
+    //UART_UartPutString("I2S undeflow\r\n");    
 }
 
 CY_ISR(envelope_trigger_interrupt){
-    UART_UartPutString("env trig\r\n");
+    //UART_UartPutString("env trig\r\n");
 }
 
 /* [] END OF FILE */

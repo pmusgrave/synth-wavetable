@@ -84,23 +84,38 @@ extern CYBIT audioClkConfigured;
 *******************************************************************************/
 void InitializeAudioOutPath(void)
 {
-    TxDMA_Init();
-	TxDMA_SetNumDataElements(0, OUT_BUFSIZE);
-    TxDMA_SetNumDataElements(1, OUT_BUFSIZE);
-    TxDMA_SetSrcAddress(0, (void *) output_buffer);
-	TxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
-    TxDMA_SetSrcAddress(1, (void *) output_buffer2);
-	TxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
-    TxDMA_SetInterruptCallback(TxDMA_Done_Interrupt);
-    TxDMA_ChEnable();
-
+    SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
+    SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
+    SPI_RxDMA_SetInterruptCallback(SPI_RxDMA_Done_Interrupt);
+    SPI_TxDMA_SetInterruptCallback(SPI_TxDMA_Done_Interrupt);
+    isr_SPIDone_StartEx(SPIDone);
+    isr_SPIDone_Enable();
+    //I2STxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
+    
+    
+    I2STxDMA_Init();
+	I2STxDMA_SetNumDataElements(0, OUT_BUFSIZE);
+    I2STxDMA_SetNumDataElements(1, OUT_BUFSIZE);
+    I2STxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
+    I2STxDMA_SetSrcAddress(0, (void *) output_buffer);
+	I2STxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
+    //I2STxDMA_SetSrcAddress(1, (void *) output_buffer2);
+	//I2STxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
+    I2STxDMA_SetInterruptCallback(I2STxDone);
+    I2STxDMA_ChEnable();
+    
+    
+    /* Start other DMA channels to begin data transfer. */
+    
+    
 	/* Validate descriptor */
-    TxDMA_ValidateDescriptor(0);
-    TxDMA_ValidateDescriptor(1);
+    I2STxDMA_ValidateDescriptor(0);
+    I2STxDMA_ValidateDescriptor(1);
+    //SPI_RxDMA_ValidateDescriptor(0);
     
     /* Start interrupts */
-    //isr_TxDMADone_StartEx(TxDMA_Done_Interrupt);
-    //isr_TxDMADone_Enable();
+    isr_I2STxDone_StartEx(I2STxDone);
+    isr_I2STxDone_Enable();
     CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1000;
@@ -167,25 +182,30 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
-        int32_t value = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8)
-        + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8)
-        + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8)
-        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8)
-        + ((base_sq[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8)
-        + ((base_sq[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8)
-        + ((base_sq[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8)
-        + ((base_sq[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8);
-        buffer[i] = value;
+        uint32_t sq_portion = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * ((65535-waveshape)>>8)
+        + ((base_sq[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * ((65535-waveshape)>>8);
         
-        //int8_t sine_portion = (value * lfo_multiplier)>>8;
-        //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (255-lfo_multiplier))>>8;
-        //buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        uint32_t sine_portion = ((base_sine[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * (waveshape>>8)
+        + ((base_sine[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * (waveshape>>8);
+        //buffer[i] = value;
+        
+        //int8_t sine_portion = (base_sine[(index>>8) & 0xFFF] * waveshape>>6)>>8;
+        //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (65535-waveshape)>>6)>>8;
+        buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
-        
-        //char string[30];
-        //sprintf(string, "%d\n",envelope_multiplier);
-        //UART_UartPutString(string);
     }
 }
 
@@ -209,18 +229,18 @@ void Stop_I2S_Tx(void) CYREENTRANT
     //if(outPlaying)
     //{       
         //UART_UartPutString("Stopping I2S\r\n");
-        I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
+        //I2S_DisableTx();     /* Stop I2S Transmit (Mute), I2S output clocks still active */
         
-        CyDelayUs(20); /* Provide enough time for DMA to transfer the last audio samples completely to I2S TX FIFO */
+        //CyDelayUs(20); /* Provide enough time for DMA to transfer the last audio samples completely to I2S TX FIFO */
    
         /* Stop / Disable DMA - Needed to reset to start of chain */
-        TxDMA_ChDisable();
+        //I2STxDMA_ChDisable();
 		
 		/* Make DMA transaction count zero */ 
-        CYDMA_DESCR_BASE.descriptor[TxDMA_CHANNEL][0].status &= 0xFFFF0000;
+        //CYDMA_DESCR_BASE.descriptor[I2STxDMA_CHANNEL][0].status &= 0xFFFF0000;
 		
         /* Disable power to speaker output */
-        Codec_PowerOffControl(CODEC_POWER_CTRL_OUTPD);
+        //Codec_PowerOffControl(CODEC_POWER_CTRL_OUTPD);
     //}    
 }
 

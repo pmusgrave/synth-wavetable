@@ -1,6 +1,17 @@
 #include <project.h>
 #include "oscillator.h"
 
+#define     BUFFER_SIZE        32
+
+/* LED control defines. LED is active low. */
+#define     LED_ON              0
+#define     LED_OFF             1
+
+extern uint32_t sample;
+extern int8_t masterTxBuffer[BUFFER_SIZE];
+extern int8_t masterRxBuffer[BUFFER_SIZE];
+extern volatile int8_t* current_buffer;
+
 extern uint16_t freq;
 extern uint16_t freq2;
 extern uint16_t freq3;
@@ -16,6 +27,7 @@ extern uint16_t attack_freq;
 extern uint16_t decay_freq;
 extern uint16_t sustain_freq;
 extern uint16_t release_freq;
+extern uint16_t waveshape;
 
 struct voice v1;
 struct voice v2;

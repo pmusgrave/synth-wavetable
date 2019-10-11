@@ -47,7 +47,10 @@
 	CY_ISR_PROTO(I2S_FIFO_DMA_REQ);
     CY_ISR_PROTO(TxBufferDMADone_Interrupt);
     CY_ISR_PROTO(I2SUnderflow);
-    CY_ISR_PROTO(TxDMA_Done_Interrupt);
+    CY_ISR_PROTO(I2STxDone);
+    CY_ISR_PROTO(SPIDone);
+    CY_ISR_PROTO(SPI_RxDMA_Done_Interrupt);
+    CY_ISR_PROTO(SPI_TxDMA_Done_Interrupt);
     CY_ISR_PROTO(TxDMA_1_Done_Interrupt);
     CY_ISR_PROTO(envelope_trigger_interrupt);
 
