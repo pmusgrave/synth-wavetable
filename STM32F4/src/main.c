@@ -88,7 +88,7 @@ int main(void)
   MX_SPI5_Init();
   /* USER CODE BEGIN 2 */
   init_wavetable();
-  freq = 10;
+  freq = 1000;
   uint16_t index = 0;
   int8_t audio_out_buffer[OUT_BUFSIZE];
   /* USER CODE END 2 */
@@ -100,10 +100,11 @@ int main(void)
     SPI_HandleTypeDef* hspi;
     hspi = &hspi5;
     if(HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
-      HAL_SPI_Transmit(hspi, &audio_out_buffer[index&OUT_BUFSIZE],8,20);
-      index++;
+      uint8_t data = (int8_t)(base_sine[(index>>10) & 0xFFF]>>8);
+      HAL_SPI_Transmit(hspi, &data, 8, 20);
+      index+=freq;
     }
-    else {
+    /*else {
       ProcessAudioOut(audio_out_buffer);
       for(int i = 0; i < OUT_BUFSIZE; i++){
         if(audio_out_buffer[i] > 50) {
@@ -114,6 +115,7 @@ int main(void)
         }
       }
     }
+    */
   }
 }
 
@@ -128,7 +130,7 @@ void ProcessAudioOut(int8_t* buffer)
     //buffer[0] = base_sine[((*index)>>10)%N];
     for(int i = 0; i < OUT_BUFSIZE; i++){
         index += freq;
-        buffer[i] = base_sine[(index>>8) & 0xFFF];
+        buffer[i] = base_sine[(index>>16) & 0xFFF];
     }
 }
 
