@@ -84,6 +84,7 @@ extern CYBIT audioClkConfigured;
 *******************************************************************************/
 void InitializeAudioOutPath(void)
 {
+    /*
     I2STxDMA_Init();
 	I2STxDMA_SetNumDataElements(0, OUT_BUFSIZE);
     I2STxDMA_SetNumDataElements(1, OUT_BUFSIZE);
@@ -94,20 +95,20 @@ void InitializeAudioOutPath(void)
 	I2STxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
     I2STxDMA_SetInterruptCallback(I2STxDone);
     I2STxDMA_ChEnable();
-    
+    */
     
     /* Start other DMA channels to begin data transfer. */
     
     
 	/* Validate descriptor */
-    I2STxDMA_ValidateDescriptor(0);
-    I2STxDMA_ValidateDescriptor(1);
+    //I2STxDMA_ValidateDescriptor(0);
+    //I2STxDMA_ValidateDescriptor(1);
     //SPI_RxDMA_ValidateDescriptor(0);
     
     /* Start interrupts */
-    isr_I2STxDone_StartEx(I2STxDone);
-    isr_I2STxDone_Enable();
-    CyIntEnable(CYDMA_INTR_NUMBER);
+    //isr_I2STxDone_StartEx(I2STxDone);
+    //isr_I2STxDone_Enable();
+    //CyIntEnable(CYDMA_INTR_NUMBER);
     
     freq = 1000;
     freq2 = 200;

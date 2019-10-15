@@ -78,8 +78,8 @@ CY_ISR(SPI_RxDMA_Done_Interrupt){
     */
     SPI_TxDMA_ValidateDescriptor(0);
     SPI_TxDMA_ChEnable();
-    I2STxDMA_ValidateDescriptor(0);
-    I2STxDMA_ChEnable();
+    //I2STxDMA_ValidateDescriptor(0);
+    //I2STxDMA_ChEnable();
     
     //LED_Write(~LED_Read());
     //SPI_reset_Write(~SPI_reset_Read());

@@ -81,7 +81,7 @@ void InitAudioPath(void)
 	InitializeAudioOutPath();
 
 	/* Set TX FIFO trigger to 2 bytes (half-empty) to increase timing margin */
-    I2S_TX_AUX_CONTROL_REG = I2S_TX_AUX_CONTROL_REG | FIFO_HALF_EMPTY_MASK;
+    //I2S_TX_AUX_CONTROL_REG = I2S_TX_AUX_CONTROL_REG | FIFO_HALF_EMPTY_MASK;
 }
  
 /* [] END OF FILE */

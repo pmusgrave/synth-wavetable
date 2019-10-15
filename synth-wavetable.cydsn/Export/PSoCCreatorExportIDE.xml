@@ -81,22 +81,6 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CodecI2CM_I2C_PVT.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CodecI2CM_PVT.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CodecI2CM_BOOT.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_BCLK_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_LRC_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2S.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2S.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2S_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2S_PVT.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_DACDAT.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_DACDAT.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_DACDAT_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_DACDAT_PM.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_MCLK.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_MCLK.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Codec_MCLK_aliases.h</File>
@@ -149,14 +133,10 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareimport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareexport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareimport.scat</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_1.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_1.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\LED_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2S_underflow.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2S_underflow.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\ADC.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\ADC.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\ADC_PM.c</File>
@@ -183,9 +163,6 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\ADC_intClock.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_ADC_EOC.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_ADC_EOC.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\TxByteCounter_PM.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\trigger_aliases.h</File>
@@ -225,20 +202,12 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_ss0_m.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_ss0_m_aliases.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_ss0_m_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset_PM.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_TxDMA.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_TxDMA.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_RxDMA.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_RxDMA.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_SCBCLK.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_SCBCLK.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2STxDMA.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\I2STxDMA.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2STxDone.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_I2STxDone.h</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">
