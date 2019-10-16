@@ -1,0 +1,2050 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"isr_trigger.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.isr_trigger_Interrupt,"ax",%progbits
+  20              		.align	2
+  21              		.global	isr_trigger_Interrupt
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	isr_trigger_Interrupt, %function
+  25              	isr_trigger_Interrupt:
+  26              	.LFB4:
+  27              		.file 1 "Generated_Source\\PSoC4\\isr_trigger.c"
+   1:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+   2:Generated_Source\PSoC4/isr_trigger.c **** * File Name: isr_trigger.c  
+   3:Generated_Source\PSoC4/isr_trigger.c **** * Version 1.70
+   4:Generated_Source\PSoC4/isr_trigger.c **** *
+   5:Generated_Source\PSoC4/isr_trigger.c **** *  Description:
+   6:Generated_Source\PSoC4/isr_trigger.c **** *   API for controlling the state of an interrupt.
+   7:Generated_Source\PSoC4/isr_trigger.c **** *
+   8:Generated_Source\PSoC4/isr_trigger.c **** *
+   9:Generated_Source\PSoC4/isr_trigger.c **** *  Note:
+  10:Generated_Source\PSoC4/isr_trigger.c **** *
+  11:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+  12:Generated_Source\PSoC4/isr_trigger.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  13:Generated_Source\PSoC4/isr_trigger.c **** * You may use this file only in accordance with the license, terms, conditions, 
+  14:Generated_Source\PSoC4/isr_trigger.c **** * disclaimers, and limitations in the end user license agreement accompanying 
+  15:Generated_Source\PSoC4/isr_trigger.c **** * the software package with which this file was provided.
+  16:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+  17:Generated_Source\PSoC4/isr_trigger.c **** 
+  18:Generated_Source\PSoC4/isr_trigger.c **** 
+  19:Generated_Source\PSoC4/isr_trigger.c **** #include <cydevice_trm.h>
+  20:Generated_Source\PSoC4/isr_trigger.c **** #include <CyLib.h>
+  21:Generated_Source\PSoC4/isr_trigger.c **** #include <isr_trigger.h>
+  22:Generated_Source\PSoC4/isr_trigger.c **** #include "cyapicallbacks.h"
+  23:Generated_Source\PSoC4/isr_trigger.c **** 
+  24:Generated_Source\PSoC4/isr_trigger.c **** #if !defined(isr_trigger__REMOVED) /* Check for removal by optimization */
+  25:Generated_Source\PSoC4/isr_trigger.c **** 
+  26:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+  27:Generated_Source\PSoC4/isr_trigger.c **** *  Place your includes, defines and code here 
+  28:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************/
+  29:Generated_Source\PSoC4/isr_trigger.c **** /* `#START isr_trigger_intc` */
+  30:Generated_Source\PSoC4/isr_trigger.c **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 2
+
+
+  31:Generated_Source\PSoC4/isr_trigger.c **** /* `#END` */
+  32:Generated_Source\PSoC4/isr_trigger.c **** 
+  33:Generated_Source\PSoC4/isr_trigger.c **** extern cyisraddress CyRamVectors[CYINT_IRQ_BASE + CY_NUM_INTERRUPTS];
+  34:Generated_Source\PSoC4/isr_trigger.c **** 
+  35:Generated_Source\PSoC4/isr_trigger.c **** /* Declared in startup, used to set unused interrupts to. */
+  36:Generated_Source\PSoC4/isr_trigger.c **** CY_ISR_PROTO(IntDefaultHandler);
+  37:Generated_Source\PSoC4/isr_trigger.c **** 
+  38:Generated_Source\PSoC4/isr_trigger.c **** 
+  39:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+  40:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_Start
+  41:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+  42:Generated_Source\PSoC4/isr_trigger.c **** *
+  43:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+  44:Generated_Source\PSoC4/isr_trigger.c **** *  Set up the interrupt and enable it. This function disables the interrupt, 
+  45:Generated_Source\PSoC4/isr_trigger.c **** *  sets the default interrupt vector, sets the priority from the value in the
+  46:Generated_Source\PSoC4/isr_trigger.c **** *  Design Wide Resources Interrupt Editor, then enables the interrupt to the 
+  47:Generated_Source\PSoC4/isr_trigger.c **** *  interrupt controller.
+  48:Generated_Source\PSoC4/isr_trigger.c **** *
+  49:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:  
+  50:Generated_Source\PSoC4/isr_trigger.c **** *   None
+  51:Generated_Source\PSoC4/isr_trigger.c **** *
+  52:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+  53:Generated_Source\PSoC4/isr_trigger.c **** *   None
+  54:Generated_Source\PSoC4/isr_trigger.c **** *
+  55:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+  56:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_Start(void)
+  57:Generated_Source\PSoC4/isr_trigger.c **** {
+  58:Generated_Source\PSoC4/isr_trigger.c ****     /* For all we know the interrupt is active. */
+  59:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_Disable();
+  60:Generated_Source\PSoC4/isr_trigger.c **** 
+  61:Generated_Source\PSoC4/isr_trigger.c ****     /* Set the ISR to point to the isr_trigger Interrupt. */
+  62:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_SetVector(&isr_trigger_Interrupt);
+  63:Generated_Source\PSoC4/isr_trigger.c **** 
+  64:Generated_Source\PSoC4/isr_trigger.c ****     /* Set the priority. */
+  65:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_SetPriority((uint8)isr_trigger_INTC_PRIOR_NUMBER);
+  66:Generated_Source\PSoC4/isr_trigger.c **** 
+  67:Generated_Source\PSoC4/isr_trigger.c ****     /* Enable it. */
+  68:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_Enable();
+  69:Generated_Source\PSoC4/isr_trigger.c **** }
+  70:Generated_Source\PSoC4/isr_trigger.c **** 
+  71:Generated_Source\PSoC4/isr_trigger.c **** 
+  72:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+  73:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_StartEx
+  74:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+  75:Generated_Source\PSoC4/isr_trigger.c **** *
+  76:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+  77:Generated_Source\PSoC4/isr_trigger.c **** *  Sets up the interrupt and enables it. This function disables the interrupt,
+  78:Generated_Source\PSoC4/isr_trigger.c **** *  sets the interrupt vector based on the address passed in, sets the priority 
+  79:Generated_Source\PSoC4/isr_trigger.c **** *  from the value in the Design Wide Resources Interrupt Editor, then enables 
+  80:Generated_Source\PSoC4/isr_trigger.c **** *  the interrupt to the interrupt controller.
+  81:Generated_Source\PSoC4/isr_trigger.c **** *  
+  82:Generated_Source\PSoC4/isr_trigger.c **** *  When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
+  83:Generated_Source\PSoC4/isr_trigger.c **** *  used to provide consistent definition across compilers:
+  84:Generated_Source\PSoC4/isr_trigger.c **** *  
+  85:Generated_Source\PSoC4/isr_trigger.c **** *  Function definition example:
+  86:Generated_Source\PSoC4/isr_trigger.c **** *   CY_ISR(MyISR)
+  87:Generated_Source\PSoC4/isr_trigger.c **** *   {
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 3
+
+
+  88:Generated_Source\PSoC4/isr_trigger.c **** *   }
+  89:Generated_Source\PSoC4/isr_trigger.c **** *   Function prototype example:
+  90:Generated_Source\PSoC4/isr_trigger.c **** *   CY_ISR_PROTO(MyISR);
+  91:Generated_Source\PSoC4/isr_trigger.c **** *
+  92:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:  
+  93:Generated_Source\PSoC4/isr_trigger.c **** *   address: Address of the ISR to set in the interrupt vector table.
+  94:Generated_Source\PSoC4/isr_trigger.c **** *
+  95:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+  96:Generated_Source\PSoC4/isr_trigger.c **** *   None
+  97:Generated_Source\PSoC4/isr_trigger.c **** *
+  98:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+  99:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_StartEx(cyisraddress address)
+ 100:Generated_Source\PSoC4/isr_trigger.c **** {
+ 101:Generated_Source\PSoC4/isr_trigger.c ****     /* For all we know the interrupt is active. */
+ 102:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_Disable();
+ 103:Generated_Source\PSoC4/isr_trigger.c **** 
+ 104:Generated_Source\PSoC4/isr_trigger.c ****     /* Set the ISR to point to the isr_trigger Interrupt. */
+ 105:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_SetVector(address);
+ 106:Generated_Source\PSoC4/isr_trigger.c **** 
+ 107:Generated_Source\PSoC4/isr_trigger.c ****     /* Set the priority. */
+ 108:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_SetPriority((uint8)isr_trigger_INTC_PRIOR_NUMBER);
+ 109:Generated_Source\PSoC4/isr_trigger.c **** 
+ 110:Generated_Source\PSoC4/isr_trigger.c ****     /* Enable it. */
+ 111:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_Enable();
+ 112:Generated_Source\PSoC4/isr_trigger.c **** }
+ 113:Generated_Source\PSoC4/isr_trigger.c **** 
+ 114:Generated_Source\PSoC4/isr_trigger.c **** 
+ 115:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 116:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_Stop
+ 117:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 118:Generated_Source\PSoC4/isr_trigger.c **** *
+ 119:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 120:Generated_Source\PSoC4/isr_trigger.c **** *   Disables and removes the interrupt.
+ 121:Generated_Source\PSoC4/isr_trigger.c **** *
+ 122:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:  
+ 123:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 124:Generated_Source\PSoC4/isr_trigger.c **** *
+ 125:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 126:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 127:Generated_Source\PSoC4/isr_trigger.c **** *
+ 128:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 129:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_Stop(void)
+ 130:Generated_Source\PSoC4/isr_trigger.c **** {
+ 131:Generated_Source\PSoC4/isr_trigger.c ****     /* Disable this interrupt. */
+ 132:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_Disable();
+ 133:Generated_Source\PSoC4/isr_trigger.c **** 
+ 134:Generated_Source\PSoC4/isr_trigger.c ****     /* Set the ISR to point to the passive one. */
+ 135:Generated_Source\PSoC4/isr_trigger.c ****     isr_trigger_SetVector(&IntDefaultHandler);
+ 136:Generated_Source\PSoC4/isr_trigger.c **** }
+ 137:Generated_Source\PSoC4/isr_trigger.c **** 
+ 138:Generated_Source\PSoC4/isr_trigger.c **** 
+ 139:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 140:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_Interrupt
+ 141:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 142:Generated_Source\PSoC4/isr_trigger.c **** *
+ 143:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 144:Generated_Source\PSoC4/isr_trigger.c **** *   The default Interrupt Service Routine for isr_trigger.
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 4
+
+
+ 145:Generated_Source\PSoC4/isr_trigger.c **** *
+ 146:Generated_Source\PSoC4/isr_trigger.c **** *   Add custom code between the START and END comments to keep the next version
+ 147:Generated_Source\PSoC4/isr_trigger.c **** *   of this file from over-writing your code.
+ 148:Generated_Source\PSoC4/isr_trigger.c **** *
+ 149:Generated_Source\PSoC4/isr_trigger.c **** *   Note You may use either the default ISR by using this API, or you may define
+ 150:Generated_Source\PSoC4/isr_trigger.c **** *   your own separate ISR through ISR_StartEx().
+ 151:Generated_Source\PSoC4/isr_trigger.c **** *
+ 152:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:  
+ 153:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 154:Generated_Source\PSoC4/isr_trigger.c **** *
+ 155:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 156:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 157:Generated_Source\PSoC4/isr_trigger.c **** *
+ 158:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 159:Generated_Source\PSoC4/isr_trigger.c **** CY_ISR(isr_trigger_Interrupt)
+ 160:Generated_Source\PSoC4/isr_trigger.c **** {
+  28              		.loc 1 160 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+ 161:Generated_Source\PSoC4/isr_trigger.c ****     #ifdef isr_trigger_INTERRUPT_INTERRUPT_CALLBACK
+ 162:Generated_Source\PSoC4/isr_trigger.c ****         isr_trigger_Interrupt_InterruptCallback();
+ 163:Generated_Source\PSoC4/isr_trigger.c ****     #endif /* isr_trigger_INTERRUPT_INTERRUPT_CALLBACK */ 
+ 164:Generated_Source\PSoC4/isr_trigger.c **** 
+ 165:Generated_Source\PSoC4/isr_trigger.c ****     /*  Place your Interrupt code here. */
+ 166:Generated_Source\PSoC4/isr_trigger.c ****     /* `#START isr_trigger_Interrupt` */
+ 167:Generated_Source\PSoC4/isr_trigger.c **** 
+ 168:Generated_Source\PSoC4/isr_trigger.c ****     /* `#END` */
+ 169:Generated_Source\PSoC4/isr_trigger.c **** }
+  33              		.loc 1 169 0
+  34              		@ sp needed
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE4:
+  38              		.size	isr_trigger_Interrupt, .-isr_trigger_Interrupt
+  39 0002 C046     		.section	.text.isr_trigger_SetVector,"ax",%progbits
+  40              		.align	2
+  41              		.global	isr_trigger_SetVector
+  42              		.code	16
+  43              		.thumb_func
+  44              		.type	isr_trigger_SetVector, %function
+  45              	isr_trigger_SetVector:
+  46              	.LFB5:
+ 170:Generated_Source\PSoC4/isr_trigger.c **** 
+ 171:Generated_Source\PSoC4/isr_trigger.c **** 
+ 172:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 173:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_SetVector
+ 174:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 175:Generated_Source\PSoC4/isr_trigger.c **** *
+ 176:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 177:Generated_Source\PSoC4/isr_trigger.c **** *   Change the ISR vector for the Interrupt. Note calling isr_trigger_Start
+ 178:Generated_Source\PSoC4/isr_trigger.c **** *   will override any effect this method would have had. To set the vector 
+ 179:Generated_Source\PSoC4/isr_trigger.c **** *   before the component has been started use isr_trigger_StartEx instead.
+ 180:Generated_Source\PSoC4/isr_trigger.c **** * 
+ 181:Generated_Source\PSoC4/isr_trigger.c **** *   When defining ISR functions, the CY_ISR and CY_ISR_PROTO macros should be 
+ 182:Generated_Source\PSoC4/isr_trigger.c **** *   used to provide consistent definition across compilers:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 5
+
+
+ 183:Generated_Source\PSoC4/isr_trigger.c **** *
+ 184:Generated_Source\PSoC4/isr_trigger.c **** *   Function definition example:
+ 185:Generated_Source\PSoC4/isr_trigger.c **** *   CY_ISR(MyISR)
+ 186:Generated_Source\PSoC4/isr_trigger.c **** *   {
+ 187:Generated_Source\PSoC4/isr_trigger.c **** *   }
+ 188:Generated_Source\PSoC4/isr_trigger.c **** *
+ 189:Generated_Source\PSoC4/isr_trigger.c **** *   Function prototype example:
+ 190:Generated_Source\PSoC4/isr_trigger.c **** *     CY_ISR_PROTO(MyISR);
+ 191:Generated_Source\PSoC4/isr_trigger.c **** *
+ 192:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 193:Generated_Source\PSoC4/isr_trigger.c **** *   address: Address of the ISR to set in the interrupt vector table.
+ 194:Generated_Source\PSoC4/isr_trigger.c **** *
+ 195:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 196:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 197:Generated_Source\PSoC4/isr_trigger.c **** *
+ 198:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 199:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_SetVector(cyisraddress address)
+ 200:Generated_Source\PSoC4/isr_trigger.c **** {
+  47              		.loc 1 200 0
+  48              		.cfi_startproc
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51              		@ link register save eliminated.
+  52              	.LVL0:
+ 201:Generated_Source\PSoC4/isr_trigger.c ****     CyRamVectors[CYINT_IRQ_BASE + isr_trigger__INTC_NUMBER] = address;
+  53              		.loc 1 201 0
+  54 0000 014B     		ldr	r3, .L3
+  55 0002 1865     		str	r0, [r3, #80]
+ 202:Generated_Source\PSoC4/isr_trigger.c **** }
+  56              		.loc 1 202 0
+  57              		@ sp needed
+  58 0004 7047     		bx	lr
+  59              	.L4:
+  60 0006 C046     		.align	2
+  61              	.L3:
+  62 0008 00000000 		.word	CyRamVectors
+  63              		.cfi_endproc
+  64              	.LFE5:
+  65              		.size	isr_trigger_SetVector, .-isr_trigger_SetVector
+  66              		.section	.text.isr_trigger_GetVector,"ax",%progbits
+  67              		.align	2
+  68              		.global	isr_trigger_GetVector
+  69              		.code	16
+  70              		.thumb_func
+  71              		.type	isr_trigger_GetVector, %function
+  72              	isr_trigger_GetVector:
+  73              	.LFB6:
+ 203:Generated_Source\PSoC4/isr_trigger.c **** 
+ 204:Generated_Source\PSoC4/isr_trigger.c **** 
+ 205:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 206:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_GetVector
+ 207:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 208:Generated_Source\PSoC4/isr_trigger.c **** *
+ 209:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 210:Generated_Source\PSoC4/isr_trigger.c **** *   Gets the "address" of the current ISR vector for the Interrupt.
+ 211:Generated_Source\PSoC4/isr_trigger.c **** *
+ 212:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 6
+
+
+ 213:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 214:Generated_Source\PSoC4/isr_trigger.c **** *
+ 215:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 216:Generated_Source\PSoC4/isr_trigger.c **** *   Address of the ISR in the interrupt vector table.
+ 217:Generated_Source\PSoC4/isr_trigger.c **** *
+ 218:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 219:Generated_Source\PSoC4/isr_trigger.c **** cyisraddress isr_trigger_GetVector(void)
+ 220:Generated_Source\PSoC4/isr_trigger.c **** {
+  74              		.loc 1 220 0
+  75              		.cfi_startproc
+  76              		@ args = 0, pretend = 0, frame = 0
+  77              		@ frame_needed = 0, uses_anonymous_args = 0
+  78              		@ link register save eliminated.
+ 221:Generated_Source\PSoC4/isr_trigger.c ****     return CyRamVectors[CYINT_IRQ_BASE + isr_trigger__INTC_NUMBER];
+  79              		.loc 1 221 0
+  80 0000 014B     		ldr	r3, .L6
+  81 0002 186D     		ldr	r0, [r3, #80]
+ 222:Generated_Source\PSoC4/isr_trigger.c **** }
+  82              		.loc 1 222 0
+  83              		@ sp needed
+  84 0004 7047     		bx	lr
+  85              	.L7:
+  86 0006 C046     		.align	2
+  87              	.L6:
+  88 0008 00000000 		.word	CyRamVectors
+  89              		.cfi_endproc
+  90              	.LFE6:
+  91              		.size	isr_trigger_GetVector, .-isr_trigger_GetVector
+  92              		.section	.text.isr_trigger_SetPriority,"ax",%progbits
+  93              		.align	2
+  94              		.global	isr_trigger_SetPriority
+  95              		.code	16
+  96              		.thumb_func
+  97              		.type	isr_trigger_SetPriority, %function
+  98              	isr_trigger_SetPriority:
+  99              	.LFB7:
+ 223:Generated_Source\PSoC4/isr_trigger.c **** 
+ 224:Generated_Source\PSoC4/isr_trigger.c **** 
+ 225:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 226:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_SetPriority
+ 227:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 228:Generated_Source\PSoC4/isr_trigger.c **** *
+ 229:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 230:Generated_Source\PSoC4/isr_trigger.c **** *   Sets the Priority of the Interrupt. 
+ 231:Generated_Source\PSoC4/isr_trigger.c **** *
+ 232:Generated_Source\PSoC4/isr_trigger.c **** *   Note calling isr_trigger_Start or isr_trigger_StartEx will 
+ 233:Generated_Source\PSoC4/isr_trigger.c **** *   override any effect this API would have had. This API should only be called
+ 234:Generated_Source\PSoC4/isr_trigger.c **** *   after isr_trigger_Start or isr_trigger_StartEx has been called. 
+ 235:Generated_Source\PSoC4/isr_trigger.c **** *   To set the initial priority for the component, use the Design-Wide Resources
+ 236:Generated_Source\PSoC4/isr_trigger.c **** *   Interrupt Editor.
+ 237:Generated_Source\PSoC4/isr_trigger.c **** *
+ 238:Generated_Source\PSoC4/isr_trigger.c **** *   Note This API has no effect on Non-maskable interrupt NMI).
+ 239:Generated_Source\PSoC4/isr_trigger.c **** *
+ 240:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 241:Generated_Source\PSoC4/isr_trigger.c **** *   priority: Priority of the interrupt, 0 being the highest priority
+ 242:Generated_Source\PSoC4/isr_trigger.c **** *             PSoC 3 and PSoC 5LP: Priority is from 0 to 7.
+ 243:Generated_Source\PSoC4/isr_trigger.c **** *             PSoC 4: Priority is from 0 to 3.
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 7
+
+
+ 244:Generated_Source\PSoC4/isr_trigger.c **** *
+ 245:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 246:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 247:Generated_Source\PSoC4/isr_trigger.c **** *
+ 248:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 249:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_SetPriority(uint8 priority)
+ 250:Generated_Source\PSoC4/isr_trigger.c **** {
+ 100              		.loc 1 250 0
+ 101              		.cfi_startproc
+ 102              		@ args = 0, pretend = 0, frame = 0
+ 103              		@ frame_needed = 0, uses_anonymous_args = 0
+ 104              	.LVL1:
+ 105 0000 10B5     		push	{r4, lr}
+ 106              		.cfi_def_cfa_offset 8
+ 107              		.cfi_offset 4, -8
+ 108              		.cfi_offset 14, -4
+ 109 0002 0400     		movs	r4, r0
+ 110              	.LVL2:
+ 251:Generated_Source\PSoC4/isr_trigger.c **** 	uint8 interruptState;
+ 252:Generated_Source\PSoC4/isr_trigger.c ****     uint32 priorityOffset = ((isr_trigger__INTC_NUMBER % 4u) * 8u) + 6u;
+ 253:Generated_Source\PSoC4/isr_trigger.c ****     
+ 254:Generated_Source\PSoC4/isr_trigger.c **** 	interruptState = CyEnterCriticalSection();
+ 111              		.loc 1 254 0
+ 112 0004 FFF7FEFF 		bl	CyEnterCriticalSection
+ 113              	.LVL3:
+ 255:Generated_Source\PSoC4/isr_trigger.c ****     *isr_trigger_INTC_PRIOR = (*isr_trigger_INTC_PRIOR & (uint32)(~isr_trigger__INTC_PRIOR_MASK)) |
+ 114              		.loc 1 255 0
+ 115 0008 044A     		ldr	r2, .L9
+ 116 000a 1368     		ldr	r3, [r2]
+ 117 000c C021     		movs	r1, #192
+ 118 000e 8B43     		bics	r3, r1
+ 256:Generated_Source\PSoC4/isr_trigger.c ****                                     ((uint32)priority << priorityOffset);
+ 119              		.loc 1 256 0
+ 120 0010 A401     		lsls	r4, r4, #6
+ 255:Generated_Source\PSoC4/isr_trigger.c ****     *isr_trigger_INTC_PRIOR = (*isr_trigger_INTC_PRIOR & (uint32)(~isr_trigger__INTC_PRIOR_MASK)) |
+ 121              		.loc 1 255 0
+ 122 0012 1C43     		orrs	r4, r3
+ 123 0014 1460     		str	r4, [r2]
+ 257:Generated_Source\PSoC4/isr_trigger.c **** 	CyExitCriticalSection(interruptState);
+ 124              		.loc 1 257 0
+ 125 0016 FFF7FEFF 		bl	CyExitCriticalSection
+ 126              	.LVL4:
+ 258:Generated_Source\PSoC4/isr_trigger.c **** }
+ 127              		.loc 1 258 0
+ 128              		@ sp needed
+ 129 001a 10BD     		pop	{r4, pc}
+ 130              	.L10:
+ 131              		.align	2
+ 132              	.L9:
+ 133 001c 04E400E0 		.word	-536812540
+ 134              		.cfi_endproc
+ 135              	.LFE7:
+ 136              		.size	isr_trigger_SetPriority, .-isr_trigger_SetPriority
+ 137              		.section	.text.isr_trigger_GetPriority,"ax",%progbits
+ 138              		.align	2
+ 139              		.global	isr_trigger_GetPriority
+ 140              		.code	16
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 8
+
+
+ 141              		.thumb_func
+ 142              		.type	isr_trigger_GetPriority, %function
+ 143              	isr_trigger_GetPriority:
+ 144              	.LFB8:
+ 259:Generated_Source\PSoC4/isr_trigger.c **** 
+ 260:Generated_Source\PSoC4/isr_trigger.c **** 
+ 261:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 262:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_GetPriority
+ 263:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 264:Generated_Source\PSoC4/isr_trigger.c **** *
+ 265:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 266:Generated_Source\PSoC4/isr_trigger.c **** *   Gets the Priority of the Interrupt.
+ 267:Generated_Source\PSoC4/isr_trigger.c **** *
+ 268:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 269:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 270:Generated_Source\PSoC4/isr_trigger.c **** *
+ 271:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 272:Generated_Source\PSoC4/isr_trigger.c **** *   Priority of the interrupt, 0 being the highest priority
+ 273:Generated_Source\PSoC4/isr_trigger.c **** *    PSoC 3 and PSoC 5LP: Priority is from 0 to 7.
+ 274:Generated_Source\PSoC4/isr_trigger.c **** *    PSoC 4: Priority is from 0 to 3.
+ 275:Generated_Source\PSoC4/isr_trigger.c **** *
+ 276:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 277:Generated_Source\PSoC4/isr_trigger.c **** uint8 isr_trigger_GetPriority(void)
+ 278:Generated_Source\PSoC4/isr_trigger.c **** {
+ 145              		.loc 1 278 0
+ 146              		.cfi_startproc
+ 147              		@ args = 0, pretend = 0, frame = 0
+ 148              		@ frame_needed = 0, uses_anonymous_args = 0
+ 149              		@ link register save eliminated.
+ 150              	.LVL5:
+ 279:Generated_Source\PSoC4/isr_trigger.c ****     uint32 priority;
+ 280:Generated_Source\PSoC4/isr_trigger.c **** 	uint32 priorityOffset = ((isr_trigger__INTC_NUMBER % 4u) * 8u) + 6u;
+ 281:Generated_Source\PSoC4/isr_trigger.c **** 
+ 282:Generated_Source\PSoC4/isr_trigger.c ****     priority = (*isr_trigger_INTC_PRIOR & isr_trigger__INTC_PRIOR_MASK) >> priorityOffset;
+ 151              		.loc 1 282 0
+ 152 0000 024B     		ldr	r3, .L12
+ 153 0002 1868     		ldr	r0, [r3]
+ 154 0004 8009     		lsrs	r0, r0, #6
+ 155              	.LVL6:
+ 283:Generated_Source\PSoC4/isr_trigger.c **** 
+ 284:Generated_Source\PSoC4/isr_trigger.c ****     return (uint8)priority;
+ 156              		.loc 1 284 0
+ 157 0006 0323     		movs	r3, #3
+ 158 0008 1840     		ands	r0, r3
+ 159              	.LVL7:
+ 285:Generated_Source\PSoC4/isr_trigger.c **** }
+ 160              		.loc 1 285 0
+ 161              		@ sp needed
+ 162 000a 7047     		bx	lr
+ 163              	.L13:
+ 164              		.align	2
+ 165              	.L12:
+ 166 000c 04E400E0 		.word	-536812540
+ 167              		.cfi_endproc
+ 168              	.LFE8:
+ 169              		.size	isr_trigger_GetPriority, .-isr_trigger_GetPriority
+ 170              		.section	.text.isr_trigger_Enable,"ax",%progbits
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 9
+
+
+ 171              		.align	2
+ 172              		.global	isr_trigger_Enable
+ 173              		.code	16
+ 174              		.thumb_func
+ 175              		.type	isr_trigger_Enable, %function
+ 176              	isr_trigger_Enable:
+ 177              	.LFB9:
+ 286:Generated_Source\PSoC4/isr_trigger.c **** 
+ 287:Generated_Source\PSoC4/isr_trigger.c **** 
+ 288:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 289:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_Enable
+ 290:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 291:Generated_Source\PSoC4/isr_trigger.c **** *
+ 292:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 293:Generated_Source\PSoC4/isr_trigger.c **** *   Enables the interrupt to the interrupt controller. Do not call this function
+ 294:Generated_Source\PSoC4/isr_trigger.c **** *   unless ISR_Start() has been called or the functionality of the ISR_Start() 
+ 295:Generated_Source\PSoC4/isr_trigger.c **** *   function, which sets the vector and the priority, has been called.
+ 296:Generated_Source\PSoC4/isr_trigger.c **** *
+ 297:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 298:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 299:Generated_Source\PSoC4/isr_trigger.c **** *
+ 300:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 301:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 302:Generated_Source\PSoC4/isr_trigger.c **** *
+ 303:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 304:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_Enable(void)
+ 305:Generated_Source\PSoC4/isr_trigger.c **** {
+ 178              		.loc 1 305 0
+ 179              		.cfi_startproc
+ 180              		@ args = 0, pretend = 0, frame = 0
+ 181              		@ frame_needed = 0, uses_anonymous_args = 0
+ 182              		@ link register save eliminated.
+ 306:Generated_Source\PSoC4/isr_trigger.c ****     /* Enable the general interrupt. */
+ 307:Generated_Source\PSoC4/isr_trigger.c ****     *isr_trigger_INTC_SET_EN = isr_trigger__INTC_MASK;
+ 183              		.loc 1 307 0
+ 184 0000 1022     		movs	r2, #16
+ 185 0002 014B     		ldr	r3, .L15
+ 186 0004 1A60     		str	r2, [r3]
+ 308:Generated_Source\PSoC4/isr_trigger.c **** }
+ 187              		.loc 1 308 0
+ 188              		@ sp needed
+ 189 0006 7047     		bx	lr
+ 190              	.L16:
+ 191              		.align	2
+ 192              	.L15:
+ 193 0008 00E100E0 		.word	-536813312
+ 194              		.cfi_endproc
+ 195              	.LFE9:
+ 196              		.size	isr_trigger_Enable, .-isr_trigger_Enable
+ 197              		.section	.text.isr_trigger_GetState,"ax",%progbits
+ 198              		.align	2
+ 199              		.global	isr_trigger_GetState
+ 200              		.code	16
+ 201              		.thumb_func
+ 202              		.type	isr_trigger_GetState, %function
+ 203              	isr_trigger_GetState:
+ 204              	.LFB10:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 10
+
+
+ 309:Generated_Source\PSoC4/isr_trigger.c **** 
+ 310:Generated_Source\PSoC4/isr_trigger.c **** 
+ 311:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 312:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_GetState
+ 313:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 314:Generated_Source\PSoC4/isr_trigger.c **** *
+ 315:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 316:Generated_Source\PSoC4/isr_trigger.c **** *   Gets the state (enabled, disabled) of the Interrupt.
+ 317:Generated_Source\PSoC4/isr_trigger.c **** *
+ 318:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 319:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 320:Generated_Source\PSoC4/isr_trigger.c **** *
+ 321:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 322:Generated_Source\PSoC4/isr_trigger.c **** *   1 if enabled, 0 if disabled.
+ 323:Generated_Source\PSoC4/isr_trigger.c **** *
+ 324:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 325:Generated_Source\PSoC4/isr_trigger.c **** uint8 isr_trigger_GetState(void)
+ 326:Generated_Source\PSoC4/isr_trigger.c **** {
+ 205              		.loc 1 326 0
+ 206              		.cfi_startproc
+ 207              		@ args = 0, pretend = 0, frame = 0
+ 208              		@ frame_needed = 0, uses_anonymous_args = 0
+ 209              		@ link register save eliminated.
+ 327:Generated_Source\PSoC4/isr_trigger.c ****     /* Get the state of the general interrupt. */
+ 328:Generated_Source\PSoC4/isr_trigger.c ****     return ((*isr_trigger_INTC_SET_EN & (uint32)isr_trigger__INTC_MASK) != 0u) ? 1u:0u;
+ 210              		.loc 1 328 0
+ 211 0000 034B     		ldr	r3, .L20
+ 212 0002 1B68     		ldr	r3, [r3]
+ 213 0004 DB06     		lsls	r3, r3, #27
+ 214 0006 01D5     		bpl	.L19
+ 215 0008 0120     		movs	r0, #1
+ 216 000a 00E0     		b	.L18
+ 217              	.L19:
+ 218 000c 0020     		movs	r0, #0
+ 219              	.L18:
+ 329:Generated_Source\PSoC4/isr_trigger.c **** }
+ 220              		.loc 1 329 0 discriminator 4
+ 221              		@ sp needed
+ 222 000e 7047     		bx	lr
+ 223              	.L21:
+ 224              		.align	2
+ 225              	.L20:
+ 226 0010 00E100E0 		.word	-536813312
+ 227              		.cfi_endproc
+ 228              	.LFE10:
+ 229              		.size	isr_trigger_GetState, .-isr_trigger_GetState
+ 230              		.section	.text.isr_trigger_Disable,"ax",%progbits
+ 231              		.align	2
+ 232              		.global	isr_trigger_Disable
+ 233              		.code	16
+ 234              		.thumb_func
+ 235              		.type	isr_trigger_Disable, %function
+ 236              	isr_trigger_Disable:
+ 237              	.LFB11:
+ 330:Generated_Source\PSoC4/isr_trigger.c **** 
+ 331:Generated_Source\PSoC4/isr_trigger.c **** 
+ 332:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 11
+
+
+ 333:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_Disable
+ 334:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 335:Generated_Source\PSoC4/isr_trigger.c **** *
+ 336:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 337:Generated_Source\PSoC4/isr_trigger.c **** *   Disables the Interrupt in the interrupt controller.
+ 338:Generated_Source\PSoC4/isr_trigger.c **** *
+ 339:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 340:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 341:Generated_Source\PSoC4/isr_trigger.c **** *
+ 342:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 343:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 344:Generated_Source\PSoC4/isr_trigger.c **** *
+ 345:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 346:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_Disable(void)
+ 347:Generated_Source\PSoC4/isr_trigger.c **** {
+ 238              		.loc 1 347 0
+ 239              		.cfi_startproc
+ 240              		@ args = 0, pretend = 0, frame = 0
+ 241              		@ frame_needed = 0, uses_anonymous_args = 0
+ 242              		@ link register save eliminated.
+ 348:Generated_Source\PSoC4/isr_trigger.c ****     /* Disable the general interrupt. */
+ 349:Generated_Source\PSoC4/isr_trigger.c ****     *isr_trigger_INTC_CLR_EN = isr_trigger__INTC_MASK;
+ 243              		.loc 1 349 0
+ 244 0000 1022     		movs	r2, #16
+ 245 0002 014B     		ldr	r3, .L23
+ 246 0004 1A60     		str	r2, [r3]
+ 350:Generated_Source\PSoC4/isr_trigger.c **** }
+ 247              		.loc 1 350 0
+ 248              		@ sp needed
+ 249 0006 7047     		bx	lr
+ 250              	.L24:
+ 251              		.align	2
+ 252              	.L23:
+ 253 0008 80E100E0 		.word	-536813184
+ 254              		.cfi_endproc
+ 255              	.LFE11:
+ 256              		.size	isr_trigger_Disable, .-isr_trigger_Disable
+ 257              		.section	.text.isr_trigger_Start,"ax",%progbits
+ 258              		.align	2
+ 259              		.global	isr_trigger_Start
+ 260              		.code	16
+ 261              		.thumb_func
+ 262              		.type	isr_trigger_Start, %function
+ 263              	isr_trigger_Start:
+ 264              	.LFB1:
+  57:Generated_Source\PSoC4/isr_trigger.c ****     /* For all we know the interrupt is active. */
+ 265              		.loc 1 57 0
+ 266              		.cfi_startproc
+ 267              		@ args = 0, pretend = 0, frame = 0
+ 268              		@ frame_needed = 0, uses_anonymous_args = 0
+ 269 0000 10B5     		push	{r4, lr}
+ 270              		.cfi_def_cfa_offset 8
+ 271              		.cfi_offset 4, -8
+ 272              		.cfi_offset 14, -4
+  59:Generated_Source\PSoC4/isr_trigger.c **** 
+ 273              		.loc 1 59 0
+ 274 0002 FFF7FEFF 		bl	isr_trigger_Disable
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 12
+
+
+ 275              	.LVL8:
+  62:Generated_Source\PSoC4/isr_trigger.c **** 
+ 276              		.loc 1 62 0
+ 277 0006 0448     		ldr	r0, .L26
+ 278 0008 FFF7FEFF 		bl	isr_trigger_SetVector
+ 279              	.LVL9:
+  65:Generated_Source\PSoC4/isr_trigger.c **** 
+ 280              		.loc 1 65 0
+ 281 000c 0320     		movs	r0, #3
+ 282 000e FFF7FEFF 		bl	isr_trigger_SetPriority
+ 283              	.LVL10:
+  68:Generated_Source\PSoC4/isr_trigger.c **** }
+ 284              		.loc 1 68 0
+ 285 0012 FFF7FEFF 		bl	isr_trigger_Enable
+ 286              	.LVL11:
+  69:Generated_Source\PSoC4/isr_trigger.c **** 
+ 287              		.loc 1 69 0
+ 288              		@ sp needed
+ 289 0016 10BD     		pop	{r4, pc}
+ 290              	.L27:
+ 291              		.align	2
+ 292              	.L26:
+ 293 0018 00000000 		.word	isr_trigger_Interrupt
+ 294              		.cfi_endproc
+ 295              	.LFE1:
+ 296              		.size	isr_trigger_Start, .-isr_trigger_Start
+ 297              		.section	.text.isr_trigger_StartEx,"ax",%progbits
+ 298              		.align	2
+ 299              		.global	isr_trigger_StartEx
+ 300              		.code	16
+ 301              		.thumb_func
+ 302              		.type	isr_trigger_StartEx, %function
+ 303              	isr_trigger_StartEx:
+ 304              	.LFB2:
+ 100:Generated_Source\PSoC4/isr_trigger.c ****     /* For all we know the interrupt is active. */
+ 305              		.loc 1 100 0
+ 306              		.cfi_startproc
+ 307              		@ args = 0, pretend = 0, frame = 0
+ 308              		@ frame_needed = 0, uses_anonymous_args = 0
+ 309              	.LVL12:
+ 310 0000 10B5     		push	{r4, lr}
+ 311              		.cfi_def_cfa_offset 8
+ 312              		.cfi_offset 4, -8
+ 313              		.cfi_offset 14, -4
+ 314 0002 0400     		movs	r4, r0
+ 102:Generated_Source\PSoC4/isr_trigger.c **** 
+ 315              		.loc 1 102 0
+ 316 0004 FFF7FEFF 		bl	isr_trigger_Disable
+ 317              	.LVL13:
+ 105:Generated_Source\PSoC4/isr_trigger.c **** 
+ 318              		.loc 1 105 0
+ 319 0008 2000     		movs	r0, r4
+ 320 000a FFF7FEFF 		bl	isr_trigger_SetVector
+ 321              	.LVL14:
+ 108:Generated_Source\PSoC4/isr_trigger.c **** 
+ 322              		.loc 1 108 0
+ 323 000e 0320     		movs	r0, #3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 13
+
+
+ 324 0010 FFF7FEFF 		bl	isr_trigger_SetPriority
+ 325              	.LVL15:
+ 111:Generated_Source\PSoC4/isr_trigger.c **** }
+ 326              		.loc 1 111 0
+ 327 0014 FFF7FEFF 		bl	isr_trigger_Enable
+ 328              	.LVL16:
+ 112:Generated_Source\PSoC4/isr_trigger.c **** 
+ 329              		.loc 1 112 0
+ 330              		@ sp needed
+ 331              	.LVL17:
+ 332 0018 10BD     		pop	{r4, pc}
+ 333              		.cfi_endproc
+ 334              	.LFE2:
+ 335              		.size	isr_trigger_StartEx, .-isr_trigger_StartEx
+ 336 001a C046     		.section	.text.isr_trigger_Stop,"ax",%progbits
+ 337              		.align	2
+ 338              		.global	isr_trigger_Stop
+ 339              		.code	16
+ 340              		.thumb_func
+ 341              		.type	isr_trigger_Stop, %function
+ 342              	isr_trigger_Stop:
+ 343              	.LFB3:
+ 130:Generated_Source\PSoC4/isr_trigger.c ****     /* Disable this interrupt. */
+ 344              		.loc 1 130 0
+ 345              		.cfi_startproc
+ 346              		@ args = 0, pretend = 0, frame = 0
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348 0000 10B5     		push	{r4, lr}
+ 349              		.cfi_def_cfa_offset 8
+ 350              		.cfi_offset 4, -8
+ 351              		.cfi_offset 14, -4
+ 132:Generated_Source\PSoC4/isr_trigger.c **** 
+ 352              		.loc 1 132 0
+ 353 0002 FFF7FEFF 		bl	isr_trigger_Disable
+ 354              	.LVL18:
+ 135:Generated_Source\PSoC4/isr_trigger.c **** }
+ 355              		.loc 1 135 0
+ 356 0006 0248     		ldr	r0, .L30
+ 357 0008 FFF7FEFF 		bl	isr_trigger_SetVector
+ 358              	.LVL19:
+ 136:Generated_Source\PSoC4/isr_trigger.c **** 
+ 359              		.loc 1 136 0
+ 360              		@ sp needed
+ 361 000c 10BD     		pop	{r4, pc}
+ 362              	.L31:
+ 363 000e C046     		.align	2
+ 364              	.L30:
+ 365 0010 00000000 		.word	IntDefaultHandler
+ 366              		.cfi_endproc
+ 367              	.LFE3:
+ 368              		.size	isr_trigger_Stop, .-isr_trigger_Stop
+ 369              		.section	.text.isr_trigger_SetPending,"ax",%progbits
+ 370              		.align	2
+ 371              		.global	isr_trigger_SetPending
+ 372              		.code	16
+ 373              		.thumb_func
+ 374              		.type	isr_trigger_SetPending, %function
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 14
+
+
+ 375              	isr_trigger_SetPending:
+ 376              	.LFB12:
+ 351:Generated_Source\PSoC4/isr_trigger.c **** 
+ 352:Generated_Source\PSoC4/isr_trigger.c **** 
+ 353:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 354:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_SetPending
+ 355:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 356:Generated_Source\PSoC4/isr_trigger.c **** *
+ 357:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 358:Generated_Source\PSoC4/isr_trigger.c **** *   Causes the Interrupt to enter the pending state, a software method of
+ 359:Generated_Source\PSoC4/isr_trigger.c **** *   generating the interrupt.
+ 360:Generated_Source\PSoC4/isr_trigger.c **** *
+ 361:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 362:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 363:Generated_Source\PSoC4/isr_trigger.c **** *
+ 364:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 365:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 366:Generated_Source\PSoC4/isr_trigger.c **** *
+ 367:Generated_Source\PSoC4/isr_trigger.c **** * Side Effects:
+ 368:Generated_Source\PSoC4/isr_trigger.c **** *   If interrupts are enabled and the interrupt is set up properly, the ISR is
+ 369:Generated_Source\PSoC4/isr_trigger.c **** *   entered (depending on the priority of this interrupt and other pending 
+ 370:Generated_Source\PSoC4/isr_trigger.c **** *   interrupts).
+ 371:Generated_Source\PSoC4/isr_trigger.c **** *
+ 372:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 373:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_SetPending(void)
+ 374:Generated_Source\PSoC4/isr_trigger.c **** {
+ 377              		.loc 1 374 0
+ 378              		.cfi_startproc
+ 379              		@ args = 0, pretend = 0, frame = 0
+ 380              		@ frame_needed = 0, uses_anonymous_args = 0
+ 381              		@ link register save eliminated.
+ 375:Generated_Source\PSoC4/isr_trigger.c ****     *isr_trigger_INTC_SET_PD = isr_trigger__INTC_MASK;
+ 382              		.loc 1 375 0
+ 383 0000 1022     		movs	r2, #16
+ 384 0002 014B     		ldr	r3, .L33
+ 385 0004 1A60     		str	r2, [r3]
+ 376:Generated_Source\PSoC4/isr_trigger.c **** }
+ 386              		.loc 1 376 0
+ 387              		@ sp needed
+ 388 0006 7047     		bx	lr
+ 389              	.L34:
+ 390              		.align	2
+ 391              	.L33:
+ 392 0008 00E200E0 		.word	-536813056
+ 393              		.cfi_endproc
+ 394              	.LFE12:
+ 395              		.size	isr_trigger_SetPending, .-isr_trigger_SetPending
+ 396              		.section	.text.isr_trigger_ClearPending,"ax",%progbits
+ 397              		.align	2
+ 398              		.global	isr_trigger_ClearPending
+ 399              		.code	16
+ 400              		.thumb_func
+ 401              		.type	isr_trigger_ClearPending, %function
+ 402              	isr_trigger_ClearPending:
+ 403              	.LFB13:
+ 377:Generated_Source\PSoC4/isr_trigger.c **** 
+ 378:Generated_Source\PSoC4/isr_trigger.c **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 15
+
+
+ 379:Generated_Source\PSoC4/isr_trigger.c **** /*******************************************************************************
+ 380:Generated_Source\PSoC4/isr_trigger.c **** * Function Name: isr_trigger_ClearPending
+ 381:Generated_Source\PSoC4/isr_trigger.c **** ********************************************************************************
+ 382:Generated_Source\PSoC4/isr_trigger.c **** *
+ 383:Generated_Source\PSoC4/isr_trigger.c **** * Summary:
+ 384:Generated_Source\PSoC4/isr_trigger.c **** *   Clears a pending interrupt in the interrupt controller.
+ 385:Generated_Source\PSoC4/isr_trigger.c **** *
+ 386:Generated_Source\PSoC4/isr_trigger.c **** *   Note Some interrupt sources are clear-on-read and require the block 
+ 387:Generated_Source\PSoC4/isr_trigger.c **** *   interrupt/status register to be read/cleared with the appropriate block API 
+ 388:Generated_Source\PSoC4/isr_trigger.c **** *   (GPIO, UART, and so on). Otherwise the ISR will continue to remain in 
+ 389:Generated_Source\PSoC4/isr_trigger.c **** *   pending state even though the interrupt itself is cleared using this API.
+ 390:Generated_Source\PSoC4/isr_trigger.c **** *
+ 391:Generated_Source\PSoC4/isr_trigger.c **** * Parameters:
+ 392:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 393:Generated_Source\PSoC4/isr_trigger.c **** *
+ 394:Generated_Source\PSoC4/isr_trigger.c **** * Return:
+ 395:Generated_Source\PSoC4/isr_trigger.c **** *   None
+ 396:Generated_Source\PSoC4/isr_trigger.c **** *
+ 397:Generated_Source\PSoC4/isr_trigger.c **** *******************************************************************************/
+ 398:Generated_Source\PSoC4/isr_trigger.c **** void isr_trigger_ClearPending(void)
+ 399:Generated_Source\PSoC4/isr_trigger.c **** {
+ 404              		.loc 1 399 0
+ 405              		.cfi_startproc
+ 406              		@ args = 0, pretend = 0, frame = 0
+ 407              		@ frame_needed = 0, uses_anonymous_args = 0
+ 408              		@ link register save eliminated.
+ 400:Generated_Source\PSoC4/isr_trigger.c ****     *isr_trigger_INTC_CLR_PD = isr_trigger__INTC_MASK;
+ 409              		.loc 1 400 0
+ 410 0000 1022     		movs	r2, #16
+ 411 0002 014B     		ldr	r3, .L36
+ 412 0004 1A60     		str	r2, [r3]
+ 401:Generated_Source\PSoC4/isr_trigger.c **** }
+ 413              		.loc 1 401 0
+ 414              		@ sp needed
+ 415 0006 7047     		bx	lr
+ 416              	.L37:
+ 417              		.align	2
+ 418              	.L36:
+ 419 0008 80E200E0 		.word	-536812928
+ 420              		.cfi_endproc
+ 421              	.LFE13:
+ 422              		.size	isr_trigger_ClearPending, .-isr_trigger_ClearPending
+ 423              		.text
+ 424              	.Letext0:
+ 425              		.file 2 "Generated_Source\\PSoC4/cytypes.h"
+ 426              		.file 3 "Generated_Source\\PSoC4/CyLib.h"
+ 427              		.section	.debug_info,"",%progbits
+ 428              	.Ldebug_info0:
+ 429 0000 01030000 		.4byte	0x301
+ 430 0004 0400     		.2byte	0x4
+ 431 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 432 000a 04       		.byte	0x4
+ 433 000b 01       		.uleb128 0x1
+ 434 000c C5010000 		.4byte	.LASF36
+ 435 0010 0C       		.byte	0xc
+ 436 0011 91020000 		.4byte	.LASF37
+ 437 0015 E4020000 		.4byte	.LASF38
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 16
+
+
+ 438 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 439 001d 00000000 		.4byte	0
+ 440 0021 00000000 		.4byte	.Ldebug_line0
+ 441 0025 02       		.uleb128 0x2
+ 442 0026 01       		.byte	0x1
+ 443 0027 06       		.byte	0x6
+ 444 0028 3C030000 		.4byte	.LASF0
+ 445 002c 02       		.uleb128 0x2
+ 446 002d 01       		.byte	0x1
+ 447 002e 08       		.byte	0x8
+ 448 002f B1000000 		.4byte	.LASF1
+ 449 0033 02       		.uleb128 0x2
+ 450 0034 02       		.byte	0x2
+ 451 0035 05       		.byte	0x5
+ 452 0036 87020000 		.4byte	.LASF2
+ 453 003a 02       		.uleb128 0x2
+ 454 003b 02       		.byte	0x2
+ 455 003c 07       		.byte	0x7
+ 456 003d 3E000000 		.4byte	.LASF3
+ 457 0041 02       		.uleb128 0x2
+ 458 0042 04       		.byte	0x4
+ 459 0043 05       		.byte	0x5
+ 460 0044 DB020000 		.4byte	.LASF4
+ 461 0048 02       		.uleb128 0x2
+ 462 0049 04       		.byte	0x4
+ 463 004a 07       		.byte	0x7
+ 464 004b E5000000 		.4byte	.LASF5
+ 465 004f 02       		.uleb128 0x2
+ 466 0050 08       		.byte	0x8
+ 467 0051 05       		.byte	0x5
+ 468 0052 5C020000 		.4byte	.LASF6
+ 469 0056 02       		.uleb128 0x2
+ 470 0057 08       		.byte	0x8
+ 471 0058 07       		.byte	0x7
+ 472 0059 9A000000 		.4byte	.LASF7
+ 473 005d 03       		.uleb128 0x3
+ 474 005e 04       		.byte	0x4
+ 475 005f 05       		.byte	0x5
+ 476 0060 696E7400 		.ascii	"int\000"
+ 477 0064 02       		.uleb128 0x2
+ 478 0065 04       		.byte	0x4
+ 479 0066 07       		.byte	0x7
+ 480 0067 82010000 		.4byte	.LASF8
+ 481 006b 04       		.uleb128 0x4
+ 482 006c F7000000 		.4byte	.LASF9
+ 483 0070 02       		.byte	0x2
+ 484 0071 E401     		.2byte	0x1e4
+ 485 0073 2C000000 		.4byte	0x2c
+ 486 0077 04       		.uleb128 0x4
+ 487 0078 64010000 		.4byte	.LASF10
+ 488 007c 02       		.byte	0x2
+ 489 007d E601     		.2byte	0x1e6
+ 490 007f 48000000 		.4byte	0x48
+ 491 0083 02       		.uleb128 0x2
+ 492 0084 04       		.byte	0x4
+ 493 0085 04       		.byte	0x4
+ 494 0086 7E000000 		.4byte	.LASF11
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 17
+
+
+ 495 008a 02       		.uleb128 0x2
+ 496 008b 08       		.byte	0x8
+ 497 008c 04       		.byte	0x4
+ 498 008d 33010000 		.4byte	.LASF12
+ 499 0091 02       		.uleb128 0x2
+ 500 0092 01       		.byte	0x1
+ 501 0093 08       		.byte	0x8
+ 502 0094 82020000 		.4byte	.LASF13
+ 503 0098 04       		.uleb128 0x4
+ 504 0099 12000000 		.4byte	.LASF14
+ 505 009d 02       		.byte	0x2
+ 506 009e 9002     		.2byte	0x290
+ 507 00a0 A4000000 		.4byte	0xa4
+ 508 00a4 05       		.uleb128 0x5
+ 509 00a5 77000000 		.4byte	0x77
+ 510 00a9 04       		.uleb128 0x4
+ 511 00aa B8010000 		.4byte	.LASF15
+ 512 00ae 02       		.byte	0x2
+ 513 00af A002     		.2byte	0x2a0
+ 514 00b1 B5000000 		.4byte	0xb5
+ 515 00b5 06       		.uleb128 0x6
+ 516 00b6 04       		.byte	0x4
+ 517 00b7 BB000000 		.4byte	0xbb
+ 518 00bb 07       		.uleb128 0x7
+ 519 00bc 02       		.uleb128 0x2
+ 520 00bd 08       		.byte	0x8
+ 521 00be 04       		.byte	0x4
+ 522 00bf 30030000 		.4byte	.LASF16
+ 523 00c3 02       		.uleb128 0x2
+ 524 00c4 04       		.byte	0x4
+ 525 00c5 07       		.byte	0x7
+ 526 00c6 53020000 		.4byte	.LASF17
+ 527 00ca 08       		.uleb128 0x8
+ 528 00cb 84000000 		.4byte	.LASF24
+ 529 00cf 01       		.byte	0x1
+ 530 00d0 9F       		.byte	0x9f
+ 531 00d1 00000000 		.4byte	.LFB4
+ 532 00d5 02000000 		.4byte	.LFE4-.LFB4
+ 533 00d9 01       		.uleb128 0x1
+ 534 00da 9C       		.byte	0x9c
+ 535 00db 09       		.uleb128 0x9
+ 536 00dc 3A010000 		.4byte	.LASF18
+ 537 00e0 01       		.byte	0x1
+ 538 00e1 C7       		.byte	0xc7
+ 539 00e2 00000000 		.4byte	.LFB5
+ 540 00e6 0C000000 		.4byte	.LFE5-.LFB5
+ 541 00ea 01       		.uleb128 0x1
+ 542 00eb 9C       		.byte	0x9c
+ 543 00ec FE000000 		.4byte	0xfe
+ 544 00f0 0A       		.uleb128 0xa
+ 545 00f1 25000000 		.4byte	.LASF20
+ 546 00f5 01       		.byte	0x1
+ 547 00f6 C7       		.byte	0xc7
+ 548 00f7 A9000000 		.4byte	0xa9
+ 549 00fb 01       		.uleb128 0x1
+ 550 00fc 50       		.byte	0x50
+ 551 00fd 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 18
+
+
+ 552 00fe 0B       		.uleb128 0xb
+ 553 00ff B6020000 		.4byte	.LASF26
+ 554 0103 01       		.byte	0x1
+ 555 0104 DB       		.byte	0xdb
+ 556 0105 A9000000 		.4byte	0xa9
+ 557 0109 00000000 		.4byte	.LFB6
+ 558 010d 0C000000 		.4byte	.LFE6-.LFB6
+ 559 0111 01       		.uleb128 0x1
+ 560 0112 9C       		.byte	0x9c
+ 561 0113 09       		.uleb128 0x9
+ 562 0114 6A020000 		.4byte	.LASF19
+ 563 0118 01       		.byte	0x1
+ 564 0119 F9       		.byte	0xf9
+ 565 011a 00000000 		.4byte	.LFB7
+ 566 011e 20000000 		.4byte	.LFE7-.LFB7
+ 567 0122 01       		.uleb128 0x1
+ 568 0123 9C       		.byte	0x9c
+ 569 0124 65010000 		.4byte	0x165
+ 570 0128 0C       		.uleb128 0xc
+ 571 0129 FD000000 		.4byte	.LASF21
+ 572 012d 01       		.byte	0x1
+ 573 012e F9       		.byte	0xf9
+ 574 012f 6B000000 		.4byte	0x6b
+ 575 0133 00000000 		.4byte	.LLST0
+ 576 0137 0D       		.uleb128 0xd
+ 577 0138 D6000000 		.4byte	.LASF22
+ 578 013c 01       		.byte	0x1
+ 579 013d FB       		.byte	0xfb
+ 580 013e 6B000000 		.4byte	0x6b
+ 581 0142 21000000 		.4byte	.LLST1
+ 582 0146 0E       		.uleb128 0xe
+ 583 0147 CC020000 		.4byte	.LASF23
+ 584 014b 01       		.byte	0x1
+ 585 014c FC       		.byte	0xfc
+ 586 014d 77000000 		.4byte	0x77
+ 587 0151 06       		.byte	0x6
+ 588 0152 0F       		.uleb128 0xf
+ 589 0153 08000000 		.4byte	.LVL3
+ 590 0157 EE020000 		.4byte	0x2ee
+ 591 015b 0F       		.uleb128 0xf
+ 592 015c 1A000000 		.4byte	.LVL4
+ 593 0160 F9020000 		.4byte	0x2f9
+ 594 0164 00       		.byte	0
+ 595 0165 10       		.uleb128 0x10
+ 596 0166 1B010000 		.4byte	.LASF39
+ 597 016a 01       		.byte	0x1
+ 598 016b 1501     		.2byte	0x115
+ 599 016d 6B000000 		.4byte	0x6b
+ 600 0171 00000000 		.4byte	.LFB8
+ 601 0175 10000000 		.4byte	.LFE8-.LFB8
+ 602 0179 01       		.uleb128 0x1
+ 603 017a 9C       		.byte	0x9c
+ 604 017b 9D010000 		.4byte	0x19d
+ 605 017f 11       		.uleb128 0x11
+ 606 0180 FD000000 		.4byte	.LASF21
+ 607 0184 01       		.byte	0x1
+ 608 0185 1701     		.2byte	0x117
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 19
+
+
+ 609 0187 77000000 		.4byte	0x77
+ 610 018b 34000000 		.4byte	.LLST2
+ 611 018f 12       		.uleb128 0x12
+ 612 0190 CC020000 		.4byte	.LASF23
+ 613 0194 01       		.byte	0x1
+ 614 0195 1801     		.2byte	0x118
+ 615 0197 77000000 		.4byte	0x77
+ 616 019b 06       		.byte	0x6
+ 617 019c 00       		.byte	0
+ 618 019d 13       		.uleb128 0x13
+ 619 019e 8F010000 		.4byte	.LASF25
+ 620 01a2 01       		.byte	0x1
+ 621 01a3 3001     		.2byte	0x130
+ 622 01a5 00000000 		.4byte	.LFB9
+ 623 01a9 0C000000 		.4byte	.LFE9-.LFB9
+ 624 01ad 01       		.uleb128 0x1
+ 625 01ae 9C       		.byte	0x9c
+ 626 01af 14       		.uleb128 0x14
+ 627 01b0 06010000 		.4byte	.LASF27
+ 628 01b4 01       		.byte	0x1
+ 629 01b5 4501     		.2byte	0x145
+ 630 01b7 6B000000 		.4byte	0x6b
+ 631 01bb 00000000 		.4byte	.LFB10
+ 632 01bf 14000000 		.4byte	.LFE10-.LFB10
+ 633 01c3 01       		.uleb128 0x1
+ 634 01c4 9C       		.byte	0x9c
+ 635 01c5 13       		.uleb128 0x13
+ 636 01c6 50010000 		.4byte	.LASF28
+ 637 01ca 01       		.byte	0x1
+ 638 01cb 5A01     		.2byte	0x15a
+ 639 01cd 00000000 		.4byte	.LFB11
+ 640 01d1 0C000000 		.4byte	.LFE11-.LFB11
+ 641 01d5 01       		.uleb128 0x1
+ 642 01d6 9C       		.byte	0x9c
+ 643 01d7 09       		.uleb128 0x9
+ 644 01d8 00000000 		.4byte	.LASF29
+ 645 01dc 01       		.byte	0x1
+ 646 01dd 38       		.byte	0x38
+ 647 01de 00000000 		.4byte	.LFB1
+ 648 01e2 1C000000 		.4byte	.LFE1-.LFB1
+ 649 01e6 01       		.uleb128 0x1
+ 650 01e7 9C       		.byte	0x9c
+ 651 01e8 29020000 		.4byte	0x229
+ 652 01ec 0F       		.uleb128 0xf
+ 653 01ed 06000000 		.4byte	.LVL8
+ 654 01f1 C5010000 		.4byte	0x1c5
+ 655 01f5 15       		.uleb128 0x15
+ 656 01f6 0C000000 		.4byte	.LVL9
+ 657 01fa DB000000 		.4byte	0xdb
+ 658 01fe 0C020000 		.4byte	0x20c
+ 659 0202 16       		.uleb128 0x16
+ 660 0203 01       		.uleb128 0x1
+ 661 0204 50       		.byte	0x50
+ 662 0205 05       		.uleb128 0x5
+ 663 0206 03       		.byte	0x3
+ 664 0207 00000000 		.4byte	isr_trigger_Interrupt
+ 665 020b 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 20
+
+
+ 666 020c 15       		.uleb128 0x15
+ 667 020d 12000000 		.4byte	.LVL10
+ 668 0211 13010000 		.4byte	0x113
+ 669 0215 1F020000 		.4byte	0x21f
+ 670 0219 16       		.uleb128 0x16
+ 671 021a 01       		.uleb128 0x1
+ 672 021b 50       		.byte	0x50
+ 673 021c 01       		.uleb128 0x1
+ 674 021d 33       		.byte	0x33
+ 675 021e 00       		.byte	0
+ 676 021f 0F       		.uleb128 0xf
+ 677 0220 16000000 		.4byte	.LVL11
+ 678 0224 9D010000 		.4byte	0x19d
+ 679 0228 00       		.byte	0
+ 680 0229 09       		.uleb128 0x9
+ 681 022a 51000000 		.4byte	.LASF30
+ 682 022e 01       		.byte	0x1
+ 683 022f 63       		.byte	0x63
+ 684 0230 00000000 		.4byte	.LFB2
+ 685 0234 1A000000 		.4byte	.LFE2-.LFB2
+ 686 0238 01       		.uleb128 0x1
+ 687 0239 9C       		.byte	0x9c
+ 688 023a 87020000 		.4byte	0x287
+ 689 023e 0C       		.uleb128 0xc
+ 690 023f 25000000 		.4byte	.LASF20
+ 691 0243 01       		.byte	0x1
+ 692 0244 63       		.byte	0x63
+ 693 0245 A9000000 		.4byte	0xa9
+ 694 0249 56000000 		.4byte	.LLST3
+ 695 024d 0F       		.uleb128 0xf
+ 696 024e 08000000 		.4byte	.LVL13
+ 697 0252 C5010000 		.4byte	0x1c5
+ 698 0256 15       		.uleb128 0x15
+ 699 0257 0E000000 		.4byte	.LVL14
+ 700 025b DB000000 		.4byte	0xdb
+ 701 025f 6A020000 		.4byte	0x26a
+ 702 0263 16       		.uleb128 0x16
+ 703 0264 01       		.uleb128 0x1
+ 704 0265 50       		.byte	0x50
+ 705 0266 02       		.uleb128 0x2
+ 706 0267 74       		.byte	0x74
+ 707 0268 00       		.sleb128 0
+ 708 0269 00       		.byte	0
+ 709 026a 15       		.uleb128 0x15
+ 710 026b 14000000 		.4byte	.LVL15
+ 711 026f 13010000 		.4byte	0x113
+ 712 0273 7D020000 		.4byte	0x27d
+ 713 0277 16       		.uleb128 0x16
+ 714 0278 01       		.uleb128 0x1
+ 715 0279 50       		.byte	0x50
+ 716 027a 01       		.uleb128 0x1
+ 717 027b 33       		.byte	0x33
+ 718 027c 00       		.byte	0
+ 719 027d 0F       		.uleb128 0xf
+ 720 027e 18000000 		.4byte	.LVL16
+ 721 0282 9D010000 		.4byte	0x19d
+ 722 0286 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 21
+
+
+ 723 0287 09       		.uleb128 0x9
+ 724 0288 2D000000 		.4byte	.LASF31
+ 725 028c 01       		.byte	0x1
+ 726 028d 81       		.byte	0x81
+ 727 028e 00000000 		.4byte	.LFB3
+ 728 0292 14000000 		.4byte	.LFE3-.LFB3
+ 729 0296 01       		.uleb128 0x1
+ 730 0297 9C       		.byte	0x9c
+ 731 0298 AF020000 		.4byte	0x2af
+ 732 029c 0F       		.uleb128 0xf
+ 733 029d 06000000 		.4byte	.LVL18
+ 734 02a1 C5010000 		.4byte	0x1c5
+ 735 02a5 0F       		.uleb128 0xf
+ 736 02a6 0C000000 		.4byte	.LVL19
+ 737 02aa DB000000 		.4byte	0xdb
+ 738 02ae 00       		.byte	0
+ 739 02af 13       		.uleb128 0x13
+ 740 02b0 BF000000 		.4byte	.LASF32
+ 741 02b4 01       		.byte	0x1
+ 742 02b5 7501     		.2byte	0x175
+ 743 02b7 00000000 		.4byte	.LFB12
+ 744 02bb 0C000000 		.4byte	.LFE12-.LFB12
+ 745 02bf 01       		.uleb128 0x1
+ 746 02c0 9C       		.byte	0x9c
+ 747 02c1 13       		.uleb128 0x13
+ 748 02c2 65000000 		.4byte	.LASF33
+ 749 02c6 01       		.byte	0x1
+ 750 02c7 8E01     		.2byte	0x18e
+ 751 02c9 00000000 		.4byte	.LFB13
+ 752 02cd 0C000000 		.4byte	.LFE13-.LFB13
+ 753 02d1 01       		.uleb128 0x1
+ 754 02d2 9C       		.byte	0x9c
+ 755 02d3 17       		.uleb128 0x17
+ 756 02d4 A9000000 		.4byte	0xa9
+ 757 02d8 E3020000 		.4byte	0x2e3
+ 758 02dc 18       		.uleb128 0x18
+ 759 02dd C3000000 		.4byte	0xc3
+ 760 02e1 2F       		.byte	0x2f
+ 761 02e2 00       		.byte	0
+ 762 02e3 19       		.uleb128 0x19
+ 763 02e4 18000000 		.4byte	.LASF40
+ 764 02e8 01       		.byte	0x1
+ 765 02e9 21       		.byte	0x21
+ 766 02ea D3020000 		.4byte	0x2d3
+ 767 02ee 1A       		.uleb128 0x1a
+ 768 02ef 6B010000 		.4byte	.LASF34
+ 769 02f3 6B010000 		.4byte	.LASF34
+ 770 02f7 03       		.byte	0x3
+ 771 02f8 E5       		.byte	0xe5
+ 772 02f9 1A       		.uleb128 0x1a
+ 773 02fa A2010000 		.4byte	.LASF35
+ 774 02fe A2010000 		.4byte	.LASF35
+ 775 0302 03       		.byte	0x3
+ 776 0303 E6       		.byte	0xe6
+ 777 0304 00       		.byte	0
+ 778              		.section	.debug_abbrev,"",%progbits
+ 779              	.Ldebug_abbrev0:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 22
+
+
+ 780 0000 01       		.uleb128 0x1
+ 781 0001 11       		.uleb128 0x11
+ 782 0002 01       		.byte	0x1
+ 783 0003 25       		.uleb128 0x25
+ 784 0004 0E       		.uleb128 0xe
+ 785 0005 13       		.uleb128 0x13
+ 786 0006 0B       		.uleb128 0xb
+ 787 0007 03       		.uleb128 0x3
+ 788 0008 0E       		.uleb128 0xe
+ 789 0009 1B       		.uleb128 0x1b
+ 790 000a 0E       		.uleb128 0xe
+ 791 000b 55       		.uleb128 0x55
+ 792 000c 17       		.uleb128 0x17
+ 793 000d 11       		.uleb128 0x11
+ 794 000e 01       		.uleb128 0x1
+ 795 000f 10       		.uleb128 0x10
+ 796 0010 17       		.uleb128 0x17
+ 797 0011 00       		.byte	0
+ 798 0012 00       		.byte	0
+ 799 0013 02       		.uleb128 0x2
+ 800 0014 24       		.uleb128 0x24
+ 801 0015 00       		.byte	0
+ 802 0016 0B       		.uleb128 0xb
+ 803 0017 0B       		.uleb128 0xb
+ 804 0018 3E       		.uleb128 0x3e
+ 805 0019 0B       		.uleb128 0xb
+ 806 001a 03       		.uleb128 0x3
+ 807 001b 0E       		.uleb128 0xe
+ 808 001c 00       		.byte	0
+ 809 001d 00       		.byte	0
+ 810 001e 03       		.uleb128 0x3
+ 811 001f 24       		.uleb128 0x24
+ 812 0020 00       		.byte	0
+ 813 0021 0B       		.uleb128 0xb
+ 814 0022 0B       		.uleb128 0xb
+ 815 0023 3E       		.uleb128 0x3e
+ 816 0024 0B       		.uleb128 0xb
+ 817 0025 03       		.uleb128 0x3
+ 818 0026 08       		.uleb128 0x8
+ 819 0027 00       		.byte	0
+ 820 0028 00       		.byte	0
+ 821 0029 04       		.uleb128 0x4
+ 822 002a 16       		.uleb128 0x16
+ 823 002b 00       		.byte	0
+ 824 002c 03       		.uleb128 0x3
+ 825 002d 0E       		.uleb128 0xe
+ 826 002e 3A       		.uleb128 0x3a
+ 827 002f 0B       		.uleb128 0xb
+ 828 0030 3B       		.uleb128 0x3b
+ 829 0031 05       		.uleb128 0x5
+ 830 0032 49       		.uleb128 0x49
+ 831 0033 13       		.uleb128 0x13
+ 832 0034 00       		.byte	0
+ 833 0035 00       		.byte	0
+ 834 0036 05       		.uleb128 0x5
+ 835 0037 35       		.uleb128 0x35
+ 836 0038 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 23
+
+
+ 837 0039 49       		.uleb128 0x49
+ 838 003a 13       		.uleb128 0x13
+ 839 003b 00       		.byte	0
+ 840 003c 00       		.byte	0
+ 841 003d 06       		.uleb128 0x6
+ 842 003e 0F       		.uleb128 0xf
+ 843 003f 00       		.byte	0
+ 844 0040 0B       		.uleb128 0xb
+ 845 0041 0B       		.uleb128 0xb
+ 846 0042 49       		.uleb128 0x49
+ 847 0043 13       		.uleb128 0x13
+ 848 0044 00       		.byte	0
+ 849 0045 00       		.byte	0
+ 850 0046 07       		.uleb128 0x7
+ 851 0047 15       		.uleb128 0x15
+ 852 0048 00       		.byte	0
+ 853 0049 27       		.uleb128 0x27
+ 854 004a 19       		.uleb128 0x19
+ 855 004b 00       		.byte	0
+ 856 004c 00       		.byte	0
+ 857 004d 08       		.uleb128 0x8
+ 858 004e 2E       		.uleb128 0x2e
+ 859 004f 00       		.byte	0
+ 860 0050 3F       		.uleb128 0x3f
+ 861 0051 19       		.uleb128 0x19
+ 862 0052 03       		.uleb128 0x3
+ 863 0053 0E       		.uleb128 0xe
+ 864 0054 3A       		.uleb128 0x3a
+ 865 0055 0B       		.uleb128 0xb
+ 866 0056 3B       		.uleb128 0x3b
+ 867 0057 0B       		.uleb128 0xb
+ 868 0058 27       		.uleb128 0x27
+ 869 0059 19       		.uleb128 0x19
+ 870 005a 11       		.uleb128 0x11
+ 871 005b 01       		.uleb128 0x1
+ 872 005c 12       		.uleb128 0x12
+ 873 005d 06       		.uleb128 0x6
+ 874 005e 40       		.uleb128 0x40
+ 875 005f 18       		.uleb128 0x18
+ 876 0060 9742     		.uleb128 0x2117
+ 877 0062 19       		.uleb128 0x19
+ 878 0063 00       		.byte	0
+ 879 0064 00       		.byte	0
+ 880 0065 09       		.uleb128 0x9
+ 881 0066 2E       		.uleb128 0x2e
+ 882 0067 01       		.byte	0x1
+ 883 0068 3F       		.uleb128 0x3f
+ 884 0069 19       		.uleb128 0x19
+ 885 006a 03       		.uleb128 0x3
+ 886 006b 0E       		.uleb128 0xe
+ 887 006c 3A       		.uleb128 0x3a
+ 888 006d 0B       		.uleb128 0xb
+ 889 006e 3B       		.uleb128 0x3b
+ 890 006f 0B       		.uleb128 0xb
+ 891 0070 27       		.uleb128 0x27
+ 892 0071 19       		.uleb128 0x19
+ 893 0072 11       		.uleb128 0x11
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 24
+
+
+ 894 0073 01       		.uleb128 0x1
+ 895 0074 12       		.uleb128 0x12
+ 896 0075 06       		.uleb128 0x6
+ 897 0076 40       		.uleb128 0x40
+ 898 0077 18       		.uleb128 0x18
+ 899 0078 9742     		.uleb128 0x2117
+ 900 007a 19       		.uleb128 0x19
+ 901 007b 01       		.uleb128 0x1
+ 902 007c 13       		.uleb128 0x13
+ 903 007d 00       		.byte	0
+ 904 007e 00       		.byte	0
+ 905 007f 0A       		.uleb128 0xa
+ 906 0080 05       		.uleb128 0x5
+ 907 0081 00       		.byte	0
+ 908 0082 03       		.uleb128 0x3
+ 909 0083 0E       		.uleb128 0xe
+ 910 0084 3A       		.uleb128 0x3a
+ 911 0085 0B       		.uleb128 0xb
+ 912 0086 3B       		.uleb128 0x3b
+ 913 0087 0B       		.uleb128 0xb
+ 914 0088 49       		.uleb128 0x49
+ 915 0089 13       		.uleb128 0x13
+ 916 008a 02       		.uleb128 0x2
+ 917 008b 18       		.uleb128 0x18
+ 918 008c 00       		.byte	0
+ 919 008d 00       		.byte	0
+ 920 008e 0B       		.uleb128 0xb
+ 921 008f 2E       		.uleb128 0x2e
+ 922 0090 00       		.byte	0
+ 923 0091 3F       		.uleb128 0x3f
+ 924 0092 19       		.uleb128 0x19
+ 925 0093 03       		.uleb128 0x3
+ 926 0094 0E       		.uleb128 0xe
+ 927 0095 3A       		.uleb128 0x3a
+ 928 0096 0B       		.uleb128 0xb
+ 929 0097 3B       		.uleb128 0x3b
+ 930 0098 0B       		.uleb128 0xb
+ 931 0099 27       		.uleb128 0x27
+ 932 009a 19       		.uleb128 0x19
+ 933 009b 49       		.uleb128 0x49
+ 934 009c 13       		.uleb128 0x13
+ 935 009d 11       		.uleb128 0x11
+ 936 009e 01       		.uleb128 0x1
+ 937 009f 12       		.uleb128 0x12
+ 938 00a0 06       		.uleb128 0x6
+ 939 00a1 40       		.uleb128 0x40
+ 940 00a2 18       		.uleb128 0x18
+ 941 00a3 9742     		.uleb128 0x2117
+ 942 00a5 19       		.uleb128 0x19
+ 943 00a6 00       		.byte	0
+ 944 00a7 00       		.byte	0
+ 945 00a8 0C       		.uleb128 0xc
+ 946 00a9 05       		.uleb128 0x5
+ 947 00aa 00       		.byte	0
+ 948 00ab 03       		.uleb128 0x3
+ 949 00ac 0E       		.uleb128 0xe
+ 950 00ad 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 25
+
+
+ 951 00ae 0B       		.uleb128 0xb
+ 952 00af 3B       		.uleb128 0x3b
+ 953 00b0 0B       		.uleb128 0xb
+ 954 00b1 49       		.uleb128 0x49
+ 955 00b2 13       		.uleb128 0x13
+ 956 00b3 02       		.uleb128 0x2
+ 957 00b4 17       		.uleb128 0x17
+ 958 00b5 00       		.byte	0
+ 959 00b6 00       		.byte	0
+ 960 00b7 0D       		.uleb128 0xd
+ 961 00b8 34       		.uleb128 0x34
+ 962 00b9 00       		.byte	0
+ 963 00ba 03       		.uleb128 0x3
+ 964 00bb 0E       		.uleb128 0xe
+ 965 00bc 3A       		.uleb128 0x3a
+ 966 00bd 0B       		.uleb128 0xb
+ 967 00be 3B       		.uleb128 0x3b
+ 968 00bf 0B       		.uleb128 0xb
+ 969 00c0 49       		.uleb128 0x49
+ 970 00c1 13       		.uleb128 0x13
+ 971 00c2 02       		.uleb128 0x2
+ 972 00c3 17       		.uleb128 0x17
+ 973 00c4 00       		.byte	0
+ 974 00c5 00       		.byte	0
+ 975 00c6 0E       		.uleb128 0xe
+ 976 00c7 34       		.uleb128 0x34
+ 977 00c8 00       		.byte	0
+ 978 00c9 03       		.uleb128 0x3
+ 979 00ca 0E       		.uleb128 0xe
+ 980 00cb 3A       		.uleb128 0x3a
+ 981 00cc 0B       		.uleb128 0xb
+ 982 00cd 3B       		.uleb128 0x3b
+ 983 00ce 0B       		.uleb128 0xb
+ 984 00cf 49       		.uleb128 0x49
+ 985 00d0 13       		.uleb128 0x13
+ 986 00d1 1C       		.uleb128 0x1c
+ 987 00d2 0B       		.uleb128 0xb
+ 988 00d3 00       		.byte	0
+ 989 00d4 00       		.byte	0
+ 990 00d5 0F       		.uleb128 0xf
+ 991 00d6 898201   		.uleb128 0x4109
+ 992 00d9 00       		.byte	0
+ 993 00da 11       		.uleb128 0x11
+ 994 00db 01       		.uleb128 0x1
+ 995 00dc 31       		.uleb128 0x31
+ 996 00dd 13       		.uleb128 0x13
+ 997 00de 00       		.byte	0
+ 998 00df 00       		.byte	0
+ 999 00e0 10       		.uleb128 0x10
+ 1000 00e1 2E       		.uleb128 0x2e
+ 1001 00e2 01       		.byte	0x1
+ 1002 00e3 3F       		.uleb128 0x3f
+ 1003 00e4 19       		.uleb128 0x19
+ 1004 00e5 03       		.uleb128 0x3
+ 1005 00e6 0E       		.uleb128 0xe
+ 1006 00e7 3A       		.uleb128 0x3a
+ 1007 00e8 0B       		.uleb128 0xb
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 26
+
+
+ 1008 00e9 3B       		.uleb128 0x3b
+ 1009 00ea 05       		.uleb128 0x5
+ 1010 00eb 27       		.uleb128 0x27
+ 1011 00ec 19       		.uleb128 0x19
+ 1012 00ed 49       		.uleb128 0x49
+ 1013 00ee 13       		.uleb128 0x13
+ 1014 00ef 11       		.uleb128 0x11
+ 1015 00f0 01       		.uleb128 0x1
+ 1016 00f1 12       		.uleb128 0x12
+ 1017 00f2 06       		.uleb128 0x6
+ 1018 00f3 40       		.uleb128 0x40
+ 1019 00f4 18       		.uleb128 0x18
+ 1020 00f5 9742     		.uleb128 0x2117
+ 1021 00f7 19       		.uleb128 0x19
+ 1022 00f8 01       		.uleb128 0x1
+ 1023 00f9 13       		.uleb128 0x13
+ 1024 00fa 00       		.byte	0
+ 1025 00fb 00       		.byte	0
+ 1026 00fc 11       		.uleb128 0x11
+ 1027 00fd 34       		.uleb128 0x34
+ 1028 00fe 00       		.byte	0
+ 1029 00ff 03       		.uleb128 0x3
+ 1030 0100 0E       		.uleb128 0xe
+ 1031 0101 3A       		.uleb128 0x3a
+ 1032 0102 0B       		.uleb128 0xb
+ 1033 0103 3B       		.uleb128 0x3b
+ 1034 0104 05       		.uleb128 0x5
+ 1035 0105 49       		.uleb128 0x49
+ 1036 0106 13       		.uleb128 0x13
+ 1037 0107 02       		.uleb128 0x2
+ 1038 0108 17       		.uleb128 0x17
+ 1039 0109 00       		.byte	0
+ 1040 010a 00       		.byte	0
+ 1041 010b 12       		.uleb128 0x12
+ 1042 010c 34       		.uleb128 0x34
+ 1043 010d 00       		.byte	0
+ 1044 010e 03       		.uleb128 0x3
+ 1045 010f 0E       		.uleb128 0xe
+ 1046 0110 3A       		.uleb128 0x3a
+ 1047 0111 0B       		.uleb128 0xb
+ 1048 0112 3B       		.uleb128 0x3b
+ 1049 0113 05       		.uleb128 0x5
+ 1050 0114 49       		.uleb128 0x49
+ 1051 0115 13       		.uleb128 0x13
+ 1052 0116 1C       		.uleb128 0x1c
+ 1053 0117 0B       		.uleb128 0xb
+ 1054 0118 00       		.byte	0
+ 1055 0119 00       		.byte	0
+ 1056 011a 13       		.uleb128 0x13
+ 1057 011b 2E       		.uleb128 0x2e
+ 1058 011c 00       		.byte	0
+ 1059 011d 3F       		.uleb128 0x3f
+ 1060 011e 19       		.uleb128 0x19
+ 1061 011f 03       		.uleb128 0x3
+ 1062 0120 0E       		.uleb128 0xe
+ 1063 0121 3A       		.uleb128 0x3a
+ 1064 0122 0B       		.uleb128 0xb
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 27
+
+
+ 1065 0123 3B       		.uleb128 0x3b
+ 1066 0124 05       		.uleb128 0x5
+ 1067 0125 27       		.uleb128 0x27
+ 1068 0126 19       		.uleb128 0x19
+ 1069 0127 11       		.uleb128 0x11
+ 1070 0128 01       		.uleb128 0x1
+ 1071 0129 12       		.uleb128 0x12
+ 1072 012a 06       		.uleb128 0x6
+ 1073 012b 40       		.uleb128 0x40
+ 1074 012c 18       		.uleb128 0x18
+ 1075 012d 9742     		.uleb128 0x2117
+ 1076 012f 19       		.uleb128 0x19
+ 1077 0130 00       		.byte	0
+ 1078 0131 00       		.byte	0
+ 1079 0132 14       		.uleb128 0x14
+ 1080 0133 2E       		.uleb128 0x2e
+ 1081 0134 00       		.byte	0
+ 1082 0135 3F       		.uleb128 0x3f
+ 1083 0136 19       		.uleb128 0x19
+ 1084 0137 03       		.uleb128 0x3
+ 1085 0138 0E       		.uleb128 0xe
+ 1086 0139 3A       		.uleb128 0x3a
+ 1087 013a 0B       		.uleb128 0xb
+ 1088 013b 3B       		.uleb128 0x3b
+ 1089 013c 05       		.uleb128 0x5
+ 1090 013d 27       		.uleb128 0x27
+ 1091 013e 19       		.uleb128 0x19
+ 1092 013f 49       		.uleb128 0x49
+ 1093 0140 13       		.uleb128 0x13
+ 1094 0141 11       		.uleb128 0x11
+ 1095 0142 01       		.uleb128 0x1
+ 1096 0143 12       		.uleb128 0x12
+ 1097 0144 06       		.uleb128 0x6
+ 1098 0145 40       		.uleb128 0x40
+ 1099 0146 18       		.uleb128 0x18
+ 1100 0147 9742     		.uleb128 0x2117
+ 1101 0149 19       		.uleb128 0x19
+ 1102 014a 00       		.byte	0
+ 1103 014b 00       		.byte	0
+ 1104 014c 15       		.uleb128 0x15
+ 1105 014d 898201   		.uleb128 0x4109
+ 1106 0150 01       		.byte	0x1
+ 1107 0151 11       		.uleb128 0x11
+ 1108 0152 01       		.uleb128 0x1
+ 1109 0153 31       		.uleb128 0x31
+ 1110 0154 13       		.uleb128 0x13
+ 1111 0155 01       		.uleb128 0x1
+ 1112 0156 13       		.uleb128 0x13
+ 1113 0157 00       		.byte	0
+ 1114 0158 00       		.byte	0
+ 1115 0159 16       		.uleb128 0x16
+ 1116 015a 8A8201   		.uleb128 0x410a
+ 1117 015d 00       		.byte	0
+ 1118 015e 02       		.uleb128 0x2
+ 1119 015f 18       		.uleb128 0x18
+ 1120 0160 9142     		.uleb128 0x2111
+ 1121 0162 18       		.uleb128 0x18
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 28
+
+
+ 1122 0163 00       		.byte	0
+ 1123 0164 00       		.byte	0
+ 1124 0165 17       		.uleb128 0x17
+ 1125 0166 01       		.uleb128 0x1
+ 1126 0167 01       		.byte	0x1
+ 1127 0168 49       		.uleb128 0x49
+ 1128 0169 13       		.uleb128 0x13
+ 1129 016a 01       		.uleb128 0x1
+ 1130 016b 13       		.uleb128 0x13
+ 1131 016c 00       		.byte	0
+ 1132 016d 00       		.byte	0
+ 1133 016e 18       		.uleb128 0x18
+ 1134 016f 21       		.uleb128 0x21
+ 1135 0170 00       		.byte	0
+ 1136 0171 49       		.uleb128 0x49
+ 1137 0172 13       		.uleb128 0x13
+ 1138 0173 2F       		.uleb128 0x2f
+ 1139 0174 0B       		.uleb128 0xb
+ 1140 0175 00       		.byte	0
+ 1141 0176 00       		.byte	0
+ 1142 0177 19       		.uleb128 0x19
+ 1143 0178 34       		.uleb128 0x34
+ 1144 0179 00       		.byte	0
+ 1145 017a 03       		.uleb128 0x3
+ 1146 017b 0E       		.uleb128 0xe
+ 1147 017c 3A       		.uleb128 0x3a
+ 1148 017d 0B       		.uleb128 0xb
+ 1149 017e 3B       		.uleb128 0x3b
+ 1150 017f 0B       		.uleb128 0xb
+ 1151 0180 49       		.uleb128 0x49
+ 1152 0181 13       		.uleb128 0x13
+ 1153 0182 3F       		.uleb128 0x3f
+ 1154 0183 19       		.uleb128 0x19
+ 1155 0184 3C       		.uleb128 0x3c
+ 1156 0185 19       		.uleb128 0x19
+ 1157 0186 00       		.byte	0
+ 1158 0187 00       		.byte	0
+ 1159 0188 1A       		.uleb128 0x1a
+ 1160 0189 2E       		.uleb128 0x2e
+ 1161 018a 00       		.byte	0
+ 1162 018b 3F       		.uleb128 0x3f
+ 1163 018c 19       		.uleb128 0x19
+ 1164 018d 3C       		.uleb128 0x3c
+ 1165 018e 19       		.uleb128 0x19
+ 1166 018f 6E       		.uleb128 0x6e
+ 1167 0190 0E       		.uleb128 0xe
+ 1168 0191 03       		.uleb128 0x3
+ 1169 0192 0E       		.uleb128 0xe
+ 1170 0193 3A       		.uleb128 0x3a
+ 1171 0194 0B       		.uleb128 0xb
+ 1172 0195 3B       		.uleb128 0x3b
+ 1173 0196 0B       		.uleb128 0xb
+ 1174 0197 00       		.byte	0
+ 1175 0198 00       		.byte	0
+ 1176 0199 00       		.byte	0
+ 1177              		.section	.debug_loc,"",%progbits
+ 1178              	.Ldebug_loc0:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 29
+
+
+ 1179              	.LLST0:
+ 1180 0000 00000000 		.4byte	.LVL1
+ 1181 0004 07000000 		.4byte	.LVL3-1
+ 1182 0008 0100     		.2byte	0x1
+ 1183 000a 50       		.byte	0x50
+ 1184 000b 07000000 		.4byte	.LVL3-1
+ 1185 000f 20000000 		.4byte	.LFE7
+ 1186 0013 0400     		.2byte	0x4
+ 1187 0015 F3       		.byte	0xf3
+ 1188 0016 01       		.uleb128 0x1
+ 1189 0017 50       		.byte	0x50
+ 1190 0018 9F       		.byte	0x9f
+ 1191 0019 00000000 		.4byte	0
+ 1192 001d 00000000 		.4byte	0
+ 1193              	.LLST1:
+ 1194 0021 08000000 		.4byte	.LVL3
+ 1195 0025 19000000 		.4byte	.LVL4-1
+ 1196 0029 0100     		.2byte	0x1
+ 1197 002b 50       		.byte	0x50
+ 1198 002c 00000000 		.4byte	0
+ 1199 0030 00000000 		.4byte	0
+ 1200              	.LLST2:
+ 1201 0034 06000000 		.4byte	.LVL6
+ 1202 0038 0A000000 		.4byte	.LVL7
+ 1203 003c 0500     		.2byte	0x5
+ 1204 003e 70       		.byte	0x70
+ 1205 003f 00       		.sleb128 0
+ 1206 0040 33       		.byte	0x33
+ 1207 0041 1A       		.byte	0x1a
+ 1208 0042 9F       		.byte	0x9f
+ 1209 0043 0A000000 		.4byte	.LVL7
+ 1210 0047 10000000 		.4byte	.LFE8
+ 1211 004b 0100     		.2byte	0x1
+ 1212 004d 50       		.byte	0x50
+ 1213 004e 00000000 		.4byte	0
+ 1214 0052 00000000 		.4byte	0
+ 1215              	.LLST3:
+ 1216 0056 00000000 		.4byte	.LVL12
+ 1217 005a 07000000 		.4byte	.LVL13-1
+ 1218 005e 0100     		.2byte	0x1
+ 1219 0060 50       		.byte	0x50
+ 1220 0061 07000000 		.4byte	.LVL13-1
+ 1221 0065 18000000 		.4byte	.LVL17
+ 1222 0069 0100     		.2byte	0x1
+ 1223 006b 54       		.byte	0x54
+ 1224 006c 18000000 		.4byte	.LVL17
+ 1225 0070 1A000000 		.4byte	.LFE2
+ 1226 0074 0400     		.2byte	0x4
+ 1227 0076 F3       		.byte	0xf3
+ 1228 0077 01       		.uleb128 0x1
+ 1229 0078 50       		.byte	0x50
+ 1230 0079 9F       		.byte	0x9f
+ 1231 007a 00000000 		.4byte	0
+ 1232 007e 00000000 		.4byte	0
+ 1233              		.section	.debug_aranges,"",%progbits
+ 1234 0000 7C000000 		.4byte	0x7c
+ 1235 0004 0200     		.2byte	0x2
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 30
+
+
+ 1236 0006 00000000 		.4byte	.Ldebug_info0
+ 1237 000a 04       		.byte	0x4
+ 1238 000b 00       		.byte	0
+ 1239 000c 0000     		.2byte	0
+ 1240 000e 0000     		.2byte	0
+ 1241 0010 00000000 		.4byte	.LFB4
+ 1242 0014 02000000 		.4byte	.LFE4-.LFB4
+ 1243 0018 00000000 		.4byte	.LFB5
+ 1244 001c 0C000000 		.4byte	.LFE5-.LFB5
+ 1245 0020 00000000 		.4byte	.LFB6
+ 1246 0024 0C000000 		.4byte	.LFE6-.LFB6
+ 1247 0028 00000000 		.4byte	.LFB7
+ 1248 002c 20000000 		.4byte	.LFE7-.LFB7
+ 1249 0030 00000000 		.4byte	.LFB8
+ 1250 0034 10000000 		.4byte	.LFE8-.LFB8
+ 1251 0038 00000000 		.4byte	.LFB9
+ 1252 003c 0C000000 		.4byte	.LFE9-.LFB9
+ 1253 0040 00000000 		.4byte	.LFB10
+ 1254 0044 14000000 		.4byte	.LFE10-.LFB10
+ 1255 0048 00000000 		.4byte	.LFB11
+ 1256 004c 0C000000 		.4byte	.LFE11-.LFB11
+ 1257 0050 00000000 		.4byte	.LFB1
+ 1258 0054 1C000000 		.4byte	.LFE1-.LFB1
+ 1259 0058 00000000 		.4byte	.LFB2
+ 1260 005c 1A000000 		.4byte	.LFE2-.LFB2
+ 1261 0060 00000000 		.4byte	.LFB3
+ 1262 0064 14000000 		.4byte	.LFE3-.LFB3
+ 1263 0068 00000000 		.4byte	.LFB12
+ 1264 006c 0C000000 		.4byte	.LFE12-.LFB12
+ 1265 0070 00000000 		.4byte	.LFB13
+ 1266 0074 0C000000 		.4byte	.LFE13-.LFB13
+ 1267 0078 00000000 		.4byte	0
+ 1268 007c 00000000 		.4byte	0
+ 1269              		.section	.debug_ranges,"",%progbits
+ 1270              	.Ldebug_ranges0:
+ 1271 0000 00000000 		.4byte	.LFB4
+ 1272 0004 02000000 		.4byte	.LFE4
+ 1273 0008 00000000 		.4byte	.LFB5
+ 1274 000c 0C000000 		.4byte	.LFE5
+ 1275 0010 00000000 		.4byte	.LFB6
+ 1276 0014 0C000000 		.4byte	.LFE6
+ 1277 0018 00000000 		.4byte	.LFB7
+ 1278 001c 20000000 		.4byte	.LFE7
+ 1279 0020 00000000 		.4byte	.LFB8
+ 1280 0024 10000000 		.4byte	.LFE8
+ 1281 0028 00000000 		.4byte	.LFB9
+ 1282 002c 0C000000 		.4byte	.LFE9
+ 1283 0030 00000000 		.4byte	.LFB10
+ 1284 0034 14000000 		.4byte	.LFE10
+ 1285 0038 00000000 		.4byte	.LFB11
+ 1286 003c 0C000000 		.4byte	.LFE11
+ 1287 0040 00000000 		.4byte	.LFB1
+ 1288 0044 1C000000 		.4byte	.LFE1
+ 1289 0048 00000000 		.4byte	.LFB2
+ 1290 004c 1A000000 		.4byte	.LFE2
+ 1291 0050 00000000 		.4byte	.LFB3
+ 1292 0054 14000000 		.4byte	.LFE3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 31
+
+
+ 1293 0058 00000000 		.4byte	.LFB12
+ 1294 005c 0C000000 		.4byte	.LFE12
+ 1295 0060 00000000 		.4byte	.LFB13
+ 1296 0064 0C000000 		.4byte	.LFE13
+ 1297 0068 00000000 		.4byte	0
+ 1298 006c 00000000 		.4byte	0
+ 1299              		.section	.debug_line,"",%progbits
+ 1300              	.Ldebug_line0:
+ 1301 0000 53010000 		.section	.debug_str,"MS",%progbits,1
+ 1301      02005300 
+ 1301      00000201 
+ 1301      FB0E0D00 
+ 1301      01010101 
+ 1302              	.LASF29:
+ 1303 0000 6973725F 		.ascii	"isr_trigger_Start\000"
+ 1303      74726967 
+ 1303      6765725F 
+ 1303      53746172 
+ 1303      7400
+ 1304              	.LASF14:
+ 1305 0012 72656733 		.ascii	"reg32\000"
+ 1305      3200
+ 1306              	.LASF40:
+ 1307 0018 43795261 		.ascii	"CyRamVectors\000"
+ 1307      6D566563 
+ 1307      746F7273 
+ 1307      00
+ 1308              	.LASF20:
+ 1309 0025 61646472 		.ascii	"address\000"
+ 1309      65737300 
+ 1310              	.LASF31:
+ 1311 002d 6973725F 		.ascii	"isr_trigger_Stop\000"
+ 1311      74726967 
+ 1311      6765725F 
+ 1311      53746F70 
+ 1311      00
+ 1312              	.LASF3:
+ 1313 003e 73686F72 		.ascii	"short unsigned int\000"
+ 1313      7420756E 
+ 1313      7369676E 
+ 1313      65642069 
+ 1313      6E7400
+ 1314              	.LASF30:
+ 1315 0051 6973725F 		.ascii	"isr_trigger_StartEx\000"
+ 1315      74726967 
+ 1315      6765725F 
+ 1315      53746172 
+ 1315      74457800 
+ 1316              	.LASF33:
+ 1317 0065 6973725F 		.ascii	"isr_trigger_ClearPending\000"
+ 1317      74726967 
+ 1317      6765725F 
+ 1317      436C6561 
+ 1317      7250656E 
+ 1318              	.LASF11:
+ 1319 007e 666C6F61 		.ascii	"float\000"
+ 1319      7400
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 32
+
+
+ 1320              	.LASF24:
+ 1321 0084 6973725F 		.ascii	"isr_trigger_Interrupt\000"
+ 1321      74726967 
+ 1321      6765725F 
+ 1321      496E7465 
+ 1321      72727570 
+ 1322              	.LASF7:
+ 1323 009a 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1323      206C6F6E 
+ 1323      6720756E 
+ 1323      7369676E 
+ 1323      65642069 
+ 1324              	.LASF1:
+ 1325 00b1 756E7369 		.ascii	"unsigned char\000"
+ 1325      676E6564 
+ 1325      20636861 
+ 1325      7200
+ 1326              	.LASF32:
+ 1327 00bf 6973725F 		.ascii	"isr_trigger_SetPending\000"
+ 1327      74726967 
+ 1327      6765725F 
+ 1327      53657450 
+ 1327      656E6469 
+ 1328              	.LASF22:
+ 1329 00d6 696E7465 		.ascii	"interruptState\000"
+ 1329      72727570 
+ 1329      74537461 
+ 1329      746500
+ 1330              	.LASF5:
+ 1331 00e5 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1331      20756E73 
+ 1331      69676E65 
+ 1331      6420696E 
+ 1331      7400
+ 1332              	.LASF9:
+ 1333 00f7 75696E74 		.ascii	"uint8\000"
+ 1333      3800
+ 1334              	.LASF21:
+ 1335 00fd 7072696F 		.ascii	"priority\000"
+ 1335      72697479 
+ 1335      00
+ 1336              	.LASF27:
+ 1337 0106 6973725F 		.ascii	"isr_trigger_GetState\000"
+ 1337      74726967 
+ 1337      6765725F 
+ 1337      47657453 
+ 1337      74617465 
+ 1338              	.LASF39:
+ 1339 011b 6973725F 		.ascii	"isr_trigger_GetPriority\000"
+ 1339      74726967 
+ 1339      6765725F 
+ 1339      47657450 
+ 1339      72696F72 
+ 1340              	.LASF12:
+ 1341 0133 646F7562 		.ascii	"double\000"
+ 1341      6C6500
+ 1342              	.LASF18:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 33
+
+
+ 1343 013a 6973725F 		.ascii	"isr_trigger_SetVector\000"
+ 1343      74726967 
+ 1343      6765725F 
+ 1343      53657456 
+ 1343      6563746F 
+ 1344              	.LASF28:
+ 1345 0150 6973725F 		.ascii	"isr_trigger_Disable\000"
+ 1345      74726967 
+ 1345      6765725F 
+ 1345      44697361 
+ 1345      626C6500 
+ 1346              	.LASF10:
+ 1347 0164 75696E74 		.ascii	"uint32\000"
+ 1347      333200
+ 1348              	.LASF34:
+ 1349 016b 4379456E 		.ascii	"CyEnterCriticalSection\000"
+ 1349      74657243 
+ 1349      72697469 
+ 1349      63616C53 
+ 1349      65637469 
+ 1350              	.LASF8:
+ 1351 0182 756E7369 		.ascii	"unsigned int\000"
+ 1351      676E6564 
+ 1351      20696E74 
+ 1351      00
+ 1352              	.LASF25:
+ 1353 018f 6973725F 		.ascii	"isr_trigger_Enable\000"
+ 1353      74726967 
+ 1353      6765725F 
+ 1353      456E6162 
+ 1353      6C6500
+ 1354              	.LASF35:
+ 1355 01a2 43794578 		.ascii	"CyExitCriticalSection\000"
+ 1355      69744372 
+ 1355      69746963 
+ 1355      616C5365 
+ 1355      6374696F 
+ 1356              	.LASF15:
+ 1357 01b8 63796973 		.ascii	"cyisraddress\000"
+ 1357      72616464 
+ 1357      72657373 
+ 1357      00
+ 1358              	.LASF36:
+ 1359 01c5 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1359      43313120 
+ 1359      352E342E 
+ 1359      31203230 
+ 1359      31363036 
+ 1360 01f8 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1360      20726576 
+ 1360      6973696F 
+ 1360      6E203233 
+ 1360      37373135 
+ 1361 022b 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1361      66756E63 
+ 1361      74696F6E 
+ 1361      2D736563 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 34
+
+
+ 1361      74696F6E 
+ 1362              	.LASF17:
+ 1363 0253 73697A65 		.ascii	"sizetype\000"
+ 1363      74797065 
+ 1363      00
+ 1364              	.LASF6:
+ 1365 025c 6C6F6E67 		.ascii	"long long int\000"
+ 1365      206C6F6E 
+ 1365      6720696E 
+ 1365      7400
+ 1366              	.LASF19:
+ 1367 026a 6973725F 		.ascii	"isr_trigger_SetPriority\000"
+ 1367      74726967 
+ 1367      6765725F 
+ 1367      53657450 
+ 1367      72696F72 
+ 1368              	.LASF13:
+ 1369 0282 63686172 		.ascii	"char\000"
+ 1369      00
+ 1370              	.LASF2:
+ 1371 0287 73686F72 		.ascii	"short int\000"
+ 1371      7420696E 
+ 1371      7400
+ 1372              	.LASF37:
+ 1373 0291 47656E65 		.ascii	"Generated_Source\\PSoC4\\isr_trigger.c\000"
+ 1373      72617465 
+ 1373      645F536F 
+ 1373      75726365 
+ 1373      5C50536F 
+ 1374              	.LASF26:
+ 1375 02b6 6973725F 		.ascii	"isr_trigger_GetVector\000"
+ 1375      74726967 
+ 1375      6765725F 
+ 1375      47657456 
+ 1375      6563746F 
+ 1376              	.LASF23:
+ 1377 02cc 7072696F 		.ascii	"priorityOffset\000"
+ 1377      72697479 
+ 1377      4F666673 
+ 1377      657400
+ 1378              	.LASF4:
+ 1379 02db 6C6F6E67 		.ascii	"long int\000"
+ 1379      20696E74 
+ 1379      00
+ 1380              	.LASF38:
+ 1381 02e4 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 1381      6F63756D 
+ 1381      656E7473 
+ 1381      5C456E67 
+ 1381      696E6565 
+ 1382 0312 43797072 		.ascii	"Cypress\\synth-wavetable.cydsn\000"
+ 1382      6573735C 
+ 1382      73796E74 
+ 1382      682D7761 
+ 1382      76657461 
+ 1383              	.LASF16:
+ 1384 0330 6C6F6E67 		.ascii	"long double\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccWnCDHr.s 			page 35
+
+
+ 1384      20646F75 
+ 1384      626C6500 
+ 1385              	.LASF0:
+ 1386 033c 7369676E 		.ascii	"signed char\000"
+ 1386      65642063 
+ 1386      68617200 
+ 1387              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

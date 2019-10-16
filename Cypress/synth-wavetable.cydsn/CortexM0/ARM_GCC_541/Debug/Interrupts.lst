@@ -1,0 +1,2372 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"Interrupts.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.ADC_EOC,"ax",%progbits
+  20              		.align	2
+  21              		.global	ADC_EOC
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	ADC_EOC, %function
+  25              	ADC_EOC:
+  26              	.LFB130:
+  27              		.file 1 "Interrupts.c"
+   1:Interrupts.c  **** /*******************************************************************************
+   2:Interrupts.c  **** * File Name: Interrupts.c
+   3:Interrupts.c  **** *
+   4:Interrupts.c  **** * Version 1.0
+   5:Interrupts.c  **** *
+   6:Interrupts.c  **** *  Description: This file contains interrupt service routines for all the interrupts
+   7:Interrupts.c  **** *               in the system
+   8:Interrupts.c  **** *
+   9:Interrupts.c  **** *******************************************************************************
+  10:Interrupts.c  **** * Copyright (2018), Cypress Semiconductor Corporation. All rights reserved.
+  11:Interrupts.c  **** *******************************************************************************
+  12:Interrupts.c  **** * This software, including source code, documentation and related materials
+  13:Interrupts.c  **** * (“Software”), is owned by Cypress Semiconductor Corporation or one of its
+  14:Interrupts.c  **** * subsidiaries (“Cypress”) and is protected by and subject to worldwide patent
+  15:Interrupts.c  **** * protection (United States and foreign), United States copyright laws and
+  16:Interrupts.c  **** * international treaty provisions. Therefore, you may use this Software only
+  17:Interrupts.c  **** * as provided in the license agreement accompanying the software package from
+  18:Interrupts.c  **** * which you obtained this Software (“EULA”).
+  19:Interrupts.c  **** *
+  20:Interrupts.c  **** * If no EULA applies, Cypress hereby grants you a personal, nonexclusive,
+  21:Interrupts.c  **** * non-transferable license to copy, modify, and compile the Software source
+  22:Interrupts.c  **** * code solely for use in connection with Cypress’s integrated circuit products.
+  23:Interrupts.c  **** * Any reproduction, modification, translation, compilation, or representation
+  24:Interrupts.c  **** * of this Software except as specified above is prohibited without the express
+  25:Interrupts.c  **** * written permission of Cypress.
+  26:Interrupts.c  **** *
+  27:Interrupts.c  **** * Disclaimer: THIS SOFTWARE IS PROVIDED AS-IS, WITH NO WARRANTY OF ANY KIND, 
+  28:Interrupts.c  **** * EXPRESS OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, NONINFRINGEMENT, IMPLIED 
+  29:Interrupts.c  **** * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. Cypress 
+  30:Interrupts.c  **** * reserves the right to make changes to the Software without notice. Cypress 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 2
+
+
+  31:Interrupts.c  **** * does not assume any liability arising out of the application or use of the 
+  32:Interrupts.c  **** * Software or any product or circuit described in the Software. Cypress does 
+  33:Interrupts.c  **** * not authorize its products for use in any products where a malfunction or 
+  34:Interrupts.c  **** * failure of the Cypress product may reasonably be expected to result in 
+  35:Interrupts.c  **** * significant property damage, injury or death (“High Risk Product”). By 
+  36:Interrupts.c  **** * including Cypress’s product in a High Risk Product, the manufacturer of such 
+  37:Interrupts.c  **** * system or application assumes all risk of such use and in doing so agrees to 
+  38:Interrupts.c  **** * indemnify Cypress against all liability.
+  39:Interrupts.c  **** *******************************************************************************/
+  40:Interrupts.c  **** #include <AudioControl.h>
+  41:Interrupts.c  **** #include <AudioOut.h>
+  42:Interrupts.c  **** #include <Config.h>
+  43:Interrupts.c  **** #include <project.h>
+  44:Interrupts.c  **** #include <Interrupts.h>
+  45:Interrupts.c  **** #include "waves.h"
+  46:Interrupts.c  **** #include "globals.h"
+  47:Interrupts.c  **** 
+  48:Interrupts.c  **** volatile uint8_t DMA_done_flag = 0;
+  49:Interrupts.c  **** volatile uint8_t DMA_counter = 0;
+  50:Interrupts.c  **** volatile int8_t* current_buffer;
+  51:Interrupts.c  **** volatile uint8_t FIFO_DMA_REQ_FLAG = 0;
+  52:Interrupts.c  **** volatile uint8_t update_ADC_flag = 0;
+  53:Interrupts.c  **** volatile uint8_t trigger_flag = 0;
+  54:Interrupts.c  **** 
+  55:Interrupts.c  **** CY_ISR(ADC_EOC) {
+  28              		.loc 1 55 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  56:Interrupts.c  ****     //UART_UartPutString("ADC EOC\r\n");
+  57:Interrupts.c  ****     update_ADC_flag = 1;
+  33              		.loc 1 57 0
+  34 0000 0122     		movs	r2, #1
+  35 0002 014B     		ldr	r3, .L2
+  36 0004 1A70     		strb	r2, [r3]
+  58:Interrupts.c  ****     //freq = 2000;
+  59:Interrupts.c  **** }
+  37              		.loc 1 59 0
+  38              		@ sp needed
+  39 0006 7047     		bx	lr
+  40              	.L3:
+  41              		.align	2
+  42              	.L2:
+  43 0008 00000000 		.word	.LANCHOR0
+  44              		.cfi_endproc
+  45              	.LFE130:
+  46              		.size	ADC_EOC, .-ADC_EOC
+  47              		.section	.text.I2STxDone,"ax",%progbits
+  48              		.align	2
+  49              		.global	I2STxDone
+  50              		.code	16
+  51              		.thumb_func
+  52              		.type	I2STxDone, %function
+  53              	I2STxDone:
+  54              	.LFB131:
+  60:Interrupts.c  **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 3
+
+
+  61:Interrupts.c  **** CY_ISR(I2STxDone){
+  55              		.loc 1 61 0
+  56              		.cfi_startproc
+  57              		@ args = 0, pretend = 0, frame = 0
+  58              		@ frame_needed = 0, uses_anonymous_args = 0
+  59              		@ link register save eliminated.
+  62:Interrupts.c  ****     //UART_UartPutString("DMA done\r\n");
+  63:Interrupts.c  ****     //CyGlobalIntDisable;
+  64:Interrupts.c  ****     DMA_done_flag = 1;
+  60              		.loc 1 64 0
+  61 0000 034A     		ldr	r2, .L5
+  62 0002 0123     		movs	r3, #1
+  63 0004 5370     		strb	r3, [r2, #1]
+  65:Interrupts.c  ****     DMA_counter++;
+  64              		.loc 1 65 0
+  65 0006 9378     		ldrb	r3, [r2, #2]
+  66 0008 0133     		adds	r3, r3, #1
+  67 000a DBB2     		uxtb	r3, r3
+  68 000c 9370     		strb	r3, [r2, #2]
+  66:Interrupts.c  **** }
+  69              		.loc 1 66 0
+  70              		@ sp needed
+  71 000e 7047     		bx	lr
+  72              	.L6:
+  73              		.align	2
+  74              	.L5:
+  75 0010 00000000 		.word	.LANCHOR0
+  76              		.cfi_endproc
+  77              	.LFE131:
+  78              		.size	I2STxDone, .-I2STxDone
+  79              		.section	.text.SPIDone,"ax",%progbits
+  80              		.align	2
+  81              		.global	SPIDone
+  82              		.code	16
+  83              		.thumb_func
+  84              		.type	SPIDone, %function
+  85              	SPIDone:
+  86              	.LFB132:
+  67:Interrupts.c  **** 
+  68:Interrupts.c  **** CY_ISR(SPIDone){
+  87              		.loc 1 68 0
+  88              		.cfi_startproc
+  89              		@ args = 0, pretend = 0, frame = 0
+  90              		@ frame_needed = 0, uses_anonymous_args = 0
+  91 0000 10B5     		push	{r4, lr}
+  92              		.cfi_def_cfa_offset 8
+  93              		.cfi_offset 4, -8
+  94              		.cfi_offset 14, -4
+  69:Interrupts.c  ****     LED_Write(0);
+  95              		.loc 1 69 0
+  96 0002 0020     		movs	r0, #0
+  97 0004 FFF7FEFF 		bl	LED_Write
+  98              	.LVL0:
+  70:Interrupts.c  ****     /* Reset receive buffers. */
+  71:Interrupts.c  ****     //memcpy((void *)current_buffer, masterRxBuffer, BUFFER_SIZE);
+  72:Interrupts.c  ****     memcpy((void *)output_buffer, masterRxBuffer, BUFFER_SIZE);
+  99              		.loc 1 72 0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 4
+
+
+ 100 0008 2022     		movs	r2, #32
+ 101 000a 0949     		ldr	r1, .L8
+ 102 000c 0948     		ldr	r0, .L8+4
+ 103 000e FFF7FEFF 		bl	memcpy
+ 104              	.LVL1:
+ 105              	.LBB10:
+ 106              	.LBB11:
+ 107              		.file 2 "Generated_Source\\PSoC4/SPI_TxDMA.h"
+   1:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+   2:Generated_Source\PSoC4/SPI_TxDMA.h **** * File Name: SPI_TxDMA.h
+   3:Generated_Source\PSoC4/SPI_TxDMA.h **** * Version 1.0
+   4:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+   5:Generated_Source\PSoC4/SPI_TxDMA.h **** * Description:
+   6:Generated_Source\PSoC4/SPI_TxDMA.h **** *  This file provides DMA channel defines and API function definitions.
+   7:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+   8:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+   9:Generated_Source\PSoC4/SPI_TxDMA.h **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC4/SPI_TxDMA.h **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/SPI_TxDMA.h **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/SPI_TxDMA.h **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+  14:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  15:Generated_Source\PSoC4/SPI_TxDMA.h **** #ifndef CY_DMA_CHANNEL_SPI_TxDMA_H
+  16:Generated_Source\PSoC4/SPI_TxDMA.h **** #define CY_DMA_CHANNEL_SPI_TxDMA_H
+  17:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  18:Generated_Source\PSoC4/SPI_TxDMA.h **** #include "CyDMA.h"
+  19:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  20:Generated_Source\PSoC4/SPI_TxDMA.h ****     
+  21:Generated_Source\PSoC4/SPI_TxDMA.h **** /***************************************
+  22:Generated_Source\PSoC4/SPI_TxDMA.h **** *   Conditional Compilation Parameters
+  23:Generated_Source\PSoC4/SPI_TxDMA.h **** ***************************************/
+  24:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  25:Generated_Source\PSoC4/SPI_TxDMA.h **** #define SPI_TxDMA_CHANNEL           (SPI_TxDMA__CHANNEL_NUMBER)
+  26:Generated_Source\PSoC4/SPI_TxDMA.h **** #define SPI_TxDMA_CHANNEL_MASK      ((uint32)(1UL << SPI_TxDMA_CHANNEL))
+  27:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  28:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  29:Generated_Source\PSoC4/SPI_TxDMA.h **** /***************************************
+  30:Generated_Source\PSoC4/SPI_TxDMA.h **** *        Function Prototypes
+  31:Generated_Source\PSoC4/SPI_TxDMA.h **** ***************************************/
+  32:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  33:Generated_Source\PSoC4/SPI_TxDMA.h **** /* Functions specific to this DMA channel */
+  34:Generated_Source\PSoC4/SPI_TxDMA.h **** void SPI_TxDMA_Init(void);
+  35:Generated_Source\PSoC4/SPI_TxDMA.h **** void SPI_TxDMA_Start(void * srcAddress, void * dstAddress);
+  36:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  37:Generated_Source\PSoC4/SPI_TxDMA.h **** /* Inline functions that call global API functions */
+  38:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_ChEnable(void);
+  39:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_ChDisable(void);
+  40:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_Trigger(void);
+  41:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetPriority(int32 priority);
+  42:Generated_Source\PSoC4/SPI_TxDMA.h **** static int32  SPI_TxDMA_GetPriority(void);
+  43:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetNextDescriptor(int32 descriptor);
+  44:Generated_Source\PSoC4/SPI_TxDMA.h **** static int32  SPI_TxDMA_GetNextDescriptor(void);
+  45:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetConfiguration(int32 descriptor, const cydma_init_struct * config);
+  46:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_ValidateDescriptor(int32 descriptor);
+  47:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetDescriptorStatus(int32 descriptor);
+  48:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetSrcAddress(int32 descriptor, void * srcAddress);
+  49:Generated_Source\PSoC4/SPI_TxDMA.h **** static void * SPI_TxDMA_GetSrcAddress(int32 descriptor);
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 5
+
+
+  50:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetDstAddress(int32 descriptor, void * dstAddress);
+  51:Generated_Source\PSoC4/SPI_TxDMA.h **** static void * SPI_TxDMA_GetDstAddress(int32 descriptor);
+  52:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetDataElementSize(int32 descriptor, uint32 dataElementSize);
+  53:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetDataElementSize(int32 descriptor);
+  54:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetNumDataElements(int32 descriptor, int32 numDataElements);
+  55:Generated_Source\PSoC4/SPI_TxDMA.h **** static int32  SPI_TxDMA_GetNumDataElements(int32 descriptor);
+  56:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetSrcDstTransferWidth(int32 descriptor, uint32 transferWidth);
+  57:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetSrcDstTransferWidth(int32 descriptor);
+  58:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetAddressIncrement(int32 descriptor, uint32 addressIncrement);
+  59:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetAddressIncrement(int32 descriptor);
+  60:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetTriggerType(int32 descriptor, uint32 triggerType);
+  61:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetTriggerType(int32 descriptor);
+  62:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetTransferMode(int32 descriptor, uint32 transferMode);
+  63:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetTransferMode(int32 descriptor);
+  64:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetPreemptable(int32 descriptor, uint32 preemptable);
+  65:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetPreemptable(int32 descriptor);
+  66:Generated_Source\PSoC4/SPI_TxDMA.h **** static void   SPI_TxDMA_SetPostCompletionActions(int32 descriptor, uint32 actions);
+  67:Generated_Source\PSoC4/SPI_TxDMA.h **** static uint32 SPI_TxDMA_GetPostCompletionAction(int32 descriptor);
+  68:Generated_Source\PSoC4/SPI_TxDMA.h **** static cydma_callback_t SPI_TxDMA_SetInterruptCallback(cydma_callback_t callback);
+  69:Generated_Source\PSoC4/SPI_TxDMA.h **** static cydma_callback_t SPI_TxDMA_GetInterruptCallback(void);
+  70:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  71:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  72:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+  73:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_ChEnable
+  74:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+  75:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+  76:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+  77:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Enables the DMA channel. It is not necessary to call SPI_TxDMA_ChEnable()
+  78:Generated_Source\PSoC4/SPI_TxDMA.h **** *  because the SPI_TxDMA_Start() API calls this function, which is the
+  79:Generated_Source\PSoC4/SPI_TxDMA.h **** *  preferred method to begin the component operation.
+  80:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+  81:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+  82:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+  83:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+  84:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+  85:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+  86:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+  87:Generated_Source\PSoC4/SPI_TxDMA.h **** * Side effect:
+  88:Generated_Source\PSoC4/SPI_TxDMA.h **** *  If this function is called before SPI_TxDMA_Start(), or SPI_TxDMA_Init()
+  89:Generated_Source\PSoC4/SPI_TxDMA.h **** *  or SPI_TxDMA_SetConfiguration(), and SPI_TxDMA_SetSrcAddress()
+  90:Generated_Source\PSoC4/SPI_TxDMA.h **** *  and SPI_TxDMA_SetDstAddress the operation of the DMA is 
+  91:Generated_Source\PSoC4/SPI_TxDMA.h **** *  undefined and could result in system data corruption. 
+  92:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+  93:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+  94:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_ChEnable(void)
+  95:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+  96:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaChEnable(SPI_TxDMA_CHANNEL);
+  97:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+  98:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+  99:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 100:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 101:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_ChDisable
+ 102:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 103:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 104:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 105:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Disables the DMA channel.
+ 106:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 6
+
+
+ 107:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 108:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 109:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 110:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ 111:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 112:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 113:Generated_Source\PSoC4/SPI_TxDMA.h **** * Side effect:
+ 114:Generated_Source\PSoC4/SPI_TxDMA.h **** *  If this function is called during a DMA transfer the transfer is aborted. 
+ 115:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 116:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 117:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_ChDisable(void)
+ 118:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 119:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaChDisable(SPI_TxDMA_CHANNEL);
+ 120:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 121:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 122:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 123:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 124:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_Trigger
+ 125:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 126:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 127:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 128:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Triggers the DMA channel, this is useful only for software triggers. This is
+ 129:Generated_Source\PSoC4/SPI_TxDMA.h **** *  not needed when hardware triggers are used.
+ 130:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 131:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 132:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 133:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 134:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ 135:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None. 
+ 136:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 137:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 138:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_Trigger(void)
+ 139:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 140:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaTrigger(SPI_TxDMA_CHANNEL);
+ 141:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 142:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 143:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 144:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 145:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_SetPriority
+ 146:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 147:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 148:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 149:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Sets the priority for the channel.
+ 150:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 151:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 152:Generated_Source\PSoC4/SPI_TxDMA.h **** *  priority: Priority for channel. Priority can be 0,1,2, or 3.
+ 153:Generated_Source\PSoC4/SPI_TxDMA.h **** *            0 is the highest priority.
+ 154:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 155:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ 156:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 157:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 158:Generated_Source\PSoC4/SPI_TxDMA.h **** * Side effect:
+ 159:Generated_Source\PSoC4/SPI_TxDMA.h **** *  This function should not be called while the channel is enabled.
+ 160:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 161:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 162:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_SetPriority(int32 priority)
+ 163:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 7
+
+
+ 164:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaSetPriority(SPI_TxDMA_CHANNEL, priority);
+ 165:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 166:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 167:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 168:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 169:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_GetPriority
+ 170:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 171:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 172:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 173:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Gets the priority for the channel.
+ 174:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 175:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 176:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 177:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 178:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ 179:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Priority for channel. Priority can be 0,1,2, or 3. 0 is the highest priority.
+ 180:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 181:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 182:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE int32 SPI_TxDMA_GetPriority(void)
+ 183:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 184:Generated_Source\PSoC4/SPI_TxDMA.h ****     return (CyDmaGetPriority(SPI_TxDMA_CHANNEL));
+ 185:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 186:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 187:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 188:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 189:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_SetNextDescriptor
+ 190:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 191:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 192:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 193:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Sets the descriptor that should be run the next time the channel is
+ 194:Generated_Source\PSoC4/SPI_TxDMA.h **** *  triggered.
+ 195:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 196:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 197:Generated_Source\PSoC4/SPI_TxDMA.h **** *  descriptor: Next Descriptor to run (0 or 1).
+ 198:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 199:Generated_Source\PSoC4/SPI_TxDMA.h **** * Side effect:
+ 200:Generated_Source\PSoC4/SPI_TxDMA.h **** *  This function should not be called while the channel is enabled.
+ 201:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 202:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 203:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_SetNextDescriptor(int32 descriptor)
+ 204:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 205:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaSetNextDescriptor(SPI_TxDMA_CHANNEL, descriptor);
+ 206:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 207:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 208:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 209:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 210:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_GetNextDescriptor
+ 211:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 212:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 213:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 214:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Returns the next descriptor that should be run, as set by 
+ 215:Generated_Source\PSoC4/SPI_TxDMA.h **** *  SPI_TxDMA_SetNextDescriptor().
+ 216:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 217:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 218:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 219:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 220:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 8
+
+
+ 221:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Next Descriptor to run (0 or 1).
+ 222:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 223:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 224:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE int32 SPI_TxDMA_GetNextDescriptor(void)
+ 225:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 226:Generated_Source\PSoC4/SPI_TxDMA.h ****     return (CyDmaGetNextDescriptor(SPI_TxDMA_CHANNEL));
+ 227:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 228:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 229:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 230:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 231:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_SetConfiguration
+ 232:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 233:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 234:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 235:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Sets configuration information for the specified descriptor.
+ 236:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 237:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 238:Generated_Source\PSoC4/SPI_TxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 239:Generated_Source\PSoC4/SPI_TxDMA.h **** *  config: Pointer to a configuration structure. Refer to cydma_init_struct
+ 240:Generated_Source\PSoC4/SPI_TxDMA.h **** *          structure definition in CyDMA_P4.h or the component datasheet.
+ 241:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 242:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ 243:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None.
+ 244:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 245:Generated_Source\PSoC4/SPI_TxDMA.h **** * Side effect:
+ 246:Generated_Source\PSoC4/SPI_TxDMA.h **** *  The status register associated with the specified descriptor is reset to
+ 247:Generated_Source\PSoC4/SPI_TxDMA.h **** *  zero after this function call. This function also validates the descriptor.
+ 248:Generated_Source\PSoC4/SPI_TxDMA.h **** *  This function should not be called while the descriptor is active.
+ 249:Generated_Source\PSoC4/SPI_TxDMA.h **** *  This can be checked by calling CyDmaGetStatus().
+ 250:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 251:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 252:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_SetConfiguration(int32 descriptor, const cydma_init_struct * config
+ 253:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 254:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaSetConfiguration(SPI_TxDMA_CHANNEL, descriptor, config);
+ 255:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 256:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 257:Generated_Source\PSoC4/SPI_TxDMA.h **** 
+ 258:Generated_Source\PSoC4/SPI_TxDMA.h **** /*******************************************************************************
+ 259:Generated_Source\PSoC4/SPI_TxDMA.h **** * Function Name: SPI_TxDMA_ValidateDescriptor
+ 260:Generated_Source\PSoC4/SPI_TxDMA.h **** ********************************************************************************
+ 261:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 262:Generated_Source\PSoC4/SPI_TxDMA.h **** * Summary:
+ 263:Generated_Source\PSoC4/SPI_TxDMA.h **** *  Validates the specified descriptor after it has been invalidated.
+ 264:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 265:Generated_Source\PSoC4/SPI_TxDMA.h **** * Parameters:
+ 266:Generated_Source\PSoC4/SPI_TxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 267:Generated_Source\PSoC4/SPI_TxDMA.h **** *                   
+ 268:Generated_Source\PSoC4/SPI_TxDMA.h **** * Return:
+ 269:Generated_Source\PSoC4/SPI_TxDMA.h **** *  None. 
+ 270:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 271:Generated_Source\PSoC4/SPI_TxDMA.h **** * Side effect:
+ 272:Generated_Source\PSoC4/SPI_TxDMA.h **** *  The status register associated with the specified descriptor is reset to
+ 273:Generated_Source\PSoC4/SPI_TxDMA.h **** *  zero after this function call. This function should not be called while the
+ 274:Generated_Source\PSoC4/SPI_TxDMA.h **** *  descriptor is active. This can be checked by calling CyDmaGetStatus().
+ 275:Generated_Source\PSoC4/SPI_TxDMA.h **** *
+ 276:Generated_Source\PSoC4/SPI_TxDMA.h **** *******************************************************************************/
+ 277:Generated_Source\PSoC4/SPI_TxDMA.h **** static CY_INLINE void SPI_TxDMA_ValidateDescriptor(int32 descriptor)
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 9
+
+
+ 278:Generated_Source\PSoC4/SPI_TxDMA.h **** {
+ 279:Generated_Source\PSoC4/SPI_TxDMA.h ****     CyDmaValidateDescriptor(SPI_TxDMA_CHANNEL, descriptor);
+ 108              		.loc 2 279 0
+ 109 0012 0021     		movs	r1, #0
+ 110 0014 0220     		movs	r0, #2
+ 111 0016 FFF7FEFF 		bl	CyDmaValidateDescriptor
+ 112              	.LVL2:
+ 113              	.LBE11:
+ 114              	.LBE10:
+ 115              	.LBB12:
+ 116              	.LBB13:
+  96:Generated_Source\PSoC4/SPI_TxDMA.h **** }
+ 117              		.loc 2 96 0
+ 118 001a 0220     		movs	r0, #2
+ 119 001c FFF7FEFF 		bl	CyDmaChEnable
+ 120              	.LVL3:
+ 121              	.LBE13:
+ 122              	.LBE12:
+ 123              	.LBB14:
+ 124              	.LBB15:
+ 125              		.file 3 "Generated_Source\\PSoC4/I2STxDMA.h"
+   1:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+   2:Generated_Source\PSoC4/I2STxDMA.h **** * File Name: I2STxDMA.h
+   3:Generated_Source\PSoC4/I2STxDMA.h **** * Version 1.0
+   4:Generated_Source\PSoC4/I2STxDMA.h **** *
+   5:Generated_Source\PSoC4/I2STxDMA.h **** * Description:
+   6:Generated_Source\PSoC4/I2STxDMA.h **** *  This file provides DMA channel defines and API function definitions.
+   7:Generated_Source\PSoC4/I2STxDMA.h **** *
+   8:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+   9:Generated_Source\PSoC4/I2STxDMA.h **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC4/I2STxDMA.h **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/I2STxDMA.h **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/I2STxDMA.h **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+  14:Generated_Source\PSoC4/I2STxDMA.h **** 
+  15:Generated_Source\PSoC4/I2STxDMA.h **** #ifndef CY_DMA_CHANNEL_I2STxDMA_H
+  16:Generated_Source\PSoC4/I2STxDMA.h **** #define CY_DMA_CHANNEL_I2STxDMA_H
+  17:Generated_Source\PSoC4/I2STxDMA.h **** 
+  18:Generated_Source\PSoC4/I2STxDMA.h **** #include "CyDMA.h"
+  19:Generated_Source\PSoC4/I2STxDMA.h **** 
+  20:Generated_Source\PSoC4/I2STxDMA.h ****     
+  21:Generated_Source\PSoC4/I2STxDMA.h **** /***************************************
+  22:Generated_Source\PSoC4/I2STxDMA.h **** *   Conditional Compilation Parameters
+  23:Generated_Source\PSoC4/I2STxDMA.h **** ***************************************/
+  24:Generated_Source\PSoC4/I2STxDMA.h **** 
+  25:Generated_Source\PSoC4/I2STxDMA.h **** #define I2STxDMA_CHANNEL           (I2STxDMA__CHANNEL_NUMBER)
+  26:Generated_Source\PSoC4/I2STxDMA.h **** #define I2STxDMA_CHANNEL_MASK      ((uint32)(1UL << I2STxDMA_CHANNEL))
+  27:Generated_Source\PSoC4/I2STxDMA.h **** 
+  28:Generated_Source\PSoC4/I2STxDMA.h **** 
+  29:Generated_Source\PSoC4/I2STxDMA.h **** /***************************************
+  30:Generated_Source\PSoC4/I2STxDMA.h **** *        Function Prototypes
+  31:Generated_Source\PSoC4/I2STxDMA.h **** ***************************************/
+  32:Generated_Source\PSoC4/I2STxDMA.h **** 
+  33:Generated_Source\PSoC4/I2STxDMA.h **** /* Functions specific to this DMA channel */
+  34:Generated_Source\PSoC4/I2STxDMA.h **** void I2STxDMA_Init(void);
+  35:Generated_Source\PSoC4/I2STxDMA.h **** void I2STxDMA_Start(void * srcAddress, void * dstAddress);
+  36:Generated_Source\PSoC4/I2STxDMA.h **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 10
+
+
+  37:Generated_Source\PSoC4/I2STxDMA.h **** /* Inline functions that call global API functions */
+  38:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_ChEnable(void);
+  39:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_ChDisable(void);
+  40:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_Trigger(void);
+  41:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetPriority(int32 priority);
+  42:Generated_Source\PSoC4/I2STxDMA.h **** static int32  I2STxDMA_GetPriority(void);
+  43:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetNextDescriptor(int32 descriptor);
+  44:Generated_Source\PSoC4/I2STxDMA.h **** static int32  I2STxDMA_GetNextDescriptor(void);
+  45:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetConfiguration(int32 descriptor, const cydma_init_struct * config);
+  46:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_ValidateDescriptor(int32 descriptor);
+  47:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetDescriptorStatus(int32 descriptor);
+  48:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetSrcAddress(int32 descriptor, void * srcAddress);
+  49:Generated_Source\PSoC4/I2STxDMA.h **** static void * I2STxDMA_GetSrcAddress(int32 descriptor);
+  50:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetDstAddress(int32 descriptor, void * dstAddress);
+  51:Generated_Source\PSoC4/I2STxDMA.h **** static void * I2STxDMA_GetDstAddress(int32 descriptor);
+  52:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetDataElementSize(int32 descriptor, uint32 dataElementSize);
+  53:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetDataElementSize(int32 descriptor);
+  54:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetNumDataElements(int32 descriptor, int32 numDataElements);
+  55:Generated_Source\PSoC4/I2STxDMA.h **** static int32  I2STxDMA_GetNumDataElements(int32 descriptor);
+  56:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetSrcDstTransferWidth(int32 descriptor, uint32 transferWidth);
+  57:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetSrcDstTransferWidth(int32 descriptor);
+  58:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetAddressIncrement(int32 descriptor, uint32 addressIncrement);
+  59:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetAddressIncrement(int32 descriptor);
+  60:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetTriggerType(int32 descriptor, uint32 triggerType);
+  61:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetTriggerType(int32 descriptor);
+  62:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetTransferMode(int32 descriptor, uint32 transferMode);
+  63:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetTransferMode(int32 descriptor);
+  64:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetPreemptable(int32 descriptor, uint32 preemptable);
+  65:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetPreemptable(int32 descriptor);
+  66:Generated_Source\PSoC4/I2STxDMA.h **** static void   I2STxDMA_SetPostCompletionActions(int32 descriptor, uint32 actions);
+  67:Generated_Source\PSoC4/I2STxDMA.h **** static uint32 I2STxDMA_GetPostCompletionAction(int32 descriptor);
+  68:Generated_Source\PSoC4/I2STxDMA.h **** static cydma_callback_t I2STxDMA_SetInterruptCallback(cydma_callback_t callback);
+  69:Generated_Source\PSoC4/I2STxDMA.h **** static cydma_callback_t I2STxDMA_GetInterruptCallback(void);
+  70:Generated_Source\PSoC4/I2STxDMA.h **** 
+  71:Generated_Source\PSoC4/I2STxDMA.h **** 
+  72:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+  73:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_ChEnable
+  74:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+  75:Generated_Source\PSoC4/I2STxDMA.h **** *
+  76:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+  77:Generated_Source\PSoC4/I2STxDMA.h **** *  Enables the DMA channel. It is not necessary to call I2STxDMA_ChEnable()
+  78:Generated_Source\PSoC4/I2STxDMA.h **** *  because the I2STxDMA_Start() API calls this function, which is the
+  79:Generated_Source\PSoC4/I2STxDMA.h **** *  preferred method to begin the component operation.
+  80:Generated_Source\PSoC4/I2STxDMA.h **** *
+  81:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+  82:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+  83:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+  84:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+  85:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+  86:Generated_Source\PSoC4/I2STxDMA.h **** *
+  87:Generated_Source\PSoC4/I2STxDMA.h **** * Side effect:
+  88:Generated_Source\PSoC4/I2STxDMA.h **** *  If this function is called before I2STxDMA_Start(), or I2STxDMA_Init()
+  89:Generated_Source\PSoC4/I2STxDMA.h **** *  or I2STxDMA_SetConfiguration(), and I2STxDMA_SetSrcAddress()
+  90:Generated_Source\PSoC4/I2STxDMA.h **** *  and I2STxDMA_SetDstAddress the operation of the DMA is 
+  91:Generated_Source\PSoC4/I2STxDMA.h **** *  undefined and could result in system data corruption. 
+  92:Generated_Source\PSoC4/I2STxDMA.h **** *
+  93:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 11
+
+
+  94:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_ChEnable(void)
+  95:Generated_Source\PSoC4/I2STxDMA.h **** {
+  96:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaChEnable(I2STxDMA_CHANNEL);
+  97:Generated_Source\PSoC4/I2STxDMA.h **** }
+  98:Generated_Source\PSoC4/I2STxDMA.h **** 
+  99:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 100:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 101:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_ChDisable
+ 102:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 103:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 104:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 105:Generated_Source\PSoC4/I2STxDMA.h **** *  Disables the DMA channel.
+ 106:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 107:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 108:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 109:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 110:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 111:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 112:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 113:Generated_Source\PSoC4/I2STxDMA.h **** * Side effect:
+ 114:Generated_Source\PSoC4/I2STxDMA.h **** *  If this function is called during a DMA transfer the transfer is aborted. 
+ 115:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 116:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 117:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_ChDisable(void)
+ 118:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 119:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaChDisable(I2STxDMA_CHANNEL);
+ 120:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 121:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 122:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 123:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 124:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_Trigger
+ 125:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 126:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 127:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 128:Generated_Source\PSoC4/I2STxDMA.h **** *  Triggers the DMA channel, this is useful only for software triggers. This is
+ 129:Generated_Source\PSoC4/I2STxDMA.h **** *  not needed when hardware triggers are used.
+ 130:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 131:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 132:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 133:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 134:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 135:Generated_Source\PSoC4/I2STxDMA.h **** *  None. 
+ 136:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 137:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 138:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_Trigger(void)
+ 139:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 140:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaTrigger(I2STxDMA_CHANNEL);
+ 141:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 142:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 143:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 144:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 145:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_SetPriority
+ 146:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 147:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 148:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 149:Generated_Source\PSoC4/I2STxDMA.h **** *  Sets the priority for the channel.
+ 150:Generated_Source\PSoC4/I2STxDMA.h **** *
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 12
+
+
+ 151:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 152:Generated_Source\PSoC4/I2STxDMA.h **** *  priority: Priority for channel. Priority can be 0,1,2, or 3.
+ 153:Generated_Source\PSoC4/I2STxDMA.h **** *            0 is the highest priority.
+ 154:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 155:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 156:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 157:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 158:Generated_Source\PSoC4/I2STxDMA.h **** * Side effect:
+ 159:Generated_Source\PSoC4/I2STxDMA.h **** *  This function should not be called while the channel is enabled.
+ 160:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 161:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 162:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_SetPriority(int32 priority)
+ 163:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 164:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaSetPriority(I2STxDMA_CHANNEL, priority);
+ 165:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 166:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 167:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 168:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 169:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_GetPriority
+ 170:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 171:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 172:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 173:Generated_Source\PSoC4/I2STxDMA.h **** *  Gets the priority for the channel.
+ 174:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 175:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 176:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 177:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 178:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 179:Generated_Source\PSoC4/I2STxDMA.h **** *  Priority for channel. Priority can be 0,1,2, or 3. 0 is the highest priority.
+ 180:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 181:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 182:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE int32 I2STxDMA_GetPriority(void)
+ 183:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 184:Generated_Source\PSoC4/I2STxDMA.h ****     return (CyDmaGetPriority(I2STxDMA_CHANNEL));
+ 185:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 186:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 187:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 188:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 189:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_SetNextDescriptor
+ 190:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 191:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 192:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 193:Generated_Source\PSoC4/I2STxDMA.h **** *  Sets the descriptor that should be run the next time the channel is
+ 194:Generated_Source\PSoC4/I2STxDMA.h **** *  triggered.
+ 195:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 196:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 197:Generated_Source\PSoC4/I2STxDMA.h **** *  descriptor: Next Descriptor to run (0 or 1).
+ 198:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 199:Generated_Source\PSoC4/I2STxDMA.h **** * Side effect:
+ 200:Generated_Source\PSoC4/I2STxDMA.h **** *  This function should not be called while the channel is enabled.
+ 201:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 202:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 203:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_SetNextDescriptor(int32 descriptor)
+ 204:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 205:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaSetNextDescriptor(I2STxDMA_CHANNEL, descriptor);
+ 206:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 207:Generated_Source\PSoC4/I2STxDMA.h **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 13
+
+
+ 208:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 209:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 210:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_GetNextDescriptor
+ 211:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 212:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 213:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 214:Generated_Source\PSoC4/I2STxDMA.h **** *  Returns the next descriptor that should be run, as set by 
+ 215:Generated_Source\PSoC4/I2STxDMA.h **** *  I2STxDMA_SetNextDescriptor().
+ 216:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 217:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 218:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 219:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 220:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 221:Generated_Source\PSoC4/I2STxDMA.h **** *  Next Descriptor to run (0 or 1).
+ 222:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 223:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 224:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE int32 I2STxDMA_GetNextDescriptor(void)
+ 225:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 226:Generated_Source\PSoC4/I2STxDMA.h ****     return (CyDmaGetNextDescriptor(I2STxDMA_CHANNEL));
+ 227:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 228:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 229:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 230:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 231:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_SetConfiguration
+ 232:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 233:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 234:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 235:Generated_Source\PSoC4/I2STxDMA.h **** *  Sets configuration information for the specified descriptor.
+ 236:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 237:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 238:Generated_Source\PSoC4/I2STxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 239:Generated_Source\PSoC4/I2STxDMA.h **** *  config: Pointer to a configuration structure. Refer to cydma_init_struct
+ 240:Generated_Source\PSoC4/I2STxDMA.h **** *          structure definition in CyDMA_P4.h or the component datasheet.
+ 241:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 242:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 243:Generated_Source\PSoC4/I2STxDMA.h **** *  None.
+ 244:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 245:Generated_Source\PSoC4/I2STxDMA.h **** * Side effect:
+ 246:Generated_Source\PSoC4/I2STxDMA.h **** *  The status register associated with the specified descriptor is reset to
+ 247:Generated_Source\PSoC4/I2STxDMA.h **** *  zero after this function call. This function also validates the descriptor.
+ 248:Generated_Source\PSoC4/I2STxDMA.h **** *  This function should not be called while the descriptor is active.
+ 249:Generated_Source\PSoC4/I2STxDMA.h **** *  This can be checked by calling CyDmaGetStatus().
+ 250:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 251:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 252:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_SetConfiguration(int32 descriptor, const cydma_init_struct * config)
+ 253:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 254:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaSetConfiguration(I2STxDMA_CHANNEL, descriptor, config);
+ 255:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 256:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 257:Generated_Source\PSoC4/I2STxDMA.h **** 
+ 258:Generated_Source\PSoC4/I2STxDMA.h **** /*******************************************************************************
+ 259:Generated_Source\PSoC4/I2STxDMA.h **** * Function Name: I2STxDMA_ValidateDescriptor
+ 260:Generated_Source\PSoC4/I2STxDMA.h **** ********************************************************************************
+ 261:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 262:Generated_Source\PSoC4/I2STxDMA.h **** * Summary:
+ 263:Generated_Source\PSoC4/I2STxDMA.h **** *  Validates the specified descriptor after it has been invalidated.
+ 264:Generated_Source\PSoC4/I2STxDMA.h **** *
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 14
+
+
+ 265:Generated_Source\PSoC4/I2STxDMA.h **** * Parameters:
+ 266:Generated_Source\PSoC4/I2STxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 267:Generated_Source\PSoC4/I2STxDMA.h **** *                   
+ 268:Generated_Source\PSoC4/I2STxDMA.h **** * Return:
+ 269:Generated_Source\PSoC4/I2STxDMA.h **** *  None. 
+ 270:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 271:Generated_Source\PSoC4/I2STxDMA.h **** * Side effect:
+ 272:Generated_Source\PSoC4/I2STxDMA.h **** *  The status register associated with the specified descriptor is reset to
+ 273:Generated_Source\PSoC4/I2STxDMA.h **** *  zero after this function call. This function should not be called while the
+ 274:Generated_Source\PSoC4/I2STxDMA.h **** *  descriptor is active. This can be checked by calling CyDmaGetStatus().
+ 275:Generated_Source\PSoC4/I2STxDMA.h **** *
+ 276:Generated_Source\PSoC4/I2STxDMA.h **** *******************************************************************************/
+ 277:Generated_Source\PSoC4/I2STxDMA.h **** static CY_INLINE void I2STxDMA_ValidateDescriptor(int32 descriptor)
+ 278:Generated_Source\PSoC4/I2STxDMA.h **** {
+ 279:Generated_Source\PSoC4/I2STxDMA.h ****     CyDmaValidateDescriptor(I2STxDMA_CHANNEL, descriptor);
+ 126              		.loc 3 279 0
+ 127 0020 0021     		movs	r1, #0
+ 128 0022 0120     		movs	r0, #1
+ 129 0024 FFF7FEFF 		bl	CyDmaValidateDescriptor
+ 130              	.LVL4:
+ 131              	.LBE15:
+ 132              	.LBE14:
+ 133              	.LBB16:
+ 134              	.LBB17:
+  96:Generated_Source\PSoC4/I2STxDMA.h **** }
+ 135              		.loc 3 96 0
+ 136 0028 0120     		movs	r0, #1
+ 137 002a FFF7FEFF 		bl	CyDmaChEnable
+ 138              	.LVL5:
+ 139              	.LBE17:
+ 140              	.LBE16:
+  73:Interrupts.c  ****     
+  74:Interrupts.c  ****     /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+  75:Interrupts.c  ****     * to the slave and correspondingly the number of bytes returned by the
+  76:Interrupts.c  ****     * slave. Therefore it is configured to be invalidated when it
+  77:Interrupts.c  ****     * finishes a transfer.
+  78:Interrupts.c  ****     */
+  79:Interrupts.c  ****     SPI_TxDMA_ValidateDescriptor(0);
+  80:Interrupts.c  ****     SPI_TxDMA_ChEnable();
+  81:Interrupts.c  ****     I2STxDMA_ValidateDescriptor(0);
+  82:Interrupts.c  ****     I2STxDMA_ChEnable();
+  83:Interrupts.c  **** }
+ 141              		.loc 1 83 0
+ 142              		@ sp needed
+ 143 002e 10BD     		pop	{r4, pc}
+ 144              	.L9:
+ 145              		.align	2
+ 146              	.L8:
+ 147 0030 00000000 		.word	masterRxBuffer
+ 148 0034 00000000 		.word	output_buffer
+ 149              		.cfi_endproc
+ 150              	.LFE132:
+ 151              		.size	SPIDone, .-SPIDone
+ 152              		.section	.text.SPI_RxDMA_Done_Interrupt,"ax",%progbits
+ 153              		.align	2
+ 154              		.global	SPI_RxDMA_Done_Interrupt
+ 155              		.code	16
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 15
+
+
+ 156              		.thumb_func
+ 157              		.type	SPI_RxDMA_Done_Interrupt, %function
+ 158              	SPI_RxDMA_Done_Interrupt:
+ 159              	.LFB133:
+  84:Interrupts.c  **** 
+  85:Interrupts.c  **** CY_ISR(SPI_RxDMA_Done_Interrupt){
+ 160              		.loc 1 85 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		@ link register save eliminated.
+  86:Interrupts.c  ****     //LED_Write(~LED_Read());
+  87:Interrupts.c  ****     //SPI_reset_Write(~SPI_reset_Read());
+  88:Interrupts.c  **** }
+ 165              		.loc 1 88 0
+ 166              		@ sp needed
+ 167 0000 7047     		bx	lr
+ 168              		.cfi_endproc
+ 169              	.LFE133:
+ 170              		.size	SPI_RxDMA_Done_Interrupt, .-SPI_RxDMA_Done_Interrupt
+ 171 0002 C046     		.section	.text.SPI_TxDMA_Done_Interrupt,"ax",%progbits
+ 172              		.align	2
+ 173              		.global	SPI_TxDMA_Done_Interrupt
+ 174              		.code	16
+ 175              		.thumb_func
+ 176              		.type	SPI_TxDMA_Done_Interrupt, %function
+ 177              	SPI_TxDMA_Done_Interrupt:
+ 178              	.LFB134:
+  89:Interrupts.c  **** 
+  90:Interrupts.c  **** CY_ISR(SPI_TxDMA_Done_Interrupt){
+ 179              		.loc 1 90 0
+ 180              		.cfi_startproc
+ 181              		@ args = 0, pretend = 0, frame = 0
+ 182              		@ frame_needed = 0, uses_anonymous_args = 0
+ 183              		@ link register save eliminated.
+  91:Interrupts.c  ****     //LED_Write(~LED_Read());
+  92:Interrupts.c  ****     //SPI_reset_Write(~SPI_reset_Read());
+  93:Interrupts.c  **** }
+ 184              		.loc 1 93 0
+ 185              		@ sp needed
+ 186 0000 7047     		bx	lr
+ 187              		.cfi_endproc
+ 188              	.LFE134:
+ 189              		.size	SPI_TxDMA_Done_Interrupt, .-SPI_TxDMA_Done_Interrupt
+ 190 0002 C046     		.section	.text.I2SUnderflow,"ax",%progbits
+ 191              		.align	2
+ 192              		.global	I2SUnderflow
+ 193              		.code	16
+ 194              		.thumb_func
+ 195              		.type	I2SUnderflow, %function
+ 196              	I2SUnderflow:
+ 197              	.LFB135:
+  94:Interrupts.c  **** 
+  95:Interrupts.c  **** CY_ISR(I2SUnderflow) {
+ 198              		.loc 1 95 0
+ 199              		.cfi_startproc
+ 200              		@ args = 0, pretend = 0, frame = 0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 16
+
+
+ 201              		@ frame_needed = 0, uses_anonymous_args = 0
+ 202              		@ link register save eliminated.
+  96:Interrupts.c  ****     //UART_UartPutString("I2S undeflow\r\n");    
+  97:Interrupts.c  **** }
+ 203              		.loc 1 97 0
+ 204              		@ sp needed
+ 205 0000 7047     		bx	lr
+ 206              		.cfi_endproc
+ 207              	.LFE135:
+ 208              		.size	I2SUnderflow, .-I2SUnderflow
+ 209 0002 C046     		.section	.text.envelope_trigger_interrupt,"ax",%progbits
+ 210              		.align	2
+ 211              		.global	envelope_trigger_interrupt
+ 212              		.code	16
+ 213              		.thumb_func
+ 214              		.type	envelope_trigger_interrupt, %function
+ 215              	envelope_trigger_interrupt:
+ 216              	.LFB136:
+  98:Interrupts.c  **** 
+  99:Interrupts.c  **** CY_ISR(envelope_trigger_interrupt){
+ 217              		.loc 1 99 0
+ 218              		.cfi_startproc
+ 219              		@ args = 0, pretend = 0, frame = 0
+ 220              		@ frame_needed = 0, uses_anonymous_args = 0
+ 221              		@ link register save eliminated.
+ 100:Interrupts.c  ****     //UART_UartPutString("env trig\r\n");
+ 101:Interrupts.c  **** }
+ 222              		.loc 1 101 0
+ 223              		@ sp needed
+ 224 0000 7047     		bx	lr
+ 225              		.cfi_endproc
+ 226              	.LFE136:
+ 227              		.size	envelope_trigger_interrupt, .-envelope_trigger_interrupt
+ 228              		.global	trigger_flag
+ 229              		.global	update_ADC_flag
+ 230              		.global	FIFO_DMA_REQ_FLAG
+ 231              		.comm	current_buffer,4,4
+ 232              		.global	DMA_counter
+ 233              		.global	DMA_done_flag
+ 234              		.comm	v8,16,4
+ 235              		.comm	v7,16,4
+ 236              		.comm	v6,16,4
+ 237              		.comm	v5,16,4
+ 238              		.comm	v4,16,4
+ 239              		.comm	v3,16,4
+ 240              		.comm	v2,16,4
+ 241              		.comm	v1,16,4
+ 242              		.comm	lfo_sine,256,4
+ 243              		.comm	base_sq,4096,4
+ 244              		.comm	base_pos_saw,4096,4
+ 245              		.comm	base_sine,8192,4
+ 246 0002 C046     		.bss
+ 247              		.set	.LANCHOR0,. + 0
+ 248              		.type	update_ADC_flag, %object
+ 249              		.size	update_ADC_flag, 1
+ 250              	update_ADC_flag:
+ 251 0000 00       		.space	1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 17
+
+
+ 252              		.type	DMA_done_flag, %object
+ 253              		.size	DMA_done_flag, 1
+ 254              	DMA_done_flag:
+ 255 0001 00       		.space	1
+ 256              		.type	DMA_counter, %object
+ 257              		.size	DMA_counter, 1
+ 258              	DMA_counter:
+ 259 0002 00       		.space	1
+ 260              		.type	trigger_flag, %object
+ 261              		.size	trigger_flag, 1
+ 262              	trigger_flag:
+ 263 0003 00       		.space	1
+ 264              		.type	FIFO_DMA_REQ_FLAG, %object
+ 265              		.size	FIFO_DMA_REQ_FLAG, 1
+ 266              	FIFO_DMA_REQ_FLAG:
+ 267 0004 00       		.space	1
+ 268              		.text
+ 269              	.Letext0:
+ 270              		.file 4 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 271              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 272              		.file 6 "Generated_Source\\PSoC4/cytypes.h"
+ 273              		.file 7 "oscillator.h"
+ 274              		.file 8 "waves.h"
+ 275              		.file 9 "globals.h"
+ 276              		.file 10 "Generated_Source\\PSoC4/CyDMA.h"
+ 277              		.file 11 "Generated_Source\\PSoC4/LED.h"
+ 278              		.section	.debug_info,"",%progbits
+ 279              	.Ldebug_info0:
+ 280 0000 A0040000 		.4byte	0x4a0
+ 281 0004 0400     		.2byte	0x4
+ 282 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 283 000a 04       		.byte	0x4
+ 284 000b 01       		.uleb128 0x1
+ 285 000c 70000000 		.4byte	.LASF56
+ 286 0010 0C       		.byte	0xc
+ 287 0011 6E030000 		.4byte	.LASF57
+ 288 0015 38010000 		.4byte	.LASF58
+ 289 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 290 001d 00000000 		.4byte	0
+ 291 0021 00000000 		.4byte	.Ldebug_line0
+ 292 0025 02       		.uleb128 0x2
+ 293 0026 E5020000 		.4byte	.LASF0
+ 294 002a 04       		.byte	0x4
+ 295 002b 1B       		.byte	0x1b
+ 296 002c 30000000 		.4byte	0x30
+ 297 0030 03       		.uleb128 0x3
+ 298 0031 01       		.byte	0x1
+ 299 0032 06       		.byte	0x6
+ 300 0033 94020000 		.4byte	.LASF2
+ 301 0037 02       		.uleb128 0x2
+ 302 0038 1D020000 		.4byte	.LASF1
+ 303 003c 04       		.byte	0x4
+ 304 003d 1D       		.byte	0x1d
+ 305 003e 42000000 		.4byte	0x42
+ 306 0042 03       		.uleb128 0x3
+ 307 0043 01       		.byte	0x1
+ 308 0044 08       		.byte	0x8
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 18
+
+
+ 309 0045 69020000 		.4byte	.LASF3
+ 310 0049 02       		.uleb128 0x2
+ 311 004a 7B030000 		.4byte	.LASF4
+ 312 004e 04       		.byte	0x4
+ 313 004f 29       		.byte	0x29
+ 314 0050 54000000 		.4byte	0x54
+ 315 0054 03       		.uleb128 0x3
+ 316 0055 02       		.byte	0x2
+ 317 0056 05       		.byte	0x5
+ 318 0057 66000000 		.4byte	.LASF5
+ 319 005b 02       		.uleb128 0x2
+ 320 005c 54000000 		.4byte	.LASF6
+ 321 0060 04       		.byte	0x4
+ 322 0061 2B       		.byte	0x2b
+ 323 0062 66000000 		.4byte	0x66
+ 324 0066 03       		.uleb128 0x3
+ 325 0067 02       		.byte	0x2
+ 326 0068 07       		.byte	0x7
+ 327 0069 FB020000 		.4byte	.LASF7
+ 328 006d 03       		.uleb128 0x3
+ 329 006e 04       		.byte	0x4
+ 330 006f 05       		.byte	0x5
+ 331 0070 E7010000 		.4byte	.LASF8
+ 332 0074 02       		.uleb128 0x2
+ 333 0075 49000000 		.4byte	.LASF9
+ 334 0079 04       		.byte	0x4
+ 335 007a 41       		.byte	0x41
+ 336 007b 7F000000 		.4byte	0x7f
+ 337 007f 03       		.uleb128 0x3
+ 338 0080 04       		.byte	0x4
+ 339 0081 07       		.byte	0x7
+ 340 0082 2F030000 		.4byte	.LASF10
+ 341 0086 03       		.uleb128 0x3
+ 342 0087 08       		.byte	0x8
+ 343 0088 05       		.byte	0x5
+ 344 0089 BC010000 		.4byte	.LASF11
+ 345 008d 03       		.uleb128 0x3
+ 346 008e 08       		.byte	0x8
+ 347 008f 07       		.byte	0x7
+ 348 0090 A0020000 		.4byte	.LASF12
+ 349 0094 04       		.uleb128 0x4
+ 350 0095 04       		.byte	0x4
+ 351 0096 05       		.byte	0x5
+ 352 0097 696E7400 		.ascii	"int\000"
+ 353 009b 03       		.uleb128 0x3
+ 354 009c 04       		.byte	0x4
+ 355 009d 07       		.byte	0x7
+ 356 009e C0020000 		.4byte	.LASF13
+ 357 00a2 02       		.uleb128 0x2
+ 358 00a3 23000000 		.4byte	.LASF14
+ 359 00a7 05       		.byte	0x5
+ 360 00a8 14       		.byte	0x14
+ 361 00a9 25000000 		.4byte	0x25
+ 362 00ad 02       		.uleb128 0x2
+ 363 00ae 11010000 		.4byte	.LASF15
+ 364 00b2 05       		.byte	0x5
+ 365 00b3 18       		.byte	0x18
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 19
+
+
+ 366 00b4 37000000 		.4byte	0x37
+ 367 00b8 02       		.uleb128 0x2
+ 368 00b9 0E030000 		.4byte	.LASF16
+ 369 00bd 05       		.byte	0x5
+ 370 00be 20       		.byte	0x20
+ 371 00bf 49000000 		.4byte	0x49
+ 372 00c3 02       		.uleb128 0x2
+ 373 00c4 D3020000 		.4byte	.LASF17
+ 374 00c8 05       		.byte	0x5
+ 375 00c9 24       		.byte	0x24
+ 376 00ca 5B000000 		.4byte	0x5b
+ 377 00ce 02       		.uleb128 0x2
+ 378 00cf B7020000 		.4byte	.LASF18
+ 379 00d3 05       		.byte	0x5
+ 380 00d4 30       		.byte	0x30
+ 381 00d5 74000000 		.4byte	0x74
+ 382 00d9 05       		.uleb128 0x5
+ 383 00da 41030000 		.4byte	.LASF19
+ 384 00de 06       		.byte	0x6
+ 385 00df E901     		.2byte	0x1e9
+ 386 00e1 6D000000 		.4byte	0x6d
+ 387 00e5 03       		.uleb128 0x3
+ 388 00e6 04       		.byte	0x4
+ 389 00e7 04       		.byte	0x4
+ 390 00e8 A4010000 		.4byte	.LASF20
+ 391 00ec 03       		.uleb128 0x3
+ 392 00ed 08       		.byte	0x8
+ 393 00ee 04       		.byte	0x4
+ 394 00ef 47030000 		.4byte	.LASF21
+ 395 00f3 03       		.uleb128 0x3
+ 396 00f4 01       		.byte	0x1
+ 397 00f5 08       		.byte	0x8
+ 398 00f6 EE020000 		.4byte	.LASF22
+ 399 00fa 03       		.uleb128 0x3
+ 400 00fb 08       		.byte	0x8
+ 401 00fc 04       		.byte	0x4
+ 402 00fd 5D020000 		.4byte	.LASF23
+ 403 0101 03       		.uleb128 0x3
+ 404 0102 04       		.byte	0x4
+ 405 0103 07       		.byte	0x7
+ 406 0104 8D030000 		.4byte	.LASF24
+ 407 0108 06       		.uleb128 0x6
+ 408 0109 CD020000 		.4byte	.LASF59
+ 409 010d 10       		.byte	0x10
+ 410 010e 07       		.byte	0x7
+ 411 010f 05       		.byte	0x5
+ 412 0110 51010000 		.4byte	0x151
+ 413 0114 07       		.uleb128 0x7
+ 414 0115 3F000000 		.4byte	.LASF25
+ 415 0119 07       		.byte	0x7
+ 416 011a 06       		.byte	0x6
+ 417 011b CE000000 		.4byte	0xce
+ 418 011f 00       		.byte	0
+ 419 0120 07       		.uleb128 0x7
+ 420 0121 41020000 		.4byte	.LASF26
+ 421 0125 07       		.byte	0x7
+ 422 0126 07       		.byte	0x7
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 20
+
+
+ 423 0127 C3000000 		.4byte	0xc3
+ 424 012b 04       		.byte	0x4
+ 425 012c 07       		.uleb128 0x7
+ 426 012d 0C020000 		.4byte	.LASF27
+ 427 0131 07       		.byte	0x7
+ 428 0132 08       		.byte	0x8
+ 429 0133 AD000000 		.4byte	0xad
+ 430 0137 06       		.byte	0x6
+ 431 0138 07       		.uleb128 0x7
+ 432 0139 AA010000 		.4byte	.LASF28
+ 433 013d 07       		.byte	0x7
+ 434 013e 09       		.byte	0x9
+ 435 013f 94000000 		.4byte	0x94
+ 436 0143 08       		.byte	0x8
+ 437 0144 07       		.uleb128 0x7
+ 438 0145 34000000 		.4byte	.LASF29
+ 439 0149 07       		.byte	0x7
+ 440 014a 0A       		.byte	0xa
+ 441 014b AD000000 		.4byte	0xad
+ 442 014f 0C       		.byte	0xc
+ 443 0150 00       		.byte	0
+ 444 0151 08       		.uleb128 0x8
+ 445 0152 84010000 		.4byte	.LASF30
+ 446 0156 03       		.byte	0x3
+ 447 0157 5E       		.byte	0x5e
+ 448 0158 03       		.byte	0x3
+ 449 0159 09       		.uleb128 0x9
+ 450 015a F0010000 		.4byte	.LASF32
+ 451 015e 03       		.byte	0x3
+ 452 015f 1501     		.2byte	0x115
+ 453 0161 03       		.byte	0x3
+ 454 0162 73010000 		.4byte	0x173
+ 455 0166 0A       		.uleb128 0xa
+ 456 0167 DA030000 		.4byte	.LASF34
+ 457 016b 03       		.byte	0x3
+ 458 016c 1501     		.2byte	0x115
+ 459 016e D9000000 		.4byte	0xd9
+ 460 0172 00       		.byte	0
+ 461 0173 08       		.uleb128 0x8
+ 462 0174 FE000000 		.4byte	.LASF31
+ 463 0178 02       		.byte	0x2
+ 464 0179 5E       		.byte	0x5e
+ 465 017a 03       		.byte	0x3
+ 466 017b 09       		.uleb128 0x9
+ 467 017c 77020000 		.4byte	.LASF33
+ 468 0180 02       		.byte	0x2
+ 469 0181 1501     		.2byte	0x115
+ 470 0183 03       		.byte	0x3
+ 471 0184 95010000 		.4byte	0x195
+ 472 0188 0A       		.uleb128 0xa
+ 473 0189 DA030000 		.4byte	.LASF34
+ 474 018d 02       		.byte	0x2
+ 475 018e 1501     		.2byte	0x115
+ 476 0190 D9000000 		.4byte	0xd9
+ 477 0194 00       		.byte	0
+ 478 0195 0B       		.uleb128 0xb
+ 479 0196 66030000 		.4byte	.LASF35
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 21
+
+
+ 480 019a 01       		.byte	0x1
+ 481 019b 37       		.byte	0x37
+ 482 019c 00000000 		.4byte	.LFB130
+ 483 01a0 0C000000 		.4byte	.LFE130-.LFB130
+ 484 01a4 01       		.uleb128 0x1
+ 485 01a5 9C       		.byte	0x9c
+ 486 01a6 0B       		.uleb128 0xb
+ 487 01a7 00000000 		.4byte	.LASF36
+ 488 01ab 01       		.byte	0x1
+ 489 01ac 3D       		.byte	0x3d
+ 490 01ad 00000000 		.4byte	.LFB131
+ 491 01b1 14000000 		.4byte	.LFE131-.LFB131
+ 492 01b5 01       		.uleb128 0x1
+ 493 01b6 9C       		.byte	0x9c
+ 494 01b7 0C       		.uleb128 0xc
+ 495 01b8 85030000 		.4byte	.LASF60
+ 496 01bc 01       		.byte	0x1
+ 497 01bd 44       		.byte	0x44
+ 498 01be 00000000 		.4byte	.LFB132
+ 499 01c2 38000000 		.4byte	.LFE132-.LFB132
+ 500 01c6 01       		.uleb128 0x1
+ 501 01c7 9C       		.byte	0x9c
+ 502 01c8 98020000 		.4byte	0x298
+ 503 01cc 0D       		.uleb128 0xd
+ 504 01cd 7B010000 		.4byte	0x17b
+ 505 01d1 12000000 		.4byte	.LBB10
+ 506 01d5 08000000 		.4byte	.LBE10-.LBB10
+ 507 01d9 01       		.byte	0x1
+ 508 01da 4F       		.byte	0x4f
+ 509 01db FD010000 		.4byte	0x1fd
+ 510 01df 0E       		.uleb128 0xe
+ 511 01e0 88010000 		.4byte	0x188
+ 512 01e4 00000000 		.4byte	.LLST0
+ 513 01e8 0F       		.uleb128 0xf
+ 514 01e9 1A000000 		.4byte	.LVL2
+ 515 01ed 79040000 		.4byte	0x479
+ 516 01f1 10       		.uleb128 0x10
+ 517 01f2 01       		.uleb128 0x1
+ 518 01f3 50       		.byte	0x50
+ 519 01f4 01       		.uleb128 0x1
+ 520 01f5 32       		.byte	0x32
+ 521 01f6 10       		.uleb128 0x10
+ 522 01f7 01       		.uleb128 0x1
+ 523 01f8 51       		.byte	0x51
+ 524 01f9 01       		.uleb128 0x1
+ 525 01fa 30       		.byte	0x30
+ 526 01fb 00       		.byte	0
+ 527 01fc 00       		.byte	0
+ 528 01fd 0D       		.uleb128 0xd
+ 529 01fe 73010000 		.4byte	0x173
+ 530 0202 1A000000 		.4byte	.LBB12
+ 531 0206 06000000 		.4byte	.LBE12-.LBB12
+ 532 020a 01       		.byte	0x1
+ 533 020b 50       		.byte	0x50
+ 534 020c 20020000 		.4byte	0x220
+ 535 0210 0F       		.uleb128 0xf
+ 536 0211 20000000 		.4byte	.LVL3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 22
+
+
+ 537 0215 84040000 		.4byte	0x484
+ 538 0219 10       		.uleb128 0x10
+ 539 021a 01       		.uleb128 0x1
+ 540 021b 50       		.byte	0x50
+ 541 021c 01       		.uleb128 0x1
+ 542 021d 32       		.byte	0x32
+ 543 021e 00       		.byte	0
+ 544 021f 00       		.byte	0
+ 545 0220 0D       		.uleb128 0xd
+ 546 0221 59010000 		.4byte	0x159
+ 547 0225 20000000 		.4byte	.LBB14
+ 548 0229 08000000 		.4byte	.LBE14-.LBB14
+ 549 022d 01       		.byte	0x1
+ 550 022e 51       		.byte	0x51
+ 551 022f 51020000 		.4byte	0x251
+ 552 0233 0E       		.uleb128 0xe
+ 553 0234 66010000 		.4byte	0x166
+ 554 0238 14000000 		.4byte	.LLST1
+ 555 023c 0F       		.uleb128 0xf
+ 556 023d 28000000 		.4byte	.LVL4
+ 557 0241 79040000 		.4byte	0x479
+ 558 0245 10       		.uleb128 0x10
+ 559 0246 01       		.uleb128 0x1
+ 560 0247 50       		.byte	0x50
+ 561 0248 01       		.uleb128 0x1
+ 562 0249 31       		.byte	0x31
+ 563 024a 10       		.uleb128 0x10
+ 564 024b 01       		.uleb128 0x1
+ 565 024c 51       		.byte	0x51
+ 566 024d 01       		.uleb128 0x1
+ 567 024e 30       		.byte	0x30
+ 568 024f 00       		.byte	0
+ 569 0250 00       		.byte	0
+ 570 0251 0D       		.uleb128 0xd
+ 571 0252 51010000 		.4byte	0x151
+ 572 0256 28000000 		.4byte	.LBB16
+ 573 025a 06000000 		.4byte	.LBE16-.LBB16
+ 574 025e 01       		.byte	0x1
+ 575 025f 52       		.byte	0x52
+ 576 0260 74020000 		.4byte	0x274
+ 577 0264 0F       		.uleb128 0xf
+ 578 0265 2E000000 		.4byte	.LVL5
+ 579 0269 84040000 		.4byte	0x484
+ 580 026d 10       		.uleb128 0x10
+ 581 026e 01       		.uleb128 0x1
+ 582 026f 50       		.byte	0x50
+ 583 0270 01       		.uleb128 0x1
+ 584 0271 31       		.byte	0x31
+ 585 0272 00       		.byte	0
+ 586 0273 00       		.byte	0
+ 587 0274 11       		.uleb128 0x11
+ 588 0275 08000000 		.4byte	.LVL0
+ 589 0279 8F040000 		.4byte	0x48f
+ 590 027d 87020000 		.4byte	0x287
+ 591 0281 10       		.uleb128 0x10
+ 592 0282 01       		.uleb128 0x1
+ 593 0283 50       		.byte	0x50
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 23
+
+
+ 594 0284 01       		.uleb128 0x1
+ 595 0285 30       		.byte	0x30
+ 596 0286 00       		.byte	0
+ 597 0287 0F       		.uleb128 0xf
+ 598 0288 12000000 		.4byte	.LVL1
+ 599 028c 9A040000 		.4byte	0x49a
+ 600 0290 10       		.uleb128 0x10
+ 601 0291 01       		.uleb128 0x1
+ 602 0292 52       		.byte	0x52
+ 603 0293 02       		.uleb128 0x2
+ 604 0294 08       		.byte	0x8
+ 605 0295 20       		.byte	0x20
+ 606 0296 00       		.byte	0
+ 607 0297 00       		.byte	0
+ 608 0298 0B       		.uleb128 0xb
+ 609 0299 16030000 		.4byte	.LASF37
+ 610 029d 01       		.byte	0x1
+ 611 029e 55       		.byte	0x55
+ 612 029f 00000000 		.4byte	.LFB133
+ 613 02a3 02000000 		.4byte	.LFE133-.LFB133
+ 614 02a7 01       		.uleb128 0x1
+ 615 02a8 9C       		.byte	0x9c
+ 616 02a9 0B       		.uleb128 0xb
+ 617 02aa 0A000000 		.4byte	.LASF38
+ 618 02ae 01       		.byte	0x1
+ 619 02af 5A       		.byte	0x5a
+ 620 02b0 00000000 		.4byte	.LFB134
+ 621 02b4 02000000 		.4byte	.LFE134-.LFB134
+ 622 02b8 01       		.uleb128 0x1
+ 623 02b9 9C       		.byte	0x9c
+ 624 02ba 0B       		.uleb128 0xb
+ 625 02bb 19010000 		.4byte	.LASF39
+ 626 02bf 01       		.byte	0x1
+ 627 02c0 5F       		.byte	0x5f
+ 628 02c1 00000000 		.4byte	.LFB135
+ 629 02c5 02000000 		.4byte	.LFE135-.LFB135
+ 630 02c9 01       		.uleb128 0x1
+ 631 02ca 9C       		.byte	0x9c
+ 632 02cb 0B       		.uleb128 0xb
+ 633 02cc BF030000 		.4byte	.LASF40
+ 634 02d0 01       		.byte	0x1
+ 635 02d1 63       		.byte	0x63
+ 636 02d2 00000000 		.4byte	.LFB136
+ 637 02d6 02000000 		.4byte	.LFE136-.LFB136
+ 638 02da 01       		.uleb128 0x1
+ 639 02db 9C       		.byte	0x9c
+ 640 02dc 12       		.uleb128 0x12
+ 641 02dd B8000000 		.4byte	0xb8
+ 642 02e1 ED020000 		.4byte	0x2ed
+ 643 02e5 13       		.uleb128 0x13
+ 644 02e6 01010000 		.4byte	0x101
+ 645 02ea FF0F     		.2byte	0xfff
+ 646 02ec 00       		.byte	0
+ 647 02ed 14       		.uleb128 0x14
+ 648 02ee 27020000 		.4byte	.LASF41
+ 649 02f2 08       		.byte	0x8
+ 650 02f3 0F       		.byte	0xf
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 24
+
+
+ 651 02f4 DC020000 		.4byte	0x2dc
+ 652 02f8 05       		.uleb128 0x5
+ 653 02f9 03       		.byte	0x3
+ 654 02fa 00000000 		.4byte	base_sine
+ 655 02fe 12       		.uleb128 0x12
+ 656 02ff A2000000 		.4byte	0xa2
+ 657 0303 0F030000 		.4byte	0x30f
+ 658 0307 13       		.uleb128 0x13
+ 659 0308 01010000 		.4byte	0x101
+ 660 030c FF0F     		.2byte	0xfff
+ 661 030e 00       		.byte	0
+ 662 030f 14       		.uleb128 0x14
+ 663 0310 50020000 		.4byte	.LASF42
+ 664 0314 08       		.byte	0x8
+ 665 0315 10       		.byte	0x10
+ 666 0316 FE020000 		.4byte	0x2fe
+ 667 031a 05       		.uleb128 0x5
+ 668 031b 03       		.byte	0x3
+ 669 031c 00000000 		.4byte	base_pos_saw
+ 670 0320 14       		.uleb128 0x14
+ 671 0321 F3020000 		.4byte	.LASF43
+ 672 0325 08       		.byte	0x8
+ 673 0326 13       		.byte	0x13
+ 674 0327 FE020000 		.4byte	0x2fe
+ 675 032b 05       		.uleb128 0x5
+ 676 032c 03       		.byte	0x3
+ 677 032d 00000000 		.4byte	base_sq
+ 678 0331 12       		.uleb128 0x12
+ 679 0332 AD000000 		.4byte	0xad
+ 680 0336 41030000 		.4byte	0x341
+ 681 033a 15       		.uleb128 0x15
+ 682 033b 01010000 		.4byte	0x101
+ 683 033f FF       		.byte	0xff
+ 684 0340 00       		.byte	0
+ 685 0341 14       		.uleb128 0x14
+ 686 0342 DC020000 		.4byte	.LASF44
+ 687 0346 08       		.byte	0x8
+ 688 0347 15       		.byte	0x15
+ 689 0348 31030000 		.4byte	0x331
+ 690 034c 05       		.uleb128 0x5
+ 691 034d 03       		.byte	0x3
+ 692 034e 00000000 		.4byte	lfo_sine
+ 693 0352 12       		.uleb128 0x12
+ 694 0353 A2000000 		.4byte	0xa2
+ 695 0357 62030000 		.4byte	0x362
+ 696 035b 15       		.uleb128 0x15
+ 697 035c 01010000 		.4byte	0x101
+ 698 0360 1F       		.byte	0x1f
+ 699 0361 00       		.byte	0
+ 700 0362 16       		.uleb128 0x16
+ 701 0363 96030000 		.4byte	.LASF45
+ 702 0367 09       		.byte	0x9
+ 703 0368 0C       		.byte	0xc
+ 704 0369 52030000 		.4byte	0x352
+ 705 036d 14       		.uleb128 0x14
+ 706 036e CA010000 		.4byte	.LASF46
+ 707 0372 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 25
+
+
+ 708 0373 32       		.byte	0x32
+ 709 0374 7E030000 		.4byte	0x37e
+ 710 0378 05       		.uleb128 0x5
+ 711 0379 03       		.byte	0x3
+ 712 037a 00000000 		.4byte	current_buffer
+ 713 037e 17       		.uleb128 0x17
+ 714 037f 04       		.byte	0x4
+ 715 0380 84030000 		.4byte	0x384
+ 716 0384 18       		.uleb128 0x18
+ 717 0385 A2000000 		.4byte	0xa2
+ 718 0389 19       		.uleb128 0x19
+ 719 038a 763100   		.ascii	"v1\000"
+ 720 038d 09       		.byte	0x9
+ 721 038e 20       		.byte	0x20
+ 722 038f 08010000 		.4byte	0x108
+ 723 0393 05       		.uleb128 0x5
+ 724 0394 03       		.byte	0x3
+ 725 0395 00000000 		.4byte	v1
+ 726 0399 19       		.uleb128 0x19
+ 727 039a 763200   		.ascii	"v2\000"
+ 728 039d 09       		.byte	0x9
+ 729 039e 21       		.byte	0x21
+ 730 039f 08010000 		.4byte	0x108
+ 731 03a3 05       		.uleb128 0x5
+ 732 03a4 03       		.byte	0x3
+ 733 03a5 00000000 		.4byte	v2
+ 734 03a9 19       		.uleb128 0x19
+ 735 03aa 763300   		.ascii	"v3\000"
+ 736 03ad 09       		.byte	0x9
+ 737 03ae 22       		.byte	0x22
+ 738 03af 08010000 		.4byte	0x108
+ 739 03b3 05       		.uleb128 0x5
+ 740 03b4 03       		.byte	0x3
+ 741 03b5 00000000 		.4byte	v3
+ 742 03b9 19       		.uleb128 0x19
+ 743 03ba 763400   		.ascii	"v4\000"
+ 744 03bd 09       		.byte	0x9
+ 745 03be 23       		.byte	0x23
+ 746 03bf 08010000 		.4byte	0x108
+ 747 03c3 05       		.uleb128 0x5
+ 748 03c4 03       		.byte	0x3
+ 749 03c5 00000000 		.4byte	v4
+ 750 03c9 19       		.uleb128 0x19
+ 751 03ca 763500   		.ascii	"v5\000"
+ 752 03cd 09       		.byte	0x9
+ 753 03ce 24       		.byte	0x24
+ 754 03cf 08010000 		.4byte	0x108
+ 755 03d3 05       		.uleb128 0x5
+ 756 03d4 03       		.byte	0x3
+ 757 03d5 00000000 		.4byte	v5
+ 758 03d9 19       		.uleb128 0x19
+ 759 03da 763600   		.ascii	"v6\000"
+ 760 03dd 09       		.byte	0x9
+ 761 03de 25       		.byte	0x25
+ 762 03df 08010000 		.4byte	0x108
+ 763 03e3 05       		.uleb128 0x5
+ 764 03e4 03       		.byte	0x3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 26
+
+
+ 765 03e5 00000000 		.4byte	v6
+ 766 03e9 19       		.uleb128 0x19
+ 767 03ea 763700   		.ascii	"v7\000"
+ 768 03ed 09       		.byte	0x9
+ 769 03ee 26       		.byte	0x26
+ 770 03ef 08010000 		.4byte	0x108
+ 771 03f3 05       		.uleb128 0x5
+ 772 03f4 03       		.byte	0x3
+ 773 03f5 00000000 		.4byte	v7
+ 774 03f9 19       		.uleb128 0x19
+ 775 03fa 763800   		.ascii	"v8\000"
+ 776 03fd 09       		.byte	0x9
+ 777 03fe 27       		.byte	0x27
+ 778 03ff 08010000 		.4byte	0x108
+ 779 0403 05       		.uleb128 0x5
+ 780 0404 03       		.byte	0x3
+ 781 0405 00000000 		.4byte	v8
+ 782 0409 14       		.uleb128 0x14
+ 783 040a 96010000 		.4byte	.LASF47
+ 784 040e 01       		.byte	0x1
+ 785 040f 30       		.byte	0x30
+ 786 0410 1A040000 		.4byte	0x41a
+ 787 0414 05       		.uleb128 0x5
+ 788 0415 03       		.byte	0x3
+ 789 0416 00000000 		.4byte	DMA_done_flag
+ 790 041a 18       		.uleb128 0x18
+ 791 041b AD000000 		.4byte	0xad
+ 792 041f 14       		.uleb128 0x14
+ 793 0420 B3030000 		.4byte	.LASF48
+ 794 0424 01       		.byte	0x1
+ 795 0425 31       		.byte	0x31
+ 796 0426 1A040000 		.4byte	0x41a
+ 797 042a 05       		.uleb128 0x5
+ 798 042b 03       		.byte	0x3
+ 799 042c 00000000 		.4byte	DMA_counter
+ 800 0430 14       		.uleb128 0x14
+ 801 0431 26010000 		.4byte	.LASF49
+ 802 0435 01       		.byte	0x1
+ 803 0436 33       		.byte	0x33
+ 804 0437 1A040000 		.4byte	0x41a
+ 805 043b 05       		.uleb128 0x5
+ 806 043c 03       		.byte	0x3
+ 807 043d 00000000 		.4byte	FIFO_DMA_REQ_FLAG
+ 808 0441 14       		.uleb128 0x14
+ 809 0442 31020000 		.4byte	.LASF50
+ 810 0446 01       		.byte	0x1
+ 811 0447 34       		.byte	0x34
+ 812 0448 1A040000 		.4byte	0x41a
+ 813 044c 05       		.uleb128 0x5
+ 814 044d 03       		.byte	0x3
+ 815 044e 00000000 		.4byte	update_ADC_flag
+ 816 0452 14       		.uleb128 0x14
+ 817 0453 AF010000 		.4byte	.LASF51
+ 818 0457 01       		.byte	0x1
+ 819 0458 35       		.byte	0x35
+ 820 0459 1A040000 		.4byte	0x41a
+ 821 045d 05       		.uleb128 0x5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 27
+
+
+ 822 045e 03       		.byte	0x3
+ 823 045f 00000000 		.4byte	trigger_flag
+ 824 0463 12       		.uleb128 0x12
+ 825 0464 A2000000 		.4byte	0xa2
+ 826 0468 6E040000 		.4byte	0x46e
+ 827 046c 1A       		.uleb128 0x1a
+ 828 046d 00       		.byte	0
+ 829 046e 16       		.uleb128 0x16
+ 830 046f D9010000 		.4byte	.LASF52
+ 831 0473 09       		.byte	0x9
+ 832 0474 2F       		.byte	0x2f
+ 833 0475 63040000 		.4byte	0x463
+ 834 0479 1B       		.uleb128 0x1b
+ 835 047a 4E030000 		.4byte	.LASF53
+ 836 047e 4E030000 		.4byte	.LASF53
+ 837 0482 0A       		.byte	0xa
+ 838 0483 8F       		.byte	0x8f
+ 839 0484 1B       		.uleb128 0x1b
+ 840 0485 A5030000 		.4byte	.LASF54
+ 841 0489 A5030000 		.4byte	.LASF54
+ 842 048d 0A       		.byte	0xa
+ 843 048e 82       		.byte	0x82
+ 844 048f 1B       		.uleb128 0x1b
+ 845 0490 2A000000 		.4byte	.LASF55
+ 846 0494 2A000000 		.4byte	.LASF55
+ 847 0498 0B       		.byte	0xb
+ 848 0499 33       		.byte	0x33
+ 849 049a 1C       		.uleb128 0x1c
+ 850 049b 5F000000 		.4byte	.LASF61
+ 851 049f 5F000000 		.4byte	.LASF61
+ 852 04a3 00       		.byte	0
+ 853              		.section	.debug_abbrev,"",%progbits
+ 854              	.Ldebug_abbrev0:
+ 855 0000 01       		.uleb128 0x1
+ 856 0001 11       		.uleb128 0x11
+ 857 0002 01       		.byte	0x1
+ 858 0003 25       		.uleb128 0x25
+ 859 0004 0E       		.uleb128 0xe
+ 860 0005 13       		.uleb128 0x13
+ 861 0006 0B       		.uleb128 0xb
+ 862 0007 03       		.uleb128 0x3
+ 863 0008 0E       		.uleb128 0xe
+ 864 0009 1B       		.uleb128 0x1b
+ 865 000a 0E       		.uleb128 0xe
+ 866 000b 55       		.uleb128 0x55
+ 867 000c 17       		.uleb128 0x17
+ 868 000d 11       		.uleb128 0x11
+ 869 000e 01       		.uleb128 0x1
+ 870 000f 10       		.uleb128 0x10
+ 871 0010 17       		.uleb128 0x17
+ 872 0011 00       		.byte	0
+ 873 0012 00       		.byte	0
+ 874 0013 02       		.uleb128 0x2
+ 875 0014 16       		.uleb128 0x16
+ 876 0015 00       		.byte	0
+ 877 0016 03       		.uleb128 0x3
+ 878 0017 0E       		.uleb128 0xe
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 28
+
+
+ 879 0018 3A       		.uleb128 0x3a
+ 880 0019 0B       		.uleb128 0xb
+ 881 001a 3B       		.uleb128 0x3b
+ 882 001b 0B       		.uleb128 0xb
+ 883 001c 49       		.uleb128 0x49
+ 884 001d 13       		.uleb128 0x13
+ 885 001e 00       		.byte	0
+ 886 001f 00       		.byte	0
+ 887 0020 03       		.uleb128 0x3
+ 888 0021 24       		.uleb128 0x24
+ 889 0022 00       		.byte	0
+ 890 0023 0B       		.uleb128 0xb
+ 891 0024 0B       		.uleb128 0xb
+ 892 0025 3E       		.uleb128 0x3e
+ 893 0026 0B       		.uleb128 0xb
+ 894 0027 03       		.uleb128 0x3
+ 895 0028 0E       		.uleb128 0xe
+ 896 0029 00       		.byte	0
+ 897 002a 00       		.byte	0
+ 898 002b 04       		.uleb128 0x4
+ 899 002c 24       		.uleb128 0x24
+ 900 002d 00       		.byte	0
+ 901 002e 0B       		.uleb128 0xb
+ 902 002f 0B       		.uleb128 0xb
+ 903 0030 3E       		.uleb128 0x3e
+ 904 0031 0B       		.uleb128 0xb
+ 905 0032 03       		.uleb128 0x3
+ 906 0033 08       		.uleb128 0x8
+ 907 0034 00       		.byte	0
+ 908 0035 00       		.byte	0
+ 909 0036 05       		.uleb128 0x5
+ 910 0037 16       		.uleb128 0x16
+ 911 0038 00       		.byte	0
+ 912 0039 03       		.uleb128 0x3
+ 913 003a 0E       		.uleb128 0xe
+ 914 003b 3A       		.uleb128 0x3a
+ 915 003c 0B       		.uleb128 0xb
+ 916 003d 3B       		.uleb128 0x3b
+ 917 003e 05       		.uleb128 0x5
+ 918 003f 49       		.uleb128 0x49
+ 919 0040 13       		.uleb128 0x13
+ 920 0041 00       		.byte	0
+ 921 0042 00       		.byte	0
+ 922 0043 06       		.uleb128 0x6
+ 923 0044 13       		.uleb128 0x13
+ 924 0045 01       		.byte	0x1
+ 925 0046 03       		.uleb128 0x3
+ 926 0047 0E       		.uleb128 0xe
+ 927 0048 0B       		.uleb128 0xb
+ 928 0049 0B       		.uleb128 0xb
+ 929 004a 3A       		.uleb128 0x3a
+ 930 004b 0B       		.uleb128 0xb
+ 931 004c 3B       		.uleb128 0x3b
+ 932 004d 0B       		.uleb128 0xb
+ 933 004e 01       		.uleb128 0x1
+ 934 004f 13       		.uleb128 0x13
+ 935 0050 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 29
+
+
+ 936 0051 00       		.byte	0
+ 937 0052 07       		.uleb128 0x7
+ 938 0053 0D       		.uleb128 0xd
+ 939 0054 00       		.byte	0
+ 940 0055 03       		.uleb128 0x3
+ 941 0056 0E       		.uleb128 0xe
+ 942 0057 3A       		.uleb128 0x3a
+ 943 0058 0B       		.uleb128 0xb
+ 944 0059 3B       		.uleb128 0x3b
+ 945 005a 0B       		.uleb128 0xb
+ 946 005b 49       		.uleb128 0x49
+ 947 005c 13       		.uleb128 0x13
+ 948 005d 38       		.uleb128 0x38
+ 949 005e 0B       		.uleb128 0xb
+ 950 005f 00       		.byte	0
+ 951 0060 00       		.byte	0
+ 952 0061 08       		.uleb128 0x8
+ 953 0062 2E       		.uleb128 0x2e
+ 954 0063 00       		.byte	0
+ 955 0064 03       		.uleb128 0x3
+ 956 0065 0E       		.uleb128 0xe
+ 957 0066 3A       		.uleb128 0x3a
+ 958 0067 0B       		.uleb128 0xb
+ 959 0068 3B       		.uleb128 0x3b
+ 960 0069 0B       		.uleb128 0xb
+ 961 006a 27       		.uleb128 0x27
+ 962 006b 19       		.uleb128 0x19
+ 963 006c 20       		.uleb128 0x20
+ 964 006d 0B       		.uleb128 0xb
+ 965 006e 00       		.byte	0
+ 966 006f 00       		.byte	0
+ 967 0070 09       		.uleb128 0x9
+ 968 0071 2E       		.uleb128 0x2e
+ 969 0072 01       		.byte	0x1
+ 970 0073 03       		.uleb128 0x3
+ 971 0074 0E       		.uleb128 0xe
+ 972 0075 3A       		.uleb128 0x3a
+ 973 0076 0B       		.uleb128 0xb
+ 974 0077 3B       		.uleb128 0x3b
+ 975 0078 05       		.uleb128 0x5
+ 976 0079 27       		.uleb128 0x27
+ 977 007a 19       		.uleb128 0x19
+ 978 007b 20       		.uleb128 0x20
+ 979 007c 0B       		.uleb128 0xb
+ 980 007d 01       		.uleb128 0x1
+ 981 007e 13       		.uleb128 0x13
+ 982 007f 00       		.byte	0
+ 983 0080 00       		.byte	0
+ 984 0081 0A       		.uleb128 0xa
+ 985 0082 05       		.uleb128 0x5
+ 986 0083 00       		.byte	0
+ 987 0084 03       		.uleb128 0x3
+ 988 0085 0E       		.uleb128 0xe
+ 989 0086 3A       		.uleb128 0x3a
+ 990 0087 0B       		.uleb128 0xb
+ 991 0088 3B       		.uleb128 0x3b
+ 992 0089 05       		.uleb128 0x5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 30
+
+
+ 993 008a 49       		.uleb128 0x49
+ 994 008b 13       		.uleb128 0x13
+ 995 008c 00       		.byte	0
+ 996 008d 00       		.byte	0
+ 997 008e 0B       		.uleb128 0xb
+ 998 008f 2E       		.uleb128 0x2e
+ 999 0090 00       		.byte	0
+ 1000 0091 3F       		.uleb128 0x3f
+ 1001 0092 19       		.uleb128 0x19
+ 1002 0093 03       		.uleb128 0x3
+ 1003 0094 0E       		.uleb128 0xe
+ 1004 0095 3A       		.uleb128 0x3a
+ 1005 0096 0B       		.uleb128 0xb
+ 1006 0097 3B       		.uleb128 0x3b
+ 1007 0098 0B       		.uleb128 0xb
+ 1008 0099 27       		.uleb128 0x27
+ 1009 009a 19       		.uleb128 0x19
+ 1010 009b 11       		.uleb128 0x11
+ 1011 009c 01       		.uleb128 0x1
+ 1012 009d 12       		.uleb128 0x12
+ 1013 009e 06       		.uleb128 0x6
+ 1014 009f 40       		.uleb128 0x40
+ 1015 00a0 18       		.uleb128 0x18
+ 1016 00a1 9742     		.uleb128 0x2117
+ 1017 00a3 19       		.uleb128 0x19
+ 1018 00a4 00       		.byte	0
+ 1019 00a5 00       		.byte	0
+ 1020 00a6 0C       		.uleb128 0xc
+ 1021 00a7 2E       		.uleb128 0x2e
+ 1022 00a8 01       		.byte	0x1
+ 1023 00a9 3F       		.uleb128 0x3f
+ 1024 00aa 19       		.uleb128 0x19
+ 1025 00ab 03       		.uleb128 0x3
+ 1026 00ac 0E       		.uleb128 0xe
+ 1027 00ad 3A       		.uleb128 0x3a
+ 1028 00ae 0B       		.uleb128 0xb
+ 1029 00af 3B       		.uleb128 0x3b
+ 1030 00b0 0B       		.uleb128 0xb
+ 1031 00b1 27       		.uleb128 0x27
+ 1032 00b2 19       		.uleb128 0x19
+ 1033 00b3 11       		.uleb128 0x11
+ 1034 00b4 01       		.uleb128 0x1
+ 1035 00b5 12       		.uleb128 0x12
+ 1036 00b6 06       		.uleb128 0x6
+ 1037 00b7 40       		.uleb128 0x40
+ 1038 00b8 18       		.uleb128 0x18
+ 1039 00b9 9742     		.uleb128 0x2117
+ 1040 00bb 19       		.uleb128 0x19
+ 1041 00bc 01       		.uleb128 0x1
+ 1042 00bd 13       		.uleb128 0x13
+ 1043 00be 00       		.byte	0
+ 1044 00bf 00       		.byte	0
+ 1045 00c0 0D       		.uleb128 0xd
+ 1046 00c1 1D       		.uleb128 0x1d
+ 1047 00c2 01       		.byte	0x1
+ 1048 00c3 31       		.uleb128 0x31
+ 1049 00c4 13       		.uleb128 0x13
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 31
+
+
+ 1050 00c5 11       		.uleb128 0x11
+ 1051 00c6 01       		.uleb128 0x1
+ 1052 00c7 12       		.uleb128 0x12
+ 1053 00c8 06       		.uleb128 0x6
+ 1054 00c9 58       		.uleb128 0x58
+ 1055 00ca 0B       		.uleb128 0xb
+ 1056 00cb 59       		.uleb128 0x59
+ 1057 00cc 0B       		.uleb128 0xb
+ 1058 00cd 01       		.uleb128 0x1
+ 1059 00ce 13       		.uleb128 0x13
+ 1060 00cf 00       		.byte	0
+ 1061 00d0 00       		.byte	0
+ 1062 00d1 0E       		.uleb128 0xe
+ 1063 00d2 05       		.uleb128 0x5
+ 1064 00d3 00       		.byte	0
+ 1065 00d4 31       		.uleb128 0x31
+ 1066 00d5 13       		.uleb128 0x13
+ 1067 00d6 02       		.uleb128 0x2
+ 1068 00d7 17       		.uleb128 0x17
+ 1069 00d8 00       		.byte	0
+ 1070 00d9 00       		.byte	0
+ 1071 00da 0F       		.uleb128 0xf
+ 1072 00db 898201   		.uleb128 0x4109
+ 1073 00de 01       		.byte	0x1
+ 1074 00df 11       		.uleb128 0x11
+ 1075 00e0 01       		.uleb128 0x1
+ 1076 00e1 31       		.uleb128 0x31
+ 1077 00e2 13       		.uleb128 0x13
+ 1078 00e3 00       		.byte	0
+ 1079 00e4 00       		.byte	0
+ 1080 00e5 10       		.uleb128 0x10
+ 1081 00e6 8A8201   		.uleb128 0x410a
+ 1082 00e9 00       		.byte	0
+ 1083 00ea 02       		.uleb128 0x2
+ 1084 00eb 18       		.uleb128 0x18
+ 1085 00ec 9142     		.uleb128 0x2111
+ 1086 00ee 18       		.uleb128 0x18
+ 1087 00ef 00       		.byte	0
+ 1088 00f0 00       		.byte	0
+ 1089 00f1 11       		.uleb128 0x11
+ 1090 00f2 898201   		.uleb128 0x4109
+ 1091 00f5 01       		.byte	0x1
+ 1092 00f6 11       		.uleb128 0x11
+ 1093 00f7 01       		.uleb128 0x1
+ 1094 00f8 31       		.uleb128 0x31
+ 1095 00f9 13       		.uleb128 0x13
+ 1096 00fa 01       		.uleb128 0x1
+ 1097 00fb 13       		.uleb128 0x13
+ 1098 00fc 00       		.byte	0
+ 1099 00fd 00       		.byte	0
+ 1100 00fe 12       		.uleb128 0x12
+ 1101 00ff 01       		.uleb128 0x1
+ 1102 0100 01       		.byte	0x1
+ 1103 0101 49       		.uleb128 0x49
+ 1104 0102 13       		.uleb128 0x13
+ 1105 0103 01       		.uleb128 0x1
+ 1106 0104 13       		.uleb128 0x13
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 32
+
+
+ 1107 0105 00       		.byte	0
+ 1108 0106 00       		.byte	0
+ 1109 0107 13       		.uleb128 0x13
+ 1110 0108 21       		.uleb128 0x21
+ 1111 0109 00       		.byte	0
+ 1112 010a 49       		.uleb128 0x49
+ 1113 010b 13       		.uleb128 0x13
+ 1114 010c 2F       		.uleb128 0x2f
+ 1115 010d 05       		.uleb128 0x5
+ 1116 010e 00       		.byte	0
+ 1117 010f 00       		.byte	0
+ 1118 0110 14       		.uleb128 0x14
+ 1119 0111 34       		.uleb128 0x34
+ 1120 0112 00       		.byte	0
+ 1121 0113 03       		.uleb128 0x3
+ 1122 0114 0E       		.uleb128 0xe
+ 1123 0115 3A       		.uleb128 0x3a
+ 1124 0116 0B       		.uleb128 0xb
+ 1125 0117 3B       		.uleb128 0x3b
+ 1126 0118 0B       		.uleb128 0xb
+ 1127 0119 49       		.uleb128 0x49
+ 1128 011a 13       		.uleb128 0x13
+ 1129 011b 3F       		.uleb128 0x3f
+ 1130 011c 19       		.uleb128 0x19
+ 1131 011d 02       		.uleb128 0x2
+ 1132 011e 18       		.uleb128 0x18
+ 1133 011f 00       		.byte	0
+ 1134 0120 00       		.byte	0
+ 1135 0121 15       		.uleb128 0x15
+ 1136 0122 21       		.uleb128 0x21
+ 1137 0123 00       		.byte	0
+ 1138 0124 49       		.uleb128 0x49
+ 1139 0125 13       		.uleb128 0x13
+ 1140 0126 2F       		.uleb128 0x2f
+ 1141 0127 0B       		.uleb128 0xb
+ 1142 0128 00       		.byte	0
+ 1143 0129 00       		.byte	0
+ 1144 012a 16       		.uleb128 0x16
+ 1145 012b 34       		.uleb128 0x34
+ 1146 012c 00       		.byte	0
+ 1147 012d 03       		.uleb128 0x3
+ 1148 012e 0E       		.uleb128 0xe
+ 1149 012f 3A       		.uleb128 0x3a
+ 1150 0130 0B       		.uleb128 0xb
+ 1151 0131 3B       		.uleb128 0x3b
+ 1152 0132 0B       		.uleb128 0xb
+ 1153 0133 49       		.uleb128 0x49
+ 1154 0134 13       		.uleb128 0x13
+ 1155 0135 3F       		.uleb128 0x3f
+ 1156 0136 19       		.uleb128 0x19
+ 1157 0137 3C       		.uleb128 0x3c
+ 1158 0138 19       		.uleb128 0x19
+ 1159 0139 00       		.byte	0
+ 1160 013a 00       		.byte	0
+ 1161 013b 17       		.uleb128 0x17
+ 1162 013c 0F       		.uleb128 0xf
+ 1163 013d 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 33
+
+
+ 1164 013e 0B       		.uleb128 0xb
+ 1165 013f 0B       		.uleb128 0xb
+ 1166 0140 49       		.uleb128 0x49
+ 1167 0141 13       		.uleb128 0x13
+ 1168 0142 00       		.byte	0
+ 1169 0143 00       		.byte	0
+ 1170 0144 18       		.uleb128 0x18
+ 1171 0145 35       		.uleb128 0x35
+ 1172 0146 00       		.byte	0
+ 1173 0147 49       		.uleb128 0x49
+ 1174 0148 13       		.uleb128 0x13
+ 1175 0149 00       		.byte	0
+ 1176 014a 00       		.byte	0
+ 1177 014b 19       		.uleb128 0x19
+ 1178 014c 34       		.uleb128 0x34
+ 1179 014d 00       		.byte	0
+ 1180 014e 03       		.uleb128 0x3
+ 1181 014f 08       		.uleb128 0x8
+ 1182 0150 3A       		.uleb128 0x3a
+ 1183 0151 0B       		.uleb128 0xb
+ 1184 0152 3B       		.uleb128 0x3b
+ 1185 0153 0B       		.uleb128 0xb
+ 1186 0154 49       		.uleb128 0x49
+ 1187 0155 13       		.uleb128 0x13
+ 1188 0156 3F       		.uleb128 0x3f
+ 1189 0157 19       		.uleb128 0x19
+ 1190 0158 02       		.uleb128 0x2
+ 1191 0159 18       		.uleb128 0x18
+ 1192 015a 00       		.byte	0
+ 1193 015b 00       		.byte	0
+ 1194 015c 1A       		.uleb128 0x1a
+ 1195 015d 21       		.uleb128 0x21
+ 1196 015e 00       		.byte	0
+ 1197 015f 00       		.byte	0
+ 1198 0160 00       		.byte	0
+ 1199 0161 1B       		.uleb128 0x1b
+ 1200 0162 2E       		.uleb128 0x2e
+ 1201 0163 00       		.byte	0
+ 1202 0164 3F       		.uleb128 0x3f
+ 1203 0165 19       		.uleb128 0x19
+ 1204 0166 3C       		.uleb128 0x3c
+ 1205 0167 19       		.uleb128 0x19
+ 1206 0168 6E       		.uleb128 0x6e
+ 1207 0169 0E       		.uleb128 0xe
+ 1208 016a 03       		.uleb128 0x3
+ 1209 016b 0E       		.uleb128 0xe
+ 1210 016c 3A       		.uleb128 0x3a
+ 1211 016d 0B       		.uleb128 0xb
+ 1212 016e 3B       		.uleb128 0x3b
+ 1213 016f 0B       		.uleb128 0xb
+ 1214 0170 00       		.byte	0
+ 1215 0171 00       		.byte	0
+ 1216 0172 1C       		.uleb128 0x1c
+ 1217 0173 2E       		.uleb128 0x2e
+ 1218 0174 00       		.byte	0
+ 1219 0175 3F       		.uleb128 0x3f
+ 1220 0176 19       		.uleb128 0x19
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 34
+
+
+ 1221 0177 3C       		.uleb128 0x3c
+ 1222 0178 19       		.uleb128 0x19
+ 1223 0179 6E       		.uleb128 0x6e
+ 1224 017a 0E       		.uleb128 0xe
+ 1225 017b 03       		.uleb128 0x3
+ 1226 017c 0E       		.uleb128 0xe
+ 1227 017d 00       		.byte	0
+ 1228 017e 00       		.byte	0
+ 1229 017f 00       		.byte	0
+ 1230              		.section	.debug_loc,"",%progbits
+ 1231              	.Ldebug_loc0:
+ 1232              	.LLST0:
+ 1233 0000 12000000 		.4byte	.LVL1
+ 1234 0004 1A000000 		.4byte	.LVL2
+ 1235 0008 0200     		.2byte	0x2
+ 1236 000a 30       		.byte	0x30
+ 1237 000b 9F       		.byte	0x9f
+ 1238 000c 00000000 		.4byte	0
+ 1239 0010 00000000 		.4byte	0
+ 1240              	.LLST1:
+ 1241 0014 20000000 		.4byte	.LVL3
+ 1242 0018 28000000 		.4byte	.LVL4
+ 1243 001c 0200     		.2byte	0x2
+ 1244 001e 30       		.byte	0x30
+ 1245 001f 9F       		.byte	0x9f
+ 1246 0020 00000000 		.4byte	0
+ 1247 0024 00000000 		.4byte	0
+ 1248              		.section	.debug_aranges,"",%progbits
+ 1249 0000 4C000000 		.4byte	0x4c
+ 1250 0004 0200     		.2byte	0x2
+ 1251 0006 00000000 		.4byte	.Ldebug_info0
+ 1252 000a 04       		.byte	0x4
+ 1253 000b 00       		.byte	0
+ 1254 000c 0000     		.2byte	0
+ 1255 000e 0000     		.2byte	0
+ 1256 0010 00000000 		.4byte	.LFB130
+ 1257 0014 0C000000 		.4byte	.LFE130-.LFB130
+ 1258 0018 00000000 		.4byte	.LFB131
+ 1259 001c 14000000 		.4byte	.LFE131-.LFB131
+ 1260 0020 00000000 		.4byte	.LFB132
+ 1261 0024 38000000 		.4byte	.LFE132-.LFB132
+ 1262 0028 00000000 		.4byte	.LFB133
+ 1263 002c 02000000 		.4byte	.LFE133-.LFB133
+ 1264 0030 00000000 		.4byte	.LFB134
+ 1265 0034 02000000 		.4byte	.LFE134-.LFB134
+ 1266 0038 00000000 		.4byte	.LFB135
+ 1267 003c 02000000 		.4byte	.LFE135-.LFB135
+ 1268 0040 00000000 		.4byte	.LFB136
+ 1269 0044 02000000 		.4byte	.LFE136-.LFB136
+ 1270 0048 00000000 		.4byte	0
+ 1271 004c 00000000 		.4byte	0
+ 1272              		.section	.debug_ranges,"",%progbits
+ 1273              	.Ldebug_ranges0:
+ 1274 0000 00000000 		.4byte	.LFB130
+ 1275 0004 0C000000 		.4byte	.LFE130
+ 1276 0008 00000000 		.4byte	.LFB131
+ 1277 000c 14000000 		.4byte	.LFE131
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 35
+
+
+ 1278 0010 00000000 		.4byte	.LFB132
+ 1279 0014 38000000 		.4byte	.LFE132
+ 1280 0018 00000000 		.4byte	.LFB133
+ 1281 001c 02000000 		.4byte	.LFE133
+ 1282 0020 00000000 		.4byte	.LFB134
+ 1283 0024 02000000 		.4byte	.LFE134
+ 1284 0028 00000000 		.4byte	.LFB135
+ 1285 002c 02000000 		.4byte	.LFE135
+ 1286 0030 00000000 		.4byte	.LFB136
+ 1287 0034 02000000 		.4byte	.LFE136
+ 1288 0038 00000000 		.4byte	0
+ 1289 003c 00000000 		.4byte	0
+ 1290              		.section	.debug_line,"",%progbits
+ 1291              	.Ldebug_line0:
+ 1292 0000 35020000 		.section	.debug_str,"MS",%progbits,1
+ 1292      02009D01 
+ 1292      00000201 
+ 1292      FB0E0D00 
+ 1292      01010101 
+ 1293              	.LASF36:
+ 1294 0000 49325354 		.ascii	"I2STxDone\000"
+ 1294      78446F6E 
+ 1294      6500
+ 1295              	.LASF38:
+ 1296 000a 5350495F 		.ascii	"SPI_TxDMA_Done_Interrupt\000"
+ 1296      5478444D 
+ 1296      415F446F 
+ 1296      6E655F49 
+ 1296      6E746572 
+ 1297              	.LASF14:
+ 1298 0023 696E7438 		.ascii	"int8_t\000"
+ 1298      5F7400
+ 1299              	.LASF55:
+ 1300 002a 4C45445F 		.ascii	"LED_Write\000"
+ 1300      57726974 
+ 1300      6500
+ 1301              	.LASF29:
+ 1302 0034 6E6F7465 		.ascii	"note_index\000"
+ 1302      5F696E64 
+ 1302      657800
+ 1303              	.LASF25:
+ 1304 003f 656E765F 		.ascii	"env_index\000"
+ 1304      696E6465 
+ 1304      7800
+ 1305              	.LASF9:
+ 1306 0049 5F5F7569 		.ascii	"__uint32_t\000"
+ 1306      6E743332 
+ 1306      5F7400
+ 1307              	.LASF6:
+ 1308 0054 5F5F7569 		.ascii	"__uint16_t\000"
+ 1308      6E743136 
+ 1308      5F7400
+ 1309              	.LASF61:
+ 1310 005f 6D656D63 		.ascii	"memcpy\000"
+ 1310      707900
+ 1311              	.LASF5:
+ 1312 0066 73686F72 		.ascii	"short int\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 36
+
+
+ 1312      7420696E 
+ 1312      7400
+ 1313              	.LASF56:
+ 1314 0070 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1314      43313120 
+ 1314      352E342E 
+ 1314      31203230 
+ 1314      31363036 
+ 1315 00a3 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1315      20726576 
+ 1315      6973696F 
+ 1315      6E203233 
+ 1315      37373135 
+ 1316 00d6 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1316      66756E63 
+ 1316      74696F6E 
+ 1316      2D736563 
+ 1316      74696F6E 
+ 1317              	.LASF31:
+ 1318 00fe 5350495F 		.ascii	"SPI_TxDMA_ChEnable\000"
+ 1318      5478444D 
+ 1318      415F4368 
+ 1318      456E6162 
+ 1318      6C6500
+ 1319              	.LASF15:
+ 1320 0111 75696E74 		.ascii	"uint8_t\000"
+ 1320      385F7400 
+ 1321              	.LASF39:
+ 1322 0119 49325355 		.ascii	"I2SUnderflow\000"
+ 1322      6E646572 
+ 1322      666C6F77 
+ 1322      00
+ 1323              	.LASF49:
+ 1324 0126 4649464F 		.ascii	"FIFO_DMA_REQ_FLAG\000"
+ 1324      5F444D41 
+ 1324      5F524551 
+ 1324      5F464C41 
+ 1324      4700
+ 1325              	.LASF58:
+ 1326 0138 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 1326      6F63756D 
+ 1326      656E7473 
+ 1326      5C456E67 
+ 1326      696E6565 
+ 1327 0166 43797072 		.ascii	"Cypress\\synth-wavetable.cydsn\000"
+ 1327      6573735C 
+ 1327      73796E74 
+ 1327      682D7761 
+ 1327      76657461 
+ 1328              	.LASF30:
+ 1329 0184 49325354 		.ascii	"I2STxDMA_ChEnable\000"
+ 1329      78444D41 
+ 1329      5F436845 
+ 1329      6E61626C 
+ 1329      6500
+ 1330              	.LASF47:
+ 1331 0196 444D415F 		.ascii	"DMA_done_flag\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 37
+
+
+ 1331      646F6E65 
+ 1331      5F666C61 
+ 1331      6700
+ 1332              	.LASF20:
+ 1333 01a4 666C6F61 		.ascii	"float\000"
+ 1333      7400
+ 1334              	.LASF28:
+ 1335 01aa 66726571 		.ascii	"freq\000"
+ 1335      00
+ 1336              	.LASF51:
+ 1337 01af 74726967 		.ascii	"trigger_flag\000"
+ 1337      6765725F 
+ 1337      666C6167 
+ 1337      00
+ 1338              	.LASF11:
+ 1339 01bc 6C6F6E67 		.ascii	"long long int\000"
+ 1339      206C6F6E 
+ 1339      6720696E 
+ 1339      7400
+ 1340              	.LASF46:
+ 1341 01ca 63757272 		.ascii	"current_buffer\000"
+ 1341      656E745F 
+ 1341      62756666 
+ 1341      657200
+ 1342              	.LASF52:
+ 1343 01d9 6F757470 		.ascii	"output_buffer\000"
+ 1343      75745F62 
+ 1343      75666665 
+ 1343      7200
+ 1344              	.LASF8:
+ 1345 01e7 6C6F6E67 		.ascii	"long int\000"
+ 1345      20696E74 
+ 1345      00
+ 1346              	.LASF32:
+ 1347 01f0 49325354 		.ascii	"I2STxDMA_ValidateDescriptor\000"
+ 1347      78444D41 
+ 1347      5F56616C 
+ 1347      69646174 
+ 1347      65446573 
+ 1348              	.LASF27:
+ 1349 020c 63757272 		.ascii	"current_env_mode\000"
+ 1349      656E745F 
+ 1349      656E765F 
+ 1349      6D6F6465 
+ 1349      00
+ 1350              	.LASF1:
+ 1351 021d 5F5F7569 		.ascii	"__uint8_t\000"
+ 1351      6E74385F 
+ 1351      7400
+ 1352              	.LASF41:
+ 1353 0227 62617365 		.ascii	"base_sine\000"
+ 1353      5F73696E 
+ 1353      6500
+ 1354              	.LASF50:
+ 1355 0231 75706461 		.ascii	"update_ADC_flag\000"
+ 1355      74655F41 
+ 1355      44435F66 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 38
+
+
+ 1355      6C616700 
+ 1356              	.LASF26:
+ 1357 0241 656E765F 		.ascii	"env_multiplier\000"
+ 1357      6D756C74 
+ 1357      69706C69 
+ 1357      657200
+ 1358              	.LASF42:
+ 1359 0250 62617365 		.ascii	"base_pos_saw\000"
+ 1359      5F706F73 
+ 1359      5F736177 
+ 1359      00
+ 1360              	.LASF23:
+ 1361 025d 6C6F6E67 		.ascii	"long double\000"
+ 1361      20646F75 
+ 1361      626C6500 
+ 1362              	.LASF3:
+ 1363 0269 756E7369 		.ascii	"unsigned char\000"
+ 1363      676E6564 
+ 1363      20636861 
+ 1363      7200
+ 1364              	.LASF33:
+ 1365 0277 5350495F 		.ascii	"SPI_TxDMA_ValidateDescriptor\000"
+ 1365      5478444D 
+ 1365      415F5661 
+ 1365      6C696461 
+ 1365      74654465 
+ 1366              	.LASF2:
+ 1367 0294 7369676E 		.ascii	"signed char\000"
+ 1367      65642063 
+ 1367      68617200 
+ 1368              	.LASF12:
+ 1369 02a0 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1369      206C6F6E 
+ 1369      6720756E 
+ 1369      7369676E 
+ 1369      65642069 
+ 1370              	.LASF18:
+ 1371 02b7 75696E74 		.ascii	"uint32_t\000"
+ 1371      33325F74 
+ 1371      00
+ 1372              	.LASF13:
+ 1373 02c0 756E7369 		.ascii	"unsigned int\000"
+ 1373      676E6564 
+ 1373      20696E74 
+ 1373      00
+ 1374              	.LASF59:
+ 1375 02cd 766F6963 		.ascii	"voice\000"
+ 1375      6500
+ 1376              	.LASF17:
+ 1377 02d3 75696E74 		.ascii	"uint16_t\000"
+ 1377      31365F74 
+ 1377      00
+ 1378              	.LASF44:
+ 1379 02dc 6C666F5F 		.ascii	"lfo_sine\000"
+ 1379      73696E65 
+ 1379      00
+ 1380              	.LASF0:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 39
+
+
+ 1381 02e5 5F5F696E 		.ascii	"__int8_t\000"
+ 1381      74385F74 
+ 1381      00
+ 1382              	.LASF22:
+ 1383 02ee 63686172 		.ascii	"char\000"
+ 1383      00
+ 1384              	.LASF43:
+ 1385 02f3 62617365 		.ascii	"base_sq\000"
+ 1385      5F737100 
+ 1386              	.LASF7:
+ 1387 02fb 73686F72 		.ascii	"short unsigned int\000"
+ 1387      7420756E 
+ 1387      7369676E 
+ 1387      65642069 
+ 1387      6E7400
+ 1388              	.LASF16:
+ 1389 030e 696E7431 		.ascii	"int16_t\000"
+ 1389      365F7400 
+ 1390              	.LASF37:
+ 1391 0316 5350495F 		.ascii	"SPI_RxDMA_Done_Interrupt\000"
+ 1391      5278444D 
+ 1391      415F446F 
+ 1391      6E655F49 
+ 1391      6E746572 
+ 1392              	.LASF10:
+ 1393 032f 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1393      20756E73 
+ 1393      69676E65 
+ 1393      6420696E 
+ 1393      7400
+ 1394              	.LASF19:
+ 1395 0341 696E7433 		.ascii	"int32\000"
+ 1395      3200
+ 1396              	.LASF21:
+ 1397 0347 646F7562 		.ascii	"double\000"
+ 1397      6C6500
+ 1398              	.LASF53:
+ 1399 034e 4379446D 		.ascii	"CyDmaValidateDescriptor\000"
+ 1399      6156616C 
+ 1399      69646174 
+ 1399      65446573 
+ 1399      63726970 
+ 1400              	.LASF35:
+ 1401 0366 4144435F 		.ascii	"ADC_EOC\000"
+ 1401      454F4300 
+ 1402              	.LASF57:
+ 1403 036e 496E7465 		.ascii	"Interrupts.c\000"
+ 1403      72727570 
+ 1403      74732E63 
+ 1403      00
+ 1404              	.LASF4:
+ 1405 037b 5F5F696E 		.ascii	"__int16_t\000"
+ 1405      7431365F 
+ 1405      7400
+ 1406              	.LASF60:
+ 1407 0385 53504944 		.ascii	"SPIDone\000"
+ 1407      6F6E6500 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccd7gu0f.s 			page 40
+
+
+ 1408              	.LASF24:
+ 1409 038d 73697A65 		.ascii	"sizetype\000"
+ 1409      74797065 
+ 1409      00
+ 1410              	.LASF45:
+ 1411 0396 6D617374 		.ascii	"masterRxBuffer\000"
+ 1411      65725278 
+ 1411      42756666 
+ 1411      657200
+ 1412              	.LASF54:
+ 1413 03a5 4379446D 		.ascii	"CyDmaChEnable\000"
+ 1413      61436845 
+ 1413      6E61626C 
+ 1413      6500
+ 1414              	.LASF48:
+ 1415 03b3 444D415F 		.ascii	"DMA_counter\000"
+ 1415      636F756E 
+ 1415      74657200 
+ 1416              	.LASF40:
+ 1417 03bf 656E7665 		.ascii	"envelope_trigger_interrupt\000"
+ 1417      6C6F7065 
+ 1417      5F747269 
+ 1417      67676572 
+ 1417      5F696E74 
+ 1418              	.LASF34:
+ 1419 03da 64657363 		.ascii	"descriptor\000"
+ 1419      72697074 
+ 1419      6F7200
+ 1420              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

@@ -1,0 +1,2533 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.main,"ax",%progbits
+  20              		.align	2
+  21              		.global	main
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	main, %function
+  25              	main:
+  26              	.LFB130:
+  27              		.file 1 "main.c"
+   1:main.c        **** #include <project.h>
+   2:main.c        **** #include "Codec.h"
+   3:main.c        **** #include "AudioControl.h"
+   4:main.c        **** #include "waves.h"
+   5:main.c        **** #include "Interrupts.h"
+   6:main.c        **** #include "AudioOut.h"
+   7:main.c        **** #include "globals.h"
+   8:main.c        **** 
+   9:main.c        **** #include "oscillator.h"
+  10:main.c        **** 
+  11:main.c        **** uint32_t sample;
+  12:main.c        **** int8_t masterTxBuffer[BUFFER_SIZE] = {"Data to transmit by SPI Master !"};
+  13:main.c        **** int8_t masterRxBuffer[BUFFER_SIZE] = {0};
+  14:main.c        **** //void FillBufferFromFPGA(int8_t* buffer);
+  15:main.c        **** 
+  16:main.c        **** uint8_t current_env_mode = 0;
+  17:main.c        **** uint16_t attack_freq = 0;
+  18:main.c        **** uint16_t decay_freq = 0;
+  19:main.c        **** uint16_t sustain_freq = 0;
+  20:main.c        **** uint16_t release_freq = 0;
+  21:main.c        **** uint16_t waveshape = 0;
+  22:main.c        ****     
+  23:main.c        **** struct voice v1 = {0,0,0,0,0};
+  24:main.c        **** struct voice v2 = {0,0,0,0,0};
+  25:main.c        **** struct voice v3 = {0,0,0,0,0};
+  26:main.c        **** struct voice v4 = {0,0,0,0,0};
+  27:main.c        **** struct voice v5 = {0,0,0,0,0};
+  28:main.c        **** struct voice v6 = {0,0,0,0,0};
+  29:main.c        **** struct voice v7 = {0,0,0,0,0};
+  30:main.c        **** struct voice v8 = {0,0,0,0,0};
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 2
+
+
+  31:main.c        **** 
+  32:main.c        **** /*******************************************************************************
+  33:main.c        **** * USB and MIDI stuff
+  34:main.c        **** * references Cypress MIDI code examples
+  35:main.c        **** *******************************************************************************/
+  36:main.c        **** #define DEVICE                  (0u)
+  37:main.c        **** #define MIDI_MSG_SIZE           (4u)
+  38:main.c        **** 
+  39:main.c        **** /*MIDI Message Fields */
+  40:main.c        **** #define MIDI_MSG_TYPE           (0u)
+  41:main.c        **** #define MIDI_NOTE_NUMBER        (1u)
+  42:main.c        **** #define MIDI_NOTE_VELOCITY      (2u)
+  43:main.c        **** 
+  44:main.c        **** /* Identity Reply message */
+  45:main.c        **** const uint8 CYCODE MIDI_IDENTITY_REPLY[] = {
+  46:main.c        ****     0xF0u,      /* SysEx */
+  47:main.c        ****     0x7Eu,      /* Non-real time */
+  48:main.c        ****     0x7Fu,      /* ID of target device (7F - "All Call") */
+  49:main.c        ****     0x06u,      /* Sub-ID#1 - General Information */
+  50:main.c        ****     0x02u,      /* Sub-ID#2 - Identity Reply */
+  51:main.c        ****     0x7Du,      /* Manufacturer's ID: 7D - Educational Use */
+  52:main.c        ****     0xB4u, 0x04u,               /* Family code */
+  53:main.c        ****     0x32u, 0xD2u,               /* Model number */
+  54:main.c        ****     0x01u, 0x00u, 0x00u, 0x00u, /* Version number */
+  55:main.c        ****     /*0xF7         End of SysEx automatically appended */
+  56:main.c        **** };
+  57:main.c        **** 
+  58:main.c        **** /* Need for Identity Reply message */
+  59:main.c        **** volatile uint8 USB_MIDI1_InqFlags;
+  60:main.c        **** 
+  61:main.c        **** volatile uint8 usbActivityCounter = 0u;
+  62:main.c        **** 
+  63:main.c        **** uint8 inqFlagsOld = 0u;
+  64:main.c        **** 
+  65:main.c        **** uint8 midiMsg[MIDI_MSG_SIZE];   
+  66:main.c        **** char buff[32];//output UART buffer
+  67:main.c        **** 
+  68:main.c        **** // volatile uint8_t MIDI_RX_flag = 0;
+  69:main.c        **** void ProcessUSBMIDI();
+  70:main.c        **** void UART_PrintNumber(int32_t);
+  71:main.c        **** 
+  72:main.c        **** /*******************************************************************************
+  73:main.c        **** * main
+  74:main.c        **** *******************************************************************************/
+  75:main.c        **** int main() {
+  28              		.loc 1 75 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 10B5     		push	{r4, lr}
+  33              		.cfi_def_cfa_offset 8
+  34              		.cfi_offset 4, -8
+  35              		.cfi_offset 14, -4
+  76:main.c        ****     LED_Write(1);
+  36              		.loc 1 76 0
+  37 0002 0120     		movs	r0, #1
+  38 0004 FFF7FEFF 		bl	LED_Write
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 3
+
+
+  39              	.LVL0:
+  77:main.c        ****     //UART_Start();
+  78:main.c        ****     TxByteCounter_Start();
+  40              		.loc 1 78 0
+  41 0008 FFF7FEFF 		bl	TxByteCounter_Start
+  42              	.LVL1:
+  79:main.c        ****     SPIByteCounter_Start();
+  43              		.loc 1 79 0
+  44 000c FFF7FEFF 		bl	SPIByteCounter_Start
+  45              	.LVL2:
+  80:main.c        ****     //isr_trigger_StartEx(envelope_trigger_interrupt);
+  81:main.c        ****     
+  82:main.c        ****     //UART_UartPutString("\r\n\r\n\r\n********************\r\n");
+  83:main.c        ****     //UART_UartPutString("PMA Wavetable Synth\r\n");
+  84:main.c        ****     //UART_UartPutString("********************\r\n");
+  85:main.c        **** 	InitAudioPath();
+  46              		.loc 1 85 0
+  47 0010 FFF7FEFF 		bl	InitAudioPath
+  48              	.LVL3:
+  86:main.c        ****     //UART_UartPutString("Audio path initialized...\r\n");
+  87:main.c        ****     
+  88:main.c        ****     init_wavetable();
+  49              		.loc 1 88 0
+  50 0014 FFF7FEFF 		bl	init_wavetable
+  51              	.LVL4:
+  89:main.c        ****     //UART_UartPutString("Wavetable initialized...\r\n");
+  90:main.c        ****     
+  91:main.c        ****     ADC_Start();
+  52              		.loc 1 91 0
+  53 0018 FFF7FEFF 		bl	ADC_Start
+  54              	.LVL5:
+  92:main.c        ****     ADC_StartConvert();
+  55              		.loc 1 92 0
+  56 001c FFF7FEFF 		bl	ADC_StartConvert
+  57              	.LVL6:
+  93:main.c        ****     isr_ADC_EOC_StartEx(ADC_EOC);
+  58              		.loc 1 93 0
+  59 0020 1F48     		ldr	r0, .L10
+  60 0022 FFF7FEFF 		bl	isr_ADC_EOC_StartEx
+  61              	.LVL7:
+  94:main.c        ****     
+  95:main.c        ****     SPI_Start();
+  62              		.loc 1 95 0
+  63 0026 FFF7FEFF 		bl	SPI_Start
+  64              	.LVL8:
+  96:main.c        ****     SPI_SpiUartWriteTxData(0u);
+  65              		.loc 1 96 0
+  66 002a 0020     		movs	r0, #0
+  67 002c FFF7FEFF 		bl	SPI_SpiUartWriteTxData
+  68              	.LVL9:
+  69              	.L2:
+  97:main.c        **** 
+  98:main.c        ****     while(0u == SPI_SpiUartGetRxBufferSize())
+  70              		.loc 1 98 0 discriminator 1
+  71 0030 FFF7FEFF 		bl	SPI_SpiUartGetRxBufferSize
+  72              	.LVL10:
+  73 0034 0028     		cmp	r0, #0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 4
+
+
+  74 0036 FBD0     		beq	.L2
+  99:main.c        ****     {
+ 100:main.c        ****         /* Wait for the first byte exchange. */
+ 101:main.c        ****     }
+ 102:main.c        ****     //SPI_SpiUartClearRxBuffer();
+ 103:main.c        ****     //UART_UartPutString("SPI initialized... \r\n");
+ 104:main.c        ****     
+ 105:main.c        ****     CodecI2CM_Start();	
+  75              		.loc 1 105 0
+  76 0038 FFF7FEFF 		bl	CodecI2CM_Start
+  77              	.LVL11:
+ 106:main.c        **** 	if(Codec_Init() == 0) {
+  78              		.loc 1 106 0
+  79 003c FFF7FEFF 		bl	Codec_Init
+  80              	.LVL12:
+  81 0040 0028     		cmp	r0, #0
+  82 0042 01D1     		bne	.L3
+ 107:main.c        ****     	//UART_UartPutString("Codec comm works!... \r\n");
+ 108:main.c        ****         Codec_Activate();
+  83              		.loc 1 108 0
+  84 0044 FFF7FEFF 		bl	Codec_Activate
+  85              	.LVL13:
+  86              	.L3:
+ 109:main.c        **** 	}
+ 110:main.c        **** 	else {
+ 111:main.c        **** 		//UART_UartPutString("Codec comm DOESN'T work!... \r\n");
+ 112:main.c        **** 	}
+ 113:main.c        ****     
+ 114:main.c        ****     I2S_Start();
+  87              		.loc 1 114 0
+  88 0048 FFF7FEFF 		bl	I2S_Start
+  89              	.LVL14:
+ 115:main.c        ****     I2S_EnableTx(); /* Unmute the TX output */ 
+  90              		.loc 1 115 0
+  91 004c FFF7FEFF 		bl	I2S_EnableTx
+  92              	.LVL15:
+ 116:main.c        ****     isr_I2S_underflow_StartEx(I2SUnderflow);
+  93              		.loc 1 116 0
+  94 0050 1448     		ldr	r0, .L10+4
+  95 0052 FFF7FEFF 		bl	isr_I2S_underflow_StartEx
+  96              	.LVL16:
+  97              	.LBB2:
+ 117:main.c        ****     
+ 118:main.c        ****     // Init USB and MIDI
+ 119:main.c        ****     // references Cypress USB MIDI code example
+ 120:main.c        ****     //USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
+ 121:main.c        ****     //MIDI1_UART_Start();
+ 122:main.c        ****     //MIDI_RX_StartEx(MIDI_RX_VECT);
+ 123:main.c        ****     //UART_UartPutString("USB MIDI initialized...\r\n");
+ 124:main.c        ****     
+ 125:main.c        ****     for(uint32_t i = 0; i < 10000; i++){
+  98              		.loc 1 125 0
+  99 0056 0024     		movs	r4, #0
+ 100 0058 05E0     		b	.L4
+ 101              	.LVL17:
+ 102              	.L5:
+ 126:main.c        ****         CyGlobalIntDisable;
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 5
+
+
+ 103              		.loc 1 126 0 discriminator 3
+ 104              		.syntax divided
+ 105              	@ 126 "main.c" 1
+ 106 005a 72B6     		CPSID   i
+ 107              	@ 0 "" 2
+ 127:main.c        ****         //ProcessUSBMIDI();
+ 128:main.c        ****         CyGlobalIntEnable;
+ 108              		.loc 1 128 0 discriminator 3
+ 109              	@ 128 "main.c" 1
+ 110 005c 62B6     		CPSIE   i
+ 111              	@ 0 "" 2
+ 129:main.c        ****         CyDelayUs(100);
+ 112              		.loc 1 129 0 discriminator 3
+ 113              		.thumb
+ 114              		.syntax unified
+ 115 005e 6420     		movs	r0, #100
+ 116 0060 FFF7FEFF 		bl	CyDelayUs
+ 117              	.LVL18:
+ 125:main.c        ****         CyGlobalIntDisable;
+ 118              		.loc 1 125 0 discriminator 3
+ 119 0064 0134     		adds	r4, r4, #1
+ 120              	.LVL19:
+ 121              	.L4:
+ 125:main.c        ****         CyGlobalIntDisable;
+ 122              		.loc 1 125 0 is_stmt 0 discriminator 1
+ 123 0066 104B     		ldr	r3, .L10+8
+ 124 0068 9C42     		cmp	r4, r3
+ 125 006a F6D9     		bls	.L5
+ 126              	.LBE2:
+ 130:main.c        ****     }
+ 131:main.c        ****     
+ 132:main.c        ****     //FillBufferFromFPGA(output_buffer);
+ 133:main.c        ****     CyGlobalIntEnable;
+ 127              		.loc 1 133 0 is_stmt 1
+ 128              		.syntax divided
+ 129              	@ 133 "main.c" 1
+ 130 006c 62B6     		CPSIE   i
+ 131              	@ 0 "" 2
+ 132              		.thumb
+ 133              		.syntax unified
+ 134              	.L7:
+ 134:main.c        **** 
+ 135:main.c        ****     for(;;) {
+ 136:main.c        ****         LED_Write(1);
+ 135              		.loc 1 136 0
+ 136 006e 0120     		movs	r0, #1
+ 137 0070 FFF7FEFF 		bl	LED_Write
+ 138              	.LVL20:
+ 137:main.c        ****         if(DMA_done_flag){
+ 139              		.loc 1 137 0
+ 140 0074 0D4B     		ldr	r3, .L10+12
+ 141 0076 1B78     		ldrb	r3, [r3]
+ 142 0078 002B     		cmp	r3, #0
+ 143 007a F8D0     		beq	.L7
+ 138:main.c        ****             DMA_done_flag = 0;
+ 144              		.loc 1 138 0
+ 145 007c 0022     		movs	r2, #0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 6
+
+
+ 146 007e 0B4B     		ldr	r3, .L10+12
+ 147 0080 1A70     		strb	r2, [r3]
+ 139:main.c        ****             
+ 140:main.c        ****             if(DMA_counter % 2 == 0){
+ 148              		.loc 1 140 0
+ 149 0082 0B4B     		ldr	r3, .L10+16
+ 150 0084 1B78     		ldrb	r3, [r3]
+ 151 0086 DB07     		lsls	r3, r3, #31
+ 152 0088 04D4     		bmi	.L8
+ 141:main.c        ****                 current_buffer = output_buffer2;
+ 153              		.loc 1 141 0
+ 154 008a 0A4A     		ldr	r2, .L10+20
+ 155 008c 0A4B     		ldr	r3, .L10+24
+ 156 008e 1A60     		str	r2, [r3]
+ 142:main.c        ****                 CyGlobalIntEnable;
+ 157              		.loc 1 142 0
+ 158              		.syntax divided
+ 159              	@ 142 "main.c" 1
+ 160 0090 62B6     		CPSIE   i
+ 161              	@ 0 "" 2
+ 162              		.thumb
+ 163              		.syntax unified
+ 164 0092 ECE7     		b	.L7
+ 165              	.L8:
+ 143:main.c        ****                 //FillBufferFromFPGA(output_buffer2);
+ 144:main.c        ****             }
+ 145:main.c        ****             else {
+ 146:main.c        ****                 CyGlobalIntEnable;
+ 166              		.loc 1 146 0
+ 167              		.syntax divided
+ 168              	@ 146 "main.c" 1
+ 169 0094 62B6     		CPSIE   i
+ 170              	@ 0 "" 2
+ 147:main.c        ****                 current_buffer = output_buffer;
+ 171              		.loc 1 147 0
+ 172              		.thumb
+ 173              		.syntax unified
+ 174 0096 094A     		ldr	r2, .L10+28
+ 175 0098 074B     		ldr	r3, .L10+24
+ 176 009a 1A60     		str	r2, [r3]
+ 177 009c E7E7     		b	.L7
+ 178              	.L11:
+ 179 009e C046     		.align	2
+ 180              	.L10:
+ 181 00a0 00000000 		.word	ADC_EOC
+ 182 00a4 00000000 		.word	I2SUnderflow
+ 183 00a8 0F270000 		.word	9999
+ 184 00ac 00000000 		.word	DMA_done_flag
+ 185 00b0 00000000 		.word	DMA_counter
+ 186 00b4 00000000 		.word	output_buffer2
+ 187 00b8 00000000 		.word	current_buffer
+ 188 00bc 00000000 		.word	output_buffer
+ 189              		.cfi_endproc
+ 190              	.LFE130:
+ 191              		.size	main, .-main
+ 192              		.section	.text.USB_callbackLocalMidiEvent,"ax",%progbits
+ 193              		.align	2
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 7
+
+
+ 194              		.global	USB_callbackLocalMidiEvent
+ 195              		.code	16
+ 196              		.thumb_func
+ 197              		.type	USB_callbackLocalMidiEvent, %function
+ 198              	USB_callbackLocalMidiEvent:
+ 199              	.LFB131:
+ 148:main.c        ****                 //FillBufferFromFPGA(output_buffer);
+ 149:main.c        ****             }
+ 150:main.c        ****         }
+ 151:main.c        ****     }
+ 152:main.c        **** }
+ 153:main.c        **** 
+ 154:main.c        **** //void FillBufferFromFPGA(int8_t* buffer){
+ 155:main.c        ****     /*
+ 156:main.c        ****     uint8_t val;
+ 157:main.c        ****     uint32_t counter = 0;
+ 158:main.c        ****     uint8_t wren;
+ 159:main.c        ****     uint8_t new_sample;
+ 160:main.c        ****     wren = wr_en_Read();
+ 161:main.c        ****     new_sample = new_sample_Read();
+ 162:main.c        ****     uint8_t temp_gpio_read;
+ 163:main.c        ****     
+ 164:main.c        ****     uint16_t byte_counter = 0;
+ 165:main.c        ****     
+ 166:main.c        ****     CyGlobalIntDisable;
+ 167:main.c        ****     
+ 168:main.c        ****     for(int i = 0; i < OUT_BUFSIZE; i++){
+ 169:main.c        ****         cts_Write(1);
+ 170:main.c        ****         temp_gpio_read = wr_en_Read();
+ 171:main.c        ****         if(wren != temp_gpio_read){
+ 172:main.c        ****             counter++;
+ 173:main.c        ****             wren = temp_gpio_read;
+ 174:main.c        ****             val = spi_miso_testing_Read();
+ 175:main.c        ****             sample = sample<<1 | (val&0b1);
+ 176:main.c        ****             cts_Write(0);
+ 177:main.c        ****             if(val == 1){
+ 178:main.c        ****                 //UART_UartPutString("1");
+ 179:main.c        ****             }
+ 180:main.c        ****             else {
+ 181:main.c        ****                 //UART_UartPutString("0");
+ 182:main.c        ****             }
+ 183:main.c        ****             
+ 184:main.c        ****             //if(counter == 8){
+ 185:main.c        ****             temp_gpio_read = new_sample_Read();
+ 186:main.c        ****             if(new_sample != temp_gpio_read){
+ 187:main.c        ****                 
+ 188:main.c        ****                 counter = 0;
+ 189:main.c        ****                 
+ 190:main.c        ****                 new_sample = temp_gpio_read;
+ 191:main.c        ****                 //UART_UartPutString("\n");
+ 192:main.c        ****                 
+ 193:main.c        ****                 
+ 194:main.c        ****                 
+ 195:main.c        ****                 //char string[30];
+ 196:main.c        ****                 //sprintf(string, "%d\n",(sample>>19));
+ 197:main.c        ****                 //UART_UartPutString(string);
+ 198:main.c        ****                 byte_counter++;
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 8
+
+
+ 199:main.c        ****                 buffer[i] = (sample>>19) & 0xFF;
+ 200:main.c        ****                 
+ 201:main.c        ****                 sample = 0;
+ 202:main.c        ****                 
+ 203:main.c        ****             }
+ 204:main.c        ****             
+ 205:main.c        ****         }
+ 206:main.c        ****     }   
+ 207:main.c        ****     cts_Write(0);
+ 208:main.c        ****     CyGlobalIntEnable;
+ 209:main.c        ****     */
+ 210:main.c        **** //}
+ 211:main.c        **** 
+ 212:main.c        **** //void UART_PrintNumber(int32_t number){
+ 213:main.c        ****     //char string[30];
+ 214:main.c        ****     //sprintf(string, "%d\n",number);
+ 215:main.c        ****     //UART_UartPutString(string);
+ 216:main.c        **** //}
+ 217:main.c        **** 
+ 218:main.c        **** 
+ 219:main.c        **** 
+ 220:main.c        **** 
+ 221:main.c        **** /*******************************************************************************
+ 222:main.c        **** * Function Name: USB_callbackLocalMidiEvent
+ 223:main.c        **** ********************************************************************************
+ 224:main.c        **** * Summary: Local processing of the USB MIDI out-events.
+ 225:main.c        **** * References: Cypress code examples, 
+ 226:main.c        **** * and https://community.cypress.com/message/144752#144752
+ 227:main.c        **** *******************************************************************************/
+ 228:main.c        **** void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
+ 229:main.c        **** {
+ 200              		.loc 1 229 0
+ 201              		.cfi_startproc
+ 202              		@ args = 0, pretend = 0, frame = 0
+ 203              		@ frame_needed = 0, uses_anonymous_args = 0
+ 204              		@ link register save eliminated.
+ 205              	.LVL21:
+ 230:main.c        ****     //uint8 note;
+ 231:main.c        ****     
+ 232:main.c        ****     /* Support General System On/Off Message. */
+ 233:main.c        ****     /*
+ 234:main.c        ****     if((0u == (USB_MIDI1_InqFlags & USB_INQ_SYSEX_FLAG)) \
+ 235:main.c        ****             && (0u != (inqFlagsOld & USB_INQ_SYSEX_FLAG)))
+ 236:main.c        ****     {
+ 237:main.c        ****         if(midiMsg[USB_EVENT_BYTE0] == USB_MIDI_SYSEX_GEN_MESSAGE)
+ 238:main.c        ****         {
+ 239:main.c        ****             if(midiMsg[USB_EVENT_BYTE1] == USB_MIDI_SYSEX_SYSTEM_ON)
+ 240:main.c        ****             {
+ 241:main.c        ****                 MIDI_PWR_Write(0u); 
+ 242:main.c        ****             }
+ 243:main.c        ****             else if(midiMsg[USB_EVENT_BYTE1] == USB_MIDI_SYSEX_SYSTEM_OFF)
+ 244:main.c        ****             {
+ 245:main.c        ****                 MIDI_PWR_Write(1u); 
+ 246:main.c        ****             }
+ 247:main.c        ****         }
+ 248:main.c        ****     }
+ 249:main.c        ****     */
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 9
+
+
+ 250:main.c        ****     inqFlagsOld = USB_MIDI1_InqFlags;
+ 206              		.loc 1 250 0
+ 207 0000 024B     		ldr	r3, .L13
+ 208 0002 1A78     		ldrb	r2, [r3]
+ 209 0004 024B     		ldr	r3, .L13+4
+ 210 0006 1A70     		strb	r2, [r3]
+ 211              	.LVL22:
+ 251:main.c        ****     cable = cable;
+ 252:main.c        ****     
+ 253:main.c        ****     /*
+ 254:main.c        ****     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
+ 255:main.c        ****     {
+ 256:main.c        ****         note = midiMsg[USB_EVENT_BYTE1];
+ 257:main.c        ****         DispatchNote(note);
+ 258:main.c        ****         LED_Write(0);
+ 259:main.c        ****     }
+ 260:main.c        ****     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
+ 261:main.c        ****     {
+ 262:main.c        ****         note = midiMsg[USB_EVENT_BYTE1];
+ 263:main.c        ****         NoteOff(note);
+ 264:main.c        ****         
+ 265:main.c        ****         //trigger_flag = 0;
+ 266:main.c        ****         //current_env_mode = RELEASE_MODE;
+ 267:main.c        ****         LED_Write(1);
+ 268:main.c        ****     }
+ 269:main.c        ****     */
+ 270:main.c        **** }    
+ 212              		.loc 1 270 0
+ 213              		@ sp needed
+ 214 0008 7047     		bx	lr
+ 215              	.L14:
+ 216 000a C046     		.align	2
+ 217              	.L13:
+ 218 000c 00000000 		.word	USB_MIDI1_InqFlags
+ 219 0010 00000000 		.word	.LANCHOR0
+ 220              		.cfi_endproc
+ 221              	.LFE131:
+ 222              		.size	USB_callbackLocalMidiEvent, .-USB_callbackLocalMidiEvent
+ 223              		.section	.text.USB_MIDI1_ProcessUsbOut_EntryCallback,"ax",%progbits
+ 224              		.align	2
+ 225              		.global	USB_MIDI1_ProcessUsbOut_EntryCallback
+ 226              		.code	16
+ 227              		.thumb_func
+ 228              		.type	USB_MIDI1_ProcessUsbOut_EntryCallback, %function
+ 229              	USB_MIDI1_ProcessUsbOut_EntryCallback:
+ 230              	.LFB132:
+ 271:main.c        **** 
+ 272:main.c        **** 
+ 273:main.c        **** /*******************************************************************************
+ 274:main.c        **** * Function Name: USB_MIDI1_ProcessUsbOut_EntryCallback
+ 275:main.c        **** ********************************************************************************
+ 276:main.c        **** * Summary:  Turn the LED_OutA on at the beginning of the function
+ 277:main.c        **** * USB_MIDI1_ProcessUsbOut() when data comes to be put in the UART1 out
+ 278:main.c        **** * buffer.
+ 279:main.c        **** * 
+ 280:main.c        **** *******************************************************************************/
+ 281:main.c        **** void USB_MIDI1_ProcessUsbOut_EntryCallback(void)
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 10
+
+
+ 282:main.c        **** {
+ 231              		.loc 1 282 0
+ 232              		.cfi_startproc
+ 233              		@ args = 0, pretend = 0, frame = 0
+ 234              		@ frame_needed = 0, uses_anonymous_args = 0
+ 235              		@ link register save eliminated.
+ 283:main.c        ****     //LED_OutA_Write(1);
+ 284:main.c        **** }
+ 236              		.loc 1 284 0
+ 237              		@ sp needed
+ 238 0000 7047     		bx	lr
+ 239              		.cfi_endproc
+ 240              	.LFE132:
+ 241              		.size	USB_MIDI1_ProcessUsbOut_EntryCallback, .-USB_MIDI1_ProcessUsbOut_EntryCallback
+ 242 0002 C046     		.section	.text.USB_MIDI1_ProcessUsbOut_ExitCallback,"ax",%progbits
+ 243              		.align	2
+ 244              		.global	USB_MIDI1_ProcessUsbOut_ExitCallback
+ 245              		.code	16
+ 246              		.thumb_func
+ 247              		.type	USB_MIDI1_ProcessUsbOut_ExitCallback, %function
+ 248              	USB_MIDI1_ProcessUsbOut_ExitCallback:
+ 249              	.LFB133:
+ 285:main.c        **** 
+ 286:main.c        **** 
+ 287:main.c        **** /*******************************************************************************
+ 288:main.c        **** * Function Name: USB_MIDI1_ProcessUsbOut_ExitCallback
+ 289:main.c        **** ********************************************************************************
+ 290:main.c        **** * Summary:  Turn the LED_OutA off at the end of the function  
+ 291:main.c        **** * USB_MIDI1_ProcessUsbOut() when data is put in the UART1 out-buffer.
+ 292:main.c        **** * 
+ 293:main.c        **** *******************************************************************************/
+ 294:main.c        **** void USB_MIDI1_ProcessUsbOut_ExitCallback(void)
+ 295:main.c        **** {
+ 250              		.loc 1 295 0
+ 251              		.cfi_startproc
+ 252              		@ args = 0, pretend = 0, frame = 0
+ 253              		@ frame_needed = 0, uses_anonymous_args = 0
+ 254              		@ link register save eliminated.
+ 296:main.c        ****     //LED_OutA_Write(0);
+ 297:main.c        **** }
+ 255              		.loc 1 297 0
+ 256              		@ sp needed
+ 257 0000 7047     		bx	lr
+ 258              		.cfi_endproc
+ 259              	.LFE133:
+ 260              		.size	USB_MIDI1_ProcessUsbOut_ExitCallback, .-USB_MIDI1_ProcessUsbOut_ExitCallback
+ 261 0002 C046     		.section	.text.MIDI1_UART_RXISR_EntryCallback,"ax",%progbits
+ 262              		.align	2
+ 263              		.global	MIDI1_UART_RXISR_EntryCallback
+ 264              		.code	16
+ 265              		.thumb_func
+ 266              		.type	MIDI1_UART_RXISR_EntryCallback, %function
+ 267              	MIDI1_UART_RXISR_EntryCallback:
+ 268              	.LFB134:
+ 298:main.c        **** 
+ 299:main.c        **** /*******************************************************************************
+ 300:main.c        **** * Function Name: MIDI1_UART_RXISR_EntryCallback
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 11
+
+
+ 301:main.c        **** ********************************************************************************
+ 302:main.c        **** * Summary:  Turn the LED_InA on at the beginning of the MIDI1_UART_RXISR ISR  
+ 303:main.c        **** * when data comes to UART1 to be put in the USBFS_MIDI IN endpoint
+ 304:main.c        **** * buffer.
+ 305:main.c        **** *
+ 306:main.c        **** *******************************************************************************/
+ 307:main.c        **** void MIDI1_UART_RXISR_EntryCallback(void)
+ 308:main.c        **** {
+ 269              		.loc 1 308 0
+ 270              		.cfi_startproc
+ 271              		@ args = 0, pretend = 0, frame = 0
+ 272              		@ frame_needed = 0, uses_anonymous_args = 0
+ 273              		@ link register save eliminated.
+ 309:main.c        ****     /* These LEDs indicate MIDI input activity */
+ 310:main.c        ****     //LED_InA_Write(1);
+ 311:main.c        **** }
+ 274              		.loc 1 311 0
+ 275              		@ sp needed
+ 276 0000 7047     		bx	lr
+ 277              		.cfi_endproc
+ 278              	.LFE134:
+ 279              		.size	MIDI1_UART_RXISR_EntryCallback, .-MIDI1_UART_RXISR_EntryCallback
+ 280 0002 C046     		.section	.text.MIDI1_UART_RXISR_ExitCallback,"ax",%progbits
+ 281              		.align	2
+ 282              		.global	MIDI1_UART_RXISR_ExitCallback
+ 283              		.code	16
+ 284              		.thumb_func
+ 285              		.type	MIDI1_UART_RXISR_ExitCallback, %function
+ 286              	MIDI1_UART_RXISR_ExitCallback:
+ 287              	.LFB135:
+ 312:main.c        **** 
+ 313:main.c        **** 
+ 314:main.c        **** /*******************************************************************************
+ 315:main.c        **** * Function Name: MIDI1_UART_RXISR_ExitCallback
+ 316:main.c        **** ********************************************************************************
+ 317:main.c        **** * Summary:  Turn the LED_InA off at the end of the MIDI1_UART_RXISR ISR  
+ 318:main.c        **** * when data is put in the USBFS_MIDI IN endpoint buffer.
+ 319:main.c        **** *
+ 320:main.c        **** *******************************************************************************/
+ 321:main.c        **** void MIDI1_UART_RXISR_ExitCallback(void)
+ 322:main.c        **** {
+ 288              		.loc 1 322 0
+ 289              		.cfi_startproc
+ 290              		@ args = 0, pretend = 0, frame = 0
+ 291              		@ frame_needed = 0, uses_anonymous_args = 0
+ 292              		@ link register save eliminated.
+ 323:main.c        ****     #if (USB_EP_MANAGEMENT_DMA_AUTO) 
+ 324:main.c        ****         USB_MIDI_IN_Service();
+ 325:main.c        ****     #endif /* (USB_EP_MANAGEMENT_DMA_AUTO) */
+ 326:main.c        ****     
+ 327:main.c        ****     //LED_InA_Write(0);
+ 328:main.c        **** }
+ 293              		.loc 1 328 0
+ 294              		@ sp needed
+ 295 0000 7047     		bx	lr
+ 296              		.cfi_endproc
+ 297              	.LFE135:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 12
+
+
+ 298              		.size	MIDI1_UART_RXISR_ExitCallback, .-MIDI1_UART_RXISR_ExitCallback
+ 299              		.comm	buff,32,4
+ 300              		.comm	midiMsg,4,4
+ 301              		.global	inqFlagsOld
+ 302              		.global	usbActivityCounter
+ 303              		.comm	USB_MIDI1_InqFlags,1,1
+ 304              		.global	MIDI_IDENTITY_REPLY
+ 305              		.global	waveshape
+ 306              		.global	release_freq
+ 307              		.global	sustain_freq
+ 308              		.global	decay_freq
+ 309              		.global	attack_freq
+ 310              		.global	current_env_mode
+ 311              		.global	masterRxBuffer
+ 312              		.global	masterTxBuffer
+ 313              		.comm	sample,4,4
+ 314              		.global	v8
+ 315              		.global	v7
+ 316              		.global	v6
+ 317              		.global	v5
+ 318              		.global	v4
+ 319              		.global	v3
+ 320              		.global	v2
+ 321              		.global	v1
+ 322              		.comm	lfo_sine,256,4
+ 323              		.comm	base_sq,4096,4
+ 324              		.comm	base_pos_saw,4096,4
+ 325              		.comm	base_sine,8192,4
+ 326 0002 C046     		.section	.rodata
+ 327              		.align	2
+ 328              		.type	MIDI_IDENTITY_REPLY, %object
+ 329              		.size	MIDI_IDENTITY_REPLY, 14
+ 330              	MIDI_IDENTITY_REPLY:
+ 331 0000 F0       		.byte	-16
+ 332 0001 7E       		.byte	126
+ 333 0002 7F       		.byte	127
+ 334 0003 06       		.byte	6
+ 335 0004 02       		.byte	2
+ 336 0005 7D       		.byte	125
+ 337 0006 B4       		.byte	-76
+ 338 0007 04       		.byte	4
+ 339 0008 32       		.byte	50
+ 340 0009 D2       		.byte	-46
+ 341 000a 01       		.byte	1
+ 342 000b 00       		.byte	0
+ 343 000c 00       		.byte	0
+ 344 000d 00       		.byte	0
+ 345              		.data
+ 346              		.align	2
+ 347              		.type	masterTxBuffer, %object
+ 348              		.size	masterTxBuffer, 32
+ 349              	masterTxBuffer:
+ 350 0000 44617461 		.ascii	"Data to transmit by SPI Master !"
+ 350      20746F20 
+ 350      7472616E 
+ 350      736D6974 
+ 350      20627920 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 13
+
+
+ 351              		.bss
+ 352              		.align	2
+ 353              		.set	.LANCHOR0,. + 0
+ 354              		.type	inqFlagsOld, %object
+ 355              		.size	inqFlagsOld, 1
+ 356              	inqFlagsOld:
+ 357 0000 00       		.space	1
+ 358              		.type	usbActivityCounter, %object
+ 359              		.size	usbActivityCounter, 1
+ 360              	usbActivityCounter:
+ 361 0001 00       		.space	1
+ 362              		.type	waveshape, %object
+ 363              		.size	waveshape, 2
+ 364              	waveshape:
+ 365 0002 0000     		.space	2
+ 366              		.type	release_freq, %object
+ 367              		.size	release_freq, 2
+ 368              	release_freq:
+ 369 0004 0000     		.space	2
+ 370              		.type	sustain_freq, %object
+ 371              		.size	sustain_freq, 2
+ 372              	sustain_freq:
+ 373 0006 0000     		.space	2
+ 374              		.type	decay_freq, %object
+ 375              		.size	decay_freq, 2
+ 376              	decay_freq:
+ 377 0008 0000     		.space	2
+ 378              		.type	attack_freq, %object
+ 379              		.size	attack_freq, 2
+ 380              	attack_freq:
+ 381 000a 0000     		.space	2
+ 382              		.type	current_env_mode, %object
+ 383              		.size	current_env_mode, 1
+ 384              	current_env_mode:
+ 385 000c 00       		.space	1
+ 386 000d 000000   		.space	3
+ 387              		.type	masterRxBuffer, %object
+ 388              		.size	masterRxBuffer, 32
+ 389              	masterRxBuffer:
+ 390 0010 00000000 		.space	32
+ 390      00000000 
+ 390      00000000 
+ 390      00000000 
+ 390      00000000 
+ 391              		.type	v8, %object
+ 392              		.size	v8, 16
+ 393              	v8:
+ 394 0030 00000000 		.space	16
+ 394      00000000 
+ 394      00000000 
+ 394      00000000 
+ 395              		.type	v7, %object
+ 396              		.size	v7, 16
+ 397              	v7:
+ 398 0040 00000000 		.space	16
+ 398      00000000 
+ 398      00000000 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 14
+
+
+ 398      00000000 
+ 399              		.type	v6, %object
+ 400              		.size	v6, 16
+ 401              	v6:
+ 402 0050 00000000 		.space	16
+ 402      00000000 
+ 402      00000000 
+ 402      00000000 
+ 403              		.type	v5, %object
+ 404              		.size	v5, 16
+ 405              	v5:
+ 406 0060 00000000 		.space	16
+ 406      00000000 
+ 406      00000000 
+ 406      00000000 
+ 407              		.type	v4, %object
+ 408              		.size	v4, 16
+ 409              	v4:
+ 410 0070 00000000 		.space	16
+ 410      00000000 
+ 410      00000000 
+ 410      00000000 
+ 411              		.type	v3, %object
+ 412              		.size	v3, 16
+ 413              	v3:
+ 414 0080 00000000 		.space	16
+ 414      00000000 
+ 414      00000000 
+ 414      00000000 
+ 415              		.type	v2, %object
+ 416              		.size	v2, 16
+ 417              	v2:
+ 418 0090 00000000 		.space	16
+ 418      00000000 
+ 418      00000000 
+ 418      00000000 
+ 419              		.type	v1, %object
+ 420              		.size	v1, 16
+ 421              	v1:
+ 422 00a0 00000000 		.space	16
+ 422      00000000 
+ 422      00000000 
+ 422      00000000 
+ 423              		.text
+ 424              	.Letext0:
+ 425              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 426              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 427              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 428              		.file 5 "oscillator.h"
+ 429              		.file 6 "waves.h"
+ 430              		.file 7 "globals.h"
+ 431              		.file 8 "Generated_Source\\PSoC4/CyLib.h"
+ 432              		.file 9 "Generated_Source\\PSoC4/LED.h"
+ 433              		.file 10 "Generated_Source\\PSoC4/TxByteCounter.h"
+ 434              		.file 11 "Generated_Source\\PSoC4/SPIByteCounter.h"
+ 435              		.file 12 "AudioControl.h"
+ 436              		.file 13 "Generated_Source\\PSoC4/ADC.h"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 15
+
+
+ 437              		.file 14 "Generated_Source\\PSoC4/isr_ADC_EOC.h"
+ 438              		.file 15 "Generated_Source\\PSoC4/SPI.h"
+ 439              		.file 16 "Generated_Source\\PSoC4/SPI_SPI_UART.h"
+ 440              		.file 17 "Generated_Source\\PSoC4/CodecI2CM.h"
+ 441              		.file 18 "Codec.h"
+ 442              		.file 19 "Generated_Source\\PSoC4/I2S.h"
+ 443              		.file 20 "Generated_Source\\PSoC4/isr_I2S_underflow.h"
+ 444              		.section	.debug_info,"",%progbits
+ 445              	.Ldebug_info0:
+ 446 0000 2F060000 		.4byte	0x62f
+ 447 0004 0400     		.2byte	0x4
+ 448 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 449 000a 04       		.byte	0x4
+ 450 000b 01       		.uleb128 0x1
+ 451 000c C4000000 		.4byte	.LASF76
+ 452 0010 0C       		.byte	0xc
+ 453 0011 1A040000 		.4byte	.LASF77
+ 454 0015 6E010000 		.4byte	.LASF78
+ 455 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 456 001d 00000000 		.4byte	0
+ 457 0021 00000000 		.4byte	.Ldebug_line0
+ 458 0025 02       		.uleb128 0x2
+ 459 0026 B1030000 		.4byte	.LASF0
+ 460 002a 02       		.byte	0x2
+ 461 002b 1B       		.byte	0x1b
+ 462 002c 30000000 		.4byte	0x30
+ 463 0030 03       		.uleb128 0x3
+ 464 0031 01       		.byte	0x1
+ 465 0032 06       		.byte	0x6
+ 466 0033 39030000 		.4byte	.LASF2
+ 467 0037 02       		.uleb128 0x2
+ 468 0038 97020000 		.4byte	.LASF1
+ 469 003c 02       		.byte	0x2
+ 470 003d 1D       		.byte	0x1d
+ 471 003e 42000000 		.4byte	0x42
+ 472 0042 03       		.uleb128 0x3
+ 473 0043 01       		.byte	0x1
+ 474 0044 08       		.byte	0x8
+ 475 0045 1E030000 		.4byte	.LASF3
+ 476 0049 02       		.uleb128 0x2
+ 477 004a 73040000 		.4byte	.LASF4
+ 478 004e 02       		.byte	0x2
+ 479 004f 29       		.byte	0x29
+ 480 0050 54000000 		.4byte	0x54
+ 481 0054 03       		.uleb128 0x3
+ 482 0055 02       		.byte	0x2
+ 483 0056 05       		.byte	0x5
+ 484 0057 8C000000 		.4byte	.LASF5
+ 485 005b 02       		.uleb128 0x2
+ 486 005c 60000000 		.4byte	.LASF6
+ 487 0060 02       		.byte	0x2
+ 488 0061 2B       		.byte	0x2b
+ 489 0062 66000000 		.4byte	0x66
+ 490 0066 03       		.uleb128 0x3
+ 491 0067 02       		.byte	0x2
+ 492 0068 07       		.byte	0x7
+ 493 0069 E5030000 		.4byte	.LASF7
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 16
+
+
+ 494 006d 03       		.uleb128 0x3
+ 495 006e 04       		.byte	0x4
+ 496 006f 05       		.byte	0x5
+ 497 0070 5D020000 		.4byte	.LASF8
+ 498 0074 02       		.uleb128 0x2
+ 499 0075 35000000 		.4byte	.LASF9
+ 500 0079 02       		.byte	0x2
+ 501 007a 41       		.byte	0x41
+ 502 007b 7F000000 		.4byte	0x7f
+ 503 007f 03       		.uleb128 0x3
+ 504 0080 04       		.byte	0x4
+ 505 0081 07       		.byte	0x7
+ 506 0082 21040000 		.4byte	.LASF10
+ 507 0086 03       		.uleb128 0x3
+ 508 0087 08       		.byte	0x8
+ 509 0088 05       		.byte	0x5
+ 510 0089 10020000 		.4byte	.LASF11
+ 511 008d 03       		.uleb128 0x3
+ 512 008e 08       		.byte	0x8
+ 513 008f 07       		.byte	0x7
+ 514 0090 45030000 		.4byte	.LASF12
+ 515 0094 04       		.uleb128 0x4
+ 516 0095 04       		.byte	0x4
+ 517 0096 05       		.byte	0x5
+ 518 0097 696E7400 		.ascii	"int\000"
+ 519 009b 03       		.uleb128 0x3
+ 520 009c 04       		.byte	0x4
+ 521 009d 07       		.byte	0x7
+ 522 009e 65030000 		.4byte	.LASF13
+ 523 00a2 02       		.uleb128 0x2
+ 524 00a3 00000000 		.4byte	.LASF14
+ 525 00a7 03       		.byte	0x3
+ 526 00a8 14       		.byte	0x14
+ 527 00a9 25000000 		.4byte	0x25
+ 528 00ad 02       		.uleb128 0x2
+ 529 00ae 60010000 		.4byte	.LASF15
+ 530 00b2 03       		.byte	0x3
+ 531 00b3 18       		.byte	0x18
+ 532 00b4 37000000 		.4byte	0x37
+ 533 00b8 02       		.uleb128 0x2
+ 534 00b9 F8030000 		.4byte	.LASF16
+ 535 00bd 03       		.byte	0x3
+ 536 00be 20       		.byte	0x20
+ 537 00bf 49000000 		.4byte	0x49
+ 538 00c3 02       		.uleb128 0x2
+ 539 00c4 72030000 		.4byte	.LASF17
+ 540 00c8 03       		.byte	0x3
+ 541 00c9 24       		.byte	0x24
+ 542 00ca 5B000000 		.4byte	0x5b
+ 543 00ce 02       		.uleb128 0x2
+ 544 00cf 5C030000 		.4byte	.LASF18
+ 545 00d3 03       		.byte	0x3
+ 546 00d4 30       		.byte	0x30
+ 547 00d5 74000000 		.4byte	0x74
+ 548 00d9 05       		.uleb128 0x5
+ 549 00da 68010000 		.4byte	.LASF19
+ 550 00de 04       		.byte	0x4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 17
+
+
+ 551 00df E401     		.2byte	0x1e4
+ 552 00e1 42000000 		.4byte	0x42
+ 553 00e5 03       		.uleb128 0x3
+ 554 00e6 04       		.byte	0x4
+ 555 00e7 04       		.byte	0x4
+ 556 00e8 FA010000 		.4byte	.LASF20
+ 557 00ec 03       		.uleb128 0x3
+ 558 00ed 08       		.byte	0x8
+ 559 00ee 04       		.byte	0x4
+ 560 00ef 33040000 		.4byte	.LASF21
+ 561 00f3 03       		.uleb128 0x3
+ 562 00f4 01       		.byte	0x1
+ 563 00f5 08       		.byte	0x8
+ 564 00f6 C5030000 		.4byte	.LASF22
+ 565 00fa 06       		.uleb128 0x6
+ 566 00fb D9000000 		.4byte	0xd9
+ 567 00ff 03       		.uleb128 0x3
+ 568 0100 08       		.byte	0x8
+ 569 0101 04       		.byte	0x4
+ 570 0102 E2020000 		.4byte	.LASF23
+ 571 0106 03       		.uleb128 0x3
+ 572 0107 04       		.byte	0x4
+ 573 0108 07       		.byte	0x7
+ 574 0109 7D040000 		.4byte	.LASF24
+ 575 010d 07       		.uleb128 0x7
+ 576 010e 04       		.byte	0x4
+ 577 010f D9000000 		.4byte	0xd9
+ 578 0113 08       		.uleb128 0x8
+ 579 0114 66020000 		.4byte	.LASF79
+ 580 0118 10       		.byte	0x10
+ 581 0119 05       		.byte	0x5
+ 582 011a 05       		.byte	0x5
+ 583 011b 5C010000 		.4byte	0x15c
+ 584 011f 09       		.uleb128 0x9
+ 585 0120 1C000000 		.4byte	.LASF25
+ 586 0124 05       		.byte	0x5
+ 587 0125 06       		.byte	0x6
+ 588 0126 CE000000 		.4byte	0xce
+ 589 012a 00       		.byte	0
+ 590 012b 09       		.uleb128 0x9
+ 591 012c AB020000 		.4byte	.LASF26
+ 592 0130 05       		.byte	0x5
+ 593 0131 07       		.byte	0x7
+ 594 0132 C3000000 		.4byte	0xc3
+ 595 0136 04       		.byte	0x4
+ 596 0137 09       		.uleb128 0x9
+ 597 0138 7C020000 		.4byte	.LASF27
+ 598 013c 05       		.byte	0x5
+ 599 013d 08       		.byte	0x8
+ 600 013e AD000000 		.4byte	0xad
+ 601 0142 06       		.byte	0x6
+ 602 0143 09       		.uleb128 0x9
+ 603 0144 0B020000 		.4byte	.LASF28
+ 604 0148 05       		.byte	0x5
+ 605 0149 09       		.byte	0x9
+ 606 014a 94000000 		.4byte	0x94
+ 607 014e 08       		.byte	0x8
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 18
+
+
+ 608 014f 09       		.uleb128 0x9
+ 609 0150 11000000 		.4byte	.LASF29
+ 610 0154 05       		.byte	0x5
+ 611 0155 0A       		.byte	0xa
+ 612 0156 AD000000 		.4byte	0xad
+ 613 015a 0C       		.byte	0xc
+ 614 015b 00       		.byte	0
+ 615 015c 0A       		.uleb128 0xa
+ 616 015d 30000000 		.4byte	.LASF80
+ 617 0161 01       		.byte	0x1
+ 618 0162 4B       		.byte	0x4b
+ 619 0163 94000000 		.4byte	0x94
+ 620 0167 00000000 		.4byte	.LFB130
+ 621 016b C0000000 		.4byte	.LFE130-.LFB130
+ 622 016f 01       		.uleb128 0x1
+ 623 0170 9C       		.byte	0x9c
+ 624 0171 5D020000 		.4byte	0x25d
+ 625 0175 0B       		.uleb128 0xb
+ 626 0176 56000000 		.4byte	.LBB2
+ 627 017a 16000000 		.4byte	.LBE2-.LBB2
+ 628 017e A0010000 		.4byte	0x1a0
+ 629 0182 0C       		.uleb128 0xc
+ 630 0183 6900     		.ascii	"i\000"
+ 631 0185 01       		.byte	0x1
+ 632 0186 7D       		.byte	0x7d
+ 633 0187 CE000000 		.4byte	0xce
+ 634 018b 00000000 		.4byte	.LLST0
+ 635 018f 0D       		.uleb128 0xd
+ 636 0190 64000000 		.4byte	.LVL18
+ 637 0194 68050000 		.4byte	0x568
+ 638 0198 0E       		.uleb128 0xe
+ 639 0199 01       		.uleb128 0x1
+ 640 019a 50       		.byte	0x50
+ 641 019b 02       		.uleb128 0x2
+ 642 019c 08       		.byte	0x8
+ 643 019d 64       		.byte	0x64
+ 644 019e 00       		.byte	0
+ 645 019f 00       		.byte	0
+ 646 01a0 0F       		.uleb128 0xf
+ 647 01a1 08000000 		.4byte	.LVL0
+ 648 01a5 73050000 		.4byte	0x573
+ 649 01a9 B3010000 		.4byte	0x1b3
+ 650 01ad 0E       		.uleb128 0xe
+ 651 01ae 01       		.uleb128 0x1
+ 652 01af 50       		.byte	0x50
+ 653 01b0 01       		.uleb128 0x1
+ 654 01b1 31       		.byte	0x31
+ 655 01b2 00       		.byte	0
+ 656 01b3 10       		.uleb128 0x10
+ 657 01b4 0C000000 		.4byte	.LVL1
+ 658 01b8 7E050000 		.4byte	0x57e
+ 659 01bc 10       		.uleb128 0x10
+ 660 01bd 10000000 		.4byte	.LVL2
+ 661 01c1 8A050000 		.4byte	0x58a
+ 662 01c5 10       		.uleb128 0x10
+ 663 01c6 14000000 		.4byte	.LVL3
+ 664 01ca 96050000 		.4byte	0x596
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 19
+
+
+ 665 01ce 10       		.uleb128 0x10
+ 666 01cf 18000000 		.4byte	.LVL4
+ 667 01d3 A1050000 		.4byte	0x5a1
+ 668 01d7 10       		.uleb128 0x10
+ 669 01d8 1C000000 		.4byte	.LVL5
+ 670 01dc AC050000 		.4byte	0x5ac
+ 671 01e0 10       		.uleb128 0x10
+ 672 01e1 20000000 		.4byte	.LVL6
+ 673 01e5 B7050000 		.4byte	0x5b7
+ 674 01e9 10       		.uleb128 0x10
+ 675 01ea 26000000 		.4byte	.LVL7
+ 676 01ee C2050000 		.4byte	0x5c2
+ 677 01f2 10       		.uleb128 0x10
+ 678 01f3 2A000000 		.4byte	.LVL8
+ 679 01f7 CD050000 		.4byte	0x5cd
+ 680 01fb 0F       		.uleb128 0xf
+ 681 01fc 30000000 		.4byte	.LVL9
+ 682 0200 D8050000 		.4byte	0x5d8
+ 683 0204 0E020000 		.4byte	0x20e
+ 684 0208 0E       		.uleb128 0xe
+ 685 0209 01       		.uleb128 0x1
+ 686 020a 50       		.byte	0x50
+ 687 020b 01       		.uleb128 0x1
+ 688 020c 30       		.byte	0x30
+ 689 020d 00       		.byte	0
+ 690 020e 10       		.uleb128 0x10
+ 691 020f 34000000 		.4byte	.LVL10
+ 692 0213 E4050000 		.4byte	0x5e4
+ 693 0217 10       		.uleb128 0x10
+ 694 0218 3C000000 		.4byte	.LVL11
+ 695 021c F0050000 		.4byte	0x5f0
+ 696 0220 10       		.uleb128 0x10
+ 697 0221 40000000 		.4byte	.LVL12
+ 698 0225 FB050000 		.4byte	0x5fb
+ 699 0229 10       		.uleb128 0x10
+ 700 022a 48000000 		.4byte	.LVL13
+ 701 022e 06060000 		.4byte	0x606
+ 702 0232 10       		.uleb128 0x10
+ 703 0233 4C000000 		.4byte	.LVL14
+ 704 0237 11060000 		.4byte	0x611
+ 705 023b 10       		.uleb128 0x10
+ 706 023c 50000000 		.4byte	.LVL15
+ 707 0240 1C060000 		.4byte	0x61c
+ 708 0244 10       		.uleb128 0x10
+ 709 0245 56000000 		.4byte	.LVL16
+ 710 0249 27060000 		.4byte	0x627
+ 711 024d 0D       		.uleb128 0xd
+ 712 024e 74000000 		.4byte	.LVL20
+ 713 0252 73050000 		.4byte	0x573
+ 714 0256 0E       		.uleb128 0xe
+ 715 0257 01       		.uleb128 0x1
+ 716 0258 50       		.byte	0x50
+ 717 0259 01       		.uleb128 0x1
+ 718 025a 31       		.byte	0x31
+ 719 025b 00       		.byte	0
+ 720 025c 00       		.byte	0
+ 721 025d 11       		.uleb128 0x11
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 20
+
+
+ 722 025e BA020000 		.4byte	.LASF81
+ 723 0262 01       		.byte	0x1
+ 724 0263 E4       		.byte	0xe4
+ 725 0264 00000000 		.4byte	.LFB131
+ 726 0268 14000000 		.4byte	.LFE131-.LFB131
+ 727 026c 01       		.uleb128 0x1
+ 728 026d 9C       		.byte	0x9c
+ 729 026e 8F020000 		.4byte	0x28f
+ 730 0272 12       		.uleb128 0x12
+ 731 0273 14040000 		.4byte	.LASF30
+ 732 0277 01       		.byte	0x1
+ 733 0278 E4       		.byte	0xe4
+ 734 0279 D9000000 		.4byte	0xd9
+ 735 027d 1F000000 		.4byte	.LLST1
+ 736 0281 13       		.uleb128 0x13
+ 737 0282 FB040000 		.4byte	.LASF31
+ 738 0286 01       		.byte	0x1
+ 739 0287 E4       		.byte	0xe4
+ 740 0288 0D010000 		.4byte	0x10d
+ 741 028c 01       		.uleb128 0x1
+ 742 028d 51       		.byte	0x51
+ 743 028e 00       		.byte	0
+ 744 028f 14       		.uleb128 0x14
+ 745 0290 EE020000 		.4byte	.LASF32
+ 746 0294 01       		.byte	0x1
+ 747 0295 1901     		.2byte	0x119
+ 748 0297 00000000 		.4byte	.LFB132
+ 749 029b 02000000 		.4byte	.LFE132-.LFB132
+ 750 029f 01       		.uleb128 0x1
+ 751 02a0 9C       		.byte	0x9c
+ 752 02a1 14       		.uleb128 0x14
+ 753 02a2 BA010000 		.4byte	.LASF33
+ 754 02a6 01       		.byte	0x1
+ 755 02a7 2601     		.2byte	0x126
+ 756 02a9 00000000 		.4byte	.LFB133
+ 757 02ad 02000000 		.4byte	.LFE133-.LFB133
+ 758 02b1 01       		.uleb128 0x1
+ 759 02b2 9C       		.byte	0x9c
+ 760 02b3 14       		.uleb128 0x14
+ 761 02b4 25020000 		.4byte	.LASF34
+ 762 02b8 01       		.byte	0x1
+ 763 02b9 3301     		.2byte	0x133
+ 764 02bb 00000000 		.4byte	.LFB134
+ 765 02bf 02000000 		.4byte	.LFE134-.LFB134
+ 766 02c3 01       		.uleb128 0x1
+ 767 02c4 9C       		.byte	0x9c
+ 768 02c5 14       		.uleb128 0x14
+ 769 02c6 86040000 		.4byte	.LASF35
+ 770 02ca 01       		.byte	0x1
+ 771 02cb 4101     		.2byte	0x141
+ 772 02cd 00000000 		.4byte	.LFB135
+ 773 02d1 02000000 		.4byte	.LFE135-.LFB135
+ 774 02d5 01       		.uleb128 0x1
+ 775 02d6 9C       		.byte	0x9c
+ 776 02d7 15       		.uleb128 0x15
+ 777 02d8 B8000000 		.4byte	0xb8
+ 778 02dc E8020000 		.4byte	0x2e8
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 21
+
+
+ 779 02e0 16       		.uleb128 0x16
+ 780 02e1 06010000 		.4byte	0x106
+ 781 02e5 FF0F     		.2byte	0xfff
+ 782 02e7 00       		.byte	0
+ 783 02e8 17       		.uleb128 0x17
+ 784 02e9 8D020000 		.4byte	.LASF36
+ 785 02ed 06       		.byte	0x6
+ 786 02ee 0F       		.byte	0xf
+ 787 02ef D7020000 		.4byte	0x2d7
+ 788 02f3 05       		.uleb128 0x5
+ 789 02f4 03       		.byte	0x3
+ 790 02f5 00000000 		.4byte	base_sine
+ 791 02f9 15       		.uleb128 0x15
+ 792 02fa A2000000 		.4byte	0xa2
+ 793 02fe 0A030000 		.4byte	0x30a
+ 794 0302 16       		.uleb128 0x16
+ 795 0303 06010000 		.4byte	0x106
+ 796 0307 FF0F     		.2byte	0xfff
+ 797 0309 00       		.byte	0
+ 798 030a 17       		.uleb128 0x17
+ 799 030b D5020000 		.4byte	.LASF37
+ 800 030f 06       		.byte	0x6
+ 801 0310 10       		.byte	0x10
+ 802 0311 F9020000 		.4byte	0x2f9
+ 803 0315 05       		.uleb128 0x5
+ 804 0316 03       		.byte	0x3
+ 805 0317 00000000 		.4byte	base_pos_saw
+ 806 031b 17       		.uleb128 0x17
+ 807 031c CA030000 		.4byte	.LASF38
+ 808 0320 06       		.byte	0x6
+ 809 0321 13       		.byte	0x13
+ 810 0322 F9020000 		.4byte	0x2f9
+ 811 0326 05       		.uleb128 0x5
+ 812 0327 03       		.byte	0x3
+ 813 0328 00000000 		.4byte	base_sq
+ 814 032c 15       		.uleb128 0x15
+ 815 032d AD000000 		.4byte	0xad
+ 816 0331 3C030000 		.4byte	0x33c
+ 817 0335 18       		.uleb128 0x18
+ 818 0336 06010000 		.4byte	0x106
+ 819 033a FF       		.byte	0xff
+ 820 033b 00       		.byte	0
+ 821 033c 17       		.uleb128 0x17
+ 822 033d A8030000 		.4byte	.LASF39
+ 823 0341 06       		.byte	0x6
+ 824 0342 15       		.byte	0x15
+ 825 0343 2C030000 		.4byte	0x32c
+ 826 0347 05       		.uleb128 0x5
+ 827 0348 03       		.byte	0x3
+ 828 0349 00000000 		.4byte	lfo_sine
+ 829 034d 17       		.uleb128 0x17
+ 830 034e 1E020000 		.4byte	.LASF40
+ 831 0352 01       		.byte	0x1
+ 832 0353 0B       		.byte	0xb
+ 833 0354 CE000000 		.4byte	0xce
+ 834 0358 05       		.uleb128 0x5
+ 835 0359 03       		.byte	0x3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 22
+
+
+ 836 035a 00000000 		.4byte	sample
+ 837 035e 15       		.uleb128 0x15
+ 838 035f A2000000 		.4byte	0xa2
+ 839 0363 6E030000 		.4byte	0x36e
+ 840 0367 18       		.uleb128 0x18
+ 841 0368 06010000 		.4byte	0x106
+ 842 036c 1F       		.byte	0x1f
+ 843 036d 00       		.byte	0
+ 844 036e 17       		.uleb128 0x17
+ 845 036f 7B030000 		.4byte	.LASF41
+ 846 0373 01       		.byte	0x1
+ 847 0374 0C       		.byte	0xc
+ 848 0375 5E030000 		.4byte	0x35e
+ 849 0379 05       		.uleb128 0x5
+ 850 037a 03       		.byte	0x3
+ 851 037b 00000000 		.4byte	masterTxBuffer
+ 852 037f 17       		.uleb128 0x17
+ 853 0380 BF040000 		.4byte	.LASF42
+ 854 0384 01       		.byte	0x1
+ 855 0385 0D       		.byte	0xd
+ 856 0386 5E030000 		.4byte	0x35e
+ 857 038a 05       		.uleb128 0x5
+ 858 038b 03       		.byte	0x3
+ 859 038c 00000000 		.4byte	masterRxBuffer
+ 860 0390 19       		.uleb128 0x19
+ 861 0391 44020000 		.4byte	.LASF43
+ 862 0395 07       		.byte	0x7
+ 863 0396 0D       		.byte	0xd
+ 864 0397 9B030000 		.4byte	0x39b
+ 865 039b 07       		.uleb128 0x7
+ 866 039c 04       		.byte	0x4
+ 867 039d A1030000 		.4byte	0x3a1
+ 868 03a1 06       		.uleb128 0x6
+ 869 03a2 A2000000 		.4byte	0xa2
+ 870 03a6 17       		.uleb128 0x17
+ 871 03a7 EF040000 		.4byte	.LASF44
+ 872 03ab 01       		.byte	0x1
+ 873 03ac 11       		.byte	0x11
+ 874 03ad C3000000 		.4byte	0xc3
+ 875 03b1 05       		.uleb128 0x5
+ 876 03b2 03       		.byte	0x3
+ 877 03b3 00000000 		.4byte	attack_freq
+ 878 03b7 17       		.uleb128 0x17
+ 879 03b8 00020000 		.4byte	.LASF45
+ 880 03bc 01       		.byte	0x1
+ 881 03bd 12       		.byte	0x12
+ 882 03be C3000000 		.4byte	0xc3
+ 883 03c2 05       		.uleb128 0x5
+ 884 03c3 03       		.byte	0x3
+ 885 03c4 00000000 		.4byte	decay_freq
+ 886 03c8 17       		.uleb128 0x17
+ 887 03c9 DF010000 		.4byte	.LASF46
+ 888 03cd 01       		.byte	0x1
+ 889 03ce 13       		.byte	0x13
+ 890 03cf C3000000 		.4byte	0xc3
+ 891 03d3 05       		.uleb128 0x5
+ 892 03d4 03       		.byte	0x3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 23
+
+
+ 893 03d5 00000000 		.4byte	sustain_freq
+ 894 03d9 17       		.uleb128 0x17
+ 895 03da E2040000 		.4byte	.LASF47
+ 896 03de 01       		.byte	0x1
+ 897 03df 14       		.byte	0x14
+ 898 03e0 C3000000 		.4byte	0xc3
+ 899 03e4 05       		.uleb128 0x5
+ 900 03e5 03       		.byte	0x3
+ 901 03e6 00000000 		.4byte	release_freq
+ 902 03ea 17       		.uleb128 0x17
+ 903 03eb A1020000 		.4byte	.LASF48
+ 904 03ef 01       		.byte	0x1
+ 905 03f0 15       		.byte	0x15
+ 906 03f1 C3000000 		.4byte	0xc3
+ 907 03f5 05       		.uleb128 0x5
+ 908 03f6 03       		.byte	0x3
+ 909 03f7 00000000 		.4byte	waveshape
+ 910 03fb 1A       		.uleb128 0x1a
+ 911 03fc 763100   		.ascii	"v1\000"
+ 912 03ff 01       		.byte	0x1
+ 913 0400 17       		.byte	0x17
+ 914 0401 13010000 		.4byte	0x113
+ 915 0405 05       		.uleb128 0x5
+ 916 0406 03       		.byte	0x3
+ 917 0407 00000000 		.4byte	v1
+ 918 040b 1A       		.uleb128 0x1a
+ 919 040c 763200   		.ascii	"v2\000"
+ 920 040f 01       		.byte	0x1
+ 921 0410 18       		.byte	0x18
+ 922 0411 13010000 		.4byte	0x113
+ 923 0415 05       		.uleb128 0x5
+ 924 0416 03       		.byte	0x3
+ 925 0417 00000000 		.4byte	v2
+ 926 041b 1A       		.uleb128 0x1a
+ 927 041c 763300   		.ascii	"v3\000"
+ 928 041f 01       		.byte	0x1
+ 929 0420 19       		.byte	0x19
+ 930 0421 13010000 		.4byte	0x113
+ 931 0425 05       		.uleb128 0x5
+ 932 0426 03       		.byte	0x3
+ 933 0427 00000000 		.4byte	v3
+ 934 042b 1A       		.uleb128 0x1a
+ 935 042c 763400   		.ascii	"v4\000"
+ 936 042f 01       		.byte	0x1
+ 937 0430 1A       		.byte	0x1a
+ 938 0431 13010000 		.4byte	0x113
+ 939 0435 05       		.uleb128 0x5
+ 940 0436 03       		.byte	0x3
+ 941 0437 00000000 		.4byte	v4
+ 942 043b 1A       		.uleb128 0x1a
+ 943 043c 763500   		.ascii	"v5\000"
+ 944 043f 01       		.byte	0x1
+ 945 0440 1B       		.byte	0x1b
+ 946 0441 13010000 		.4byte	0x113
+ 947 0445 05       		.uleb128 0x5
+ 948 0446 03       		.byte	0x3
+ 949 0447 00000000 		.4byte	v5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 24
+
+
+ 950 044b 1A       		.uleb128 0x1a
+ 951 044c 763600   		.ascii	"v6\000"
+ 952 044f 01       		.byte	0x1
+ 953 0450 1C       		.byte	0x1c
+ 954 0451 13010000 		.4byte	0x113
+ 955 0455 05       		.uleb128 0x5
+ 956 0456 03       		.byte	0x3
+ 957 0457 00000000 		.4byte	v6
+ 958 045b 1A       		.uleb128 0x1a
+ 959 045c 763700   		.ascii	"v7\000"
+ 960 045f 01       		.byte	0x1
+ 961 0460 1D       		.byte	0x1d
+ 962 0461 13010000 		.4byte	0x113
+ 963 0465 05       		.uleb128 0x5
+ 964 0466 03       		.byte	0x3
+ 965 0467 00000000 		.4byte	v7
+ 966 046b 1A       		.uleb128 0x1a
+ 967 046c 763800   		.ascii	"v8\000"
+ 968 046f 01       		.byte	0x1
+ 969 0470 1E       		.byte	0x1e
+ 970 0471 13010000 		.4byte	0x113
+ 971 0475 05       		.uleb128 0x5
+ 972 0476 03       		.byte	0x3
+ 973 0477 00000000 		.4byte	v8
+ 974 047b 19       		.uleb128 0x19
+ 975 047c EC010000 		.4byte	.LASF49
+ 976 0480 07       		.byte	0x7
+ 977 0481 29       		.byte	0x29
+ 978 0482 86040000 		.4byte	0x486
+ 979 0486 06       		.uleb128 0x6
+ 980 0487 AD000000 		.4byte	0xad
+ 981 048b 19       		.uleb128 0x19
+ 982 048c 03050000 		.4byte	.LASF50
+ 983 0490 07       		.byte	0x7
+ 984 0491 2A       		.byte	0x2a
+ 985 0492 86040000 		.4byte	0x486
+ 986 0496 15       		.uleb128 0x15
+ 987 0497 A2000000 		.4byte	0xa2
+ 988 049b A1040000 		.4byte	0x4a1
+ 989 049f 1B       		.uleb128 0x1b
+ 990 04a0 00       		.byte	0
+ 991 04a1 19       		.uleb128 0x19
+ 992 04a2 0F050000 		.4byte	.LASF51
+ 993 04a6 07       		.byte	0x7
+ 994 04a7 2F       		.byte	0x2f
+ 995 04a8 96040000 		.4byte	0x496
+ 996 04ac 19       		.uleb128 0x19
+ 997 04ad 99030000 		.4byte	.LASF52
+ 998 04b1 07       		.byte	0x7
+ 999 04b2 30       		.byte	0x30
+ 1000 04b3 96040000 		.4byte	0x496
+ 1001 04b7 17       		.uleb128 0x17
+ 1002 04b8 7C020000 		.4byte	.LASF27
+ 1003 04bc 01       		.byte	0x1
+ 1004 04bd 10       		.byte	0x10
+ 1005 04be AD000000 		.4byte	0xad
+ 1006 04c2 05       		.uleb128 0x5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 25
+
+
+ 1007 04c3 03       		.byte	0x3
+ 1008 04c4 00000000 		.4byte	current_env_mode
+ 1009 04c8 15       		.uleb128 0x15
+ 1010 04c9 D8040000 		.4byte	0x4d8
+ 1011 04cd D8040000 		.4byte	0x4d8
+ 1012 04d1 18       		.uleb128 0x18
+ 1013 04d2 06010000 		.4byte	0x106
+ 1014 04d6 0D       		.byte	0xd
+ 1015 04d7 00       		.byte	0
+ 1016 04d8 1C       		.uleb128 0x1c
+ 1017 04d9 D9000000 		.4byte	0xd9
+ 1018 04dd 17       		.uleb128 0x17
+ 1019 04de 00040000 		.4byte	.LASF53
+ 1020 04e2 01       		.byte	0x1
+ 1021 04e3 2D       		.byte	0x2d
+ 1022 04e4 EE040000 		.4byte	0x4ee
+ 1023 04e8 05       		.uleb128 0x5
+ 1024 04e9 03       		.byte	0x3
+ 1025 04ea 00000000 		.4byte	MIDI_IDENTITY_REPLY
+ 1026 04ee 1C       		.uleb128 0x1c
+ 1027 04ef C8040000 		.4byte	0x4c8
+ 1028 04f3 17       		.uleb128 0x17
+ 1029 04f4 3A040000 		.4byte	.LASF54
+ 1030 04f8 01       		.byte	0x1
+ 1031 04f9 3B       		.byte	0x3b
+ 1032 04fa FA000000 		.4byte	0xfa
+ 1033 04fe 05       		.uleb128 0x5
+ 1034 04ff 03       		.byte	0x3
+ 1035 0500 00000000 		.4byte	USB_MIDI1_InqFlags
+ 1036 0504 17       		.uleb128 0x17
+ 1037 0505 D2030000 		.4byte	.LASF55
+ 1038 0509 01       		.byte	0x1
+ 1039 050a 3D       		.byte	0x3d
+ 1040 050b FA000000 		.4byte	0xfa
+ 1041 050f 05       		.uleb128 0x5
+ 1042 0510 03       		.byte	0x3
+ 1043 0511 00000000 		.4byte	usbActivityCounter
+ 1044 0515 17       		.uleb128 0x17
+ 1045 0516 6B000000 		.4byte	.LASF56
+ 1046 051a 01       		.byte	0x1
+ 1047 051b 3F       		.byte	0x3f
+ 1048 051c D9000000 		.4byte	0xd9
+ 1049 0520 05       		.uleb128 0x5
+ 1050 0521 03       		.byte	0x3
+ 1051 0522 00000000 		.4byte	inqFlagsOld
+ 1052 0526 15       		.uleb128 0x15
+ 1053 0527 D9000000 		.4byte	0xd9
+ 1054 052b 36050000 		.4byte	0x536
+ 1055 052f 18       		.uleb128 0x18
+ 1056 0530 06010000 		.4byte	0x106
+ 1057 0534 03       		.byte	0x3
+ 1058 0535 00       		.byte	0
+ 1059 0536 17       		.uleb128 0x17
+ 1060 0537 FB040000 		.4byte	.LASF31
+ 1061 053b 01       		.byte	0x1
+ 1062 053c 41       		.byte	0x41
+ 1063 053d 26050000 		.4byte	0x526
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 26
+
+
+ 1064 0541 05       		.uleb128 0x5
+ 1065 0542 03       		.byte	0x3
+ 1066 0543 00000000 		.4byte	midiMsg
+ 1067 0547 15       		.uleb128 0x15
+ 1068 0548 F3000000 		.4byte	0xf3
+ 1069 054c 57050000 		.4byte	0x557
+ 1070 0550 18       		.uleb128 0x18
+ 1071 0551 06010000 		.4byte	0x106
+ 1072 0555 1F       		.byte	0x1f
+ 1073 0556 00       		.byte	0
+ 1074 0557 17       		.uleb128 0x17
+ 1075 0558 40000000 		.4byte	.LASF57
+ 1076 055c 01       		.byte	0x1
+ 1077 055d 42       		.byte	0x42
+ 1078 055e 47050000 		.4byte	0x547
+ 1079 0562 05       		.uleb128 0x5
+ 1080 0563 03       		.byte	0x3
+ 1081 0564 00000000 		.4byte	buff
+ 1082 0568 1D       		.uleb128 0x1d
+ 1083 0569 14030000 		.4byte	.LASF58
+ 1084 056d 14030000 		.4byte	.LASF58
+ 1085 0571 08       		.byte	0x8
+ 1086 0572 DA       		.byte	0xda
+ 1087 0573 1D       		.uleb128 0x1d
+ 1088 0574 07000000 		.4byte	.LASF59
+ 1089 0578 07000000 		.4byte	.LASF59
+ 1090 057c 09       		.byte	0x9
+ 1091 057d 33       		.byte	0x33
+ 1092 057e 1E       		.uleb128 0x1e
+ 1093 057f 96000000 		.4byte	.LASF60
+ 1094 0583 96000000 		.4byte	.LASF60
+ 1095 0587 0A       		.byte	0xa
+ 1096 0588 3201     		.2byte	0x132
+ 1097 058a 1E       		.uleb128 0x1e
+ 1098 058b 77000000 		.4byte	.LASF61
+ 1099 058f 77000000 		.4byte	.LASF61
+ 1100 0593 0B       		.byte	0xb
+ 1101 0594 3201     		.2byte	0x132
+ 1102 0596 1D       		.uleb128 0x1d
+ 1103 0597 52010000 		.4byte	.LASF62
+ 1104 059b 52010000 		.4byte	.LASF62
+ 1105 059f 0C       		.byte	0xc
+ 1106 05a0 52       		.byte	0x52
+ 1107 05a1 1D       		.uleb128 0x1d
+ 1108 05a2 64040000 		.4byte	.LASF63
+ 1109 05a6 64040000 		.4byte	.LASF63
+ 1110 05aa 06       		.byte	0x6
+ 1111 05ab 17       		.byte	0x17
+ 1112 05ac 1D       		.uleb128 0x1d
+ 1113 05ad 53020000 		.4byte	.LASF64
+ 1114 05b1 53020000 		.4byte	.LASF64
+ 1115 05b5 0D       		.byte	0xd
+ 1116 05b6 99       		.byte	0x99
+ 1117 05b7 1D       		.uleb128 0x1d
+ 1118 05b8 AE040000 		.4byte	.LASF65
+ 1119 05bc AE040000 		.4byte	.LASF65
+ 1120 05c0 0D       		.byte	0xd
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 27
+
+
+ 1121 05c1 9D       		.byte	0x9d
+ 1122 05c2 1D       		.uleb128 0x1d
+ 1123 05c3 CE040000 		.4byte	.LASF66
+ 1124 05c7 CE040000 		.4byte	.LASF66
+ 1125 05cb 0E       		.byte	0xe
+ 1126 05cc 18       		.byte	0x18
+ 1127 05cd 1D       		.uleb128 0x1d
+ 1128 05ce A4040000 		.4byte	.LASF67
+ 1129 05d2 A4040000 		.4byte	.LASF67
+ 1130 05d6 0F       		.byte	0xf
+ 1131 05d7 72       		.byte	0x72
+ 1132 05d8 1E       		.uleb128 0x1e
+ 1133 05d9 4D040000 		.4byte	.LASF68
+ 1134 05dd 4D040000 		.4byte	.LASF68
+ 1135 05e1 10       		.byte	0x10
+ 1136 05e2 4403     		.2byte	0x344
+ 1137 05e4 1E       		.uleb128 0x1e
+ 1138 05e5 45000000 		.4byte	.LASF69
+ 1139 05e9 45000000 		.4byte	.LASF69
+ 1140 05ed 10       		.byte	0x10
+ 1141 05ee 3E03     		.2byte	0x33e
+ 1142 05f0 1D       		.uleb128 0x1d
+ 1143 05f1 6C020000 		.4byte	.LASF70
+ 1144 05f5 6C020000 		.4byte	.LASF70
+ 1145 05f9 11       		.byte	0x11
+ 1146 05fa 72       		.byte	0x72
+ 1147 05fb 1D       		.uleb128 0x1d
+ 1148 05fc BA030000 		.4byte	.LASF71
+ 1149 0600 BA030000 		.4byte	.LASF71
+ 1150 0604 12       		.byte	0x12
+ 1151 0605 A8       		.byte	0xa8
+ 1152 0606 1D       		.uleb128 0x1d
+ 1153 0607 8A030000 		.4byte	.LASF72
+ 1154 060b 8A030000 		.4byte	.LASF72
+ 1155 060f 12       		.byte	0x12
+ 1156 0610 AE       		.byte	0xae
+ 1157 0611 1D       		.uleb128 0x1d
+ 1158 0612 26000000 		.4byte	.LASF73
+ 1159 0616 26000000 		.4byte	.LASF73
+ 1160 061a 13       		.byte	0x13
+ 1161 061b 28       		.byte	0x28
+ 1162 061c 1D       		.uleb128 0x1d
+ 1163 061d 2C030000 		.4byte	.LASF74
+ 1164 0621 2C030000 		.4byte	.LASF74
+ 1165 0625 13       		.byte	0x13
+ 1166 0626 34       		.byte	0x34
+ 1167 0627 1D       		.uleb128 0x1d
+ 1168 0628 AA000000 		.4byte	.LASF75
+ 1169 062c AA000000 		.4byte	.LASF75
+ 1170 0630 14       		.byte	0x14
+ 1171 0631 18       		.byte	0x18
+ 1172 0632 00       		.byte	0
+ 1173              		.section	.debug_abbrev,"",%progbits
+ 1174              	.Ldebug_abbrev0:
+ 1175 0000 01       		.uleb128 0x1
+ 1176 0001 11       		.uleb128 0x11
+ 1177 0002 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 28
+
+
+ 1178 0003 25       		.uleb128 0x25
+ 1179 0004 0E       		.uleb128 0xe
+ 1180 0005 13       		.uleb128 0x13
+ 1181 0006 0B       		.uleb128 0xb
+ 1182 0007 03       		.uleb128 0x3
+ 1183 0008 0E       		.uleb128 0xe
+ 1184 0009 1B       		.uleb128 0x1b
+ 1185 000a 0E       		.uleb128 0xe
+ 1186 000b 55       		.uleb128 0x55
+ 1187 000c 17       		.uleb128 0x17
+ 1188 000d 11       		.uleb128 0x11
+ 1189 000e 01       		.uleb128 0x1
+ 1190 000f 10       		.uleb128 0x10
+ 1191 0010 17       		.uleb128 0x17
+ 1192 0011 00       		.byte	0
+ 1193 0012 00       		.byte	0
+ 1194 0013 02       		.uleb128 0x2
+ 1195 0014 16       		.uleb128 0x16
+ 1196 0015 00       		.byte	0
+ 1197 0016 03       		.uleb128 0x3
+ 1198 0017 0E       		.uleb128 0xe
+ 1199 0018 3A       		.uleb128 0x3a
+ 1200 0019 0B       		.uleb128 0xb
+ 1201 001a 3B       		.uleb128 0x3b
+ 1202 001b 0B       		.uleb128 0xb
+ 1203 001c 49       		.uleb128 0x49
+ 1204 001d 13       		.uleb128 0x13
+ 1205 001e 00       		.byte	0
+ 1206 001f 00       		.byte	0
+ 1207 0020 03       		.uleb128 0x3
+ 1208 0021 24       		.uleb128 0x24
+ 1209 0022 00       		.byte	0
+ 1210 0023 0B       		.uleb128 0xb
+ 1211 0024 0B       		.uleb128 0xb
+ 1212 0025 3E       		.uleb128 0x3e
+ 1213 0026 0B       		.uleb128 0xb
+ 1214 0027 03       		.uleb128 0x3
+ 1215 0028 0E       		.uleb128 0xe
+ 1216 0029 00       		.byte	0
+ 1217 002a 00       		.byte	0
+ 1218 002b 04       		.uleb128 0x4
+ 1219 002c 24       		.uleb128 0x24
+ 1220 002d 00       		.byte	0
+ 1221 002e 0B       		.uleb128 0xb
+ 1222 002f 0B       		.uleb128 0xb
+ 1223 0030 3E       		.uleb128 0x3e
+ 1224 0031 0B       		.uleb128 0xb
+ 1225 0032 03       		.uleb128 0x3
+ 1226 0033 08       		.uleb128 0x8
+ 1227 0034 00       		.byte	0
+ 1228 0035 00       		.byte	0
+ 1229 0036 05       		.uleb128 0x5
+ 1230 0037 16       		.uleb128 0x16
+ 1231 0038 00       		.byte	0
+ 1232 0039 03       		.uleb128 0x3
+ 1233 003a 0E       		.uleb128 0xe
+ 1234 003b 3A       		.uleb128 0x3a
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 29
+
+
+ 1235 003c 0B       		.uleb128 0xb
+ 1236 003d 3B       		.uleb128 0x3b
+ 1237 003e 05       		.uleb128 0x5
+ 1238 003f 49       		.uleb128 0x49
+ 1239 0040 13       		.uleb128 0x13
+ 1240 0041 00       		.byte	0
+ 1241 0042 00       		.byte	0
+ 1242 0043 06       		.uleb128 0x6
+ 1243 0044 35       		.uleb128 0x35
+ 1244 0045 00       		.byte	0
+ 1245 0046 49       		.uleb128 0x49
+ 1246 0047 13       		.uleb128 0x13
+ 1247 0048 00       		.byte	0
+ 1248 0049 00       		.byte	0
+ 1249 004a 07       		.uleb128 0x7
+ 1250 004b 0F       		.uleb128 0xf
+ 1251 004c 00       		.byte	0
+ 1252 004d 0B       		.uleb128 0xb
+ 1253 004e 0B       		.uleb128 0xb
+ 1254 004f 49       		.uleb128 0x49
+ 1255 0050 13       		.uleb128 0x13
+ 1256 0051 00       		.byte	0
+ 1257 0052 00       		.byte	0
+ 1258 0053 08       		.uleb128 0x8
+ 1259 0054 13       		.uleb128 0x13
+ 1260 0055 01       		.byte	0x1
+ 1261 0056 03       		.uleb128 0x3
+ 1262 0057 0E       		.uleb128 0xe
+ 1263 0058 0B       		.uleb128 0xb
+ 1264 0059 0B       		.uleb128 0xb
+ 1265 005a 3A       		.uleb128 0x3a
+ 1266 005b 0B       		.uleb128 0xb
+ 1267 005c 3B       		.uleb128 0x3b
+ 1268 005d 0B       		.uleb128 0xb
+ 1269 005e 01       		.uleb128 0x1
+ 1270 005f 13       		.uleb128 0x13
+ 1271 0060 00       		.byte	0
+ 1272 0061 00       		.byte	0
+ 1273 0062 09       		.uleb128 0x9
+ 1274 0063 0D       		.uleb128 0xd
+ 1275 0064 00       		.byte	0
+ 1276 0065 03       		.uleb128 0x3
+ 1277 0066 0E       		.uleb128 0xe
+ 1278 0067 3A       		.uleb128 0x3a
+ 1279 0068 0B       		.uleb128 0xb
+ 1280 0069 3B       		.uleb128 0x3b
+ 1281 006a 0B       		.uleb128 0xb
+ 1282 006b 49       		.uleb128 0x49
+ 1283 006c 13       		.uleb128 0x13
+ 1284 006d 38       		.uleb128 0x38
+ 1285 006e 0B       		.uleb128 0xb
+ 1286 006f 00       		.byte	0
+ 1287 0070 00       		.byte	0
+ 1288 0071 0A       		.uleb128 0xa
+ 1289 0072 2E       		.uleb128 0x2e
+ 1290 0073 01       		.byte	0x1
+ 1291 0074 3F       		.uleb128 0x3f
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 30
+
+
+ 1292 0075 19       		.uleb128 0x19
+ 1293 0076 03       		.uleb128 0x3
+ 1294 0077 0E       		.uleb128 0xe
+ 1295 0078 3A       		.uleb128 0x3a
+ 1296 0079 0B       		.uleb128 0xb
+ 1297 007a 3B       		.uleb128 0x3b
+ 1298 007b 0B       		.uleb128 0xb
+ 1299 007c 49       		.uleb128 0x49
+ 1300 007d 13       		.uleb128 0x13
+ 1301 007e 8701     		.uleb128 0x87
+ 1302 0080 19       		.uleb128 0x19
+ 1303 0081 11       		.uleb128 0x11
+ 1304 0082 01       		.uleb128 0x1
+ 1305 0083 12       		.uleb128 0x12
+ 1306 0084 06       		.uleb128 0x6
+ 1307 0085 40       		.uleb128 0x40
+ 1308 0086 18       		.uleb128 0x18
+ 1309 0087 9742     		.uleb128 0x2117
+ 1310 0089 19       		.uleb128 0x19
+ 1311 008a 01       		.uleb128 0x1
+ 1312 008b 13       		.uleb128 0x13
+ 1313 008c 00       		.byte	0
+ 1314 008d 00       		.byte	0
+ 1315 008e 0B       		.uleb128 0xb
+ 1316 008f 0B       		.uleb128 0xb
+ 1317 0090 01       		.byte	0x1
+ 1318 0091 11       		.uleb128 0x11
+ 1319 0092 01       		.uleb128 0x1
+ 1320 0093 12       		.uleb128 0x12
+ 1321 0094 06       		.uleb128 0x6
+ 1322 0095 01       		.uleb128 0x1
+ 1323 0096 13       		.uleb128 0x13
+ 1324 0097 00       		.byte	0
+ 1325 0098 00       		.byte	0
+ 1326 0099 0C       		.uleb128 0xc
+ 1327 009a 34       		.uleb128 0x34
+ 1328 009b 00       		.byte	0
+ 1329 009c 03       		.uleb128 0x3
+ 1330 009d 08       		.uleb128 0x8
+ 1331 009e 3A       		.uleb128 0x3a
+ 1332 009f 0B       		.uleb128 0xb
+ 1333 00a0 3B       		.uleb128 0x3b
+ 1334 00a1 0B       		.uleb128 0xb
+ 1335 00a2 49       		.uleb128 0x49
+ 1336 00a3 13       		.uleb128 0x13
+ 1337 00a4 02       		.uleb128 0x2
+ 1338 00a5 17       		.uleb128 0x17
+ 1339 00a6 00       		.byte	0
+ 1340 00a7 00       		.byte	0
+ 1341 00a8 0D       		.uleb128 0xd
+ 1342 00a9 898201   		.uleb128 0x4109
+ 1343 00ac 01       		.byte	0x1
+ 1344 00ad 11       		.uleb128 0x11
+ 1345 00ae 01       		.uleb128 0x1
+ 1346 00af 31       		.uleb128 0x31
+ 1347 00b0 13       		.uleb128 0x13
+ 1348 00b1 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 31
+
+
+ 1349 00b2 00       		.byte	0
+ 1350 00b3 0E       		.uleb128 0xe
+ 1351 00b4 8A8201   		.uleb128 0x410a
+ 1352 00b7 00       		.byte	0
+ 1353 00b8 02       		.uleb128 0x2
+ 1354 00b9 18       		.uleb128 0x18
+ 1355 00ba 9142     		.uleb128 0x2111
+ 1356 00bc 18       		.uleb128 0x18
+ 1357 00bd 00       		.byte	0
+ 1358 00be 00       		.byte	0
+ 1359 00bf 0F       		.uleb128 0xf
+ 1360 00c0 898201   		.uleb128 0x4109
+ 1361 00c3 01       		.byte	0x1
+ 1362 00c4 11       		.uleb128 0x11
+ 1363 00c5 01       		.uleb128 0x1
+ 1364 00c6 31       		.uleb128 0x31
+ 1365 00c7 13       		.uleb128 0x13
+ 1366 00c8 01       		.uleb128 0x1
+ 1367 00c9 13       		.uleb128 0x13
+ 1368 00ca 00       		.byte	0
+ 1369 00cb 00       		.byte	0
+ 1370 00cc 10       		.uleb128 0x10
+ 1371 00cd 898201   		.uleb128 0x4109
+ 1372 00d0 00       		.byte	0
+ 1373 00d1 11       		.uleb128 0x11
+ 1374 00d2 01       		.uleb128 0x1
+ 1375 00d3 31       		.uleb128 0x31
+ 1376 00d4 13       		.uleb128 0x13
+ 1377 00d5 00       		.byte	0
+ 1378 00d6 00       		.byte	0
+ 1379 00d7 11       		.uleb128 0x11
+ 1380 00d8 2E       		.uleb128 0x2e
+ 1381 00d9 01       		.byte	0x1
+ 1382 00da 3F       		.uleb128 0x3f
+ 1383 00db 19       		.uleb128 0x19
+ 1384 00dc 03       		.uleb128 0x3
+ 1385 00dd 0E       		.uleb128 0xe
+ 1386 00de 3A       		.uleb128 0x3a
+ 1387 00df 0B       		.uleb128 0xb
+ 1388 00e0 3B       		.uleb128 0x3b
+ 1389 00e1 0B       		.uleb128 0xb
+ 1390 00e2 27       		.uleb128 0x27
+ 1391 00e3 19       		.uleb128 0x19
+ 1392 00e4 11       		.uleb128 0x11
+ 1393 00e5 01       		.uleb128 0x1
+ 1394 00e6 12       		.uleb128 0x12
+ 1395 00e7 06       		.uleb128 0x6
+ 1396 00e8 40       		.uleb128 0x40
+ 1397 00e9 18       		.uleb128 0x18
+ 1398 00ea 9742     		.uleb128 0x2117
+ 1399 00ec 19       		.uleb128 0x19
+ 1400 00ed 01       		.uleb128 0x1
+ 1401 00ee 13       		.uleb128 0x13
+ 1402 00ef 00       		.byte	0
+ 1403 00f0 00       		.byte	0
+ 1404 00f1 12       		.uleb128 0x12
+ 1405 00f2 05       		.uleb128 0x5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 32
+
+
+ 1406 00f3 00       		.byte	0
+ 1407 00f4 03       		.uleb128 0x3
+ 1408 00f5 0E       		.uleb128 0xe
+ 1409 00f6 3A       		.uleb128 0x3a
+ 1410 00f7 0B       		.uleb128 0xb
+ 1411 00f8 3B       		.uleb128 0x3b
+ 1412 00f9 0B       		.uleb128 0xb
+ 1413 00fa 49       		.uleb128 0x49
+ 1414 00fb 13       		.uleb128 0x13
+ 1415 00fc 02       		.uleb128 0x2
+ 1416 00fd 17       		.uleb128 0x17
+ 1417 00fe 00       		.byte	0
+ 1418 00ff 00       		.byte	0
+ 1419 0100 13       		.uleb128 0x13
+ 1420 0101 05       		.uleb128 0x5
+ 1421 0102 00       		.byte	0
+ 1422 0103 03       		.uleb128 0x3
+ 1423 0104 0E       		.uleb128 0xe
+ 1424 0105 3A       		.uleb128 0x3a
+ 1425 0106 0B       		.uleb128 0xb
+ 1426 0107 3B       		.uleb128 0x3b
+ 1427 0108 0B       		.uleb128 0xb
+ 1428 0109 49       		.uleb128 0x49
+ 1429 010a 13       		.uleb128 0x13
+ 1430 010b 02       		.uleb128 0x2
+ 1431 010c 18       		.uleb128 0x18
+ 1432 010d 00       		.byte	0
+ 1433 010e 00       		.byte	0
+ 1434 010f 14       		.uleb128 0x14
+ 1435 0110 2E       		.uleb128 0x2e
+ 1436 0111 00       		.byte	0
+ 1437 0112 3F       		.uleb128 0x3f
+ 1438 0113 19       		.uleb128 0x19
+ 1439 0114 03       		.uleb128 0x3
+ 1440 0115 0E       		.uleb128 0xe
+ 1441 0116 3A       		.uleb128 0x3a
+ 1442 0117 0B       		.uleb128 0xb
+ 1443 0118 3B       		.uleb128 0x3b
+ 1444 0119 05       		.uleb128 0x5
+ 1445 011a 27       		.uleb128 0x27
+ 1446 011b 19       		.uleb128 0x19
+ 1447 011c 11       		.uleb128 0x11
+ 1448 011d 01       		.uleb128 0x1
+ 1449 011e 12       		.uleb128 0x12
+ 1450 011f 06       		.uleb128 0x6
+ 1451 0120 40       		.uleb128 0x40
+ 1452 0121 18       		.uleb128 0x18
+ 1453 0122 9742     		.uleb128 0x2117
+ 1454 0124 19       		.uleb128 0x19
+ 1455 0125 00       		.byte	0
+ 1456 0126 00       		.byte	0
+ 1457 0127 15       		.uleb128 0x15
+ 1458 0128 01       		.uleb128 0x1
+ 1459 0129 01       		.byte	0x1
+ 1460 012a 49       		.uleb128 0x49
+ 1461 012b 13       		.uleb128 0x13
+ 1462 012c 01       		.uleb128 0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 33
+
+
+ 1463 012d 13       		.uleb128 0x13
+ 1464 012e 00       		.byte	0
+ 1465 012f 00       		.byte	0
+ 1466 0130 16       		.uleb128 0x16
+ 1467 0131 21       		.uleb128 0x21
+ 1468 0132 00       		.byte	0
+ 1469 0133 49       		.uleb128 0x49
+ 1470 0134 13       		.uleb128 0x13
+ 1471 0135 2F       		.uleb128 0x2f
+ 1472 0136 05       		.uleb128 0x5
+ 1473 0137 00       		.byte	0
+ 1474 0138 00       		.byte	0
+ 1475 0139 17       		.uleb128 0x17
+ 1476 013a 34       		.uleb128 0x34
+ 1477 013b 00       		.byte	0
+ 1478 013c 03       		.uleb128 0x3
+ 1479 013d 0E       		.uleb128 0xe
+ 1480 013e 3A       		.uleb128 0x3a
+ 1481 013f 0B       		.uleb128 0xb
+ 1482 0140 3B       		.uleb128 0x3b
+ 1483 0141 0B       		.uleb128 0xb
+ 1484 0142 49       		.uleb128 0x49
+ 1485 0143 13       		.uleb128 0x13
+ 1486 0144 3F       		.uleb128 0x3f
+ 1487 0145 19       		.uleb128 0x19
+ 1488 0146 02       		.uleb128 0x2
+ 1489 0147 18       		.uleb128 0x18
+ 1490 0148 00       		.byte	0
+ 1491 0149 00       		.byte	0
+ 1492 014a 18       		.uleb128 0x18
+ 1493 014b 21       		.uleb128 0x21
+ 1494 014c 00       		.byte	0
+ 1495 014d 49       		.uleb128 0x49
+ 1496 014e 13       		.uleb128 0x13
+ 1497 014f 2F       		.uleb128 0x2f
+ 1498 0150 0B       		.uleb128 0xb
+ 1499 0151 00       		.byte	0
+ 1500 0152 00       		.byte	0
+ 1501 0153 19       		.uleb128 0x19
+ 1502 0154 34       		.uleb128 0x34
+ 1503 0155 00       		.byte	0
+ 1504 0156 03       		.uleb128 0x3
+ 1505 0157 0E       		.uleb128 0xe
+ 1506 0158 3A       		.uleb128 0x3a
+ 1507 0159 0B       		.uleb128 0xb
+ 1508 015a 3B       		.uleb128 0x3b
+ 1509 015b 0B       		.uleb128 0xb
+ 1510 015c 49       		.uleb128 0x49
+ 1511 015d 13       		.uleb128 0x13
+ 1512 015e 3F       		.uleb128 0x3f
+ 1513 015f 19       		.uleb128 0x19
+ 1514 0160 3C       		.uleb128 0x3c
+ 1515 0161 19       		.uleb128 0x19
+ 1516 0162 00       		.byte	0
+ 1517 0163 00       		.byte	0
+ 1518 0164 1A       		.uleb128 0x1a
+ 1519 0165 34       		.uleb128 0x34
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 34
+
+
+ 1520 0166 00       		.byte	0
+ 1521 0167 03       		.uleb128 0x3
+ 1522 0168 08       		.uleb128 0x8
+ 1523 0169 3A       		.uleb128 0x3a
+ 1524 016a 0B       		.uleb128 0xb
+ 1525 016b 3B       		.uleb128 0x3b
+ 1526 016c 0B       		.uleb128 0xb
+ 1527 016d 49       		.uleb128 0x49
+ 1528 016e 13       		.uleb128 0x13
+ 1529 016f 3F       		.uleb128 0x3f
+ 1530 0170 19       		.uleb128 0x19
+ 1531 0171 02       		.uleb128 0x2
+ 1532 0172 18       		.uleb128 0x18
+ 1533 0173 00       		.byte	0
+ 1534 0174 00       		.byte	0
+ 1535 0175 1B       		.uleb128 0x1b
+ 1536 0176 21       		.uleb128 0x21
+ 1537 0177 00       		.byte	0
+ 1538 0178 00       		.byte	0
+ 1539 0179 00       		.byte	0
+ 1540 017a 1C       		.uleb128 0x1c
+ 1541 017b 26       		.uleb128 0x26
+ 1542 017c 00       		.byte	0
+ 1543 017d 49       		.uleb128 0x49
+ 1544 017e 13       		.uleb128 0x13
+ 1545 017f 00       		.byte	0
+ 1546 0180 00       		.byte	0
+ 1547 0181 1D       		.uleb128 0x1d
+ 1548 0182 2E       		.uleb128 0x2e
+ 1549 0183 00       		.byte	0
+ 1550 0184 3F       		.uleb128 0x3f
+ 1551 0185 19       		.uleb128 0x19
+ 1552 0186 3C       		.uleb128 0x3c
+ 1553 0187 19       		.uleb128 0x19
+ 1554 0188 6E       		.uleb128 0x6e
+ 1555 0189 0E       		.uleb128 0xe
+ 1556 018a 03       		.uleb128 0x3
+ 1557 018b 0E       		.uleb128 0xe
+ 1558 018c 3A       		.uleb128 0x3a
+ 1559 018d 0B       		.uleb128 0xb
+ 1560 018e 3B       		.uleb128 0x3b
+ 1561 018f 0B       		.uleb128 0xb
+ 1562 0190 00       		.byte	0
+ 1563 0191 00       		.byte	0
+ 1564 0192 1E       		.uleb128 0x1e
+ 1565 0193 2E       		.uleb128 0x2e
+ 1566 0194 00       		.byte	0
+ 1567 0195 3F       		.uleb128 0x3f
+ 1568 0196 19       		.uleb128 0x19
+ 1569 0197 3C       		.uleb128 0x3c
+ 1570 0198 19       		.uleb128 0x19
+ 1571 0199 6E       		.uleb128 0x6e
+ 1572 019a 0E       		.uleb128 0xe
+ 1573 019b 03       		.uleb128 0x3
+ 1574 019c 0E       		.uleb128 0xe
+ 1575 019d 3A       		.uleb128 0x3a
+ 1576 019e 0B       		.uleb128 0xb
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 35
+
+
+ 1577 019f 3B       		.uleb128 0x3b
+ 1578 01a0 05       		.uleb128 0x5
+ 1579 01a1 00       		.byte	0
+ 1580 01a2 00       		.byte	0
+ 1581 01a3 00       		.byte	0
+ 1582              		.section	.debug_loc,"",%progbits
+ 1583              	.Ldebug_loc0:
+ 1584              	.LLST0:
+ 1585 0000 56000000 		.4byte	.LVL16
+ 1586 0004 5A000000 		.4byte	.LVL17
+ 1587 0008 0200     		.2byte	0x2
+ 1588 000a 30       		.byte	0x30
+ 1589 000b 9F       		.byte	0x9f
+ 1590 000c 5A000000 		.4byte	.LVL17
+ 1591 0010 C0000000 		.4byte	.LFE130
+ 1592 0014 0100     		.2byte	0x1
+ 1593 0016 54       		.byte	0x54
+ 1594 0017 00000000 		.4byte	0
+ 1595 001b 00000000 		.4byte	0
+ 1596              	.LLST1:
+ 1597 001f 00000000 		.4byte	.LVL21
+ 1598 0023 08000000 		.4byte	.LVL22
+ 1599 0027 0100     		.2byte	0x1
+ 1600 0029 50       		.byte	0x50
+ 1601 002a 08000000 		.4byte	.LVL22
+ 1602 002e 14000000 		.4byte	.LFE131
+ 1603 0032 0400     		.2byte	0x4
+ 1604 0034 F3       		.byte	0xf3
+ 1605 0035 01       		.uleb128 0x1
+ 1606 0036 50       		.byte	0x50
+ 1607 0037 9F       		.byte	0x9f
+ 1608 0038 00000000 		.4byte	0
+ 1609 003c 00000000 		.4byte	0
+ 1610              		.section	.debug_aranges,"",%progbits
+ 1611 0000 44000000 		.4byte	0x44
+ 1612 0004 0200     		.2byte	0x2
+ 1613 0006 00000000 		.4byte	.Ldebug_info0
+ 1614 000a 04       		.byte	0x4
+ 1615 000b 00       		.byte	0
+ 1616 000c 0000     		.2byte	0
+ 1617 000e 0000     		.2byte	0
+ 1618 0010 00000000 		.4byte	.LFB130
+ 1619 0014 C0000000 		.4byte	.LFE130-.LFB130
+ 1620 0018 00000000 		.4byte	.LFB131
+ 1621 001c 14000000 		.4byte	.LFE131-.LFB131
+ 1622 0020 00000000 		.4byte	.LFB132
+ 1623 0024 02000000 		.4byte	.LFE132-.LFB132
+ 1624 0028 00000000 		.4byte	.LFB133
+ 1625 002c 02000000 		.4byte	.LFE133-.LFB133
+ 1626 0030 00000000 		.4byte	.LFB134
+ 1627 0034 02000000 		.4byte	.LFE134-.LFB134
+ 1628 0038 00000000 		.4byte	.LFB135
+ 1629 003c 02000000 		.4byte	.LFE135-.LFB135
+ 1630 0040 00000000 		.4byte	0
+ 1631 0044 00000000 		.4byte	0
+ 1632              		.section	.debug_ranges,"",%progbits
+ 1633              	.Ldebug_ranges0:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 36
+
+
+ 1634 0000 00000000 		.4byte	.LFB130
+ 1635 0004 C0000000 		.4byte	.LFE130
+ 1636 0008 00000000 		.4byte	.LFB131
+ 1637 000c 14000000 		.4byte	.LFE131
+ 1638 0010 00000000 		.4byte	.LFB132
+ 1639 0014 02000000 		.4byte	.LFE132
+ 1640 0018 00000000 		.4byte	.LFB133
+ 1641 001c 02000000 		.4byte	.LFE133
+ 1642 0020 00000000 		.4byte	.LFB134
+ 1643 0024 02000000 		.4byte	.LFE134
+ 1644 0028 00000000 		.4byte	.LFB135
+ 1645 002c 02000000 		.4byte	.LFE135
+ 1646 0030 00000000 		.4byte	0
+ 1647 0034 00000000 		.4byte	0
+ 1648              		.section	.debug_line,"",%progbits
+ 1649              	.Ldebug_line0:
+ 1650 0000 CE020000 		.section	.debug_str,"MS",%progbits,1
+ 1650      02002202 
+ 1650      00000201 
+ 1650      FB0E0D00 
+ 1650      01010101 
+ 1651              	.LASF14:
+ 1652 0000 696E7438 		.ascii	"int8_t\000"
+ 1652      5F7400
+ 1653              	.LASF59:
+ 1654 0007 4C45445F 		.ascii	"LED_Write\000"
+ 1654      57726974 
+ 1654      6500
+ 1655              	.LASF29:
+ 1656 0011 6E6F7465 		.ascii	"note_index\000"
+ 1656      5F696E64 
+ 1656      657800
+ 1657              	.LASF25:
+ 1658 001c 656E765F 		.ascii	"env_index\000"
+ 1658      696E6465 
+ 1658      7800
+ 1659              	.LASF73:
+ 1660 0026 4932535F 		.ascii	"I2S_Start\000"
+ 1660      53746172 
+ 1660      7400
+ 1661              	.LASF80:
+ 1662 0030 6D61696E 		.ascii	"main\000"
+ 1662      00
+ 1663              	.LASF9:
+ 1664 0035 5F5F7569 		.ascii	"__uint32_t\000"
+ 1664      6E743332 
+ 1664      5F7400
+ 1665              	.LASF57:
+ 1666 0040 62756666 		.ascii	"buff\000"
+ 1666      00
+ 1667              	.LASF69:
+ 1668 0045 5350495F 		.ascii	"SPI_SpiUartGetRxBufferSize\000"
+ 1668      53706955 
+ 1668      61727447 
+ 1668      65745278 
+ 1668      42756666 
+ 1669              	.LASF6:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 37
+
+
+ 1670 0060 5F5F7569 		.ascii	"__uint16_t\000"
+ 1670      6E743136 
+ 1670      5F7400
+ 1671              	.LASF56:
+ 1672 006b 696E7146 		.ascii	"inqFlagsOld\000"
+ 1672      6C616773 
+ 1672      4F6C6400 
+ 1673              	.LASF61:
+ 1674 0077 53504942 		.ascii	"SPIByteCounter_Start\000"
+ 1674      79746543 
+ 1674      6F756E74 
+ 1674      65725F53 
+ 1674      74617274 
+ 1675              	.LASF5:
+ 1676 008c 73686F72 		.ascii	"short int\000"
+ 1676      7420696E 
+ 1676      7400
+ 1677              	.LASF60:
+ 1678 0096 54784279 		.ascii	"TxByteCounter_Start\000"
+ 1678      7465436F 
+ 1678      756E7465 
+ 1678      725F5374 
+ 1678      61727400 
+ 1679              	.LASF75:
+ 1680 00aa 6973725F 		.ascii	"isr_I2S_underflow_StartEx\000"
+ 1680      4932535F 
+ 1680      756E6465 
+ 1680      72666C6F 
+ 1680      775F5374 
+ 1681              	.LASF76:
+ 1682 00c4 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1682      43313120 
+ 1682      352E342E 
+ 1682      31203230 
+ 1682      31363036 
+ 1683 00f7 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1683      20726576 
+ 1683      6973696F 
+ 1683      6E203233 
+ 1683      37373135 
+ 1684 012a 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1684      66756E63 
+ 1684      74696F6E 
+ 1684      2D736563 
+ 1684      74696F6E 
+ 1685              	.LASF62:
+ 1686 0152 496E6974 		.ascii	"InitAudioPath\000"
+ 1686      41756469 
+ 1686      6F506174 
+ 1686      6800
+ 1687              	.LASF15:
+ 1688 0160 75696E74 		.ascii	"uint8_t\000"
+ 1688      385F7400 
+ 1689              	.LASF19:
+ 1690 0168 75696E74 		.ascii	"uint8\000"
+ 1690      3800
+ 1691              	.LASF78:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 38
+
+
+ 1692 016e 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 1692      6F63756D 
+ 1692      656E7473 
+ 1692      5C456E67 
+ 1692      696E6565 
+ 1693 019c 43797072 		.ascii	"Cypress\\synth-wavetable.cydsn\000"
+ 1693      6573735C 
+ 1693      73796E74 
+ 1693      682D7761 
+ 1693      76657461 
+ 1694              	.LASF33:
+ 1695 01ba 5553425F 		.ascii	"USB_MIDI1_ProcessUsbOut_ExitCallback\000"
+ 1695      4D494449 
+ 1695      315F5072 
+ 1695      6F636573 
+ 1695      73557362 
+ 1696              	.LASF46:
+ 1697 01df 73757374 		.ascii	"sustain_freq\000"
+ 1697      61696E5F 
+ 1697      66726571 
+ 1697      00
+ 1698              	.LASF49:
+ 1699 01ec 444D415F 		.ascii	"DMA_done_flag\000"
+ 1699      646F6E65 
+ 1699      5F666C61 
+ 1699      6700
+ 1700              	.LASF20:
+ 1701 01fa 666C6F61 		.ascii	"float\000"
+ 1701      7400
+ 1702              	.LASF45:
+ 1703 0200 64656361 		.ascii	"decay_freq\000"
+ 1703      795F6672 
+ 1703      657100
+ 1704              	.LASF28:
+ 1705 020b 66726571 		.ascii	"freq\000"
+ 1705      00
+ 1706              	.LASF11:
+ 1707 0210 6C6F6E67 		.ascii	"long long int\000"
+ 1707      206C6F6E 
+ 1707      6720696E 
+ 1707      7400
+ 1708              	.LASF40:
+ 1709 021e 73616D70 		.ascii	"sample\000"
+ 1709      6C6500
+ 1710              	.LASF34:
+ 1711 0225 4D494449 		.ascii	"MIDI1_UART_RXISR_EntryCallback\000"
+ 1711      315F5541 
+ 1711      52545F52 
+ 1711      58495352 
+ 1711      5F456E74 
+ 1712              	.LASF43:
+ 1713 0244 63757272 		.ascii	"current_buffer\000"
+ 1713      656E745F 
+ 1713      62756666 
+ 1713      657200
+ 1714              	.LASF64:
+ 1715 0253 4144435F 		.ascii	"ADC_Start\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 39
+
+
+ 1715      53746172 
+ 1715      7400
+ 1716              	.LASF8:
+ 1717 025d 6C6F6E67 		.ascii	"long int\000"
+ 1717      20696E74 
+ 1717      00
+ 1718              	.LASF79:
+ 1719 0266 766F6963 		.ascii	"voice\000"
+ 1719      6500
+ 1720              	.LASF70:
+ 1721 026c 436F6465 		.ascii	"CodecI2CM_Start\000"
+ 1721      63493243 
+ 1721      4D5F5374 
+ 1721      61727400 
+ 1722              	.LASF27:
+ 1723 027c 63757272 		.ascii	"current_env_mode\000"
+ 1723      656E745F 
+ 1723      656E765F 
+ 1723      6D6F6465 
+ 1723      00
+ 1724              	.LASF36:
+ 1725 028d 62617365 		.ascii	"base_sine\000"
+ 1725      5F73696E 
+ 1725      6500
+ 1726              	.LASF1:
+ 1727 0297 5F5F7569 		.ascii	"__uint8_t\000"
+ 1727      6E74385F 
+ 1727      7400
+ 1728              	.LASF48:
+ 1729 02a1 77617665 		.ascii	"waveshape\000"
+ 1729      73686170 
+ 1729      6500
+ 1730              	.LASF26:
+ 1731 02ab 656E765F 		.ascii	"env_multiplier\000"
+ 1731      6D756C74 
+ 1731      69706C69 
+ 1731      657200
+ 1732              	.LASF81:
+ 1733 02ba 5553425F 		.ascii	"USB_callbackLocalMidiEvent\000"
+ 1733      63616C6C 
+ 1733      6261636B 
+ 1733      4C6F6361 
+ 1733      6C4D6964 
+ 1734              	.LASF37:
+ 1735 02d5 62617365 		.ascii	"base_pos_saw\000"
+ 1735      5F706F73 
+ 1735      5F736177 
+ 1735      00
+ 1736              	.LASF23:
+ 1737 02e2 6C6F6E67 		.ascii	"long double\000"
+ 1737      20646F75 
+ 1737      626C6500 
+ 1738              	.LASF32:
+ 1739 02ee 5553425F 		.ascii	"USB_MIDI1_ProcessUsbOut_EntryCallback\000"
+ 1739      4D494449 
+ 1739      315F5072 
+ 1739      6F636573 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 40
+
+
+ 1739      73557362 
+ 1740              	.LASF58:
+ 1741 0314 43794465 		.ascii	"CyDelayUs\000"
+ 1741      6C617955 
+ 1741      7300
+ 1742              	.LASF3:
+ 1743 031e 756E7369 		.ascii	"unsigned char\000"
+ 1743      676E6564 
+ 1743      20636861 
+ 1743      7200
+ 1744              	.LASF74:
+ 1745 032c 4932535F 		.ascii	"I2S_EnableTx\000"
+ 1745      456E6162 
+ 1745      6C655478 
+ 1745      00
+ 1746              	.LASF2:
+ 1747 0339 7369676E 		.ascii	"signed char\000"
+ 1747      65642063 
+ 1747      68617200 
+ 1748              	.LASF12:
+ 1749 0345 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1749      206C6F6E 
+ 1749      6720756E 
+ 1749      7369676E 
+ 1749      65642069 
+ 1750              	.LASF18:
+ 1751 035c 75696E74 		.ascii	"uint32_t\000"
+ 1751      33325F74 
+ 1751      00
+ 1752              	.LASF13:
+ 1753 0365 756E7369 		.ascii	"unsigned int\000"
+ 1753      676E6564 
+ 1753      20696E74 
+ 1753      00
+ 1754              	.LASF17:
+ 1755 0372 75696E74 		.ascii	"uint16_t\000"
+ 1755      31365F74 
+ 1755      00
+ 1756              	.LASF41:
+ 1757 037b 6D617374 		.ascii	"masterTxBuffer\000"
+ 1757      65725478 
+ 1757      42756666 
+ 1757      657200
+ 1758              	.LASF72:
+ 1759 038a 436F6465 		.ascii	"Codec_Activate\000"
+ 1759      635F4163 
+ 1759      74697661 
+ 1759      746500
+ 1760              	.LASF52:
+ 1761 0399 6F757470 		.ascii	"output_buffer2\000"
+ 1761      75745F62 
+ 1761      75666665 
+ 1761      723200
+ 1762              	.LASF39:
+ 1763 03a8 6C666F5F 		.ascii	"lfo_sine\000"
+ 1763      73696E65 
+ 1763      00
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 41
+
+
+ 1764              	.LASF0:
+ 1765 03b1 5F5F696E 		.ascii	"__int8_t\000"
+ 1765      74385F74 
+ 1765      00
+ 1766              	.LASF71:
+ 1767 03ba 436F6465 		.ascii	"Codec_Init\000"
+ 1767      635F496E 
+ 1767      697400
+ 1768              	.LASF22:
+ 1769 03c5 63686172 		.ascii	"char\000"
+ 1769      00
+ 1770              	.LASF38:
+ 1771 03ca 62617365 		.ascii	"base_sq\000"
+ 1771      5F737100 
+ 1772              	.LASF55:
+ 1773 03d2 75736241 		.ascii	"usbActivityCounter\000"
+ 1773      63746976 
+ 1773      69747943 
+ 1773      6F756E74 
+ 1773      657200
+ 1774              	.LASF7:
+ 1775 03e5 73686F72 		.ascii	"short unsigned int\000"
+ 1775      7420756E 
+ 1775      7369676E 
+ 1775      65642069 
+ 1775      6E7400
+ 1776              	.LASF16:
+ 1777 03f8 696E7431 		.ascii	"int16_t\000"
+ 1777      365F7400 
+ 1778              	.LASF53:
+ 1779 0400 4D494449 		.ascii	"MIDI_IDENTITY_REPLY\000"
+ 1779      5F494445 
+ 1779      4E544954 
+ 1779      595F5245 
+ 1779      504C5900 
+ 1780              	.LASF30:
+ 1781 0414 6361626C 		.ascii	"cable\000"
+ 1781      6500
+ 1782              	.LASF77:
+ 1783 041a 6D61696E 		.ascii	"main.c\000"
+ 1783      2E6300
+ 1784              	.LASF10:
+ 1785 0421 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1785      20756E73 
+ 1785      69676E65 
+ 1785      6420696E 
+ 1785      7400
+ 1786              	.LASF21:
+ 1787 0433 646F7562 		.ascii	"double\000"
+ 1787      6C6500
+ 1788              	.LASF54:
+ 1789 043a 5553425F 		.ascii	"USB_MIDI1_InqFlags\000"
+ 1789      4D494449 
+ 1789      315F496E 
+ 1789      71466C61 
+ 1789      677300
+ 1790              	.LASF68:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 42
+
+
+ 1791 044d 5350495F 		.ascii	"SPI_SpiUartWriteTxData\000"
+ 1791      53706955 
+ 1791      61727457 
+ 1791      72697465 
+ 1791      54784461 
+ 1792              	.LASF63:
+ 1793 0464 696E6974 		.ascii	"init_wavetable\000"
+ 1793      5F776176 
+ 1793      65746162 
+ 1793      6C6500
+ 1794              	.LASF4:
+ 1795 0473 5F5F696E 		.ascii	"__int16_t\000"
+ 1795      7431365F 
+ 1795      7400
+ 1796              	.LASF24:
+ 1797 047d 73697A65 		.ascii	"sizetype\000"
+ 1797      74797065 
+ 1797      00
+ 1798              	.LASF35:
+ 1799 0486 4D494449 		.ascii	"MIDI1_UART_RXISR_ExitCallback\000"
+ 1799      315F5541 
+ 1799      52545F52 
+ 1799      58495352 
+ 1799      5F457869 
+ 1800              	.LASF67:
+ 1801 04a4 5350495F 		.ascii	"SPI_Start\000"
+ 1801      53746172 
+ 1801      7400
+ 1802              	.LASF65:
+ 1803 04ae 4144435F 		.ascii	"ADC_StartConvert\000"
+ 1803      53746172 
+ 1803      74436F6E 
+ 1803      76657274 
+ 1803      00
+ 1804              	.LASF42:
+ 1805 04bf 6D617374 		.ascii	"masterRxBuffer\000"
+ 1805      65725278 
+ 1805      42756666 
+ 1805      657200
+ 1806              	.LASF66:
+ 1807 04ce 6973725F 		.ascii	"isr_ADC_EOC_StartEx\000"
+ 1807      4144435F 
+ 1807      454F435F 
+ 1807      53746172 
+ 1807      74457800 
+ 1808              	.LASF47:
+ 1809 04e2 72656C65 		.ascii	"release_freq\000"
+ 1809      6173655F 
+ 1809      66726571 
+ 1809      00
+ 1810              	.LASF44:
+ 1811 04ef 61747461 		.ascii	"attack_freq\000"
+ 1811      636B5F66 
+ 1811      72657100 
+ 1812              	.LASF31:
+ 1813 04fb 6D696469 		.ascii	"midiMsg\000"
+ 1813      4D736700 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccmehLig.s 			page 43
+
+
+ 1814              	.LASF50:
+ 1815 0503 444D415F 		.ascii	"DMA_counter\000"
+ 1815      636F756E 
+ 1815      74657200 
+ 1816              	.LASF51:
+ 1817 050f 6F757470 		.ascii	"output_buffer\000"
+ 1817      75745F62 
+ 1817      75666665 
+ 1817      7200
+ 1818              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

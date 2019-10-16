@@ -111,15 +111,15 @@ void ProcessVoice(struct voice* v) {
     switch((*v).current_env_mode){
     case ATTACK_MODE:
         (*v).env_index += attack_freq;
-        (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF]; // using pos saw wave here, but should rename to linear ramp or something
+        (*v).env_multiplier = base_pos_saw[((*v).env_index>>7) & 0xFFF]; // using pos saw wave here, but should rename to linear ramp or something
         if((*v).env_multiplier > 120) {
-            (*v).env_multiplier  = 127;
+            (*v).env_multiplier  = 120;
             (*v).current_env_mode = DECAY_MODE;
         }
         break;
     case DECAY_MODE:
         (*v).env_index -= decay_freq;
-        (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF];
+        (*v).env_multiplier = base_pos_saw[((*v).env_index>>7) & 0xFFF];
         if((*v).env_multiplier < base_pos_saw[(sustain_freq) & 0xFFF]) {
             (*v).env_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
             (*v).current_env_mode = SUSTAIN_MODE;
@@ -130,8 +130,8 @@ void ProcessVoice(struct voice* v) {
         break;
     case RELEASE_MODE:
         (*v).env_index -= release_freq;
-        (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF];
-        if((*v).env_multiplier < 10) {
+        (*v).env_multiplier = base_pos_saw[((*v).env_index>>7) & 0xFFF];
+        if((*v).env_multiplier < 3) {
             (*v).env_multiplier = 0;
             (*v).env_index = 0;
             (*v).current_env_mode = NOT_TRIGGERED;
@@ -141,13 +141,14 @@ void ProcessVoice(struct voice* v) {
 }
 
 void DispatchNote(uint8 note) {
-    freq = music_notes[note-21] * 20;
+    freq = (uint16_t)(music_notes[note]/3);
     
-    if(v1.current_env_mode == NOT_TRIGGERED){
+    //if(v1.current_env_mode == NOT_TRIGGERED){
         v1.freq = freq;
         v1.note_index = note;
-        v1.current_env_mode = SUSTAIN_MODE;
+        v1.current_env_mode = ATTACK_MODE;
         return;
+    /*
     }
     else if(v2.current_env_mode == NOT_TRIGGERED){
         v2.freq = freq;
@@ -191,11 +192,12 @@ void DispatchNote(uint8 note) {
         v8.current_env_mode = SUSTAIN_MODE;
         return;
     }
+    */
 }
 
 void NoteOff(uint8 note){
     if(v1.note_index == note){
-        v1.current_env_mode = NOT_TRIGGERED;
+        v1.current_env_mode = RELEASE_MODE;
         v1.env_multiplier = 0;
     }
     else if(v2.note_index == note){

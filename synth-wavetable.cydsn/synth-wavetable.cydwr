@@ -3910,6 +3910,16 @@
     </Group>
   </Group>
   <Group key="Pin2">
+    <Group key="0d776c25-0fda-4bff-af2b-9962432af301/8b77a6c4-10a0-4390-971c-672353e2a49c">
+      <Group key="0">
+        <Data key="Port Format" value="13,1" />
+      </Group>
+    </Group>
+    <Group key="0d776c25-0fda-4bff-af2b-9962432af301/618a72fc-5ddd-4df5-958f-a3d55102db42">
+      <Group key="0">
+        <Data key="Port Format" value="13,0" />
+      </Group>
+    </Group>
     <Group key="2e1e8d66-1e7e-4cfe-bf79-eae640f97731">
       <Group key="0">
         <Data key="Port Format" value="3,5" />
@@ -3947,7 +3957,7 @@
     </Group>
     <Group key="8c9622c4-ba43-4dcc-95ad-94958b1124ce">
       <Group key="0">
-        <Data key="Port Format" value="2,6" />
+        <Data key="Port Format" value="9,2" />
       </Group>
     </Group>
     <Group key="9e4b187c-325d-48af-a51b-a1872d68ab71">
@@ -3972,7 +3982,7 @@
     </Group>
     <Group key="92b3b3ef-4dfe-4e74-81f8-0a8f40d7dd48">
       <Group key="0">
-        <Data key="Port Format" value="2,7" />
+        <Data key="Port Format" value="9,3" />
       </Group>
     </Group>
     <Group key="5711f6e8-cb8a-4621-9e37-afae2646afe9">

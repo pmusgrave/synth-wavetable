@@ -8,10 +8,12 @@
 
 #include "oscillator.h"
 
+#define SPI_CMD_FREQ 1
+#define SPI_CMD_ENV 2
+
 uint32_t sample;
-int8 CYCODE masterTxBuffer[BUFFER_SIZE] = {40};
+int8 masterTxBuffer[BUFFER_SIZE] = {1};
 int8 masterRxBuffer[BUFFER_SIZE] = {0};
-//void FillBufferFromFPGA(int8_t* buffer);
 
 uint8_t current_env_mode = 0;
 uint16_t attack_freq = 0;
@@ -67,6 +69,7 @@ char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
 void ProcessUSBMIDI();
+void ProcessSpiToFpga();
 void UART_PrintNumber(int32_t);
 
 /*******************************************************************************
@@ -93,7 +96,6 @@ int main() {
     
     SPI_Start();
     SPI_SpiUartWriteTxData(0u);
-
     while(0u == SPI_SpiUartGetRxBufferSize())
     {
         /* Wait for the first byte exchange. */
@@ -116,14 +118,14 @@ int main() {
     
     // Init USB and MIDI
     // references Cypress USB MIDI code example
-    //USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
-    //MIDI1_UART_Start();
+    USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
+    MIDI1_UART_Start();
     //MIDI_RX_StartEx(MIDI_RX_VECT);
     //UART_UartPutString("USB MIDI initialized...\r\n");
     
     for(uint32_t i = 0; i < 10000; i++){
         CyGlobalIntDisable;
-        //ProcessUSBMIDI();
+        ProcessUSBMIDI();
         CyGlobalIntEnable;
         CyDelayUs(100);
     }
@@ -138,45 +140,23 @@ int main() {
     //I2STxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
         
     for(;;) {
-        if(DMA_done_flag){
-            DMA_done_flag = 0;
-            
-            if(DMA_counter % 2 == 0){
-                //current_buffer = output_buffer2;
-                //CyGlobalIntEnable;
-                //FillBufferFromFPGA(output_buffer2);
-            }
-            else {
-                //CyGlobalIntEnable;
-                //current_buffer = output_buffer;
-                //FillBufferFromFPGA(output_buffer);
-            }
-        }
-        
-        /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
-        * configured to set an interrupt when they finish transferring all data
-        * elements.
-        */
-        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
-        {
-            /* Once asserted, interrupt bits remain high until cleared. */
-            CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
-
-            /* Reset receive buffers. */
-            memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
-            //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
-            
-            /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
-            * to the slave and correspondingly the number of bytes returned by the
-            * slave. Therefore it is configured to be invalidated when it
-            * finishes a transfer.
-            */
-            SPI_TxDMA_ValidateDescriptor(0);
-            SPI_TxDMA_ChEnable();
-        }
-        
+        ProcessSpiToFpga();
+        ProcessUSBMIDI();
+        ProcessVoice(&v1);
+        /*ProcessVoice(&v2);
+        ProcessVoice(&v3);
+        ProcessVoice(&v4);
+        ProcessVoice(&v5);
+        ProcessVoice(&v6);
+        ProcessVoice(&v7);
+        ProcessVoice(&v8);*/
         if(update_ADC_flag){
-            masterTxBuffer[0] = (uint8_t)ADC_GetResult16(0);
+            attack_freq = ADC_GetResult16(0);
+            decay_freq = ADC_GetResult16(1);
+            sustain_freq = ADC_GetResult16(2);
+            release_freq = ADC_GetResult16(3);
+            //attack_freq = 52275;
+            //attack_freq = 60;
             update_ADC_flag = 0;
         }
     }
@@ -188,7 +168,99 @@ int main() {
     //UART_UartPutString(string);
 //}
 
+void ProcessSpiToFpga(){
+    static uint8_t spi_byte_counter;
+    
+    /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
+    * configured to set an interrupt when they finish transferring all data
+    * elements.
+    */
+    if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
+    {
+        /* Once asserted, interrupt bits remain high until cleared. */
+        CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
 
+        /* Reset receive buffers. */
+        memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
+        //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
+        
+        // this byte counting method needs to be more flexible to allow
+        // sending different types of commands. Refactor.
+        // Could fill a larger buffer and let DMA handle it, I suppose.
+        switch(spi_byte_counter){
+        case 0:
+            masterTxBuffer[0] = SPI_CMD_FREQ;
+            spi_byte_counter++;
+            break;
+        case 1:
+            masterTxBuffer[0] = (uint8_t)(v1.freq>>8);
+            spi_byte_counter++;
+            break;
+        case 2:
+            masterTxBuffer[0] = (uint8_t)(v1.freq);
+            spi_byte_counter++;
+            break;
+        case 3:
+            masterTxBuffer[0] = SPI_CMD_ENV;
+            spi_byte_counter++;
+            break;
+        case 4:
+            masterTxBuffer[0] = (uint8_t)(v1.env_multiplier);
+            spi_byte_counter = 0;
+            break;
+        default:
+            spi_byte_counter = 0;
+            break;
+        }
+        
+        CyDelay(2);
+        
+        /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+        * to the slave and correspondingly the number of bytes returned by the
+        * slave. Therefore it is configured to be invalidated when it
+        * finishes a transfer.
+        */
+        SPI_TxDMA_ValidateDescriptor(0);
+        SPI_TxDMA_ChEnable();
+    }
+}
+
+void ProcessUSBMIDI(){
+    /*******************************************************************************
+    * USB AND MIDI STUFF
+    * references Cypress USB MIDI code examples
+    *******************************************************************************/
+    
+    if(0u != USB_IsConfigurationChanged()){
+        if(0u != USB_GetConfiguration())   // Initialize IN endpoints when device configured
+        {
+            USB_MIDI_Init(); // Enable output endpoint
+        }
+    }            
+    
+    /* Service USB MIDI when device is configured */
+    if(0u != USB_GetConfiguration())    
+    {
+        /* Call this API from UART RX ISR for Auto DMA mode */
+        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
+            USB_MIDI_IN_Service();
+        #endif
+        /* In Manual EP Memory Management mode OUT_EP_Service() 
+        *  may have to be called from main foreground or from OUT EP ISR
+        */
+        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
+            USB_MIDI_OUT_Service();
+        #endif
+
+        /* Sending Identity Reply Universal System Exclusive message 
+         * back to computer */
+        if(0u != (USB_MIDI1_InqFlags & USB_INQ_IDENTITY_REQ_FLAG))
+        {
+            USB_PutUsbMidiIn(sizeof(MIDI_IDENTITY_REPLY), (uint8 *)MIDI_IDENTITY_REPLY, USB_MIDI_CABLE_00);
+            USB_MIDI1_InqFlags &= ~USB_INQ_IDENTITY_REQ_FLAG;
+        }
+    }
+}
 
 
 /*******************************************************************************
@@ -200,7 +272,7 @@ int main() {
 *******************************************************************************/
 void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
 {
-    //uint8 note;
+    uint8 note;
     
     /* Support General System On/Off Message. */
     /*
@@ -223,7 +295,6 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     inqFlagsOld = USB_MIDI1_InqFlags;
     cable = cable;
     
-    /*
     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
     {
         note = midiMsg[USB_EVENT_BYTE1];
@@ -239,7 +310,6 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         //current_env_mode = RELEASE_MODE;
         LED_Write(1);
     }
-    */
 }    
 
 

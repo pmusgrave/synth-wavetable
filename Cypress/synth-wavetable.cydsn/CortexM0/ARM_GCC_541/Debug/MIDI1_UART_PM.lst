@@ -1,0 +1,977 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"MIDI1_UART_PM.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.MIDI1_UART_SaveConfig,"ax",%progbits
+  20              		.align	2
+  21              		.global	MIDI1_UART_SaveConfig
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	MIDI1_UART_SaveConfig, %function
+  25              	MIDI1_UART_SaveConfig:
+  26              	.LFB1:
+  27              		.file 1 "Generated_Source\\PSoC4\\MIDI1_UART_PM.c"
+   1:Generated_Source\PSoC4/MIDI1_UART_PM.c **** /*******************************************************************************
+   2:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * File Name: MIDI1_UART_PM.c
+   3:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Version 2.50
+   4:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+   5:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Description:
+   6:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  This file provides Sleep/WakeUp APIs functionality.
+   7:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+   8:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Note:
+   9:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  10:Generated_Source\PSoC4/MIDI1_UART_PM.c **** ********************************************************************************
+  11:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Copyright 2008-2015, Cypress Semiconductor Corporation.  All rights reserved.
+  12:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * You may use this file only in accordance with the license, terms, conditions,
+  13:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  14:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * the software package with which this file was provided.
+  15:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *******************************************************************************/
+  16:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  17:Generated_Source\PSoC4/MIDI1_UART_PM.c **** #include "MIDI1_UART.h"
+  18:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  19:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  20:Generated_Source\PSoC4/MIDI1_UART_PM.c **** /***************************************
+  21:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Local data allocation
+  22:Generated_Source\PSoC4/MIDI1_UART_PM.c **** ***************************************/
+  23:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  24:Generated_Source\PSoC4/MIDI1_UART_PM.c **** static MIDI1_UART_BACKUP_STRUCT  MIDI1_UART_backup =
+  25:Generated_Source\PSoC4/MIDI1_UART_PM.c **** {
+  26:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     /* enableState - disabled */
+  27:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     0u,
+  28:Generated_Source\PSoC4/MIDI1_UART_PM.c **** };
+  29:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  30:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 2
+
+
+  31:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  32:Generated_Source\PSoC4/MIDI1_UART_PM.c **** /*******************************************************************************
+  33:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Function Name: MIDI1_UART_SaveConfig
+  34:Generated_Source\PSoC4/MIDI1_UART_PM.c **** ********************************************************************************
+  35:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  36:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Summary:
+  37:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  This function saves the component nonretention control register.
+  38:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  Does not save the FIFO which is a set of nonretention registers.
+  39:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  This function is called by the MIDI1_UART_Sleep() function.
+  40:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  41:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Parameters:
+  42:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+  43:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  44:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Return:
+  45:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+  46:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  47:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Global Variables:
+  48:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_backup - modified when non-retention registers are saved.
+  49:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  50:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Reentrant:
+  51:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  No.
+  52:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  53:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *******************************************************************************/
+  54:Generated_Source\PSoC4/MIDI1_UART_PM.c **** void MIDI1_UART_SaveConfig(void)
+  55:Generated_Source\PSoC4/MIDI1_UART_PM.c **** {
+  28              		.loc 1 55 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  56:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #if(MIDI1_UART_CONTROL_REG_REMOVED == 0u)
+  57:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         MIDI1_UART_backup.cr = MIDI1_UART_CONTROL_REG;
+  58:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #endif /* End MIDI1_UART_CONTROL_REG_REMOVED */
+  59:Generated_Source\PSoC4/MIDI1_UART_PM.c **** }
+  33              		.loc 1 59 0
+  34              		@ sp needed
+  35 0000 7047     		bx	lr
+  36              		.cfi_endproc
+  37              	.LFE1:
+  38              		.size	MIDI1_UART_SaveConfig, .-MIDI1_UART_SaveConfig
+  39 0002 C046     		.section	.text.MIDI1_UART_RestoreConfig,"ax",%progbits
+  40              		.align	2
+  41              		.global	MIDI1_UART_RestoreConfig
+  42              		.code	16
+  43              		.thumb_func
+  44              		.type	MIDI1_UART_RestoreConfig, %function
+  45              	MIDI1_UART_RestoreConfig:
+  46              	.LFB2:
+  60:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  61:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  62:Generated_Source\PSoC4/MIDI1_UART_PM.c **** /*******************************************************************************
+  63:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Function Name: MIDI1_UART_RestoreConfig
+  64:Generated_Source\PSoC4/MIDI1_UART_PM.c **** ********************************************************************************
+  65:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  66:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Summary:
+  67:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  Restores the nonretention control register except FIFO.
+  68:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  Does not restore the FIFO which is a set of nonretention registers.
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 3
+
+
+  69:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  70:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Parameters:
+  71:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+  72:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  73:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Return:
+  74:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+  75:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  76:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Global Variables:
+  77:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_backup - used when non-retention registers are restored.
+  78:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  79:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Reentrant:
+  80:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  No.
+  81:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  82:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Notes:
+  83:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  If this function is called without calling MIDI1_UART_SaveConfig() 
+  84:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  first, the data loaded may be incorrect.
+  85:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  86:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *******************************************************************************/
+  87:Generated_Source\PSoC4/MIDI1_UART_PM.c **** void MIDI1_UART_RestoreConfig(void)
+  88:Generated_Source\PSoC4/MIDI1_UART_PM.c **** {
+  47              		.loc 1 88 0
+  48              		.cfi_startproc
+  49              		@ args = 0, pretend = 0, frame = 0
+  50              		@ frame_needed = 0, uses_anonymous_args = 0
+  51              		@ link register save eliminated.
+  89:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #if(MIDI1_UART_CONTROL_REG_REMOVED == 0u)
+  90:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         MIDI1_UART_CONTROL_REG = MIDI1_UART_backup.cr;
+  91:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #endif /* End MIDI1_UART_CONTROL_REG_REMOVED */
+  92:Generated_Source\PSoC4/MIDI1_UART_PM.c **** }
+  52              		.loc 1 92 0
+  53              		@ sp needed
+  54 0000 7047     		bx	lr
+  55              		.cfi_endproc
+  56              	.LFE2:
+  57              		.size	MIDI1_UART_RestoreConfig, .-MIDI1_UART_RestoreConfig
+  58 0002 C046     		.section	.text.MIDI1_UART_Sleep,"ax",%progbits
+  59              		.align	2
+  60              		.global	MIDI1_UART_Sleep
+  61              		.code	16
+  62              		.thumb_func
+  63              		.type	MIDI1_UART_Sleep, %function
+  64              	MIDI1_UART_Sleep:
+  65              	.LFB3:
+  93:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  94:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+  95:Generated_Source\PSoC4/MIDI1_UART_PM.c **** /*******************************************************************************
+  96:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Function Name: MIDI1_UART_Sleep
+  97:Generated_Source\PSoC4/MIDI1_UART_PM.c **** ********************************************************************************
+  98:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+  99:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Summary:
+ 100:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  This is the preferred API to prepare the component for sleep. 
+ 101:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  The MIDI1_UART_Sleep() API saves the current component state. Then it
+ 102:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  calls the MIDI1_UART_Stop() function and calls 
+ 103:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_SaveConfig() to save the hardware configuration.
+ 104:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  Call the MIDI1_UART_Sleep() function before calling the CyPmSleep() 
+ 105:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  or the CyPmHibernate() function. 
+ 106:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 4
+
+
+ 107:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Parameters:
+ 108:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+ 109:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 110:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Return:
+ 111:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+ 112:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 113:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Global Variables:
+ 114:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_backup - modified when non-retention registers are saved.
+ 115:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 116:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Reentrant:
+ 117:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  No.
+ 118:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 119:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *******************************************************************************/
+ 120:Generated_Source\PSoC4/MIDI1_UART_PM.c **** void MIDI1_UART_Sleep(void)
+ 121:Generated_Source\PSoC4/MIDI1_UART_PM.c **** {
+  66              		.loc 1 121 0
+  67              		.cfi_startproc
+  68              		@ args = 0, pretend = 0, frame = 0
+  69              		@ frame_needed = 0, uses_anonymous_args = 0
+  70 0000 10B5     		push	{r4, lr}
+  71              		.cfi_def_cfa_offset 8
+  72              		.cfi_offset 4, -8
+  73              		.cfi_offset 14, -4
+ 122:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #if(MIDI1_UART_RX_ENABLED || MIDI1_UART_HD_ENABLED)
+ 123:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         if((MIDI1_UART_RXSTATUS_ACTL_REG  & MIDI1_UART_INT_ENABLE) != 0u)
+  74              		.loc 1 123 0
+  75 0002 074B     		ldr	r3, .L6
+  76 0004 1B78     		ldrb	r3, [r3]
+  77 0006 DB06     		lsls	r3, r3, #27
+  78 0008 03D5     		bpl	.L4
+ 124:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         {
+ 125:Generated_Source\PSoC4/MIDI1_UART_PM.c ****             MIDI1_UART_backup.enableState = 1u;
+  79              		.loc 1 125 0
+  80 000a 0122     		movs	r2, #1
+  81 000c 054B     		ldr	r3, .L6+4
+  82 000e 1A70     		strb	r2, [r3]
+  83 0010 02E0     		b	.L5
+  84              	.L4:
+ 126:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         }
+ 127:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         else
+ 128:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         {
+ 129:Generated_Source\PSoC4/MIDI1_UART_PM.c ****             MIDI1_UART_backup.enableState = 0u;
+  85              		.loc 1 129 0
+  86 0012 0022     		movs	r2, #0
+  87 0014 034B     		ldr	r3, .L6+4
+  88 0016 1A70     		strb	r2, [r3]
+  89              	.L5:
+ 130:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         }
+ 131:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #else
+ 132:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         if((MIDI1_UART_TXSTATUS_ACTL_REG  & MIDI1_UART_INT_ENABLE) !=0u)
+ 133:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         {
+ 134:Generated_Source\PSoC4/MIDI1_UART_PM.c ****             MIDI1_UART_backup.enableState = 1u;
+ 135:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         }
+ 136:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         else
+ 137:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         {
+ 138:Generated_Source\PSoC4/MIDI1_UART_PM.c ****             MIDI1_UART_backup.enableState = 0u;
+ 139:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         }
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 5
+
+
+ 140:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #endif /* End MIDI1_UART_RX_ENABLED || MIDI1_UART_HD_ENABLED*/
+ 141:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+ 142:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     MIDI1_UART_Stop();
+  90              		.loc 1 142 0
+  91 0018 FFF7FEFF 		bl	MIDI1_UART_Stop
+  92              	.LVL0:
+ 143:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     MIDI1_UART_SaveConfig();
+ 144:Generated_Source\PSoC4/MIDI1_UART_PM.c **** }
+  93              		.loc 1 144 0
+  94              		@ sp needed
+  95 001c 10BD     		pop	{r4, pc}
+  96              	.L7:
+  97 001e C046     		.align	2
+  98              	.L6:
+  99 0020 93000F40 		.word	1074725011
+ 100 0024 00000000 		.word	.LANCHOR0
+ 101              		.cfi_endproc
+ 102              	.LFE3:
+ 103              		.size	MIDI1_UART_Sleep, .-MIDI1_UART_Sleep
+ 104              		.section	.text.MIDI1_UART_Wakeup,"ax",%progbits
+ 105              		.align	2
+ 106              		.global	MIDI1_UART_Wakeup
+ 107              		.code	16
+ 108              		.thumb_func
+ 109              		.type	MIDI1_UART_Wakeup, %function
+ 110              	MIDI1_UART_Wakeup:
+ 111              	.LFB4:
+ 145:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+ 146:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+ 147:Generated_Source\PSoC4/MIDI1_UART_PM.c **** /*******************************************************************************
+ 148:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Function Name: MIDI1_UART_Wakeup
+ 149:Generated_Source\PSoC4/MIDI1_UART_PM.c **** ********************************************************************************
+ 150:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 151:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Summary:
+ 152:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  This is the preferred API to restore the component to the state when 
+ 153:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_Sleep() was called. The MIDI1_UART_Wakeup() function
+ 154:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  calls the MIDI1_UART_RestoreConfig() function to restore the 
+ 155:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  configuration. If the component was enabled before the 
+ 156:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_Sleep() function was called, the MIDI1_UART_Wakeup()
+ 157:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  function will also re-enable the component.
+ 158:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 159:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Parameters:
+ 160:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+ 161:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 162:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Return:
+ 163:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  None.
+ 164:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 165:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Global Variables:
+ 166:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  MIDI1_UART_backup - used when non-retention registers are restored.
+ 167:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 168:Generated_Source\PSoC4/MIDI1_UART_PM.c **** * Reentrant:
+ 169:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *  No.
+ 170:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *
+ 171:Generated_Source\PSoC4/MIDI1_UART_PM.c **** *******************************************************************************/
+ 172:Generated_Source\PSoC4/MIDI1_UART_PM.c **** void MIDI1_UART_Wakeup(void)
+ 173:Generated_Source\PSoC4/MIDI1_UART_PM.c **** {
+ 112              		.loc 1 173 0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 6
+
+
+ 113              		.cfi_startproc
+ 114              		@ args = 0, pretend = 0, frame = 0
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116 0000 10B5     		push	{r4, lr}
+ 117              		.cfi_def_cfa_offset 8
+ 118              		.cfi_offset 4, -8
+ 119              		.cfi_offset 14, -4
+ 174:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     MIDI1_UART_RestoreConfig();
+ 175:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #if( (MIDI1_UART_RX_ENABLED) || (MIDI1_UART_HD_ENABLED) )
+ 176:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         MIDI1_UART_ClearRxBuffer();
+ 120              		.loc 1 176 0
+ 121 0002 FFF7FEFF 		bl	MIDI1_UART_ClearRxBuffer
+ 122              	.LVL1:
+ 177:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #endif /* End (MIDI1_UART_RX_ENABLED) || (MIDI1_UART_HD_ENABLED) */
+ 178:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #if(MIDI1_UART_TX_ENABLED || MIDI1_UART_HD_ENABLED)
+ 179:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         MIDI1_UART_ClearTxBuffer();
+ 123              		.loc 1 179 0
+ 124 0006 FFF7FEFF 		bl	MIDI1_UART_ClearTxBuffer
+ 125              	.LVL2:
+ 180:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     #endif /* End MIDI1_UART_TX_ENABLED || MIDI1_UART_HD_ENABLED */
+ 181:Generated_Source\PSoC4/MIDI1_UART_PM.c **** 
+ 182:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     if(MIDI1_UART_backup.enableState != 0u)
+ 126              		.loc 1 182 0
+ 127 000a 034B     		ldr	r3, .L10
+ 128 000c 1B78     		ldrb	r3, [r3]
+ 129 000e 002B     		cmp	r3, #0
+ 130 0010 01D0     		beq	.L8
+ 183:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     {
+ 184:Generated_Source\PSoC4/MIDI1_UART_PM.c ****         MIDI1_UART_Enable();
+ 131              		.loc 1 184 0
+ 132 0012 FFF7FEFF 		bl	MIDI1_UART_Enable
+ 133              	.LVL3:
+ 134              	.L8:
+ 185:Generated_Source\PSoC4/MIDI1_UART_PM.c ****     }
+ 186:Generated_Source\PSoC4/MIDI1_UART_PM.c **** }
+ 135              		.loc 1 186 0
+ 136              		@ sp needed
+ 137 0016 10BD     		pop	{r4, pc}
+ 138              	.L11:
+ 139              		.align	2
+ 140              	.L10:
+ 141 0018 00000000 		.word	.LANCHOR0
+ 142              		.cfi_endproc
+ 143              	.LFE4:
+ 144              		.size	MIDI1_UART_Wakeup, .-MIDI1_UART_Wakeup
+ 145              		.bss
+ 146              		.align	2
+ 147              		.set	.LANCHOR0,. + 0
+ 148              		.type	MIDI1_UART_backup, %object
+ 149              		.size	MIDI1_UART_backup, 1
+ 150              	MIDI1_UART_backup:
+ 151 0000 00       		.space	1
+ 152              		.text
+ 153              	.Letext0:
+ 154              		.file 2 "Generated_Source\\PSoC4\\cytypes.h"
+ 155              		.file 3 "Generated_Source\\PSoC4\\MIDI1_UART.h"
+ 156              		.section	.debug_info,"",%progbits
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 7
+
+
+ 157              	.Ldebug_info0:
+ 158 0000 7B010000 		.4byte	0x17b
+ 159 0004 0400     		.2byte	0x4
+ 160 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 161 000a 04       		.byte	0x4
+ 162 000b 01       		.uleb128 0x1
+ 163 000c 3E010000 		.4byte	.LASF25
+ 164 0010 0C       		.byte	0xc
+ 165 0011 17010000 		.4byte	.LASF26
+ 166 0015 84000000 		.4byte	.LASF27
+ 167 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 168 001d 00000000 		.4byte	0
+ 169 0021 00000000 		.4byte	.Ldebug_line0
+ 170 0025 02       		.uleb128 0x2
+ 171 0026 01       		.byte	0x1
+ 172 0027 06       		.byte	0x6
+ 173 0028 6E020000 		.4byte	.LASF0
+ 174 002c 02       		.uleb128 0x2
+ 175 002d 01       		.byte	0x1
+ 176 002e 08       		.byte	0x8
+ 177 002f 2F000000 		.4byte	.LASF1
+ 178 0033 02       		.uleb128 0x2
+ 179 0034 02       		.byte	0x2
+ 180 0035 05       		.byte	0x5
+ 181 0036 26020000 		.4byte	.LASF2
+ 182 003a 02       		.uleb128 0x2
+ 183 003b 02       		.byte	0x2
+ 184 003c 07       		.byte	0x7
+ 185 003d 16000000 		.4byte	.LASF3
+ 186 0041 02       		.uleb128 0x2
+ 187 0042 04       		.byte	0x4
+ 188 0043 05       		.byte	0x5
+ 189 0044 30020000 		.4byte	.LASF4
+ 190 0048 02       		.uleb128 0x2
+ 191 0049 04       		.byte	0x4
+ 192 004a 07       		.byte	0x7
+ 193 004b 54000000 		.4byte	.LASF5
+ 194 004f 02       		.uleb128 0x2
+ 195 0050 08       		.byte	0x8
+ 196 0051 05       		.byte	0x5
+ 197 0052 E1010000 		.4byte	.LASF6
+ 198 0056 02       		.uleb128 0x2
+ 199 0057 08       		.byte	0x8
+ 200 0058 07       		.byte	0x7
+ 201 0059 00010000 		.4byte	.LASF7
+ 202 005d 03       		.uleb128 0x3
+ 203 005e 04       		.byte	0x4
+ 204 005f 05       		.byte	0x5
+ 205 0060 696E7400 		.ascii	"int\000"
+ 206 0064 02       		.uleb128 0x2
+ 207 0065 04       		.byte	0x4
+ 208 0066 07       		.byte	0x7
+ 209 0067 DA000000 		.4byte	.LASF8
+ 210 006b 04       		.uleb128 0x4
+ 211 006c 66000000 		.4byte	.LASF12
+ 212 0070 02       		.byte	0x2
+ 213 0071 E401     		.2byte	0x1e4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 8
+
+
+ 214 0073 2C000000 		.4byte	0x2c
+ 215 0077 02       		.uleb128 0x2
+ 216 0078 04       		.byte	0x4
+ 217 0079 04       		.byte	0x4
+ 218 007a 29000000 		.4byte	.LASF9
+ 219 007e 02       		.uleb128 0x2
+ 220 007f 08       		.byte	0x8
+ 221 0080 04       		.byte	0x4
+ 222 0081 6C000000 		.4byte	.LASF10
+ 223 0085 02       		.uleb128 0x2
+ 224 0086 01       		.byte	0x1
+ 225 0087 08       		.byte	0x8
+ 226 0088 08020000 		.4byte	.LASF11
+ 227 008c 04       		.uleb128 0x4
+ 228 008d 4F000000 		.4byte	.LASF13
+ 229 0091 02       		.byte	0x2
+ 230 0092 8E02     		.2byte	0x28e
+ 231 0094 98000000 		.4byte	0x98
+ 232 0098 05       		.uleb128 0x5
+ 233 0099 6B000000 		.4byte	0x6b
+ 234 009d 02       		.uleb128 0x2
+ 235 009e 08       		.byte	0x8
+ 236 009f 04       		.byte	0x4
+ 237 00a0 CC010000 		.4byte	.LASF14
+ 238 00a4 02       		.uleb128 0x2
+ 239 00a5 04       		.byte	0x4
+ 240 00a6 07       		.byte	0x7
+ 241 00a7 D8010000 		.4byte	.LASF15
+ 242 00ab 06       		.uleb128 0x6
+ 243 00ac 0D020000 		.4byte	.LASF28
+ 244 00b0 01       		.byte	0x1
+ 245 00b1 03       		.byte	0x3
+ 246 00b2 45       		.byte	0x45
+ 247 00b3 C4000000 		.4byte	0xc4
+ 248 00b7 07       		.uleb128 0x7
+ 249 00b8 39020000 		.4byte	.LASF29
+ 250 00bc 03       		.byte	0x3
+ 251 00bd 47       		.byte	0x47
+ 252 00be 6B000000 		.4byte	0x6b
+ 253 00c2 00       		.byte	0
+ 254 00c3 00       		.byte	0
+ 255 00c4 08       		.uleb128 0x8
+ 256 00c5 EF010000 		.4byte	.LASF16
+ 257 00c9 03       		.byte	0x3
+ 258 00ca 4D       		.byte	0x4d
+ 259 00cb AB000000 		.4byte	0xab
+ 260 00cf 09       		.uleb128 0x9
+ 261 00d0 00000000 		.4byte	.LASF17
+ 262 00d4 01       		.byte	0x1
+ 263 00d5 36       		.byte	0x36
+ 264 00d6 00000000 		.4byte	.LFB1
+ 265 00da 02000000 		.4byte	.LFE1-.LFB1
+ 266 00de 01       		.uleb128 0x1
+ 267 00df 9C       		.byte	0x9c
+ 268 00e0 09       		.uleb128 0x9
+ 269 00e1 55020000 		.4byte	.LASF18
+ 270 00e5 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 9
+
+
+ 271 00e6 57       		.byte	0x57
+ 272 00e7 00000000 		.4byte	.LFB2
+ 273 00eb 02000000 		.4byte	.LFE2-.LFB2
+ 274 00ef 01       		.uleb128 0x1
+ 275 00f0 9C       		.byte	0x9c
+ 276 00f1 0A       		.uleb128 0xa
+ 277 00f2 73000000 		.4byte	.LASF19
+ 278 00f6 01       		.byte	0x1
+ 279 00f7 78       		.byte	0x78
+ 280 00f8 00000000 		.4byte	.LFB3
+ 281 00fc 28000000 		.4byte	.LFE3-.LFB3
+ 282 0100 01       		.uleb128 0x1
+ 283 0101 9C       		.byte	0x9c
+ 284 0102 10010000 		.4byte	0x110
+ 285 0106 0B       		.uleb128 0xb
+ 286 0107 1C000000 		.4byte	.LVL0
+ 287 010b 52010000 		.4byte	0x152
+ 288 010f 00       		.byte	0
+ 289 0110 0A       		.uleb128 0xa
+ 290 0111 C8000000 		.4byte	.LASF20
+ 291 0115 01       		.byte	0x1
+ 292 0116 AC       		.byte	0xac
+ 293 0117 00000000 		.4byte	.LFB4
+ 294 011b 1C000000 		.4byte	.LFE4-.LFB4
+ 295 011f 01       		.uleb128 0x1
+ 296 0120 9C       		.byte	0x9c
+ 297 0121 41010000 		.4byte	0x141
+ 298 0125 0B       		.uleb128 0xb
+ 299 0126 06000000 		.4byte	.LVL1
+ 300 012a 5D010000 		.4byte	0x15d
+ 301 012e 0B       		.uleb128 0xb
+ 302 012f 0A000000 		.4byte	.LVL2
+ 303 0133 68010000 		.4byte	0x168
+ 304 0137 0B       		.uleb128 0xb
+ 305 0138 16000000 		.4byte	.LVL3
+ 306 013c 73010000 		.4byte	0x173
+ 307 0140 00       		.byte	0
+ 308 0141 0C       		.uleb128 0xc
+ 309 0142 3D000000 		.4byte	.LASF30
+ 310 0146 01       		.byte	0x1
+ 311 0147 18       		.byte	0x18
+ 312 0148 C4000000 		.4byte	0xc4
+ 313 014c 05       		.uleb128 0x5
+ 314 014d 03       		.byte	0x3
+ 315 014e 00000000 		.4byte	MIDI1_UART_backup
+ 316 0152 0D       		.uleb128 0xd
+ 317 0153 45020000 		.4byte	.LASF21
+ 318 0157 45020000 		.4byte	.LASF21
+ 319 015b 03       		.byte	0x3
+ 320 015c 55       		.byte	0x55
+ 321 015d 0D       		.uleb128 0xd
+ 322 015e 7A020000 		.4byte	.LASF22
+ 323 0162 7A020000 		.4byte	.LASF22
+ 324 0166 03       		.byte	0x3
+ 325 0167 75       		.byte	0x75
+ 326 0168 0D       		.uleb128 0xd
+ 327 0169 E7000000 		.4byte	.LASF23
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 10
+
+
+ 328 016d E7000000 		.4byte	.LASF23
+ 329 0171 03       		.byte	0x3
+ 330 0172 8F       		.byte	0x8f
+ 331 0173 0D       		.uleb128 0xd
+ 332 0174 93020000 		.4byte	.LASF24
+ 333 0178 93020000 		.4byte	.LASF24
+ 334 017c 03       		.byte	0x3
+ 335 017d 5A       		.byte	0x5a
+ 336 017e 00       		.byte	0
+ 337              		.section	.debug_abbrev,"",%progbits
+ 338              	.Ldebug_abbrev0:
+ 339 0000 01       		.uleb128 0x1
+ 340 0001 11       		.uleb128 0x11
+ 341 0002 01       		.byte	0x1
+ 342 0003 25       		.uleb128 0x25
+ 343 0004 0E       		.uleb128 0xe
+ 344 0005 13       		.uleb128 0x13
+ 345 0006 0B       		.uleb128 0xb
+ 346 0007 03       		.uleb128 0x3
+ 347 0008 0E       		.uleb128 0xe
+ 348 0009 1B       		.uleb128 0x1b
+ 349 000a 0E       		.uleb128 0xe
+ 350 000b 55       		.uleb128 0x55
+ 351 000c 17       		.uleb128 0x17
+ 352 000d 11       		.uleb128 0x11
+ 353 000e 01       		.uleb128 0x1
+ 354 000f 10       		.uleb128 0x10
+ 355 0010 17       		.uleb128 0x17
+ 356 0011 00       		.byte	0
+ 357 0012 00       		.byte	0
+ 358 0013 02       		.uleb128 0x2
+ 359 0014 24       		.uleb128 0x24
+ 360 0015 00       		.byte	0
+ 361 0016 0B       		.uleb128 0xb
+ 362 0017 0B       		.uleb128 0xb
+ 363 0018 3E       		.uleb128 0x3e
+ 364 0019 0B       		.uleb128 0xb
+ 365 001a 03       		.uleb128 0x3
+ 366 001b 0E       		.uleb128 0xe
+ 367 001c 00       		.byte	0
+ 368 001d 00       		.byte	0
+ 369 001e 03       		.uleb128 0x3
+ 370 001f 24       		.uleb128 0x24
+ 371 0020 00       		.byte	0
+ 372 0021 0B       		.uleb128 0xb
+ 373 0022 0B       		.uleb128 0xb
+ 374 0023 3E       		.uleb128 0x3e
+ 375 0024 0B       		.uleb128 0xb
+ 376 0025 03       		.uleb128 0x3
+ 377 0026 08       		.uleb128 0x8
+ 378 0027 00       		.byte	0
+ 379 0028 00       		.byte	0
+ 380 0029 04       		.uleb128 0x4
+ 381 002a 16       		.uleb128 0x16
+ 382 002b 00       		.byte	0
+ 383 002c 03       		.uleb128 0x3
+ 384 002d 0E       		.uleb128 0xe
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 11
+
+
+ 385 002e 3A       		.uleb128 0x3a
+ 386 002f 0B       		.uleb128 0xb
+ 387 0030 3B       		.uleb128 0x3b
+ 388 0031 05       		.uleb128 0x5
+ 389 0032 49       		.uleb128 0x49
+ 390 0033 13       		.uleb128 0x13
+ 391 0034 00       		.byte	0
+ 392 0035 00       		.byte	0
+ 393 0036 05       		.uleb128 0x5
+ 394 0037 35       		.uleb128 0x35
+ 395 0038 00       		.byte	0
+ 396 0039 49       		.uleb128 0x49
+ 397 003a 13       		.uleb128 0x13
+ 398 003b 00       		.byte	0
+ 399 003c 00       		.byte	0
+ 400 003d 06       		.uleb128 0x6
+ 401 003e 13       		.uleb128 0x13
+ 402 003f 01       		.byte	0x1
+ 403 0040 03       		.uleb128 0x3
+ 404 0041 0E       		.uleb128 0xe
+ 405 0042 0B       		.uleb128 0xb
+ 406 0043 0B       		.uleb128 0xb
+ 407 0044 3A       		.uleb128 0x3a
+ 408 0045 0B       		.uleb128 0xb
+ 409 0046 3B       		.uleb128 0x3b
+ 410 0047 0B       		.uleb128 0xb
+ 411 0048 01       		.uleb128 0x1
+ 412 0049 13       		.uleb128 0x13
+ 413 004a 00       		.byte	0
+ 414 004b 00       		.byte	0
+ 415 004c 07       		.uleb128 0x7
+ 416 004d 0D       		.uleb128 0xd
+ 417 004e 00       		.byte	0
+ 418 004f 03       		.uleb128 0x3
+ 419 0050 0E       		.uleb128 0xe
+ 420 0051 3A       		.uleb128 0x3a
+ 421 0052 0B       		.uleb128 0xb
+ 422 0053 3B       		.uleb128 0x3b
+ 423 0054 0B       		.uleb128 0xb
+ 424 0055 49       		.uleb128 0x49
+ 425 0056 13       		.uleb128 0x13
+ 426 0057 38       		.uleb128 0x38
+ 427 0058 0B       		.uleb128 0xb
+ 428 0059 00       		.byte	0
+ 429 005a 00       		.byte	0
+ 430 005b 08       		.uleb128 0x8
+ 431 005c 16       		.uleb128 0x16
+ 432 005d 00       		.byte	0
+ 433 005e 03       		.uleb128 0x3
+ 434 005f 0E       		.uleb128 0xe
+ 435 0060 3A       		.uleb128 0x3a
+ 436 0061 0B       		.uleb128 0xb
+ 437 0062 3B       		.uleb128 0x3b
+ 438 0063 0B       		.uleb128 0xb
+ 439 0064 49       		.uleb128 0x49
+ 440 0065 13       		.uleb128 0x13
+ 441 0066 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 12
+
+
+ 442 0067 00       		.byte	0
+ 443 0068 09       		.uleb128 0x9
+ 444 0069 2E       		.uleb128 0x2e
+ 445 006a 00       		.byte	0
+ 446 006b 3F       		.uleb128 0x3f
+ 447 006c 19       		.uleb128 0x19
+ 448 006d 03       		.uleb128 0x3
+ 449 006e 0E       		.uleb128 0xe
+ 450 006f 3A       		.uleb128 0x3a
+ 451 0070 0B       		.uleb128 0xb
+ 452 0071 3B       		.uleb128 0x3b
+ 453 0072 0B       		.uleb128 0xb
+ 454 0073 27       		.uleb128 0x27
+ 455 0074 19       		.uleb128 0x19
+ 456 0075 11       		.uleb128 0x11
+ 457 0076 01       		.uleb128 0x1
+ 458 0077 12       		.uleb128 0x12
+ 459 0078 06       		.uleb128 0x6
+ 460 0079 40       		.uleb128 0x40
+ 461 007a 18       		.uleb128 0x18
+ 462 007b 9742     		.uleb128 0x2117
+ 463 007d 19       		.uleb128 0x19
+ 464 007e 00       		.byte	0
+ 465 007f 00       		.byte	0
+ 466 0080 0A       		.uleb128 0xa
+ 467 0081 2E       		.uleb128 0x2e
+ 468 0082 01       		.byte	0x1
+ 469 0083 3F       		.uleb128 0x3f
+ 470 0084 19       		.uleb128 0x19
+ 471 0085 03       		.uleb128 0x3
+ 472 0086 0E       		.uleb128 0xe
+ 473 0087 3A       		.uleb128 0x3a
+ 474 0088 0B       		.uleb128 0xb
+ 475 0089 3B       		.uleb128 0x3b
+ 476 008a 0B       		.uleb128 0xb
+ 477 008b 27       		.uleb128 0x27
+ 478 008c 19       		.uleb128 0x19
+ 479 008d 11       		.uleb128 0x11
+ 480 008e 01       		.uleb128 0x1
+ 481 008f 12       		.uleb128 0x12
+ 482 0090 06       		.uleb128 0x6
+ 483 0091 40       		.uleb128 0x40
+ 484 0092 18       		.uleb128 0x18
+ 485 0093 9742     		.uleb128 0x2117
+ 486 0095 19       		.uleb128 0x19
+ 487 0096 01       		.uleb128 0x1
+ 488 0097 13       		.uleb128 0x13
+ 489 0098 00       		.byte	0
+ 490 0099 00       		.byte	0
+ 491 009a 0B       		.uleb128 0xb
+ 492 009b 898201   		.uleb128 0x4109
+ 493 009e 00       		.byte	0
+ 494 009f 11       		.uleb128 0x11
+ 495 00a0 01       		.uleb128 0x1
+ 496 00a1 31       		.uleb128 0x31
+ 497 00a2 13       		.uleb128 0x13
+ 498 00a3 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 13
+
+
+ 499 00a4 00       		.byte	0
+ 500 00a5 0C       		.uleb128 0xc
+ 501 00a6 34       		.uleb128 0x34
+ 502 00a7 00       		.byte	0
+ 503 00a8 03       		.uleb128 0x3
+ 504 00a9 0E       		.uleb128 0xe
+ 505 00aa 3A       		.uleb128 0x3a
+ 506 00ab 0B       		.uleb128 0xb
+ 507 00ac 3B       		.uleb128 0x3b
+ 508 00ad 0B       		.uleb128 0xb
+ 509 00ae 49       		.uleb128 0x49
+ 510 00af 13       		.uleb128 0x13
+ 511 00b0 02       		.uleb128 0x2
+ 512 00b1 18       		.uleb128 0x18
+ 513 00b2 00       		.byte	0
+ 514 00b3 00       		.byte	0
+ 515 00b4 0D       		.uleb128 0xd
+ 516 00b5 2E       		.uleb128 0x2e
+ 517 00b6 00       		.byte	0
+ 518 00b7 3F       		.uleb128 0x3f
+ 519 00b8 19       		.uleb128 0x19
+ 520 00b9 3C       		.uleb128 0x3c
+ 521 00ba 19       		.uleb128 0x19
+ 522 00bb 6E       		.uleb128 0x6e
+ 523 00bc 0E       		.uleb128 0xe
+ 524 00bd 03       		.uleb128 0x3
+ 525 00be 0E       		.uleb128 0xe
+ 526 00bf 3A       		.uleb128 0x3a
+ 527 00c0 0B       		.uleb128 0xb
+ 528 00c1 3B       		.uleb128 0x3b
+ 529 00c2 0B       		.uleb128 0xb
+ 530 00c3 00       		.byte	0
+ 531 00c4 00       		.byte	0
+ 532 00c5 00       		.byte	0
+ 533              		.section	.debug_aranges,"",%progbits
+ 534 0000 34000000 		.4byte	0x34
+ 535 0004 0200     		.2byte	0x2
+ 536 0006 00000000 		.4byte	.Ldebug_info0
+ 537 000a 04       		.byte	0x4
+ 538 000b 00       		.byte	0
+ 539 000c 0000     		.2byte	0
+ 540 000e 0000     		.2byte	0
+ 541 0010 00000000 		.4byte	.LFB1
+ 542 0014 02000000 		.4byte	.LFE1-.LFB1
+ 543 0018 00000000 		.4byte	.LFB2
+ 544 001c 02000000 		.4byte	.LFE2-.LFB2
+ 545 0020 00000000 		.4byte	.LFB3
+ 546 0024 28000000 		.4byte	.LFE3-.LFB3
+ 547 0028 00000000 		.4byte	.LFB4
+ 548 002c 1C000000 		.4byte	.LFE4-.LFB4
+ 549 0030 00000000 		.4byte	0
+ 550 0034 00000000 		.4byte	0
+ 551              		.section	.debug_ranges,"",%progbits
+ 552              	.Ldebug_ranges0:
+ 553 0000 00000000 		.4byte	.LFB1
+ 554 0004 02000000 		.4byte	.LFE1
+ 555 0008 00000000 		.4byte	.LFB2
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 14
+
+
+ 556 000c 02000000 		.4byte	.LFE2
+ 557 0010 00000000 		.4byte	.LFB3
+ 558 0014 28000000 		.4byte	.LFE3
+ 559 0018 00000000 		.4byte	.LFB4
+ 560 001c 1C000000 		.4byte	.LFE4
+ 561 0020 00000000 		.4byte	0
+ 562 0024 00000000 		.4byte	0
+ 563              		.section	.debug_line,"",%progbits
+ 564              	.Ldebug_line0:
+ 565 0000 AD000000 		.section	.debug_str,"MS",%progbits,1
+ 565      02005A00 
+ 565      00000201 
+ 565      FB0E0D00 
+ 565      01010101 
+ 566              	.LASF17:
+ 567 0000 4D494449 		.ascii	"MIDI1_UART_SaveConfig\000"
+ 567      315F5541 
+ 567      52545F53 
+ 567      61766543 
+ 567      6F6E6669 
+ 568              	.LASF3:
+ 569 0016 73686F72 		.ascii	"short unsigned int\000"
+ 569      7420756E 
+ 569      7369676E 
+ 569      65642069 
+ 569      6E7400
+ 570              	.LASF9:
+ 571 0029 666C6F61 		.ascii	"float\000"
+ 571      7400
+ 572              	.LASF1:
+ 573 002f 756E7369 		.ascii	"unsigned char\000"
+ 573      676E6564 
+ 573      20636861 
+ 573      7200
+ 574              	.LASF30:
+ 575 003d 4D494449 		.ascii	"MIDI1_UART_backup\000"
+ 575      315F5541 
+ 575      52545F62 
+ 575      61636B75 
+ 575      7000
+ 576              	.LASF13:
+ 577 004f 72656738 		.ascii	"reg8\000"
+ 577      00
+ 578              	.LASF5:
+ 579 0054 6C6F6E67 		.ascii	"long unsigned int\000"
+ 579      20756E73 
+ 579      69676E65 
+ 579      6420696E 
+ 579      7400
+ 580              	.LASF12:
+ 581 0066 75696E74 		.ascii	"uint8\000"
+ 581      3800
+ 582              	.LASF10:
+ 583 006c 646F7562 		.ascii	"double\000"
+ 583      6C6500
+ 584              	.LASF19:
+ 585 0073 4D494449 		.ascii	"MIDI1_UART_Sleep\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 15
+
+
+ 585      315F5541 
+ 585      52545F53 
+ 585      6C656570 
+ 585      00
+ 586              	.LASF27:
+ 587 0084 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 587      6F63756D 
+ 587      656E7473 
+ 587      5C456E67 
+ 587      696E6565 
+ 588 00b2 73796E74 		.ascii	"synth-wavetable.cydsn\000"
+ 588      682D7761 
+ 588      76657461 
+ 588      626C652E 
+ 588      63796473 
+ 589              	.LASF20:
+ 590 00c8 4D494449 		.ascii	"MIDI1_UART_Wakeup\000"
+ 590      315F5541 
+ 590      52545F57 
+ 590      616B6575 
+ 590      7000
+ 591              	.LASF8:
+ 592 00da 756E7369 		.ascii	"unsigned int\000"
+ 592      676E6564 
+ 592      20696E74 
+ 592      00
+ 593              	.LASF23:
+ 594 00e7 4D494449 		.ascii	"MIDI1_UART_ClearTxBuffer\000"
+ 594      315F5541 
+ 594      52545F43 
+ 594      6C656172 
+ 594      54784275 
+ 595              	.LASF7:
+ 596 0100 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 596      206C6F6E 
+ 596      6720756E 
+ 596      7369676E 
+ 596      65642069 
+ 597              	.LASF26:
+ 598 0117 47656E65 		.ascii	"Generated_Source\\PSoC4\\MIDI1_UART_PM.c\000"
+ 598      72617465 
+ 598      645F536F 
+ 598      75726365 
+ 598      5C50536F 
+ 599              	.LASF25:
+ 600 013e 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 600      43313120 
+ 600      352E342E 
+ 600      31203230 
+ 600      31363036 
+ 601 0171 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 601      20726576 
+ 601      6973696F 
+ 601      6E203233 
+ 601      37373135 
+ 602 01a4 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 602      66756E63 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 16
+
+
+ 602      74696F6E 
+ 602      2D736563 
+ 602      74696F6E 
+ 603              	.LASF14:
+ 604 01cc 6C6F6E67 		.ascii	"long double\000"
+ 604      20646F75 
+ 604      626C6500 
+ 605              	.LASF15:
+ 606 01d8 73697A65 		.ascii	"sizetype\000"
+ 606      74797065 
+ 606      00
+ 607              	.LASF6:
+ 608 01e1 6C6F6E67 		.ascii	"long long int\000"
+ 608      206C6F6E 
+ 608      6720696E 
+ 608      7400
+ 609              	.LASF16:
+ 610 01ef 4D494449 		.ascii	"MIDI1_UART_BACKUP_STRUCT\000"
+ 610      315F5541 
+ 610      52545F42 
+ 610      41434B55 
+ 610      505F5354 
+ 611              	.LASF11:
+ 612 0208 63686172 		.ascii	"char\000"
+ 612      00
+ 613              	.LASF28:
+ 614 020d 4D494449 		.ascii	"MIDI1_UART_backupStruct_\000"
+ 614      315F5541 
+ 614      52545F62 
+ 614      61636B75 
+ 614      70537472 
+ 615              	.LASF2:
+ 616 0226 73686F72 		.ascii	"short int\000"
+ 616      7420696E 
+ 616      7400
+ 617              	.LASF4:
+ 618 0230 6C6F6E67 		.ascii	"long int\000"
+ 618      20696E74 
+ 618      00
+ 619              	.LASF29:
+ 620 0239 656E6162 		.ascii	"enableState\000"
+ 620      6C655374 
+ 620      61746500 
+ 621              	.LASF21:
+ 622 0245 4D494449 		.ascii	"MIDI1_UART_Stop\000"
+ 622      315F5541 
+ 622      52545F53 
+ 622      746F7000 
+ 623              	.LASF18:
+ 624 0255 4D494449 		.ascii	"MIDI1_UART_RestoreConfig\000"
+ 624      315F5541 
+ 624      52545F52 
+ 624      6573746F 
+ 624      7265436F 
+ 625              	.LASF0:
+ 626 026e 7369676E 		.ascii	"signed char\000"
+ 626      65642063 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc6vt5f0.s 			page 17
+
+
+ 626      68617200 
+ 627              	.LASF22:
+ 628 027a 4D494449 		.ascii	"MIDI1_UART_ClearRxBuffer\000"
+ 628      315F5541 
+ 628      52545F43 
+ 628      6C656172 
+ 628      52784275 
+ 629              	.LASF24:
+ 630 0293 4D494449 		.ascii	"MIDI1_UART_Enable\000"
+ 630      315F5541 
+ 630      52545F45 
+ 630      6E61626C 
+ 630      6500
+ 631              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

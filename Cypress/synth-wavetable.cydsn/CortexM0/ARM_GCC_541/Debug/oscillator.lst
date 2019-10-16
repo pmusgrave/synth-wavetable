@@ -1,0 +1,1940 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"oscillator.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.ProcessVoice,"ax",%progbits
+  20              		.align	2
+  21              		.global	ProcessVoice
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	ProcessVoice, %function
+  25              	ProcessVoice:
+  26              	.LFB130:
+  27              		.file 1 "oscillator.c"
+   1:oscillator.c  **** #include "project.h"
+   2:oscillator.c  **** #include "oscillator.h"
+   3:oscillator.c  **** #include "waves.h"
+   4:oscillator.c  **** #include "globals.h"
+   5:oscillator.c  **** 
+   6:oscillator.c  **** double music_notes[99] = {
+   7:oscillator.c  ****     9.0110625,
+   8:oscillator.c  ****     9.5484495,
+   9:oscillator.c  ****     10.11532725,
+  10:oscillator.c  ****     10.7149725,
+  11:oscillator.c  ****     11.35393875,
+  12:oscillator.c  ****     12.02894925,
+  13:oscillator.c  ****     12.74328075,
+  14:oscillator.c  ****     13.50021,
+  15:oscillator.c  ****     14.30301375,
+  16:oscillator.c  ****     15.15496875,
+  17:oscillator.c  ****     16.056075,
+  18:oscillator.c  ****     17.00960925,
+  19:oscillator.c  ****     18.022125,
+  20:oscillator.c  ****     19.09362225,
+  21:oscillator.c  ****     20.2306545,
+  22:oscillator.c  ****     21.43322175,
+  23:oscillator.c  ****     22.7078775,
+  24:oscillator.c  ****     24.0578985,
+  25:oscillator.c  ****     25.4865615,
+  26:oscillator.c  ****     27.00369675,
+  27:oscillator.c  ****     28.60930425,
+  28:oscillator.c  ****     30.3099375,
+  29:oscillator.c  ****     32.11215,
+  30:oscillator.c  ****     34.02249525,
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 2
+
+
+  31:oscillator.c  ****     36.04425,
+  32:oscillator.c  ****     38.1872445,
+  33:oscillator.c  ****     40.45803225,
+  34:oscillator.c  ****     42.86316675,
+  35:oscillator.c  ****     45.41247825,
+  36:oscillator.c  ****     48.11252025,
+  37:oscillator.c  ****     50.973123,
+  38:oscillator.c  ****     54.00411675,
+  39:oscillator.c  ****     57.21533175,
+  40:oscillator.c  ****     60.619875,
+  41:oscillator.c  ****     64.2243,
+  42:oscillator.c  ****     68.04171375,
+  43:oscillator.c  ****     72.0885,
+  44:oscillator.c  ****     76.374489,
+  45:oscillator.c  ****     80.9160645,
+  46:oscillator.c  ****     85.72961025,
+  47:oscillator.c  ****     90.8249565,
+  48:oscillator.c  ****     96.2250405,
+  49:oscillator.c  ****     101.9495228,
+  50:oscillator.c  ****     108.0115103,
+  51:oscillator.c  ****     114.4339403,
+  52:oscillator.c  ****     121.2364733,
+  53:oscillator.c  ****     128.4486,
+  54:oscillator.c  ****     136.0834275,
+  55:oscillator.c  ****     144.177,
+  56:oscillator.c  ****     152.748978,
+  57:oscillator.c  ****     161.832129,
+  58:oscillator.c  ****     171.4559438,
+  59:oscillator.c  ****     181.6531898,
+  60:oscillator.c  ****     192.4533578,
+  61:oscillator.c  ****     203.8957688,
+  62:oscillator.c  ****     216.0197438,
+  63:oscillator.c  ****     228.8678805,
+  64:oscillator.c  ****     242.4762233,
+  65:oscillator.c  ****     256.8939233,
+  66:oscillator.c  ****     272.1701318,
+  67:oscillator.c  ****     288.354,
+  68:oscillator.c  ****     305.5012328,
+  69:oscillator.c  ****     323.6675348,
+  70:oscillator.c  ****     342.9118875,
+  71:oscillator.c  ****     363.3031028,
+  72:oscillator.c  ****     384.9067155,
+  73:oscillator.c  ****     407.7948143,
+  74:oscillator.c  ****     432.0427643,
+  75:oscillator.c  ****     457.7324843,
+  76:oscillator.c  ****     484.9524465,
+  77:oscillator.c  ****     513.7878465,
+  78:oscillator.c  ****     544.3402635,
+  79:oscillator.c  ****     576.708,
+  80:oscillator.c  ****     611.0024655,
+  81:oscillator.c  ****     647.3317928,
+  82:oscillator.c  ****     685.823775,
+  83:oscillator.c  ****     726.6062055,
+  84:oscillator.c  ****     769.813431,
+  85:oscillator.c  ****     815.5896285,
+  86:oscillator.c  ****     864.0855285,
+  87:oscillator.c  ****     915.4682453,
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 3
+
+
+  88:oscillator.c  ****     969.904893,
+  89:oscillator.c  ****     1027.575693,
+  90:oscillator.c  ****     1088.680527,
+  91:oscillator.c  ****     1153.416,
+  92:oscillator.c  ****     1222.001654,
+  93:oscillator.c  ****     1294.666862,
+  94:oscillator.c  ****     1371.650827,
+  95:oscillator.c  ****     1453.212411,
+  96:oscillator.c  ****     1539.623585,
+  97:oscillator.c  ****     1631.17598,
+  98:oscillator.c  ****     1728.171057,
+  99:oscillator.c  ****     1830.933214,
+ 100:oscillator.c  ****     1939.806509,
+ 101:oscillator.c  ****     2055.154663,
+ 102:oscillator.c  ****     2177.361054,
+ 103:oscillator.c  ****     2306.832,
+ 104:oscillator.c  ****     2444.003309,
+ 105:oscillator.c  ****     2589.330448
+ 106:oscillator.c  **** };
+ 107:oscillator.c  **** 
+ 108:oscillator.c  **** 
+ 109:oscillator.c  **** 
+ 110:oscillator.c  **** void ProcessVoice(struct voice* v) {
+  28              		.loc 1 110 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+ 111:oscillator.c  ****     switch((*v).current_env_mode){
+  34              		.loc 1 111 0
+  35 0000 8379     		ldrb	r3, [r0, #6]
+  36 0002 022B     		cmp	r3, #2
+  37 0004 1AD0     		beq	.L3
+  38 0006 02D8     		bhi	.L4
+  39 0008 012B     		cmp	r3, #1
+  40 000a 05D0     		beq	.L5
+  41 000c 43E0     		b	.L1
+  42              	.L4:
+  43 000e 032B     		cmp	r3, #3
+  44 0010 29D0     		beq	.L6
+  45 0012 042B     		cmp	r3, #4
+  46 0014 2FD0     		beq	.L7
+  47 0016 3EE0     		b	.L1
+  48              	.L5:
+ 112:oscillator.c  ****     case ATTACK_MODE:
+ 113:oscillator.c  ****         (*v).env_index += attack_freq;
+  49              		.loc 1 113 0
+  50 0018 1F4B     		ldr	r3, .L8
+  51 001a 1B88     		ldrh	r3, [r3]
+  52 001c 0268     		ldr	r2, [r0]
+  53 001e 9446     		mov	ip, r2
+  54 0020 6344     		add	r3, r3, ip
+  55 0022 0360     		str	r3, [r0]
+ 114:oscillator.c  ****         (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF]; // using pos saw wave her
+  56              		.loc 1 114 0
+  57 0024 1B0D     		lsrs	r3, r3, #20
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 4
+
+
+  58 0026 1D4A     		ldr	r2, .L8+4
+  59 0028 D356     		ldrsb	r3, [r2, r3]
+  60 002a 9BB2     		uxth	r3, r3
+  61 002c 8380     		strh	r3, [r0, #4]
+ 115:oscillator.c  ****         if((*v).env_multiplier > 120) {
+  62              		.loc 1 115 0
+  63 002e 782B     		cmp	r3, #120
+  64 0030 31D9     		bls	.L1
+ 116:oscillator.c  ****             (*v).env_multiplier  = 127;
+  65              		.loc 1 116 0
+  66 0032 7F23     		movs	r3, #127
+  67 0034 8380     		strh	r3, [r0, #4]
+ 117:oscillator.c  ****             (*v).current_env_mode = DECAY_MODE;
+  68              		.loc 1 117 0
+  69 0036 7D3B     		subs	r3, r3, #125
+  70 0038 8371     		strb	r3, [r0, #6]
+  71 003a 2CE0     		b	.L1
+  72              	.L3:
+ 118:oscillator.c  ****         }
+ 119:oscillator.c  ****         break;
+ 120:oscillator.c  ****     case DECAY_MODE:
+ 121:oscillator.c  ****         (*v).env_index -= decay_freq;
+  73              		.loc 1 121 0
+  74 003c 184B     		ldr	r3, .L8+8
+  75 003e 1B88     		ldrh	r3, [r3]
+  76 0040 0268     		ldr	r2, [r0]
+  77 0042 D31A     		subs	r3, r2, r3
+  78 0044 0360     		str	r3, [r0]
+ 122:oscillator.c  ****         (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF];
+  79              		.loc 1 122 0
+  80 0046 1B0D     		lsrs	r3, r3, #20
+  81 0048 1449     		ldr	r1, .L8+4
+  82 004a CA56     		ldrsb	r2, [r1, r3]
+  83 004c 92B2     		uxth	r2, r2
+  84 004e 8280     		strh	r2, [r0, #4]
+ 123:oscillator.c  ****         if((*v).env_multiplier < base_pos_saw[(sustain_freq) & 0xFFF]) {
+  85              		.loc 1 123 0
+  86 0050 144B     		ldr	r3, .L8+12
+  87 0052 1B88     		ldrh	r3, [r3]
+  88 0054 1B05     		lsls	r3, r3, #20
+  89 0056 1B0D     		lsrs	r3, r3, #20
+  90 0058 CB56     		ldrsb	r3, [r1, r3]
+  91 005a 9A42     		cmp	r2, r3
+  92 005c 1BDA     		bge	.L1
+ 124:oscillator.c  ****             (*v).env_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
+  93              		.loc 1 124 0
+  94 005e 8380     		strh	r3, [r0, #4]
+ 125:oscillator.c  ****             (*v).current_env_mode = SUSTAIN_MODE;
+  95              		.loc 1 125 0
+  96 0060 0323     		movs	r3, #3
+  97 0062 8371     		strb	r3, [r0, #6]
+  98 0064 17E0     		b	.L1
+  99              	.L6:
+ 126:oscillator.c  ****         }
+ 127:oscillator.c  ****         break;
+ 128:oscillator.c  ****     case SUSTAIN_MODE:
+ 129:oscillator.c  ****         (*v).env_multiplier = base_pos_saw[(sustain_freq) & 0xFFF];
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 5
+
+
+ 100              		.loc 1 129 0
+ 101 0066 0F4B     		ldr	r3, .L8+12
+ 102 0068 1B88     		ldrh	r3, [r3]
+ 103 006a 1B05     		lsls	r3, r3, #20
+ 104 006c 1B0D     		lsrs	r3, r3, #20
+ 105 006e 0B4A     		ldr	r2, .L8+4
+ 106 0070 D356     		ldrsb	r3, [r2, r3]
+ 107 0072 8380     		strh	r3, [r0, #4]
+ 130:oscillator.c  ****         break;
+ 108              		.loc 1 130 0
+ 109 0074 0FE0     		b	.L1
+ 110              	.L7:
+ 131:oscillator.c  ****     case RELEASE_MODE:
+ 132:oscillator.c  ****         (*v).env_index -= release_freq;
+ 111              		.loc 1 132 0
+ 112 0076 0C4B     		ldr	r3, .L8+16
+ 113 0078 1B88     		ldrh	r3, [r3]
+ 114 007a 0268     		ldr	r2, [r0]
+ 115 007c D31A     		subs	r3, r2, r3
+ 116 007e 0360     		str	r3, [r0]
+ 133:oscillator.c  ****         (*v).env_multiplier = base_pos_saw[((*v).env_index>>20) & 0xFFF];
+ 117              		.loc 1 133 0
+ 118 0080 1B0D     		lsrs	r3, r3, #20
+ 119 0082 064A     		ldr	r2, .L8+4
+ 120 0084 D356     		ldrsb	r3, [r2, r3]
+ 121 0086 9BB2     		uxth	r3, r3
+ 122 0088 8380     		strh	r3, [r0, #4]
+ 134:oscillator.c  ****         if((*v).env_multiplier < 10) {
+ 123              		.loc 1 134 0
+ 124 008a 092B     		cmp	r3, #9
+ 125 008c 03D8     		bhi	.L1
+ 135:oscillator.c  ****             (*v).env_multiplier = 0;
+ 126              		.loc 1 135 0
+ 127 008e 0023     		movs	r3, #0
+ 128 0090 8380     		strh	r3, [r0, #4]
+ 136:oscillator.c  ****             (*v).env_index = 0;
+ 129              		.loc 1 136 0
+ 130 0092 0360     		str	r3, [r0]
+ 137:oscillator.c  ****             (*v).current_env_mode = NOT_TRIGGERED;
+ 131              		.loc 1 137 0
+ 132 0094 8371     		strb	r3, [r0, #6]
+ 133              	.L1:
+ 138:oscillator.c  ****         }
+ 139:oscillator.c  ****         break;
+ 140:oscillator.c  ****     }
+ 141:oscillator.c  **** }
+ 134              		.loc 1 141 0
+ 135              		@ sp needed
+ 136 0096 7047     		bx	lr
+ 137              	.L9:
+ 138              		.align	2
+ 139              	.L8:
+ 140 0098 00000000 		.word	attack_freq
+ 141 009c 00000000 		.word	base_pos_saw
+ 142 00a0 00000000 		.word	decay_freq
+ 143 00a4 00000000 		.word	sustain_freq
+ 144 00a8 00000000 		.word	release_freq
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 6
+
+
+ 145              		.cfi_endproc
+ 146              	.LFE130:
+ 147              		.size	ProcessVoice, .-ProcessVoice
+ 148              		.global	__aeabi_dmul
+ 149              		.global	__aeabi_d2uiz
+ 150              		.section	.text.DispatchNote,"ax",%progbits
+ 151              		.align	2
+ 152              		.global	DispatchNote
+ 153              		.code	16
+ 154              		.thumb_func
+ 155              		.type	DispatchNote, %function
+ 156              	DispatchNote:
+ 157              	.LFB131:
+ 142:oscillator.c  **** 
+ 143:oscillator.c  **** void DispatchNote(uint8 note) {
+ 158              		.loc 1 143 0
+ 159              		.cfi_startproc
+ 160              		@ args = 0, pretend = 0, frame = 0
+ 161              		@ frame_needed = 0, uses_anonymous_args = 0
+ 162              	.LVL1:
+ 163 0000 10B5     		push	{r4, lr}
+ 164              		.cfi_def_cfa_offset 8
+ 165              		.cfi_offset 4, -8
+ 166              		.cfi_offset 14, -4
+ 167 0002 0400     		movs	r4, r0
+ 144:oscillator.c  ****     freq = music_notes[note-21] * 20;
+ 168              		.loc 1 144 0
+ 169 0004 0300     		movs	r3, r0
+ 170 0006 153B     		subs	r3, r3, #21
+ 171 0008 DB00     		lsls	r3, r3, #3
+ 172 000a 2E4A     		ldr	r2, .L19
+ 173 000c D318     		adds	r3, r2, r3
+ 174 000e 1868     		ldr	r0, [r3]
+ 175 0010 5968     		ldr	r1, [r3, #4]
+ 176              	.LVL2:
+ 177 0012 0022     		movs	r2, #0
+ 178 0014 2C4B     		ldr	r3, .L19+4
+ 179 0016 FFF7FEFF 		bl	__aeabi_dmul
+ 180              	.LVL3:
+ 181 001a FFF7FEFF 		bl	__aeabi_d2uiz
+ 182              	.LVL4:
+ 183 001e 80B2     		uxth	r0, r0
+ 184 0020 2A4B     		ldr	r3, .L19+8
+ 185 0022 1880     		strh	r0, [r3]
+ 145:oscillator.c  ****     
+ 146:oscillator.c  ****     if(v1.current_env_mode == NOT_TRIGGERED){
+ 186              		.loc 1 146 0
+ 187 0024 2A4B     		ldr	r3, .L19+12
+ 188 0026 9B79     		ldrb	r3, [r3, #6]
+ 189 0028 002B     		cmp	r3, #0
+ 190 002a 05D1     		bne	.L11
+ 147:oscillator.c  ****         v1.freq = freq;
+ 191              		.loc 1 147 0
+ 192 002c 284B     		ldr	r3, .L19+12
+ 193 002e 9860     		str	r0, [r3, #8]
+ 148:oscillator.c  ****         v1.note_index = note;
+ 194              		.loc 1 148 0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 7
+
+
+ 195 0030 1C73     		strb	r4, [r3, #12]
+ 149:oscillator.c  ****         v1.current_env_mode = SUSTAIN_MODE;
+ 196              		.loc 1 149 0
+ 197 0032 0322     		movs	r2, #3
+ 198 0034 9A71     		strb	r2, [r3, #6]
+ 150:oscillator.c  ****         return;
+ 199              		.loc 1 150 0
+ 200 0036 44E0     		b	.L10
+ 201              	.L11:
+ 151:oscillator.c  ****     }
+ 152:oscillator.c  ****     else if(v2.current_env_mode == NOT_TRIGGERED){
+ 202              		.loc 1 152 0
+ 203 0038 264B     		ldr	r3, .L19+16
+ 204 003a 9B79     		ldrb	r3, [r3, #6]
+ 205 003c 002B     		cmp	r3, #0
+ 206 003e 05D1     		bne	.L13
+ 153:oscillator.c  ****         v2.freq = freq;
+ 207              		.loc 1 153 0
+ 208 0040 244B     		ldr	r3, .L19+16
+ 209 0042 9860     		str	r0, [r3, #8]
+ 154:oscillator.c  ****         v2.note_index = note;
+ 210              		.loc 1 154 0
+ 211 0044 1C73     		strb	r4, [r3, #12]
+ 155:oscillator.c  ****         v2.current_env_mode = SUSTAIN_MODE;
+ 212              		.loc 1 155 0
+ 213 0046 0322     		movs	r2, #3
+ 214 0048 9A71     		strb	r2, [r3, #6]
+ 156:oscillator.c  ****         return;
+ 215              		.loc 1 156 0
+ 216 004a 3AE0     		b	.L10
+ 217              	.L13:
+ 157:oscillator.c  ****     }
+ 158:oscillator.c  ****     else if(v3.current_env_mode == NOT_TRIGGERED){
+ 218              		.loc 1 158 0
+ 219 004c 224B     		ldr	r3, .L19+20
+ 220 004e 9B79     		ldrb	r3, [r3, #6]
+ 221 0050 002B     		cmp	r3, #0
+ 222 0052 05D1     		bne	.L14
+ 159:oscillator.c  ****         v3.freq = freq;
+ 223              		.loc 1 159 0
+ 224 0054 204B     		ldr	r3, .L19+20
+ 225 0056 9860     		str	r0, [r3, #8]
+ 160:oscillator.c  ****         v3.note_index = note;
+ 226              		.loc 1 160 0
+ 227 0058 1C73     		strb	r4, [r3, #12]
+ 161:oscillator.c  ****         v3.current_env_mode = SUSTAIN_MODE;
+ 228              		.loc 1 161 0
+ 229 005a 0322     		movs	r2, #3
+ 230 005c 9A71     		strb	r2, [r3, #6]
+ 162:oscillator.c  ****         return;
+ 231              		.loc 1 162 0
+ 232 005e 30E0     		b	.L10
+ 233              	.L14:
+ 163:oscillator.c  ****     }
+ 164:oscillator.c  ****     else if(v4.current_env_mode == NOT_TRIGGERED){
+ 234              		.loc 1 164 0
+ 235 0060 1E4B     		ldr	r3, .L19+24
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 8
+
+
+ 236 0062 9B79     		ldrb	r3, [r3, #6]
+ 237 0064 002B     		cmp	r3, #0
+ 238 0066 05D1     		bne	.L15
+ 165:oscillator.c  ****         v4.freq = freq;
+ 239              		.loc 1 165 0
+ 240 0068 1C4B     		ldr	r3, .L19+24
+ 241 006a 9860     		str	r0, [r3, #8]
+ 166:oscillator.c  ****         v4.note_index = note;
+ 242              		.loc 1 166 0
+ 243 006c 1C73     		strb	r4, [r3, #12]
+ 167:oscillator.c  ****         v4.current_env_mode = SUSTAIN_MODE;
+ 244              		.loc 1 167 0
+ 245 006e 0322     		movs	r2, #3
+ 246 0070 9A71     		strb	r2, [r3, #6]
+ 168:oscillator.c  ****         return;
+ 247              		.loc 1 168 0
+ 248 0072 26E0     		b	.L10
+ 249              	.L15:
+ 169:oscillator.c  ****     }
+ 170:oscillator.c  ****     else if(v5.current_env_mode == NOT_TRIGGERED){
+ 250              		.loc 1 170 0
+ 251 0074 1A4B     		ldr	r3, .L19+28
+ 252 0076 9B79     		ldrb	r3, [r3, #6]
+ 253 0078 002B     		cmp	r3, #0
+ 254 007a 05D1     		bne	.L16
+ 171:oscillator.c  ****         v5.freq = freq;
+ 255              		.loc 1 171 0
+ 256 007c 184B     		ldr	r3, .L19+28
+ 257 007e 9860     		str	r0, [r3, #8]
+ 172:oscillator.c  ****         v5.note_index = note;
+ 258              		.loc 1 172 0
+ 259 0080 1C73     		strb	r4, [r3, #12]
+ 173:oscillator.c  ****         v5.current_env_mode = SUSTAIN_MODE;
+ 260              		.loc 1 173 0
+ 261 0082 0322     		movs	r2, #3
+ 262 0084 9A71     		strb	r2, [r3, #6]
+ 174:oscillator.c  ****         return;
+ 263              		.loc 1 174 0
+ 264 0086 1CE0     		b	.L10
+ 265              	.L16:
+ 175:oscillator.c  ****     }
+ 176:oscillator.c  ****     else if(v6.current_env_mode == NOT_TRIGGERED){
+ 266              		.loc 1 176 0
+ 267 0088 164B     		ldr	r3, .L19+32
+ 268 008a 9B79     		ldrb	r3, [r3, #6]
+ 269 008c 002B     		cmp	r3, #0
+ 270 008e 05D1     		bne	.L17
+ 177:oscillator.c  ****         v6.freq = freq;
+ 271              		.loc 1 177 0
+ 272 0090 144B     		ldr	r3, .L19+32
+ 273 0092 9860     		str	r0, [r3, #8]
+ 178:oscillator.c  ****         v6.note_index = note;
+ 274              		.loc 1 178 0
+ 275 0094 1C73     		strb	r4, [r3, #12]
+ 179:oscillator.c  ****         v6.current_env_mode = SUSTAIN_MODE;
+ 276              		.loc 1 179 0
+ 277 0096 0322     		movs	r2, #3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 9
+
+
+ 278 0098 9A71     		strb	r2, [r3, #6]
+ 180:oscillator.c  ****         return;
+ 279              		.loc 1 180 0
+ 280 009a 12E0     		b	.L10
+ 281              	.L17:
+ 181:oscillator.c  ****     }
+ 182:oscillator.c  ****     else if(v7.current_env_mode == NOT_TRIGGERED){
+ 282              		.loc 1 182 0
+ 283 009c 124B     		ldr	r3, .L19+36
+ 284 009e 9B79     		ldrb	r3, [r3, #6]
+ 285 00a0 002B     		cmp	r3, #0
+ 286 00a2 05D1     		bne	.L18
+ 183:oscillator.c  ****         v7.freq = freq;
+ 287              		.loc 1 183 0
+ 288 00a4 104B     		ldr	r3, .L19+36
+ 289 00a6 9860     		str	r0, [r3, #8]
+ 184:oscillator.c  ****         v7.note_index = note;
+ 290              		.loc 1 184 0
+ 291 00a8 1C73     		strb	r4, [r3, #12]
+ 185:oscillator.c  ****         v7.current_env_mode = SUSTAIN_MODE;
+ 292              		.loc 1 185 0
+ 293 00aa 0322     		movs	r2, #3
+ 294 00ac 9A71     		strb	r2, [r3, #6]
+ 186:oscillator.c  ****         return;
+ 295              		.loc 1 186 0
+ 296 00ae 08E0     		b	.L10
+ 297              	.L18:
+ 187:oscillator.c  ****     }
+ 188:oscillator.c  ****     else if(v8.current_env_mode == NOT_TRIGGERED){
+ 298              		.loc 1 188 0
+ 299 00b0 0E4B     		ldr	r3, .L19+40
+ 300 00b2 9B79     		ldrb	r3, [r3, #6]
+ 301 00b4 002B     		cmp	r3, #0
+ 302 00b6 04D1     		bne	.L10
+ 189:oscillator.c  ****         v8.freq = freq;
+ 303              		.loc 1 189 0
+ 304 00b8 0C4B     		ldr	r3, .L19+40
+ 305 00ba 9860     		str	r0, [r3, #8]
+ 190:oscillator.c  ****         v8.note_index = note;
+ 306              		.loc 1 190 0
+ 307 00bc 1C73     		strb	r4, [r3, #12]
+ 191:oscillator.c  ****         v8.current_env_mode = SUSTAIN_MODE;
+ 308              		.loc 1 191 0
+ 309 00be 0322     		movs	r2, #3
+ 310 00c0 9A71     		strb	r2, [r3, #6]
+ 311              	.L10:
+ 192:oscillator.c  ****         return;
+ 193:oscillator.c  ****     }
+ 194:oscillator.c  **** }
+ 312              		.loc 1 194 0
+ 313              		@ sp needed
+ 314 00c2 10BD     		pop	{r4, pc}
+ 315              	.L20:
+ 316              		.align	2
+ 317              	.L19:
+ 318 00c4 00000000 		.word	.LANCHOR0
+ 319 00c8 00003440 		.word	1077149696
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 10
+
+
+ 320 00cc 00000000 		.word	freq
+ 321 00d0 00000000 		.word	v1
+ 322 00d4 00000000 		.word	v2
+ 323 00d8 00000000 		.word	v3
+ 324 00dc 00000000 		.word	v4
+ 325 00e0 00000000 		.word	v5
+ 326 00e4 00000000 		.word	v6
+ 327 00e8 00000000 		.word	v7
+ 328 00ec 00000000 		.word	v8
+ 329              		.cfi_endproc
+ 330              	.LFE131:
+ 331              		.size	DispatchNote, .-DispatchNote
+ 332              		.section	.text.NoteOff,"ax",%progbits
+ 333              		.align	2
+ 334              		.global	NoteOff
+ 335              		.code	16
+ 336              		.thumb_func
+ 337              		.type	NoteOff, %function
+ 338              	NoteOff:
+ 339              	.LFB132:
+ 195:oscillator.c  **** 
+ 196:oscillator.c  **** void NoteOff(uint8 note){
+ 340              		.loc 1 196 0
+ 341              		.cfi_startproc
+ 342              		@ args = 0, pretend = 0, frame = 0
+ 343              		@ frame_needed = 0, uses_anonymous_args = 0
+ 344              		@ link register save eliminated.
+ 345              	.LVL5:
+ 197:oscillator.c  ****     if(v1.note_index == note){
+ 346              		.loc 1 197 0
+ 347 0000 234B     		ldr	r3, .L30
+ 348 0002 1B7B     		ldrb	r3, [r3, #12]
+ 349 0004 8342     		cmp	r3, r0
+ 350 0006 04D1     		bne	.L22
+ 198:oscillator.c  ****         v1.current_env_mode = NOT_TRIGGERED;
+ 351              		.loc 1 198 0
+ 352 0008 214B     		ldr	r3, .L30
+ 353 000a 0022     		movs	r2, #0
+ 354 000c 9A71     		strb	r2, [r3, #6]
+ 199:oscillator.c  ****         v1.env_multiplier = 0;
+ 355              		.loc 1 199 0
+ 356 000e 9A80     		strh	r2, [r3, #4]
+ 357 0010 3DE0     		b	.L21
+ 358              	.L22:
+ 200:oscillator.c  ****     }
+ 201:oscillator.c  ****     else if(v2.note_index == note){
+ 359              		.loc 1 201 0
+ 360 0012 204B     		ldr	r3, .L30+4
+ 361 0014 1B7B     		ldrb	r3, [r3, #12]
+ 362 0016 9842     		cmp	r0, r3
+ 363 0018 04D1     		bne	.L24
+ 202:oscillator.c  ****         v2.current_env_mode = NOT_TRIGGERED;
+ 364              		.loc 1 202 0
+ 365 001a 1E4B     		ldr	r3, .L30+4
+ 366 001c 0022     		movs	r2, #0
+ 367 001e 9A71     		strb	r2, [r3, #6]
+ 203:oscillator.c  ****         v2.env_multiplier = 0;
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 11
+
+
+ 368              		.loc 1 203 0
+ 369 0020 9A80     		strh	r2, [r3, #4]
+ 370 0022 34E0     		b	.L21
+ 371              	.L24:
+ 204:oscillator.c  ****     }
+ 205:oscillator.c  ****     else if(v3.note_index == note){
+ 372              		.loc 1 205 0
+ 373 0024 1C4B     		ldr	r3, .L30+8
+ 374 0026 1B7B     		ldrb	r3, [r3, #12]
+ 375 0028 9842     		cmp	r0, r3
+ 376 002a 04D1     		bne	.L25
+ 206:oscillator.c  ****         v3.current_env_mode = NOT_TRIGGERED;
+ 377              		.loc 1 206 0
+ 378 002c 1A4B     		ldr	r3, .L30+8
+ 379 002e 0022     		movs	r2, #0
+ 380 0030 9A71     		strb	r2, [r3, #6]
+ 207:oscillator.c  ****         v3.env_multiplier = 0;
+ 381              		.loc 1 207 0
+ 382 0032 9A80     		strh	r2, [r3, #4]
+ 383 0034 2BE0     		b	.L21
+ 384              	.L25:
+ 208:oscillator.c  ****     }
+ 209:oscillator.c  ****     else if(v4.note_index == note){
+ 385              		.loc 1 209 0
+ 386 0036 194B     		ldr	r3, .L30+12
+ 387 0038 1B7B     		ldrb	r3, [r3, #12]
+ 388 003a 9842     		cmp	r0, r3
+ 389 003c 04D1     		bne	.L26
+ 210:oscillator.c  ****         v4.current_env_mode = NOT_TRIGGERED;
+ 390              		.loc 1 210 0
+ 391 003e 174B     		ldr	r3, .L30+12
+ 392 0040 0022     		movs	r2, #0
+ 393 0042 9A71     		strb	r2, [r3, #6]
+ 211:oscillator.c  ****         v4.env_multiplier = 0;
+ 394              		.loc 1 211 0
+ 395 0044 9A80     		strh	r2, [r3, #4]
+ 396 0046 22E0     		b	.L21
+ 397              	.L26:
+ 212:oscillator.c  ****     }
+ 213:oscillator.c  ****     else if(v5.note_index == note){
+ 398              		.loc 1 213 0
+ 399 0048 154B     		ldr	r3, .L30+16
+ 400 004a 1B7B     		ldrb	r3, [r3, #12]
+ 401 004c 9842     		cmp	r0, r3
+ 402 004e 04D1     		bne	.L27
+ 214:oscillator.c  ****         v5.current_env_mode = NOT_TRIGGERED;
+ 403              		.loc 1 214 0
+ 404 0050 134B     		ldr	r3, .L30+16
+ 405 0052 0022     		movs	r2, #0
+ 406 0054 9A71     		strb	r2, [r3, #6]
+ 215:oscillator.c  ****         v5.env_multiplier = 0;
+ 407              		.loc 1 215 0
+ 408 0056 9A80     		strh	r2, [r3, #4]
+ 409 0058 19E0     		b	.L21
+ 410              	.L27:
+ 216:oscillator.c  ****     }
+ 217:oscillator.c  ****     else if(v6.note_index == note){
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 12
+
+
+ 411              		.loc 1 217 0
+ 412 005a 124B     		ldr	r3, .L30+20
+ 413 005c 1B7B     		ldrb	r3, [r3, #12]
+ 414 005e 9842     		cmp	r0, r3
+ 415 0060 04D1     		bne	.L28
+ 218:oscillator.c  ****         v6.current_env_mode = NOT_TRIGGERED;
+ 416              		.loc 1 218 0
+ 417 0062 104B     		ldr	r3, .L30+20
+ 418 0064 0022     		movs	r2, #0
+ 419 0066 9A71     		strb	r2, [r3, #6]
+ 219:oscillator.c  ****         v6.env_multiplier = 0;
+ 420              		.loc 1 219 0
+ 421 0068 9A80     		strh	r2, [r3, #4]
+ 422 006a 10E0     		b	.L21
+ 423              	.L28:
+ 220:oscillator.c  ****     }
+ 221:oscillator.c  ****     else if(v7.note_index == note){
+ 424              		.loc 1 221 0
+ 425 006c 0E4B     		ldr	r3, .L30+24
+ 426 006e 1B7B     		ldrb	r3, [r3, #12]
+ 427 0070 9842     		cmp	r0, r3
+ 428 0072 04D1     		bne	.L29
+ 222:oscillator.c  ****         v7.current_env_mode = NOT_TRIGGERED;
+ 429              		.loc 1 222 0
+ 430 0074 0C4B     		ldr	r3, .L30+24
+ 431 0076 0022     		movs	r2, #0
+ 432 0078 9A71     		strb	r2, [r3, #6]
+ 223:oscillator.c  ****         v7.env_multiplier = 0;
+ 433              		.loc 1 223 0
+ 434 007a 9A80     		strh	r2, [r3, #4]
+ 435 007c 07E0     		b	.L21
+ 436              	.L29:
+ 224:oscillator.c  ****     }
+ 225:oscillator.c  ****     else if(v8.note_index == note){
+ 437              		.loc 1 225 0
+ 438 007e 0B4B     		ldr	r3, .L30+28
+ 439 0080 1B7B     		ldrb	r3, [r3, #12]
+ 440 0082 9842     		cmp	r0, r3
+ 441 0084 03D1     		bne	.L21
+ 226:oscillator.c  ****         v8.current_env_mode = NOT_TRIGGERED;
+ 442              		.loc 1 226 0
+ 443 0086 094B     		ldr	r3, .L30+28
+ 444 0088 0022     		movs	r2, #0
+ 445 008a 9A71     		strb	r2, [r3, #6]
+ 227:oscillator.c  ****         v8.env_multiplier = 0;
+ 446              		.loc 1 227 0
+ 447 008c 9A80     		strh	r2, [r3, #4]
+ 448              	.L21:
+ 228:oscillator.c  ****     }
+ 229:oscillator.c  **** }
+ 449              		.loc 1 229 0
+ 450              		@ sp needed
+ 451 008e 7047     		bx	lr
+ 452              	.L31:
+ 453              		.align	2
+ 454              	.L30:
+ 455 0090 00000000 		.word	v1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 13
+
+
+ 456 0094 00000000 		.word	v2
+ 457 0098 00000000 		.word	v3
+ 458 009c 00000000 		.word	v4
+ 459 00a0 00000000 		.word	v5
+ 460 00a4 00000000 		.word	v6
+ 461 00a8 00000000 		.word	v7
+ 462 00ac 00000000 		.word	v8
+ 463              		.cfi_endproc
+ 464              	.LFE132:
+ 465              		.size	NoteOff, .-NoteOff
+ 466              		.global	music_notes
+ 467              		.comm	v8,16,4
+ 468              		.comm	v7,16,4
+ 469              		.comm	v6,16,4
+ 470              		.comm	v5,16,4
+ 471              		.comm	v4,16,4
+ 472              		.comm	v3,16,4
+ 473              		.comm	v2,16,4
+ 474              		.comm	v1,16,4
+ 475              		.comm	lfo_sine,256,4
+ 476              		.comm	base_sq,4096,4
+ 477              		.comm	base_pos_saw,4096,4
+ 478              		.comm	base_sine,8192,4
+ 479              		.data
+ 480              		.align	3
+ 481              		.set	.LANCHOR0,. + 0
+ 482              		.type	music_notes, %object
+ 483              		.size	music_notes, 792
+ 484              	music_notes:
+ 485 0000 8B6CE7FB 		.word	-68719477
+ 486 0004 A9052240 		.word	1075971497
+ 487 0008 DE03745F 		.word	1601438686
+ 488 000c CE182340 		.word	1076041934
+ 489 0010 DC2C5E2C 		.word	744369372
+ 490 0014 0C3B2440 		.word	1076116236
+ 491 0018 271422E0 		.word	-534637529
+ 492 001c 106E2540 		.word	1076194832
+ 493 0020 0113B875 		.word	1974997761
+ 494 0024 37B52640 		.word	1076278583
+ 495 0028 CAFCA36F 		.word	1873018058
+ 496 002c D20E2840 		.word	1076367058
+ 497 0030 22FE614B 		.word	1264713250
+ 498 0034 8F7C2940 		.word	1076460687
+ 499 0038 AA436E86 		.word	-2039594070
+ 500 003c 1B002B40 		.word	1076559899
+ 501 0040 05FA449E 		.word	-1639646715
+ 502 0044 249B2C40 		.word	1076665124
+ 503 0048 D34D6210 		.word	274877907
+ 504 004c 584F2E40 		.word	1076776792
+ 505 0050 8A1F63EE 		.word	-295493750
+ 506 0054 5A0E3040 		.word	1076891226
+ 507 0058 357D76C0 		.word	-1065976523
+ 508 005c 75023140 		.word	1076953717
+ 509 0060 8B6CE7FB 		.word	-68719477
+ 510 0064 A9053240 		.word	1077020073
+ 511 0068 8DEDB5A0 		.word	-1598689907
+ 512 006c F7173340 		.word	1077090295
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 14
+
+
+ 513 0070 DC2C5E2C 		.word	744369372
+ 514 0074 0C3B3440 		.word	1077164812
+ 515 0078 782AE09E 		.word	-1629476232
+ 516 007c E76E3540 		.word	1077243623
+ 517 0080 0113B875 		.word	1974997761
+ 518 0084 37B53640 		.word	1077327159
+ 519 0088 CAFCA36F 		.word	1873018058
+ 520 008c D20E3840 		.word	1077415634
+ 521 0090 22FE614B 		.word	1264713250
+ 522 0094 8F7C3940 		.word	1077509263
+ 523 0098 FB592C45 		.word	1160534523
+ 524 009c F2003B40 		.word	1077608690
+ 525 00a0 5610035D 		.word	1560481878
+ 526 00a4 FB9B3C40 		.word	1077713915
+ 527 00a8 D34D6210 		.word	274877907
+ 528 00ac 584F3E40 		.word	1077825368
+ 529 00b0 8A1F63EE 		.word	-295493750
+ 530 00b4 5A0E4040 		.word	1077939802
+ 531 00b8 5D88D51F 		.word	534087773
+ 532 00bc E1024140 		.word	1078002401
+ 533 00c0 8B6CE7FB 		.word	-68719477
+ 534 00c4 A9054240 		.word	1078068649
+ 535 00c8 8DEDB5A0 		.word	-1598689907
+ 536 00cc F7174340 		.word	1078138871
+ 537 00d0 B421FFCC 		.word	-855694924
+ 538 00d4 A03A4440 		.word	1078213280
+ 539 00d8 4F1F813F 		.word	1065426767
+ 540 00dc 7C6E4540 		.word	1078292092
+ 541 00e0 D9075916 		.word	374933465
+ 542 00e4 CCB44640 		.word	1078375628
+ 543 00e8 A2F14410 		.word	272953762
+ 544 00ec 670E4840 		.word	1078464103
+ 545 00f0 22FE614B 		.word	1264713250
+ 546 00f4 8F7C4940 		.word	1078557839
+ 547 00f8 D34ECDE5 		.word	-439529773
+ 548 00fc 86004B40 		.word	1078657158
+ 549 0100 2D05A4FD 		.word	-39582419
+ 550 0104 8F9B4C40 		.word	1078762383
+ 551 0108 D34D6210 		.word	274877907
+ 552 010c 584F4E40 		.word	1078873944
+ 553 0110 8A1F63EE 		.word	-295493750
+ 554 0114 5A0E5040 		.word	1078988378
+ 555 0118 C9022670 		.word	1881539273
+ 556 011c AB025140 		.word	1079050923
+ 557 0120 8B6CE7FB 		.word	-68719477
+ 558 0124 A9055240 		.word	1079117225
+ 559 0128 8DEDB5A0 		.word	-1598689907
+ 560 012c F7175340 		.word	1079187447
+ 561 0130 B421FFCC 		.word	-855694924
+ 562 0134 A03A5440 		.word	1079261856
+ 563 0138 E3A430EF 		.word	-282024733
+ 564 013c B16E5540 		.word	1079340721
+ 565 0140 D9075916 		.word	374933465
+ 566 0144 CCB45640 		.word	1079424204
+ 567 0148 A2F14410 		.word	272953762
+ 568 014c 670E5840 		.word	1079512679
+ 569 0150 9B3347FB 		.word	-79219813
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 15
+
+
+ 570 0154 C47C5940 		.word	1079606468
+ 571 0158 4C84B295 		.word	-1783462836
+ 572 015c BC005B40 		.word	1079705788
+ 573 0160 A73A89AD 		.word	-1383515481
+ 574 0164 C59B5C40 		.word	1079811013
+ 575 0168 2478E860 		.word	1625847844
+ 576 016c 224F5E40 		.word	1079922466
+ 577 0170 8A1F63EE 		.word	-295493750
+ 578 0174 5A0E6040 		.word	1080036954
+ 579 0178 C9022670 		.word	1881539273
+ 580 017c AB026140 		.word	1080099499
+ 581 0180 8B6CE7FB 		.word	-68719477
+ 582 0184 A9056240 		.word	1080165801
+ 583 0188 8DEDB5A0 		.word	-1598689907
+ 584 018c F7176340 		.word	1080236023
+ 585 0190 B421FFCC 		.word	-855694924
+ 586 0194 A03A6440 		.word	1080310432
+ 587 0198 0CBA7317 		.word	393460236
+ 588 019c 976E6540 		.word	1080389271
+ 589 01a0 96A24BEE 		.word	-297033066
+ 590 01a4 E6B46640 		.word	1080472806
+ 591 01a8 5E8C37E8 		.word	-399012770
+ 592 01ac 810E6840 		.word	1080561281
+ 593 01b0 DF985423 		.word	592746719
+ 594 01b4 AA7C6940 		.word	1080655018
+ 595 01b8 8FE9BFBD 		.word	-1111496305
+ 596 01bc A1006B40 		.word	1080754337
+ 597 01c0 C28A53AD 		.word	-1387033918
+ 598 01c4 C59B6C40 		.word	1080859589
+ 599 01c8 FB62A538 		.word	950362875
+ 600 01cc 3D4F6E40 		.word	1080971069
+ 601 01d0 1EAA8482 		.word	-2105234914
+ 602 01d4 4D0E7040 		.word	1081085517
+ 603 01d8 27501FDC 		.word	-601927641
+ 604 01dc B8027140 		.word	1081148088
+ 605 01e0 8B6CE7FB 		.word	-68719477
+ 606 01e4 A9057240 		.word	1081214377
+ 607 01e8 EC3AAF0C 		.word	212810476
+ 608 01ec 05187340 		.word	1081284613
+ 609 01f0 126FF838 		.word	955805458
+ 610 01f4 AE3A7440 		.word	1081359022
+ 611 01f8 19E25817 		.word	391701017
+ 612 01fc 976E7540 		.word	1081437847
+ 613 0200 37555282 		.word	-2108533449
+ 614 0204 D9B47640 		.word	1081521369
+ 615 0208 6CB41CE8 		.word	-400771988
+ 616 020c 810E7840 		.word	1081609857
+ 617 0210 4A0E338F 		.word	-1892479414
+ 618 0214 B77C7940 		.word	1081703607
+ 619 0218 FB5E9E29 		.word	698244859
+ 620 021c AF007B40 		.word	1081802927
+ 621 0220 56157541 		.word	1098192214
+ 622 0224 B89B7C40 		.word	1081908152
+ 623 0228 098B8A38 		.word	948603657
+ 624 022c 3D4F7E40 		.word	1082019645
+ 625 0230 253E7782 		.word	-2106114523
+ 626 0234 4D0E8040 		.word	1082134093
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 16
+
+
+ 627 0238 2EE411DC 		.word	-602807250
+ 628 023c B8028140 		.word	1082196664
+ 629 0240 8B6CE7FB 		.word	-68719477
+ 630 0244 A9058240 		.word	1082262953
+ 631 0248 F2CEA10C 		.word	211930866
+ 632 024c 05188340 		.word	1082333189
+ 633 0250 63C8FB82 		.word	-2097428381
+ 634 0254 A73A8440 		.word	1082407591
+ 635 0258 19E25817 		.word	391701017
+ 636 025c 976E8540 		.word	1082486423
+ 637 0260 3EE94482 		.word	-2109413058
+ 638 0264 D9B48640 		.word	1082569945
+ 639 0268 6CB41CE8 		.word	-400771988
+ 640 026c 810E8840 		.word	1082658433
+ 641 0270 51A2258F 		.word	-1893359023
+ 642 0274 B77C8940 		.word	1082752183
+ 643 0278 02F39029 		.word	697365250
+ 644 027c AF008B40 		.word	1082851503
+ 645 0280 0C5064F7 		.word	-144420852
+ 646 0284 BE9B8C40 		.word	1082956734
+ 647 0288 098B8A38 		.word	948603657
+ 648 028c 3D4F8E40 		.word	1083068221
+ 649 0290 253E7782 		.word	-2106114523
+ 650 0294 4D0E9040 		.word	1083182669
+ 651 0298 2EE411DC 		.word	-602807250
+ 652 029c B8029140 		.word	1083245240
+ 653 02a0 8B6CE7FB 		.word	-68719477
+ 654 02a4 A9059240 		.word	1083311529
+ 655 02a8 A10F96B1 		.word	-1315565663
+ 656 02ac 01189340 		.word	1083381761
+ 657 02b0 C843DFDD 		.word	-572570680
+ 658 02b4 AA3A9440 		.word	1083456170
+ 659 02b8 6AA16472 		.word	1919197546
+ 660 02bc 9A6E9540 		.word	1083535002
+ 661 02c0 3EE94482 		.word	-2109413058
+ 662 02c4 D9B49640 		.word	1083618521
+ 663 02c8 1BF5108D 		.word	-1928268517
+ 664 02cc 7E0E9840 		.word	1083707006
+ 665 02d0 00E31934 		.word	874111744
+ 666 02d4 B47C9940 		.word	1083800756
+ 667 02d8 02F39029 		.word	697365250
+ 668 02dc AF009B40 		.word	1083900079
+ 669 02e0 AD68739C 		.word	-1670158163
+ 670 02e4 BB9B9C40 		.word	1084005307
+ 671 02e8 B8CB7EDD 		.word	-578892872
+ 672 02ec 394F9E40 		.word	1084116793
+ 673 02f0 CD1DFD2F 		.word	805117389
+ 674 02f4 4F0EA040 		.word	1084231247
+ 675 02f8 2EE411DC 		.word	-602807250
+ 676 02fc B802A140 		.word	1084293816
+ 677 0300 8B6CE7FB 		.word	-68719477
+ 678 0304 A905A240 		.word	1084360105
+ 679 0308 919DB7B1 		.word	-1313366639
+ 680 030c 0118A340 		.word	1084430337
+ 681 0310 0FF27A30 		.word	813363727
+ 682 0314 A93AA440 		.word	1084504745
+ 683              		.text
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 17
+
+
+ 684              	.Letext0:
+ 685              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 686              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 687              		.file 4 "Generated_Source\\PSoC4/cytypes.h"
+ 688              		.file 5 "oscillator.h"
+ 689              		.file 6 "waves.h"
+ 690              		.file 7 "globals.h"
+ 691              		.section	.debug_info,"",%progbits
+ 692              	.Ldebug_info0:
+ 693 0000 0B030000 		.4byte	0x30b
+ 694 0004 0400     		.2byte	0x4
+ 695 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 696 000a 04       		.byte	0x4
+ 697 000b 01       		.uleb128 0x1
+ 698 000c 27010000 		.4byte	.LASF43
+ 699 0010 0C       		.byte	0xc
+ 700 0011 2B000000 		.4byte	.LASF44
+ 701 0015 35020000 		.4byte	.LASF45
+ 702 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 703 001d 00000000 		.4byte	0
+ 704 0021 00000000 		.4byte	.Ldebug_line0
+ 705 0025 02       		.uleb128 0x2
+ 706 0026 0D000000 		.4byte	.LASF0
+ 707 002a 02       		.byte	0x2
+ 708 002b 1B       		.byte	0x1b
+ 709 002c 30000000 		.4byte	0x30
+ 710 0030 03       		.uleb128 0x3
+ 711 0031 01       		.byte	0x1
+ 712 0032 06       		.byte	0x6
+ 713 0033 8D020000 		.4byte	.LASF2
+ 714 0037 02       		.uleb128 0x2
+ 715 0038 21000000 		.4byte	.LASF1
+ 716 003c 02       		.byte	0x2
+ 717 003d 1D       		.byte	0x1d
+ 718 003e 42000000 		.4byte	0x42
+ 719 0042 03       		.uleb128 0x3
+ 720 0043 01       		.byte	0x1
+ 721 0044 08       		.byte	0x8
+ 722 0045 71000000 		.4byte	.LASF3
+ 723 0049 02       		.uleb128 0x2
+ 724 004a 38000000 		.4byte	.LASF4
+ 725 004e 02       		.byte	0x2
+ 726 004f 29       		.byte	0x29
+ 727 0050 54000000 		.4byte	0x54
+ 728 0054 03       		.uleb128 0x3
+ 729 0055 02       		.byte	0x2
+ 730 0056 05       		.byte	0x5
+ 731 0057 D4000000 		.4byte	.LASF5
+ 732 005b 02       		.uleb128 0x2
+ 733 005c C2000000 		.4byte	.LASF6
+ 734 0060 02       		.byte	0x2
+ 735 0061 2B       		.byte	0x2b
+ 736 0062 66000000 		.4byte	0x66
+ 737 0066 03       		.uleb128 0x3
+ 738 0067 02       		.byte	0x2
+ 739 0068 07       		.byte	0x7
+ 740 0069 BE010000 		.4byte	.LASF7
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 18
+
+
+ 741 006d 03       		.uleb128 0x3
+ 742 006e 04       		.byte	0x4
+ 743 006f 05       		.byte	0x5
+ 744 0070 A6000000 		.4byte	.LASF8
+ 745 0074 02       		.uleb128 0x2
+ 746 0075 AF000000 		.4byte	.LASF9
+ 747 0079 02       		.byte	0x2
+ 748 007a 41       		.byte	0x41
+ 749 007b 7F000000 		.4byte	0x7f
+ 750 007f 03       		.uleb128 0x3
+ 751 0080 04       		.byte	0x4
+ 752 0081 07       		.byte	0x7
+ 753 0082 8A000000 		.4byte	.LASF10
+ 754 0086 03       		.uleb128 0x3
+ 755 0087 08       		.byte	0x8
+ 756 0088 05       		.byte	0x5
+ 757 0089 D1010000 		.4byte	.LASF11
+ 758 008d 03       		.uleb128 0x3
+ 759 008e 08       		.byte	0x8
+ 760 008f 07       		.byte	0x7
+ 761 0090 F1000000 		.4byte	.LASF12
+ 762 0094 04       		.uleb128 0x4
+ 763 0095 04       		.byte	0x4
+ 764 0096 05       		.byte	0x5
+ 765 0097 696E7400 		.ascii	"int\000"
+ 766 009b 03       		.uleb128 0x3
+ 767 009c 04       		.byte	0x4
+ 768 009d 07       		.byte	0x7
+ 769 009e E4000000 		.4byte	.LASF13
+ 770 00a2 02       		.uleb128 0x2
+ 771 00a3 48000000 		.4byte	.LASF14
+ 772 00a7 03       		.byte	0x3
+ 773 00a8 14       		.byte	0x14
+ 774 00a9 25000000 		.4byte	0x25
+ 775 00ad 02       		.uleb128 0x2
+ 776 00ae 08010000 		.4byte	.LASF15
+ 777 00b2 03       		.byte	0x3
+ 778 00b3 18       		.byte	0x18
+ 779 00b4 37000000 		.4byte	0x37
+ 780 00b8 02       		.uleb128 0x2
+ 781 00b9 10010000 		.4byte	.LASF16
+ 782 00bd 03       		.byte	0x3
+ 783 00be 20       		.byte	0x20
+ 784 00bf 49000000 		.4byte	0x49
+ 785 00c3 02       		.uleb128 0x2
+ 786 00c4 0F020000 		.4byte	.LASF17
+ 787 00c8 03       		.byte	0x3
+ 788 00c9 24       		.byte	0x24
+ 789 00ca 5B000000 		.4byte	0x5b
+ 790 00ce 02       		.uleb128 0x2
+ 791 00cf 24020000 		.4byte	.LASF18
+ 792 00d3 03       		.byte	0x3
+ 793 00d4 30       		.byte	0x30
+ 794 00d5 74000000 		.4byte	0x74
+ 795 00d9 05       		.uleb128 0x5
+ 796 00da 42000000 		.4byte	.LASF19
+ 797 00de 04       		.byte	0x4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 19
+
+
+ 798 00df E401     		.2byte	0x1e4
+ 799 00e1 42000000 		.4byte	0x42
+ 800 00e5 03       		.uleb128 0x3
+ 801 00e6 04       		.byte	0x4
+ 802 00e7 04       		.byte	0x4
+ 803 00e8 66000000 		.4byte	.LASF20
+ 804 00ec 03       		.uleb128 0x3
+ 805 00ed 08       		.byte	0x8
+ 806 00ee 04       		.byte	0x4
+ 807 00ef CD000000 		.4byte	.LASF21
+ 808 00f3 03       		.uleb128 0x3
+ 809 00f4 01       		.byte	0x1
+ 810 00f5 08       		.byte	0x8
+ 811 00f6 EC010000 		.4byte	.LASF22
+ 812 00fa 03       		.uleb128 0x3
+ 813 00fb 08       		.byte	0x8
+ 814 00fc 04       		.byte	0x4
+ 815 00fd 81020000 		.4byte	.LASF23
+ 816 0101 03       		.uleb128 0x3
+ 817 0102 04       		.byte	0x4
+ 818 0103 07       		.byte	0x7
+ 819 0104 B5010000 		.4byte	.LASF24
+ 820 0108 06       		.uleb128 0x6
+ 821 0109 DE000000 		.4byte	.LASF46
+ 822 010d 10       		.byte	0x10
+ 823 010e 05       		.byte	0x5
+ 824 010f 05       		.byte	0x5
+ 825 0110 51010000 		.4byte	0x151
+ 826 0114 07       		.uleb128 0x7
+ 827 0115 9C000000 		.4byte	.LASF25
+ 828 0119 05       		.byte	0x5
+ 829 011a 06       		.byte	0x6
+ 830 011b CE000000 		.4byte	0xce
+ 831 011f 00       		.byte	0
+ 832 0120 07       		.uleb128 0x7
+ 833 0121 18010000 		.4byte	.LASF26
+ 834 0125 05       		.byte	0x5
+ 835 0126 07       		.byte	0x7
+ 836 0127 C3000000 		.4byte	0xc3
+ 837 012b 04       		.byte	0x4
+ 838 012c 07       		.uleb128 0x7
+ 839 012d AF020000 		.4byte	.LASF27
+ 840 0131 05       		.byte	0x5
+ 841 0132 08       		.byte	0x8
+ 842 0133 AD000000 		.4byte	0xad
+ 843 0137 06       		.byte	0x6
+ 844 0138 07       		.uleb128 0x7
+ 845 0139 FD010000 		.4byte	.LASF28
+ 846 013d 05       		.byte	0x5
+ 847 013e 09       		.byte	0x9
+ 848 013f 94000000 		.4byte	0x94
+ 849 0143 08       		.byte	0x8
+ 850 0144 07       		.uleb128 0x7
+ 851 0145 16000000 		.4byte	.LASF29
+ 852 0149 05       		.byte	0x5
+ 853 014a 0A       		.byte	0xa
+ 854 014b AD000000 		.4byte	0xad
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 20
+
+
+ 855 014f 0C       		.byte	0xc
+ 856 0150 00       		.byte	0
+ 857 0151 08       		.uleb128 0x8
+ 858 0152 02020000 		.4byte	.LASF30
+ 859 0156 01       		.byte	0x1
+ 860 0157 6E       		.byte	0x6e
+ 861 0158 00000000 		.4byte	.LFB130
+ 862 015c AC000000 		.4byte	.LFE130-.LFB130
+ 863 0160 01       		.uleb128 0x1
+ 864 0161 9C       		.byte	0x9c
+ 865 0162 72010000 		.4byte	0x172
+ 866 0166 09       		.uleb128 0x9
+ 867 0167 7600     		.ascii	"v\000"
+ 868 0169 01       		.byte	0x1
+ 869 016a 6E       		.byte	0x6e
+ 870 016b 72010000 		.4byte	0x172
+ 871 016f 01       		.uleb128 0x1
+ 872 0170 50       		.byte	0x50
+ 873 0171 00       		.byte	0
+ 874 0172 0A       		.uleb128 0xa
+ 875 0173 04       		.byte	0x4
+ 876 0174 08010000 		.4byte	0x108
+ 877 0178 0B       		.uleb128 0xb
+ 878 0179 99020000 		.4byte	.LASF31
+ 879 017d 01       		.byte	0x1
+ 880 017e 8F       		.byte	0x8f
+ 881 017f 00000000 		.4byte	.LFB131
+ 882 0183 F0000000 		.4byte	.LFE131-.LFB131
+ 883 0187 01       		.uleb128 0x1
+ 884 0188 9C       		.byte	0x9c
+ 885 0189 9D010000 		.4byte	0x19d
+ 886 018d 0C       		.uleb128 0xc
+ 887 018e 6C000000 		.4byte	.LASF32
+ 888 0192 01       		.byte	0x1
+ 889 0193 8F       		.byte	0x8f
+ 890 0194 D9000000 		.4byte	0xd9
+ 891 0198 00000000 		.4byte	.LLST0
+ 892 019c 00       		.byte	0
+ 893 019d 08       		.uleb128 0x8
+ 894 019e 2D020000 		.4byte	.LASF33
+ 895 01a2 01       		.byte	0x1
+ 896 01a3 C4       		.byte	0xc4
+ 897 01a4 00000000 		.4byte	.LFB132
+ 898 01a8 B0000000 		.4byte	.LFE132-.LFB132
+ 899 01ac 01       		.uleb128 0x1
+ 900 01ad 9C       		.byte	0x9c
+ 901 01ae C0010000 		.4byte	0x1c0
+ 902 01b2 0D       		.uleb128 0xd
+ 903 01b3 6C000000 		.4byte	.LASF32
+ 904 01b7 01       		.byte	0x1
+ 905 01b8 C4       		.byte	0xc4
+ 906 01b9 D9000000 		.4byte	0xd9
+ 907 01bd 01       		.uleb128 0x1
+ 908 01be 50       		.byte	0x50
+ 909 01bf 00       		.byte	0
+ 910 01c0 0E       		.uleb128 0xe
+ 911 01c1 B8000000 		.4byte	0xb8
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 21
+
+
+ 912 01c5 D1010000 		.4byte	0x1d1
+ 913 01c9 0F       		.uleb128 0xf
+ 914 01ca 01010000 		.4byte	0x101
+ 915 01ce FF0F     		.2byte	0xfff
+ 916 01d0 00       		.byte	0
+ 917 01d1 10       		.uleb128 0x10
+ 918 01d2 5C000000 		.4byte	.LASF34
+ 919 01d6 06       		.byte	0x6
+ 920 01d7 0F       		.byte	0xf
+ 921 01d8 C0010000 		.4byte	0x1c0
+ 922 01dc 05       		.uleb128 0x5
+ 923 01dd 03       		.byte	0x3
+ 924 01de 00000000 		.4byte	base_sine
+ 925 01e2 0E       		.uleb128 0xe
+ 926 01e3 A2000000 		.4byte	0xa2
+ 927 01e7 F3010000 		.4byte	0x1f3
+ 928 01eb 0F       		.uleb128 0xf
+ 929 01ec 01010000 		.4byte	0x101
+ 930 01f0 FF0F     		.2byte	0xfff
+ 931 01f2 00       		.byte	0
+ 932 01f3 10       		.uleb128 0x10
+ 933 01f4 DF010000 		.4byte	.LASF35
+ 934 01f8 06       		.byte	0x6
+ 935 01f9 10       		.byte	0x10
+ 936 01fa E2010000 		.4byte	0x1e2
+ 937 01fe 05       		.uleb128 0x5
+ 938 01ff 03       		.byte	0x3
+ 939 0200 00000000 		.4byte	base_pos_saw
+ 940 0204 10       		.uleb128 0x10
+ 941 0205 BA000000 		.4byte	.LASF36
+ 942 0209 06       		.byte	0x6
+ 943 020a 13       		.byte	0x13
+ 944 020b E2010000 		.4byte	0x1e2
+ 945 020f 05       		.uleb128 0x5
+ 946 0210 03       		.byte	0x3
+ 947 0211 00000000 		.4byte	base_sq
+ 948 0215 0E       		.uleb128 0xe
+ 949 0216 AD000000 		.4byte	0xad
+ 950 021a 25020000 		.4byte	0x225
+ 951 021e 11       		.uleb128 0x11
+ 952 021f 01010000 		.4byte	0x101
+ 953 0223 FF       		.byte	0xff
+ 954 0224 00       		.byte	0
+ 955 0225 10       		.uleb128 0x10
+ 956 0226 A6020000 		.4byte	.LASF37
+ 957 022a 06       		.byte	0x6
+ 958 022b 15       		.byte	0x15
+ 959 022c 15020000 		.4byte	0x215
+ 960 0230 05       		.uleb128 0x5
+ 961 0231 03       		.byte	0x3
+ 962 0232 00000000 		.4byte	lfo_sine
+ 963 0236 12       		.uleb128 0x12
+ 964 0237 FD010000 		.4byte	.LASF28
+ 965 023b 07       		.byte	0x7
+ 966 023c 14       		.byte	0x14
+ 967 023d C3000000 		.4byte	0xc3
+ 968 0241 12       		.uleb128 0x12
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 22
+
+
+ 969 0242 18020000 		.4byte	.LASF38
+ 970 0246 07       		.byte	0x7
+ 971 0247 1A       		.byte	0x1a
+ 972 0248 C3000000 		.4byte	0xc3
+ 973 024c 12       		.uleb128 0x12
+ 974 024d 7F000000 		.4byte	.LASF39
+ 975 0251 07       		.byte	0x7
+ 976 0252 1B       		.byte	0x1b
+ 977 0253 C3000000 		.4byte	0xc3
+ 978 0257 12       		.uleb128 0x12
+ 979 0258 4F000000 		.4byte	.LASF40
+ 980 025c 07       		.byte	0x7
+ 981 025d 1C       		.byte	0x1c
+ 982 025e C3000000 		.4byte	0xc3
+ 983 0262 12       		.uleb128 0x12
+ 984 0263 00000000 		.4byte	.LASF41
+ 985 0267 07       		.byte	0x7
+ 986 0268 1D       		.byte	0x1d
+ 987 0269 C3000000 		.4byte	0xc3
+ 988 026d 13       		.uleb128 0x13
+ 989 026e 763100   		.ascii	"v1\000"
+ 990 0271 07       		.byte	0x7
+ 991 0272 20       		.byte	0x20
+ 992 0273 08010000 		.4byte	0x108
+ 993 0277 05       		.uleb128 0x5
+ 994 0278 03       		.byte	0x3
+ 995 0279 00000000 		.4byte	v1
+ 996 027d 13       		.uleb128 0x13
+ 997 027e 763200   		.ascii	"v2\000"
+ 998 0281 07       		.byte	0x7
+ 999 0282 21       		.byte	0x21
+ 1000 0283 08010000 		.4byte	0x108
+ 1001 0287 05       		.uleb128 0x5
+ 1002 0288 03       		.byte	0x3
+ 1003 0289 00000000 		.4byte	v2
+ 1004 028d 13       		.uleb128 0x13
+ 1005 028e 763300   		.ascii	"v3\000"
+ 1006 0291 07       		.byte	0x7
+ 1007 0292 22       		.byte	0x22
+ 1008 0293 08010000 		.4byte	0x108
+ 1009 0297 05       		.uleb128 0x5
+ 1010 0298 03       		.byte	0x3
+ 1011 0299 00000000 		.4byte	v3
+ 1012 029d 13       		.uleb128 0x13
+ 1013 029e 763400   		.ascii	"v4\000"
+ 1014 02a1 07       		.byte	0x7
+ 1015 02a2 23       		.byte	0x23
+ 1016 02a3 08010000 		.4byte	0x108
+ 1017 02a7 05       		.uleb128 0x5
+ 1018 02a8 03       		.byte	0x3
+ 1019 02a9 00000000 		.4byte	v4
+ 1020 02ad 13       		.uleb128 0x13
+ 1021 02ae 763500   		.ascii	"v5\000"
+ 1022 02b1 07       		.byte	0x7
+ 1023 02b2 24       		.byte	0x24
+ 1024 02b3 08010000 		.4byte	0x108
+ 1025 02b7 05       		.uleb128 0x5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 23
+
+
+ 1026 02b8 03       		.byte	0x3
+ 1027 02b9 00000000 		.4byte	v5
+ 1028 02bd 13       		.uleb128 0x13
+ 1029 02be 763600   		.ascii	"v6\000"
+ 1030 02c1 07       		.byte	0x7
+ 1031 02c2 25       		.byte	0x25
+ 1032 02c3 08010000 		.4byte	0x108
+ 1033 02c7 05       		.uleb128 0x5
+ 1034 02c8 03       		.byte	0x3
+ 1035 02c9 00000000 		.4byte	v6
+ 1036 02cd 13       		.uleb128 0x13
+ 1037 02ce 763700   		.ascii	"v7\000"
+ 1038 02d1 07       		.byte	0x7
+ 1039 02d2 26       		.byte	0x26
+ 1040 02d3 08010000 		.4byte	0x108
+ 1041 02d7 05       		.uleb128 0x5
+ 1042 02d8 03       		.byte	0x3
+ 1043 02d9 00000000 		.4byte	v7
+ 1044 02dd 13       		.uleb128 0x13
+ 1045 02de 763800   		.ascii	"v8\000"
+ 1046 02e1 07       		.byte	0x7
+ 1047 02e2 27       		.byte	0x27
+ 1048 02e3 08010000 		.4byte	0x108
+ 1049 02e7 05       		.uleb128 0x5
+ 1050 02e8 03       		.byte	0x3
+ 1051 02e9 00000000 		.4byte	v8
+ 1052 02ed 0E       		.uleb128 0xe
+ 1053 02ee EC000000 		.4byte	0xec
+ 1054 02f2 FD020000 		.4byte	0x2fd
+ 1055 02f6 11       		.uleb128 0x11
+ 1056 02f7 01010000 		.4byte	0x101
+ 1057 02fb 62       		.byte	0x62
+ 1058 02fc 00       		.byte	0
+ 1059 02fd 10       		.uleb128 0x10
+ 1060 02fe F1010000 		.4byte	.LASF42
+ 1061 0302 01       		.byte	0x1
+ 1062 0303 06       		.byte	0x6
+ 1063 0304 ED020000 		.4byte	0x2ed
+ 1064 0308 05       		.uleb128 0x5
+ 1065 0309 03       		.byte	0x3
+ 1066 030a 00000000 		.4byte	music_notes
+ 1067 030e 00       		.byte	0
+ 1068              		.section	.debug_abbrev,"",%progbits
+ 1069              	.Ldebug_abbrev0:
+ 1070 0000 01       		.uleb128 0x1
+ 1071 0001 11       		.uleb128 0x11
+ 1072 0002 01       		.byte	0x1
+ 1073 0003 25       		.uleb128 0x25
+ 1074 0004 0E       		.uleb128 0xe
+ 1075 0005 13       		.uleb128 0x13
+ 1076 0006 0B       		.uleb128 0xb
+ 1077 0007 03       		.uleb128 0x3
+ 1078 0008 0E       		.uleb128 0xe
+ 1079 0009 1B       		.uleb128 0x1b
+ 1080 000a 0E       		.uleb128 0xe
+ 1081 000b 55       		.uleb128 0x55
+ 1082 000c 17       		.uleb128 0x17
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 24
+
+
+ 1083 000d 11       		.uleb128 0x11
+ 1084 000e 01       		.uleb128 0x1
+ 1085 000f 10       		.uleb128 0x10
+ 1086 0010 17       		.uleb128 0x17
+ 1087 0011 00       		.byte	0
+ 1088 0012 00       		.byte	0
+ 1089 0013 02       		.uleb128 0x2
+ 1090 0014 16       		.uleb128 0x16
+ 1091 0015 00       		.byte	0
+ 1092 0016 03       		.uleb128 0x3
+ 1093 0017 0E       		.uleb128 0xe
+ 1094 0018 3A       		.uleb128 0x3a
+ 1095 0019 0B       		.uleb128 0xb
+ 1096 001a 3B       		.uleb128 0x3b
+ 1097 001b 0B       		.uleb128 0xb
+ 1098 001c 49       		.uleb128 0x49
+ 1099 001d 13       		.uleb128 0x13
+ 1100 001e 00       		.byte	0
+ 1101 001f 00       		.byte	0
+ 1102 0020 03       		.uleb128 0x3
+ 1103 0021 24       		.uleb128 0x24
+ 1104 0022 00       		.byte	0
+ 1105 0023 0B       		.uleb128 0xb
+ 1106 0024 0B       		.uleb128 0xb
+ 1107 0025 3E       		.uleb128 0x3e
+ 1108 0026 0B       		.uleb128 0xb
+ 1109 0027 03       		.uleb128 0x3
+ 1110 0028 0E       		.uleb128 0xe
+ 1111 0029 00       		.byte	0
+ 1112 002a 00       		.byte	0
+ 1113 002b 04       		.uleb128 0x4
+ 1114 002c 24       		.uleb128 0x24
+ 1115 002d 00       		.byte	0
+ 1116 002e 0B       		.uleb128 0xb
+ 1117 002f 0B       		.uleb128 0xb
+ 1118 0030 3E       		.uleb128 0x3e
+ 1119 0031 0B       		.uleb128 0xb
+ 1120 0032 03       		.uleb128 0x3
+ 1121 0033 08       		.uleb128 0x8
+ 1122 0034 00       		.byte	0
+ 1123 0035 00       		.byte	0
+ 1124 0036 05       		.uleb128 0x5
+ 1125 0037 16       		.uleb128 0x16
+ 1126 0038 00       		.byte	0
+ 1127 0039 03       		.uleb128 0x3
+ 1128 003a 0E       		.uleb128 0xe
+ 1129 003b 3A       		.uleb128 0x3a
+ 1130 003c 0B       		.uleb128 0xb
+ 1131 003d 3B       		.uleb128 0x3b
+ 1132 003e 05       		.uleb128 0x5
+ 1133 003f 49       		.uleb128 0x49
+ 1134 0040 13       		.uleb128 0x13
+ 1135 0041 00       		.byte	0
+ 1136 0042 00       		.byte	0
+ 1137 0043 06       		.uleb128 0x6
+ 1138 0044 13       		.uleb128 0x13
+ 1139 0045 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 25
+
+
+ 1140 0046 03       		.uleb128 0x3
+ 1141 0047 0E       		.uleb128 0xe
+ 1142 0048 0B       		.uleb128 0xb
+ 1143 0049 0B       		.uleb128 0xb
+ 1144 004a 3A       		.uleb128 0x3a
+ 1145 004b 0B       		.uleb128 0xb
+ 1146 004c 3B       		.uleb128 0x3b
+ 1147 004d 0B       		.uleb128 0xb
+ 1148 004e 01       		.uleb128 0x1
+ 1149 004f 13       		.uleb128 0x13
+ 1150 0050 00       		.byte	0
+ 1151 0051 00       		.byte	0
+ 1152 0052 07       		.uleb128 0x7
+ 1153 0053 0D       		.uleb128 0xd
+ 1154 0054 00       		.byte	0
+ 1155 0055 03       		.uleb128 0x3
+ 1156 0056 0E       		.uleb128 0xe
+ 1157 0057 3A       		.uleb128 0x3a
+ 1158 0058 0B       		.uleb128 0xb
+ 1159 0059 3B       		.uleb128 0x3b
+ 1160 005a 0B       		.uleb128 0xb
+ 1161 005b 49       		.uleb128 0x49
+ 1162 005c 13       		.uleb128 0x13
+ 1163 005d 38       		.uleb128 0x38
+ 1164 005e 0B       		.uleb128 0xb
+ 1165 005f 00       		.byte	0
+ 1166 0060 00       		.byte	0
+ 1167 0061 08       		.uleb128 0x8
+ 1168 0062 2E       		.uleb128 0x2e
+ 1169 0063 01       		.byte	0x1
+ 1170 0064 3F       		.uleb128 0x3f
+ 1171 0065 19       		.uleb128 0x19
+ 1172 0066 03       		.uleb128 0x3
+ 1173 0067 0E       		.uleb128 0xe
+ 1174 0068 3A       		.uleb128 0x3a
+ 1175 0069 0B       		.uleb128 0xb
+ 1176 006a 3B       		.uleb128 0x3b
+ 1177 006b 0B       		.uleb128 0xb
+ 1178 006c 27       		.uleb128 0x27
+ 1179 006d 19       		.uleb128 0x19
+ 1180 006e 11       		.uleb128 0x11
+ 1181 006f 01       		.uleb128 0x1
+ 1182 0070 12       		.uleb128 0x12
+ 1183 0071 06       		.uleb128 0x6
+ 1184 0072 40       		.uleb128 0x40
+ 1185 0073 18       		.uleb128 0x18
+ 1186 0074 9742     		.uleb128 0x2117
+ 1187 0076 19       		.uleb128 0x19
+ 1188 0077 01       		.uleb128 0x1
+ 1189 0078 13       		.uleb128 0x13
+ 1190 0079 00       		.byte	0
+ 1191 007a 00       		.byte	0
+ 1192 007b 09       		.uleb128 0x9
+ 1193 007c 05       		.uleb128 0x5
+ 1194 007d 00       		.byte	0
+ 1195 007e 03       		.uleb128 0x3
+ 1196 007f 08       		.uleb128 0x8
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 26
+
+
+ 1197 0080 3A       		.uleb128 0x3a
+ 1198 0081 0B       		.uleb128 0xb
+ 1199 0082 3B       		.uleb128 0x3b
+ 1200 0083 0B       		.uleb128 0xb
+ 1201 0084 49       		.uleb128 0x49
+ 1202 0085 13       		.uleb128 0x13
+ 1203 0086 02       		.uleb128 0x2
+ 1204 0087 18       		.uleb128 0x18
+ 1205 0088 00       		.byte	0
+ 1206 0089 00       		.byte	0
+ 1207 008a 0A       		.uleb128 0xa
+ 1208 008b 0F       		.uleb128 0xf
+ 1209 008c 00       		.byte	0
+ 1210 008d 0B       		.uleb128 0xb
+ 1211 008e 0B       		.uleb128 0xb
+ 1212 008f 49       		.uleb128 0x49
+ 1213 0090 13       		.uleb128 0x13
+ 1214 0091 00       		.byte	0
+ 1215 0092 00       		.byte	0
+ 1216 0093 0B       		.uleb128 0xb
+ 1217 0094 2E       		.uleb128 0x2e
+ 1218 0095 01       		.byte	0x1
+ 1219 0096 3F       		.uleb128 0x3f
+ 1220 0097 19       		.uleb128 0x19
+ 1221 0098 03       		.uleb128 0x3
+ 1222 0099 0E       		.uleb128 0xe
+ 1223 009a 3A       		.uleb128 0x3a
+ 1224 009b 0B       		.uleb128 0xb
+ 1225 009c 3B       		.uleb128 0x3b
+ 1226 009d 0B       		.uleb128 0xb
+ 1227 009e 27       		.uleb128 0x27
+ 1228 009f 19       		.uleb128 0x19
+ 1229 00a0 11       		.uleb128 0x11
+ 1230 00a1 01       		.uleb128 0x1
+ 1231 00a2 12       		.uleb128 0x12
+ 1232 00a3 06       		.uleb128 0x6
+ 1233 00a4 40       		.uleb128 0x40
+ 1234 00a5 18       		.uleb128 0x18
+ 1235 00a6 9642     		.uleb128 0x2116
+ 1236 00a8 19       		.uleb128 0x19
+ 1237 00a9 01       		.uleb128 0x1
+ 1238 00aa 13       		.uleb128 0x13
+ 1239 00ab 00       		.byte	0
+ 1240 00ac 00       		.byte	0
+ 1241 00ad 0C       		.uleb128 0xc
+ 1242 00ae 05       		.uleb128 0x5
+ 1243 00af 00       		.byte	0
+ 1244 00b0 03       		.uleb128 0x3
+ 1245 00b1 0E       		.uleb128 0xe
+ 1246 00b2 3A       		.uleb128 0x3a
+ 1247 00b3 0B       		.uleb128 0xb
+ 1248 00b4 3B       		.uleb128 0x3b
+ 1249 00b5 0B       		.uleb128 0xb
+ 1250 00b6 49       		.uleb128 0x49
+ 1251 00b7 13       		.uleb128 0x13
+ 1252 00b8 02       		.uleb128 0x2
+ 1253 00b9 17       		.uleb128 0x17
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 27
+
+
+ 1254 00ba 00       		.byte	0
+ 1255 00bb 00       		.byte	0
+ 1256 00bc 0D       		.uleb128 0xd
+ 1257 00bd 05       		.uleb128 0x5
+ 1258 00be 00       		.byte	0
+ 1259 00bf 03       		.uleb128 0x3
+ 1260 00c0 0E       		.uleb128 0xe
+ 1261 00c1 3A       		.uleb128 0x3a
+ 1262 00c2 0B       		.uleb128 0xb
+ 1263 00c3 3B       		.uleb128 0x3b
+ 1264 00c4 0B       		.uleb128 0xb
+ 1265 00c5 49       		.uleb128 0x49
+ 1266 00c6 13       		.uleb128 0x13
+ 1267 00c7 02       		.uleb128 0x2
+ 1268 00c8 18       		.uleb128 0x18
+ 1269 00c9 00       		.byte	0
+ 1270 00ca 00       		.byte	0
+ 1271 00cb 0E       		.uleb128 0xe
+ 1272 00cc 01       		.uleb128 0x1
+ 1273 00cd 01       		.byte	0x1
+ 1274 00ce 49       		.uleb128 0x49
+ 1275 00cf 13       		.uleb128 0x13
+ 1276 00d0 01       		.uleb128 0x1
+ 1277 00d1 13       		.uleb128 0x13
+ 1278 00d2 00       		.byte	0
+ 1279 00d3 00       		.byte	0
+ 1280 00d4 0F       		.uleb128 0xf
+ 1281 00d5 21       		.uleb128 0x21
+ 1282 00d6 00       		.byte	0
+ 1283 00d7 49       		.uleb128 0x49
+ 1284 00d8 13       		.uleb128 0x13
+ 1285 00d9 2F       		.uleb128 0x2f
+ 1286 00da 05       		.uleb128 0x5
+ 1287 00db 00       		.byte	0
+ 1288 00dc 00       		.byte	0
+ 1289 00dd 10       		.uleb128 0x10
+ 1290 00de 34       		.uleb128 0x34
+ 1291 00df 00       		.byte	0
+ 1292 00e0 03       		.uleb128 0x3
+ 1293 00e1 0E       		.uleb128 0xe
+ 1294 00e2 3A       		.uleb128 0x3a
+ 1295 00e3 0B       		.uleb128 0xb
+ 1296 00e4 3B       		.uleb128 0x3b
+ 1297 00e5 0B       		.uleb128 0xb
+ 1298 00e6 49       		.uleb128 0x49
+ 1299 00e7 13       		.uleb128 0x13
+ 1300 00e8 3F       		.uleb128 0x3f
+ 1301 00e9 19       		.uleb128 0x19
+ 1302 00ea 02       		.uleb128 0x2
+ 1303 00eb 18       		.uleb128 0x18
+ 1304 00ec 00       		.byte	0
+ 1305 00ed 00       		.byte	0
+ 1306 00ee 11       		.uleb128 0x11
+ 1307 00ef 21       		.uleb128 0x21
+ 1308 00f0 00       		.byte	0
+ 1309 00f1 49       		.uleb128 0x49
+ 1310 00f2 13       		.uleb128 0x13
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 28
+
+
+ 1311 00f3 2F       		.uleb128 0x2f
+ 1312 00f4 0B       		.uleb128 0xb
+ 1313 00f5 00       		.byte	0
+ 1314 00f6 00       		.byte	0
+ 1315 00f7 12       		.uleb128 0x12
+ 1316 00f8 34       		.uleb128 0x34
+ 1317 00f9 00       		.byte	0
+ 1318 00fa 03       		.uleb128 0x3
+ 1319 00fb 0E       		.uleb128 0xe
+ 1320 00fc 3A       		.uleb128 0x3a
+ 1321 00fd 0B       		.uleb128 0xb
+ 1322 00fe 3B       		.uleb128 0x3b
+ 1323 00ff 0B       		.uleb128 0xb
+ 1324 0100 49       		.uleb128 0x49
+ 1325 0101 13       		.uleb128 0x13
+ 1326 0102 3F       		.uleb128 0x3f
+ 1327 0103 19       		.uleb128 0x19
+ 1328 0104 3C       		.uleb128 0x3c
+ 1329 0105 19       		.uleb128 0x19
+ 1330 0106 00       		.byte	0
+ 1331 0107 00       		.byte	0
+ 1332 0108 13       		.uleb128 0x13
+ 1333 0109 34       		.uleb128 0x34
+ 1334 010a 00       		.byte	0
+ 1335 010b 03       		.uleb128 0x3
+ 1336 010c 08       		.uleb128 0x8
+ 1337 010d 3A       		.uleb128 0x3a
+ 1338 010e 0B       		.uleb128 0xb
+ 1339 010f 3B       		.uleb128 0x3b
+ 1340 0110 0B       		.uleb128 0xb
+ 1341 0111 49       		.uleb128 0x49
+ 1342 0112 13       		.uleb128 0x13
+ 1343 0113 3F       		.uleb128 0x3f
+ 1344 0114 19       		.uleb128 0x19
+ 1345 0115 02       		.uleb128 0x2
+ 1346 0116 18       		.uleb128 0x18
+ 1347 0117 00       		.byte	0
+ 1348 0118 00       		.byte	0
+ 1349 0119 00       		.byte	0
+ 1350              		.section	.debug_loc,"",%progbits
+ 1351              	.Ldebug_loc0:
+ 1352              	.LLST0:
+ 1353 0000 00000000 		.4byte	.LVL1
+ 1354 0004 12000000 		.4byte	.LVL2
+ 1355 0008 0100     		.2byte	0x1
+ 1356 000a 50       		.byte	0x50
+ 1357 000b 12000000 		.4byte	.LVL2
+ 1358 000f F0000000 		.4byte	.LFE131
+ 1359 0013 0400     		.2byte	0x4
+ 1360 0015 F3       		.byte	0xf3
+ 1361 0016 01       		.uleb128 0x1
+ 1362 0017 50       		.byte	0x50
+ 1363 0018 9F       		.byte	0x9f
+ 1364 0019 00000000 		.4byte	0
+ 1365 001d 00000000 		.4byte	0
+ 1366              		.section	.debug_aranges,"",%progbits
+ 1367 0000 2C000000 		.4byte	0x2c
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 29
+
+
+ 1368 0004 0200     		.2byte	0x2
+ 1369 0006 00000000 		.4byte	.Ldebug_info0
+ 1370 000a 04       		.byte	0x4
+ 1371 000b 00       		.byte	0
+ 1372 000c 0000     		.2byte	0
+ 1373 000e 0000     		.2byte	0
+ 1374 0010 00000000 		.4byte	.LFB130
+ 1375 0014 AC000000 		.4byte	.LFE130-.LFB130
+ 1376 0018 00000000 		.4byte	.LFB131
+ 1377 001c F0000000 		.4byte	.LFE131-.LFB131
+ 1378 0020 00000000 		.4byte	.LFB132
+ 1379 0024 B0000000 		.4byte	.LFE132-.LFB132
+ 1380 0028 00000000 		.4byte	0
+ 1381 002c 00000000 		.4byte	0
+ 1382              		.section	.debug_ranges,"",%progbits
+ 1383              	.Ldebug_ranges0:
+ 1384 0000 00000000 		.4byte	.LFB130
+ 1385 0004 AC000000 		.4byte	.LFE130
+ 1386 0008 00000000 		.4byte	.LFB131
+ 1387 000c F0000000 		.4byte	.LFE131
+ 1388 0010 00000000 		.4byte	.LFB132
+ 1389 0014 B0000000 		.4byte	.LFE132
+ 1390 0018 00000000 		.4byte	0
+ 1391 001c 00000000 		.4byte	0
+ 1392              		.section	.debug_line,"",%progbits
+ 1393              	.Ldebug_line0:
+ 1394 0000 F7010000 		.section	.debug_str,"MS",%progbits,1
+ 1394      02006C01 
+ 1394      00000201 
+ 1394      FB0E0D00 
+ 1394      01010101 
+ 1395              	.LASF41:
+ 1396 0000 72656C65 		.ascii	"release_freq\000"
+ 1396      6173655F 
+ 1396      66726571 
+ 1396      00
+ 1397              	.LASF0:
+ 1398 000d 5F5F696E 		.ascii	"__int8_t\000"
+ 1398      74385F74 
+ 1398      00
+ 1399              	.LASF29:
+ 1400 0016 6E6F7465 		.ascii	"note_index\000"
+ 1400      5F696E64 
+ 1400      657800
+ 1401              	.LASF1:
+ 1402 0021 5F5F7569 		.ascii	"__uint8_t\000"
+ 1402      6E74385F 
+ 1402      7400
+ 1403              	.LASF44:
+ 1404 002b 6F736369 		.ascii	"oscillator.c\000"
+ 1404      6C6C6174 
+ 1404      6F722E63 
+ 1404      00
+ 1405              	.LASF4:
+ 1406 0038 5F5F696E 		.ascii	"__int16_t\000"
+ 1406      7431365F 
+ 1406      7400
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 30
+
+
+ 1407              	.LASF19:
+ 1408 0042 75696E74 		.ascii	"uint8\000"
+ 1408      3800
+ 1409              	.LASF14:
+ 1410 0048 696E7438 		.ascii	"int8_t\000"
+ 1410      5F7400
+ 1411              	.LASF40:
+ 1412 004f 73757374 		.ascii	"sustain_freq\000"
+ 1412      61696E5F 
+ 1412      66726571 
+ 1412      00
+ 1413              	.LASF34:
+ 1414 005c 62617365 		.ascii	"base_sine\000"
+ 1414      5F73696E 
+ 1414      6500
+ 1415              	.LASF20:
+ 1416 0066 666C6F61 		.ascii	"float\000"
+ 1416      7400
+ 1417              	.LASF32:
+ 1418 006c 6E6F7465 		.ascii	"note\000"
+ 1418      00
+ 1419              	.LASF3:
+ 1420 0071 756E7369 		.ascii	"unsigned char\000"
+ 1420      676E6564 
+ 1420      20636861 
+ 1420      7200
+ 1421              	.LASF39:
+ 1422 007f 64656361 		.ascii	"decay_freq\000"
+ 1422      795F6672 
+ 1422      657100
+ 1423              	.LASF10:
+ 1424 008a 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1424      20756E73 
+ 1424      69676E65 
+ 1424      6420696E 
+ 1424      7400
+ 1425              	.LASF25:
+ 1426 009c 656E765F 		.ascii	"env_index\000"
+ 1426      696E6465 
+ 1426      7800
+ 1427              	.LASF8:
+ 1428 00a6 6C6F6E67 		.ascii	"long int\000"
+ 1428      20696E74 
+ 1428      00
+ 1429              	.LASF9:
+ 1430 00af 5F5F7569 		.ascii	"__uint32_t\000"
+ 1430      6E743332 
+ 1430      5F7400
+ 1431              	.LASF36:
+ 1432 00ba 62617365 		.ascii	"base_sq\000"
+ 1432      5F737100 
+ 1433              	.LASF6:
+ 1434 00c2 5F5F7569 		.ascii	"__uint16_t\000"
+ 1434      6E743136 
+ 1434      5F7400
+ 1435              	.LASF21:
+ 1436 00cd 646F7562 		.ascii	"double\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 31
+
+
+ 1436      6C6500
+ 1437              	.LASF5:
+ 1438 00d4 73686F72 		.ascii	"short int\000"
+ 1438      7420696E 
+ 1438      7400
+ 1439              	.LASF46:
+ 1440 00de 766F6963 		.ascii	"voice\000"
+ 1440      6500
+ 1441              	.LASF13:
+ 1442 00e4 756E7369 		.ascii	"unsigned int\000"
+ 1442      676E6564 
+ 1442      20696E74 
+ 1442      00
+ 1443              	.LASF12:
+ 1444 00f1 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1444      206C6F6E 
+ 1444      6720756E 
+ 1444      7369676E 
+ 1444      65642069 
+ 1445              	.LASF15:
+ 1446 0108 75696E74 		.ascii	"uint8_t\000"
+ 1446      385F7400 
+ 1447              	.LASF16:
+ 1448 0110 696E7431 		.ascii	"int16_t\000"
+ 1448      365F7400 
+ 1449              	.LASF26:
+ 1450 0118 656E765F 		.ascii	"env_multiplier\000"
+ 1450      6D756C74 
+ 1450      69706C69 
+ 1450      657200
+ 1451              	.LASF43:
+ 1452 0127 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1452      43313120 
+ 1452      352E342E 
+ 1452      31203230 
+ 1452      31363036 
+ 1453 015a 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1453      20726576 
+ 1453      6973696F 
+ 1453      6E203233 
+ 1453      37373135 
+ 1454 018d 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1454      66756E63 
+ 1454      74696F6E 
+ 1454      2D736563 
+ 1454      74696F6E 
+ 1455              	.LASF24:
+ 1456 01b5 73697A65 		.ascii	"sizetype\000"
+ 1456      74797065 
+ 1456      00
+ 1457              	.LASF7:
+ 1458 01be 73686F72 		.ascii	"short unsigned int\000"
+ 1458      7420756E 
+ 1458      7369676E 
+ 1458      65642069 
+ 1458      6E7400
+ 1459              	.LASF11:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 32
+
+
+ 1460 01d1 6C6F6E67 		.ascii	"long long int\000"
+ 1460      206C6F6E 
+ 1460      6720696E 
+ 1460      7400
+ 1461              	.LASF35:
+ 1462 01df 62617365 		.ascii	"base_pos_saw\000"
+ 1462      5F706F73 
+ 1462      5F736177 
+ 1462      00
+ 1463              	.LASF22:
+ 1464 01ec 63686172 		.ascii	"char\000"
+ 1464      00
+ 1465              	.LASF42:
+ 1466 01f1 6D757369 		.ascii	"music_notes\000"
+ 1466      635F6E6F 
+ 1466      74657300 
+ 1467              	.LASF28:
+ 1468 01fd 66726571 		.ascii	"freq\000"
+ 1468      00
+ 1469              	.LASF30:
+ 1470 0202 50726F63 		.ascii	"ProcessVoice\000"
+ 1470      65737356 
+ 1470      6F696365 
+ 1470      00
+ 1471              	.LASF17:
+ 1472 020f 75696E74 		.ascii	"uint16_t\000"
+ 1472      31365F74 
+ 1472      00
+ 1473              	.LASF38:
+ 1474 0218 61747461 		.ascii	"attack_freq\000"
+ 1474      636B5F66 
+ 1474      72657100 
+ 1475              	.LASF18:
+ 1476 0224 75696E74 		.ascii	"uint32_t\000"
+ 1476      33325F74 
+ 1476      00
+ 1477              	.LASF33:
+ 1478 022d 4E6F7465 		.ascii	"NoteOff\000"
+ 1478      4F666600 
+ 1479              	.LASF45:
+ 1480 0235 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 1480      6F63756D 
+ 1480      656E7473 
+ 1480      5C456E67 
+ 1480      696E6565 
+ 1481 0263 43797072 		.ascii	"Cypress\\synth-wavetable.cydsn\000"
+ 1481      6573735C 
+ 1481      73796E74 
+ 1481      682D7761 
+ 1481      76657461 
+ 1482              	.LASF23:
+ 1483 0281 6C6F6E67 		.ascii	"long double\000"
+ 1483      20646F75 
+ 1483      626C6500 
+ 1484              	.LASF2:
+ 1485 028d 7369676E 		.ascii	"signed char\000"
+ 1485      65642063 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\ccrkUjHL.s 			page 33
+
+
+ 1485      68617200 
+ 1486              	.LASF31:
+ 1487 0299 44697370 		.ascii	"DispatchNote\000"
+ 1487      61746368 
+ 1487      4E6F7465 
+ 1487      00
+ 1488              	.LASF37:
+ 1489 02a6 6C666F5F 		.ascii	"lfo_sine\000"
+ 1489      73696E65 
+ 1489      00
+ 1490              	.LASF27:
+ 1491 02af 63757272 		.ascii	"current_env_mode\000"
+ 1491      656E745F 
+ 1491      656E765F 
+ 1491      6D6F6465 
+ 1491      00
+ 1492              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

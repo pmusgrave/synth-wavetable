@@ -1,0 +1,1792 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"SPI_RxDMA.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.SPI_RxDMA_Init,"ax",%progbits
+  20              		.align	2
+  21              		.global	SPI_RxDMA_Init
+  22              		.code	16
+  23              		.thumb_func
+  24              		.type	SPI_RxDMA_Init, %function
+  25              	SPI_RxDMA_Init:
+  26              	.LFB33:
+  27              		.file 1 "Generated_Source\\PSoC4\\SPI_RxDMA.c"
+   1:Generated_Source\PSoC4/SPI_RxDMA.c **** /*******************************************************************************
+   2:Generated_Source\PSoC4/SPI_RxDMA.c **** * File Name: SPI_RxDMA.h
+   3:Generated_Source\PSoC4/SPI_RxDMA.c **** * Version 1.0
+   4:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+   5:Generated_Source\PSoC4/SPI_RxDMA.c **** * Description:
+   6:Generated_Source\PSoC4/SPI_RxDMA.c **** *  This file contains all of the channel DMA API functions.
+   7:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+   8:Generated_Source\PSoC4/SPI_RxDMA.c **** ********************************************************************************
+   9:Generated_Source\PSoC4/SPI_RxDMA.c **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC4/SPI_RxDMA.c **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/SPI_RxDMA.c **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/SPI_RxDMA.c **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/SPI_RxDMA.c **** *******************************************************************************/
+  14:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  15:Generated_Source\PSoC4/SPI_RxDMA.c **** #include "SPI_RxDMA.h"
+  16:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  17:Generated_Source\PSoC4/SPI_RxDMA.c **** uint8 SPI_RxDMA_initVar = 0u;
+  18:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  19:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  20:Generated_Source\PSoC4/SPI_RxDMA.c **** /*******************************************************************************
+  21:Generated_Source\PSoC4/SPI_RxDMA.c **** * Function Name: SPI_RxDMA_Start
+  22:Generated_Source\PSoC4/SPI_RxDMA.c **** ********************************************************************************
+  23:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+  24:Generated_Source\PSoC4/SPI_RxDMA.c **** * Summary:
+  25:Generated_Source\PSoC4/SPI_RxDMA.c **** *  Calls Init() to configure the DMA channel based on the customizer settings if
+  26:Generated_Source\PSoC4/SPI_RxDMA.c **** *  the channel has not been initialized before.
+  27:Generated_Source\PSoC4/SPI_RxDMA.c **** *  Sets source and destination address, validates descriptor 0 and enables the
+  28:Generated_Source\PSoC4/SPI_RxDMA.c **** *  channel. After calling this function the DMA channel is active and waiting
+  29:Generated_Source\PSoC4/SPI_RxDMA.c **** *  for a trigger.
+  30:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 2
+
+
+  31:Generated_Source\PSoC4/SPI_RxDMA.c **** * Parameters:
+  32:Generated_Source\PSoC4/SPI_RxDMA.c **** *  srcAddress: Address of DMA transfer source for descriptor 0.
+  33:Generated_Source\PSoC4/SPI_RxDMA.c **** *  dstAddress: Address of DMA transfer destination for descriptor 0.
+  34:Generated_Source\PSoC4/SPI_RxDMA.c **** *                   
+  35:Generated_Source\PSoC4/SPI_RxDMA.c **** * Return:
+  36:Generated_Source\PSoC4/SPI_RxDMA.c **** *  None.
+  37:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+  38:Generated_Source\PSoC4/SPI_RxDMA.c **** *******************************************************************************/
+  39:Generated_Source\PSoC4/SPI_RxDMA.c **** void SPI_RxDMA_Start(void * srcAddress, void * dstAddress)
+  40:Generated_Source\PSoC4/SPI_RxDMA.c **** {
+  41:Generated_Source\PSoC4/SPI_RxDMA.c ****     if(0u == SPI_RxDMA_initVar)
+  42:Generated_Source\PSoC4/SPI_RxDMA.c ****     {
+  43:Generated_Source\PSoC4/SPI_RxDMA.c ****         SPI_RxDMA_Init();
+  44:Generated_Source\PSoC4/SPI_RxDMA.c ****         SPI_RxDMA_initVar = 1u;
+  45:Generated_Source\PSoC4/SPI_RxDMA.c ****     }
+  46:Generated_Source\PSoC4/SPI_RxDMA.c ****     CyDmaEnable();
+  47:Generated_Source\PSoC4/SPI_RxDMA.c ****     SPI_RxDMA_SetSrcAddress(0, srcAddress);
+  48:Generated_Source\PSoC4/SPI_RxDMA.c ****     SPI_RxDMA_SetDstAddress(0, dstAddress);
+  49:Generated_Source\PSoC4/SPI_RxDMA.c ****     SPI_RxDMA_ValidateDescriptor(0);
+  50:Generated_Source\PSoC4/SPI_RxDMA.c ****     SPI_RxDMA_ChEnable();
+  51:Generated_Source\PSoC4/SPI_RxDMA.c **** }
+  52:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  53:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  54:Generated_Source\PSoC4/SPI_RxDMA.c **** /*******************************************************************************
+  55:Generated_Source\PSoC4/SPI_RxDMA.c **** * Function Name: SPI_RxDMA_Init
+  56:Generated_Source\PSoC4/SPI_RxDMA.c **** ********************************************************************************
+  57:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+  58:Generated_Source\PSoC4/SPI_RxDMA.c **** * Summary:
+  59:Generated_Source\PSoC4/SPI_RxDMA.c **** *  Initializes the DMA channel based on the parameters set in the component
+  60:Generated_Source\PSoC4/SPI_RxDMA.c **** *  customizer. It is not necessary to call SPI_RxDMA_Init() because the
+  61:Generated_Source\PSoC4/SPI_RxDMA.c **** *  SPI_RxDMA_Start() API calls this function, which is the preferred method
+  62:Generated_Source\PSoC4/SPI_RxDMA.c **** *  to begin component operation.
+  63:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+  64:Generated_Source\PSoC4/SPI_RxDMA.c **** * Parameters:
+  65:Generated_Source\PSoC4/SPI_RxDMA.c **** *  None.
+  66:Generated_Source\PSoC4/SPI_RxDMA.c **** *                   
+  67:Generated_Source\PSoC4/SPI_RxDMA.c **** * Return:
+  68:Generated_Source\PSoC4/SPI_RxDMA.c **** *  None.
+  69:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+  70:Generated_Source\PSoC4/SPI_RxDMA.c **** * Side effect:
+  71:Generated_Source\PSoC4/SPI_RxDMA.c **** *  The first descriptor is set to descriptor 0. This function should not be
+  72:Generated_Source\PSoC4/SPI_RxDMA.c **** *  called while the channel is enabled. All settings will be reset to their
+  73:Generated_Source\PSoC4/SPI_RxDMA.c **** *  initial values.
+  74:Generated_Source\PSoC4/SPI_RxDMA.c **** *
+  75:Generated_Source\PSoC4/SPI_RxDMA.c **** *******************************************************************************/
+  76:Generated_Source\PSoC4/SPI_RxDMA.c **** void SPI_RxDMA_Init(void)
+  77:Generated_Source\PSoC4/SPI_RxDMA.c **** {
+  28              		.loc 1 77 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  78:Generated_Source\PSoC4/SPI_RxDMA.c ****     CYDMA_CH_CTL_BASE.ctl[SPI_RxDMA_CHANNEL] = SPI_RxDMA_CHANNEL_CFG;
+  33              		.loc 1 78 0
+  34 0000 8022     		movs	r2, #128
+  35 0002 5205     		lsls	r2, r2, #21
+  36 0004 064B     		ldr	r3, .L2
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 3
+
+
+  37 0006 1A60     		str	r2, [r3]
+  79:Generated_Source\PSoC4/SPI_RxDMA.c ****     CYDMA_DESCR_BASE.descriptor[SPI_RxDMA_CHANNEL][0].ctl = SPI_RxDMA_DESCR0_CFG;
+  38              		.loc 1 79 0
+  39 0008 064B     		ldr	r3, .L2+4
+  40 000a 074A     		ldr	r2, .L2+8
+  41 000c 9A60     		str	r2, [r3, #8]
+  80:Generated_Source\PSoC4/SPI_RxDMA.c ****     CYDMA_DESCR_BASE.descriptor[SPI_RxDMA_CHANNEL][1].ctl = SPI_RxDMA_DESCR1_CFG;
+  42              		.loc 1 80 0
+  43 000e 0022     		movs	r2, #0
+  44 0010 9A61     		str	r2, [r3, #24]
+  81:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+  82:Generated_Source\PSoC4/SPI_RxDMA.c ****     /* If the Generate IRQ option is selected for descriptor 0 or 1, set the
+  83:Generated_Source\PSoC4/SPI_RxDMA.c ****     * channel bit field in the DMA interrupt mask register.
+  84:Generated_Source\PSoC4/SPI_RxDMA.c ****     */
+  85:Generated_Source\PSoC4/SPI_RxDMA.c ****     #if (0u != ((SPI_RxDMA_DESCR0_CFG | SPI_RxDMA_DESCR1_CFG) & CYDMA_GENERATE_IRQ))
+  86:Generated_Source\PSoC4/SPI_RxDMA.c ****         CYDMA_INTR_MASK_REG |= SPI_RxDMA_CHANNEL_MASK;
+  45              		.loc 1 86 0
+  46 0012 064A     		ldr	r2, .L2+12
+  47 0014 1168     		ldr	r1, [r2]
+  48 0016 0123     		movs	r3, #1
+  49 0018 0B43     		orrs	r3, r1
+  50 001a 1360     		str	r3, [r2]
+  87:Generated_Source\PSoC4/SPI_RxDMA.c ****     #endif /* (0u != ((SPI_RxDMA_DESCR0_CFG | SPI_RxDMA_DESCR1_CFG) & CYDMA_GENERATE_IRQ)) */
+  88:Generated_Source\PSoC4/SPI_RxDMA.c **** }
+  51              		.loc 1 88 0
+  52              		@ sp needed
+  53 001c 7047     		bx	lr
+  54              	.L3:
+  55 001e C046     		.align	2
+  56              	.L2:
+  57 0020 80101040 		.word	1074794624
+  58 0024 00181040 		.word	1074796544
+  59 0028 1F006009 		.word	157286431
+  60 002c F8171040 		.word	1074796536
+  61              		.cfi_endproc
+  62              	.LFE33:
+  63              		.size	SPI_RxDMA_Init, .-SPI_RxDMA_Init
+  64              		.section	.text.SPI_RxDMA_Start,"ax",%progbits
+  65              		.align	2
+  66              		.global	SPI_RxDMA_Start
+  67              		.code	16
+  68              		.thumb_func
+  69              		.type	SPI_RxDMA_Start, %function
+  70              	SPI_RxDMA_Start:
+  71              	.LFB32:
+  40:Generated_Source\PSoC4/SPI_RxDMA.c ****     if(0u == SPI_RxDMA_initVar)
+  72              		.loc 1 40 0
+  73              		.cfi_startproc
+  74              		@ args = 0, pretend = 0, frame = 0
+  75              		@ frame_needed = 0, uses_anonymous_args = 0
+  76              	.LVL0:
+  77 0000 70B5     		push	{r4, r5, r6, lr}
+  78              		.cfi_def_cfa_offset 16
+  79              		.cfi_offset 4, -16
+  80              		.cfi_offset 5, -12
+  81              		.cfi_offset 6, -8
+  82              		.cfi_offset 14, -4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 4
+
+
+  83 0002 0500     		movs	r5, r0
+  84 0004 0C00     		movs	r4, r1
+  41:Generated_Source\PSoC4/SPI_RxDMA.c ****     {
+  85              		.loc 1 41 0
+  86 0006 0E4B     		ldr	r3, .L6
+  87 0008 1B78     		ldrb	r3, [r3]
+  88 000a 002B     		cmp	r3, #0
+  89 000c 04D1     		bne	.L5
+  43:Generated_Source\PSoC4/SPI_RxDMA.c ****         SPI_RxDMA_initVar = 1u;
+  90              		.loc 1 43 0
+  91 000e FFF7FEFF 		bl	SPI_RxDMA_Init
+  92              	.LVL1:
+  44:Generated_Source\PSoC4/SPI_RxDMA.c ****     }
+  93              		.loc 1 44 0
+  94 0012 0122     		movs	r2, #1
+  95 0014 0A4B     		ldr	r3, .L6
+  96 0016 1A70     		strb	r2, [r3]
+  97              	.L5:
+  46:Generated_Source\PSoC4/SPI_RxDMA.c ****     SPI_RxDMA_SetSrcAddress(0, srcAddress);
+  98              		.loc 1 46 0
+  99 0018 FFF7FEFF 		bl	CyDmaEnable
+ 100              	.LVL2:
+ 101              	.LBB10:
+ 102              	.LBB11:
+ 103              		.file 2 "Generated_Source\\PSoC4\\SPI_RxDMA.h"
+   1:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+   2:Generated_Source\PSoC4/SPI_RxDMA.h **** * File Name: SPI_RxDMA.h
+   3:Generated_Source\PSoC4/SPI_RxDMA.h **** * Version 1.0
+   4:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+   5:Generated_Source\PSoC4/SPI_RxDMA.h **** * Description:
+   6:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This file provides DMA channel defines and API function definitions.
+   7:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+   8:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+   9:Generated_Source\PSoC4/SPI_RxDMA.h **** * Copyright 2015, Cypress Semiconductor Corporation. All rights reserved.
+  10:Generated_Source\PSoC4/SPI_RxDMA.h **** * You may use this file only in accordance with the license, terms, conditions,
+  11:Generated_Source\PSoC4/SPI_RxDMA.h **** * disclaimers, and limitations in the end user license agreement accompanying
+  12:Generated_Source\PSoC4/SPI_RxDMA.h **** * the software package with which this file was provided.
+  13:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+  14:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  15:Generated_Source\PSoC4/SPI_RxDMA.h **** #ifndef CY_DMA_CHANNEL_SPI_RxDMA_H
+  16:Generated_Source\PSoC4/SPI_RxDMA.h **** #define CY_DMA_CHANNEL_SPI_RxDMA_H
+  17:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  18:Generated_Source\PSoC4/SPI_RxDMA.h **** #include "CyDMA.h"
+  19:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  20:Generated_Source\PSoC4/SPI_RxDMA.h ****     
+  21:Generated_Source\PSoC4/SPI_RxDMA.h **** /***************************************
+  22:Generated_Source\PSoC4/SPI_RxDMA.h **** *   Conditional Compilation Parameters
+  23:Generated_Source\PSoC4/SPI_RxDMA.h **** ***************************************/
+  24:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  25:Generated_Source\PSoC4/SPI_RxDMA.h **** #define SPI_RxDMA_CHANNEL           (SPI_RxDMA__CHANNEL_NUMBER)
+  26:Generated_Source\PSoC4/SPI_RxDMA.h **** #define SPI_RxDMA_CHANNEL_MASK      ((uint32)(1UL << SPI_RxDMA_CHANNEL))
+  27:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  28:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  29:Generated_Source\PSoC4/SPI_RxDMA.h **** /***************************************
+  30:Generated_Source\PSoC4/SPI_RxDMA.h **** *        Function Prototypes
+  31:Generated_Source\PSoC4/SPI_RxDMA.h **** ***************************************/
+  32:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 5
+
+
+  33:Generated_Source\PSoC4/SPI_RxDMA.h **** /* Functions specific to this DMA channel */
+  34:Generated_Source\PSoC4/SPI_RxDMA.h **** void SPI_RxDMA_Init(void);
+  35:Generated_Source\PSoC4/SPI_RxDMA.h **** void SPI_RxDMA_Start(void * srcAddress, void * dstAddress);
+  36:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  37:Generated_Source\PSoC4/SPI_RxDMA.h **** /* Inline functions that call global API functions */
+  38:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_ChEnable(void);
+  39:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_ChDisable(void);
+  40:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_Trigger(void);
+  41:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetPriority(int32 priority);
+  42:Generated_Source\PSoC4/SPI_RxDMA.h **** static int32  SPI_RxDMA_GetPriority(void);
+  43:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetNextDescriptor(int32 descriptor);
+  44:Generated_Source\PSoC4/SPI_RxDMA.h **** static int32  SPI_RxDMA_GetNextDescriptor(void);
+  45:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetConfiguration(int32 descriptor, const cydma_init_struct * config);
+  46:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_ValidateDescriptor(int32 descriptor);
+  47:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetDescriptorStatus(int32 descriptor);
+  48:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetSrcAddress(int32 descriptor, void * srcAddress);
+  49:Generated_Source\PSoC4/SPI_RxDMA.h **** static void * SPI_RxDMA_GetSrcAddress(int32 descriptor);
+  50:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetDstAddress(int32 descriptor, void * dstAddress);
+  51:Generated_Source\PSoC4/SPI_RxDMA.h **** static void * SPI_RxDMA_GetDstAddress(int32 descriptor);
+  52:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetDataElementSize(int32 descriptor, uint32 dataElementSize);
+  53:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetDataElementSize(int32 descriptor);
+  54:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetNumDataElements(int32 descriptor, int32 numDataElements);
+  55:Generated_Source\PSoC4/SPI_RxDMA.h **** static int32  SPI_RxDMA_GetNumDataElements(int32 descriptor);
+  56:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetSrcDstTransferWidth(int32 descriptor, uint32 transferWidth);
+  57:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetSrcDstTransferWidth(int32 descriptor);
+  58:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetAddressIncrement(int32 descriptor, uint32 addressIncrement);
+  59:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetAddressIncrement(int32 descriptor);
+  60:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetTriggerType(int32 descriptor, uint32 triggerType);
+  61:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetTriggerType(int32 descriptor);
+  62:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetTransferMode(int32 descriptor, uint32 transferMode);
+  63:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetTransferMode(int32 descriptor);
+  64:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetPreemptable(int32 descriptor, uint32 preemptable);
+  65:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetPreemptable(int32 descriptor);
+  66:Generated_Source\PSoC4/SPI_RxDMA.h **** static void   SPI_RxDMA_SetPostCompletionActions(int32 descriptor, uint32 actions);
+  67:Generated_Source\PSoC4/SPI_RxDMA.h **** static uint32 SPI_RxDMA_GetPostCompletionAction(int32 descriptor);
+  68:Generated_Source\PSoC4/SPI_RxDMA.h **** static cydma_callback_t SPI_RxDMA_SetInterruptCallback(cydma_callback_t callback);
+  69:Generated_Source\PSoC4/SPI_RxDMA.h **** static cydma_callback_t SPI_RxDMA_GetInterruptCallback(void);
+  70:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  71:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  72:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+  73:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_ChEnable
+  74:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+  75:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+  76:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+  77:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Enables the DMA channel. It is not necessary to call SPI_RxDMA_ChEnable()
+  78:Generated_Source\PSoC4/SPI_RxDMA.h **** *  because the SPI_RxDMA_Start() API calls this function, which is the
+  79:Generated_Source\PSoC4/SPI_RxDMA.h **** *  preferred method to begin the component operation.
+  80:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+  81:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+  82:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+  83:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+  84:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+  85:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+  86:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+  87:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+  88:Generated_Source\PSoC4/SPI_RxDMA.h **** *  If this function is called before SPI_RxDMA_Start(), or SPI_RxDMA_Init()
+  89:Generated_Source\PSoC4/SPI_RxDMA.h **** *  or SPI_RxDMA_SetConfiguration(), and SPI_RxDMA_SetSrcAddress()
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 6
+
+
+  90:Generated_Source\PSoC4/SPI_RxDMA.h **** *  and SPI_RxDMA_SetDstAddress the operation of the DMA is 
+  91:Generated_Source\PSoC4/SPI_RxDMA.h **** *  undefined and could result in system data corruption. 
+  92:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+  93:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+  94:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_ChEnable(void)
+  95:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+  96:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaChEnable(SPI_RxDMA_CHANNEL);
+  97:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+  98:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+  99:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 100:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 101:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_ChDisable
+ 102:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 103:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 104:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 105:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Disables the DMA channel.
+ 106:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 107:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 108:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 109:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 110:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 111:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 112:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 113:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 114:Generated_Source\PSoC4/SPI_RxDMA.h **** *  If this function is called during a DMA transfer the transfer is aborted. 
+ 115:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 116:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 117:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_ChDisable(void)
+ 118:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 119:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaChDisable(SPI_RxDMA_CHANNEL);
+ 120:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 121:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 122:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 123:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 124:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_Trigger
+ 125:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 126:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 127:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 128:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Triggers the DMA channel, this is useful only for software triggers. This is
+ 129:Generated_Source\PSoC4/SPI_RxDMA.h **** *  not needed when hardware triggers are used.
+ 130:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 131:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 132:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 133:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 134:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 135:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None. 
+ 136:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 137:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 138:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_Trigger(void)
+ 139:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 140:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaTrigger(SPI_RxDMA_CHANNEL);
+ 141:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 142:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 143:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 144:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 145:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_SetPriority
+ 146:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 7
+
+
+ 147:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 148:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 149:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Sets the priority for the channel.
+ 150:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 151:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 152:Generated_Source\PSoC4/SPI_RxDMA.h **** *  priority: Priority for channel. Priority can be 0,1,2, or 3.
+ 153:Generated_Source\PSoC4/SPI_RxDMA.h **** *            0 is the highest priority.
+ 154:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 155:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 156:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 157:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 158:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 159:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This function should not be called while the channel is enabled.
+ 160:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 161:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 162:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_SetPriority(int32 priority)
+ 163:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 164:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaSetPriority(SPI_RxDMA_CHANNEL, priority);
+ 165:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 166:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 167:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 168:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 169:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_GetPriority
+ 170:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 171:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 172:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 173:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Gets the priority for the channel.
+ 174:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 175:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 176:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 177:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 178:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 179:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Priority for channel. Priority can be 0,1,2, or 3. 0 is the highest priority.
+ 180:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 181:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 182:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE int32 SPI_RxDMA_GetPriority(void)
+ 183:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 184:Generated_Source\PSoC4/SPI_RxDMA.h ****     return (CyDmaGetPriority(SPI_RxDMA_CHANNEL));
+ 185:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 186:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 187:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 188:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 189:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_SetNextDescriptor
+ 190:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 191:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 192:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 193:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Sets the descriptor that should be run the next time the channel is
+ 194:Generated_Source\PSoC4/SPI_RxDMA.h **** *  triggered.
+ 195:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 196:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 197:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Next Descriptor to run (0 or 1).
+ 198:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 199:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 200:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This function should not be called while the channel is enabled.
+ 201:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 202:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 203:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_SetNextDescriptor(int32 descriptor)
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 8
+
+
+ 204:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 205:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaSetNextDescriptor(SPI_RxDMA_CHANNEL, descriptor);
+ 206:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 207:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 208:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 209:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 210:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_GetNextDescriptor
+ 211:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 212:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 213:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 214:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Returns the next descriptor that should be run, as set by 
+ 215:Generated_Source\PSoC4/SPI_RxDMA.h **** *  SPI_RxDMA_SetNextDescriptor().
+ 216:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 217:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 218:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 219:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 220:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 221:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Next Descriptor to run (0 or 1).
+ 222:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 223:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 224:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE int32 SPI_RxDMA_GetNextDescriptor(void)
+ 225:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 226:Generated_Source\PSoC4/SPI_RxDMA.h ****     return (CyDmaGetNextDescriptor(SPI_RxDMA_CHANNEL));
+ 227:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 228:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 229:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 230:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 231:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_SetConfiguration
+ 232:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 233:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 234:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 235:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Sets configuration information for the specified descriptor.
+ 236:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 237:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 238:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 239:Generated_Source\PSoC4/SPI_RxDMA.h **** *  config: Pointer to a configuration structure. Refer to cydma_init_struct
+ 240:Generated_Source\PSoC4/SPI_RxDMA.h **** *          structure definition in CyDMA_P4.h or the component datasheet.
+ 241:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 242:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 243:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 244:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 245:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 246:Generated_Source\PSoC4/SPI_RxDMA.h **** *  The status register associated with the specified descriptor is reset to
+ 247:Generated_Source\PSoC4/SPI_RxDMA.h **** *  zero after this function call. This function also validates the descriptor.
+ 248:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This function should not be called while the descriptor is active.
+ 249:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This can be checked by calling CyDmaGetStatus().
+ 250:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 251:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 252:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_SetConfiguration(int32 descriptor, const cydma_init_struct * config
+ 253:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 254:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaSetConfiguration(SPI_RxDMA_CHANNEL, descriptor, config);
+ 255:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 256:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 257:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 258:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 259:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_ValidateDescriptor
+ 260:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 9
+
+
+ 261:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 262:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 263:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Validates the specified descriptor after it has been invalidated.
+ 264:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 265:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 266:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 267:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 268:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 269:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None. 
+ 270:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 271:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 272:Generated_Source\PSoC4/SPI_RxDMA.h **** *  The status register associated with the specified descriptor is reset to
+ 273:Generated_Source\PSoC4/SPI_RxDMA.h **** *  zero after this function call. This function should not be called while the
+ 274:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor is active. This can be checked by calling CyDmaGetStatus().
+ 275:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 276:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 277:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_ValidateDescriptor(int32 descriptor)
+ 278:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 279:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaValidateDescriptor(SPI_RxDMA_CHANNEL, descriptor);
+ 280:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 281:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 282:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 283:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 284:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_GetDescriptorStatus
+ 285:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 286:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 287:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 288:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Returns the status of the specified descriptor.
+ 289:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 290:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 291:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 292:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 293:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 294:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Returns the contents of the specified descriptors status register. Refer to 
+ 295:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor status register bit definitions in CyDMA_P4.h or the API
+ 296:Generated_Source\PSoC4/SPI_RxDMA.h **** *  description in the DMA channel datasheet for more information.
+ 297:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 298:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 299:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE uint32 SPI_RxDMA_GetDescriptorStatus(int32 descriptor)
+ 300:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 301:Generated_Source\PSoC4/SPI_RxDMA.h ****     return (CyDmaGetDescriptorStatus(SPI_RxDMA_CHANNEL, descriptor));
+ 302:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 303:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 304:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 305:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 306:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_SetSrcAddress
+ 307:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 308:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 309:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 310:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Configures the source address for the specified descriptor.
+ 311:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 312:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 313:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 314:Generated_Source\PSoC4/SPI_RxDMA.h **** *  srcAddress: Address of DMA transfer source.
+ 315:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 316:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 317:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 10
+
+
+ 318:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 319:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 320:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This function should not be called when the specified descriptor is active
+ 321:Generated_Source\PSoC4/SPI_RxDMA.h **** *  in the DMA transfer engine. This can be checked by calling CyDmaGetStatus(). 
+ 322:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 323:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 324:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_SetSrcAddress(int32 descriptor, void * srcAddress)
+ 325:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 326:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaSetSrcAddress(SPI_RxDMA_CHANNEL, descriptor, srcAddress);
+ 104              		.loc 2 326 0
+ 105 001c 2A00     		movs	r2, r5
+ 106 001e 0021     		movs	r1, #0
+ 107 0020 0020     		movs	r0, #0
+ 108 0022 FFF7FEFF 		bl	CyDmaSetSrcAddress
+ 109              	.LVL3:
+ 110              	.LBE11:
+ 111              	.LBE10:
+ 112              	.LBB12:
+ 113              	.LBB13:
+ 327:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 328:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 329:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 330:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 331:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_GetSrcAddress
+ 332:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 333:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 334:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 335:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Returns the source address for the specified descriptor, set by either 
+ 336:Generated_Source\PSoC4/SPI_RxDMA.h **** *  SPI_RxDMA_Start() or SPI_RxDMA_SetSrcAddress().
+ 337:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 338:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 339:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Specifies descriptor (0 or 1) used by this function.
+ 340:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 341:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 342:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Source address written to specified descriptor.
+ 343:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 344:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 345:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void * SPI_RxDMA_GetSrcAddress(int32 descriptor)
+ 346:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 347:Generated_Source\PSoC4/SPI_RxDMA.h ****     return (CyDmaGetSrcAddress(SPI_RxDMA_CHANNEL, descriptor));
+ 348:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 349:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 350:Generated_Source\PSoC4/SPI_RxDMA.h **** 
+ 351:Generated_Source\PSoC4/SPI_RxDMA.h **** /*******************************************************************************
+ 352:Generated_Source\PSoC4/SPI_RxDMA.h **** * Function Name: SPI_RxDMA_SetDstAddress
+ 353:Generated_Source\PSoC4/SPI_RxDMA.h **** ********************************************************************************
+ 354:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 355:Generated_Source\PSoC4/SPI_RxDMA.h **** * Summary:
+ 356:Generated_Source\PSoC4/SPI_RxDMA.h **** *  Configures the destination address for the specified descriptor.
+ 357:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 358:Generated_Source\PSoC4/SPI_RxDMA.h **** * Parameters:
+ 359:Generated_Source\PSoC4/SPI_RxDMA.h **** *  descriptor: Descriptor (0 or 1) modified by this function.
+ 360:Generated_Source\PSoC4/SPI_RxDMA.h **** *  dstAddress: Address of DMA transfer destination.
+ 361:Generated_Source\PSoC4/SPI_RxDMA.h **** *                   
+ 362:Generated_Source\PSoC4/SPI_RxDMA.h **** * Return:
+ 363:Generated_Source\PSoC4/SPI_RxDMA.h **** *  None.
+ 364:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 11
+
+
+ 365:Generated_Source\PSoC4/SPI_RxDMA.h **** * Side effect:
+ 366:Generated_Source\PSoC4/SPI_RxDMA.h **** *  This function should not be called when the specified descriptor is active
+ 367:Generated_Source\PSoC4/SPI_RxDMA.h **** *  in the DMA transfer engine. This can be checked by calling CyDmaGetStatus(). 
+ 368:Generated_Source\PSoC4/SPI_RxDMA.h **** *
+ 369:Generated_Source\PSoC4/SPI_RxDMA.h **** *******************************************************************************/
+ 370:Generated_Source\PSoC4/SPI_RxDMA.h **** static CY_INLINE void SPI_RxDMA_SetDstAddress(int32 descriptor, void * dstAddress)
+ 371:Generated_Source\PSoC4/SPI_RxDMA.h **** {
+ 372:Generated_Source\PSoC4/SPI_RxDMA.h ****     CyDmaSetDstAddress(SPI_RxDMA_CHANNEL, descriptor, dstAddress);
+ 114              		.loc 2 372 0
+ 115 0026 2200     		movs	r2, r4
+ 116 0028 0021     		movs	r1, #0
+ 117 002a 0020     		movs	r0, #0
+ 118 002c FFF7FEFF 		bl	CyDmaSetDstAddress
+ 119              	.LVL4:
+ 120              	.LBE13:
+ 121              	.LBE12:
+ 122              	.LBB14:
+ 123              	.LBB15:
+ 279:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 124              		.loc 2 279 0
+ 125 0030 0021     		movs	r1, #0
+ 126 0032 0020     		movs	r0, #0
+ 127 0034 FFF7FEFF 		bl	CyDmaValidateDescriptor
+ 128              	.LVL5:
+ 129              	.LBE15:
+ 130              	.LBE14:
+ 131              	.LBB16:
+ 132              	.LBB17:
+  96:Generated_Source\PSoC4/SPI_RxDMA.h **** }
+ 133              		.loc 2 96 0
+ 134 0038 0020     		movs	r0, #0
+ 135 003a FFF7FEFF 		bl	CyDmaChEnable
+ 136              	.LVL6:
+ 137              	.LBE17:
+ 138              	.LBE16:
+  51:Generated_Source\PSoC4/SPI_RxDMA.c **** 
+ 139              		.loc 1 51 0
+ 140              		@ sp needed
+ 141              	.LVL7:
+ 142              	.LVL8:
+ 143 003e 70BD     		pop	{r4, r5, r6, pc}
+ 144              	.L7:
+ 145              		.align	2
+ 146              	.L6:
+ 147 0040 00000000 		.word	.LANCHOR0
+ 148              		.cfi_endproc
+ 149              	.LFE32:
+ 150              		.size	SPI_RxDMA_Start, .-SPI_RxDMA_Start
+ 151              		.global	SPI_RxDMA_initVar
+ 152              		.bss
+ 153              		.set	.LANCHOR0,. + 0
+ 154              		.type	SPI_RxDMA_initVar, %object
+ 155              		.size	SPI_RxDMA_initVar, 1
+ 156              	SPI_RxDMA_initVar:
+ 157 0000 00       		.space	1
+ 158              		.text
+ 159              	.Letext0:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 12
+
+
+ 160              		.file 3 "Generated_Source\\PSoC4\\cytypes.h"
+ 161              		.file 4 "Generated_Source\\PSoC4\\CyDMA.h"
+ 162              		.section	.debug_info,"",%progbits
+ 163              	.Ldebug_info0:
+ 164 0000 47030000 		.4byte	0x347
+ 165 0004 0400     		.2byte	0x4
+ 166 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 167 000a 04       		.byte	0x4
+ 168 000b 01       		.uleb128 0x1
+ 169 000c AC000000 		.4byte	.LASF32
+ 170 0010 0C       		.byte	0xc
+ 171 0011 13000000 		.4byte	.LASF33
+ 172 0015 71010000 		.4byte	.LASF34
+ 173 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 174 001d 00000000 		.4byte	0
+ 175 0021 00000000 		.4byte	.Ldebug_line0
+ 176 0025 02       		.uleb128 0x2
+ 177 0026 01       		.byte	0x1
+ 178 0027 06       		.byte	0x6
+ 179 0028 FB010000 		.4byte	.LASF0
+ 180 002c 02       		.uleb128 0x2
+ 181 002d 01       		.byte	0x1
+ 182 002e 08       		.byte	0x8
+ 183 002f ED010000 		.4byte	.LASF1
+ 184 0033 02       		.uleb128 0x2
+ 185 0034 02       		.byte	0x2
+ 186 0035 05       		.byte	0x5
+ 187 0036 6C000000 		.4byte	.LASF2
+ 188 003a 02       		.uleb128 0x2
+ 189 003b 02       		.byte	0x2
+ 190 003c 07       		.byte	0x7
+ 191 003d 43020000 		.4byte	.LASF3
+ 192 0041 02       		.uleb128 0x2
+ 193 0042 04       		.byte	0x4
+ 194 0043 05       		.byte	0x5
+ 195 0044 D1010000 		.4byte	.LASF4
+ 196 0048 02       		.uleb128 0x2
+ 197 0049 04       		.byte	0x4
+ 198 004a 07       		.byte	0x7
+ 199 004b B7020000 		.4byte	.LASF5
+ 200 004f 02       		.uleb128 0x2
+ 201 0050 08       		.byte	0x8
+ 202 0051 05       		.byte	0x5
+ 203 0052 C3010000 		.4byte	.LASF6
+ 204 0056 02       		.uleb128 0x2
+ 205 0057 08       		.byte	0x8
+ 206 0058 07       		.byte	0x7
+ 207 0059 07020000 		.4byte	.LASF7
+ 208 005d 03       		.uleb128 0x3
+ 209 005e 04       		.byte	0x4
+ 210 005f 05       		.byte	0x5
+ 211 0060 696E7400 		.ascii	"int\000"
+ 212 0064 02       		.uleb128 0x2
+ 213 0065 04       		.byte	0x4
+ 214 0066 07       		.byte	0x7
+ 215 0067 1E020000 		.4byte	.LASF8
+ 216 006b 04       		.uleb128 0x4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 13
+
+
+ 217 006c 6B010000 		.4byte	.LASF9
+ 218 0070 03       		.byte	0x3
+ 219 0071 E401     		.2byte	0x1e4
+ 220 0073 2C000000 		.4byte	0x2c
+ 221 0077 04       		.uleb128 0x4
+ 222 0078 B0020000 		.4byte	.LASF10
+ 223 007c 03       		.byte	0x3
+ 224 007d E601     		.2byte	0x1e6
+ 225 007f 48000000 		.4byte	0x48
+ 226 0083 04       		.uleb128 0x4
+ 227 0084 C9020000 		.4byte	.LASF11
+ 228 0088 03       		.byte	0x3
+ 229 0089 E901     		.2byte	0x1e9
+ 230 008b 41000000 		.4byte	0x41
+ 231 008f 02       		.uleb128 0x2
+ 232 0090 04       		.byte	0x4
+ 233 0091 04       		.byte	0x4
+ 234 0092 BD010000 		.4byte	.LASF12
+ 235 0096 02       		.uleb128 0x2
+ 236 0097 08       		.byte	0x8
+ 237 0098 04       		.byte	0x4
+ 238 0099 CF020000 		.4byte	.LASF13
+ 239 009d 02       		.uleb128 0x2
+ 240 009e 01       		.byte	0x1
+ 241 009f 08       		.byte	0x8
+ 242 00a0 88020000 		.4byte	.LASF14
+ 243 00a4 04       		.uleb128 0x4
+ 244 00a5 3D020000 		.4byte	.LASF15
+ 245 00a9 03       		.byte	0x3
+ 246 00aa 9002     		.2byte	0x290
+ 247 00ac B0000000 		.4byte	0xb0
+ 248 00b0 05       		.uleb128 0x5
+ 249 00b1 77000000 		.4byte	0x77
+ 250 00b5 06       		.uleb128 0x6
+ 251 00b6 80       		.byte	0x80
+ 252 00b7 04       		.byte	0x4
+ 253 00b8 26       		.byte	0x26
+ 254 00b9 CA000000 		.4byte	0xca
+ 255 00bd 07       		.uleb128 0x7
+ 256 00be 63746C00 		.ascii	"ctl\000"
+ 257 00c2 04       		.byte	0x4
+ 258 00c3 28       		.byte	0x28
+ 259 00c4 CA000000 		.4byte	0xca
+ 260 00c8 00       		.byte	0
+ 261 00c9 00       		.byte	0
+ 262 00ca 08       		.uleb128 0x8
+ 263 00cb 77000000 		.4byte	0x77
+ 264 00cf DA000000 		.4byte	0xda
+ 265 00d3 09       		.uleb128 0x9
+ 266 00d4 DA000000 		.4byte	0xda
+ 267 00d8 1F       		.byte	0x1f
+ 268 00d9 00       		.byte	0
+ 269 00da 02       		.uleb128 0x2
+ 270 00db 04       		.byte	0x4
+ 271 00dc 07       		.byte	0x7
+ 272 00dd 76000000 		.4byte	.LASF16
+ 273 00e1 0A       		.uleb128 0xa
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 14
+
+
+ 274 00e2 52010000 		.4byte	.LASF17
+ 275 00e6 04       		.byte	0x4
+ 276 00e7 29       		.byte	0x29
+ 277 00e8 B5000000 		.4byte	0xb5
+ 278 00ec 06       		.uleb128 0x6
+ 279 00ed 10       		.byte	0x10
+ 280 00ee 04       		.byte	0x4
+ 281 00ef 2C       		.byte	0x2c
+ 282 00f0 25010000 		.4byte	0x125
+ 283 00f4 07       		.uleb128 0x7
+ 284 00f5 73726300 		.ascii	"src\000"
+ 285 00f9 04       		.byte	0x4
+ 286 00fa 2E       		.byte	0x2e
+ 287 00fb 25010000 		.4byte	0x125
+ 288 00ff 00       		.byte	0
+ 289 0100 07       		.uleb128 0x7
+ 290 0101 64737400 		.ascii	"dst\000"
+ 291 0105 04       		.byte	0x4
+ 292 0106 2F       		.byte	0x2f
+ 293 0107 25010000 		.4byte	0x125
+ 294 010b 04       		.byte	0x4
+ 295 010c 07       		.uleb128 0x7
+ 296 010d 63746C00 		.ascii	"ctl\000"
+ 297 0111 04       		.byte	0x4
+ 298 0112 30       		.byte	0x30
+ 299 0113 77000000 		.4byte	0x77
+ 300 0117 08       		.byte	0x8
+ 301 0118 0B       		.uleb128 0xb
+ 302 0119 56020000 		.4byte	.LASF18
+ 303 011d 04       		.byte	0x4
+ 304 011e 31       		.byte	0x31
+ 305 011f 77000000 		.4byte	0x77
+ 306 0123 0C       		.byte	0xc
+ 307 0124 00       		.byte	0
+ 308 0125 0C       		.uleb128 0xc
+ 309 0126 04       		.byte	0x4
+ 310 0127 0A       		.uleb128 0xa
+ 311 0128 8D020000 		.4byte	.LASF19
+ 312 012c 04       		.byte	0x4
+ 313 012d 32       		.byte	0x32
+ 314 012e EC000000 		.4byte	0xec
+ 315 0132 0D       		.uleb128 0xd
+ 316 0133 0004     		.2byte	0x400
+ 317 0135 04       		.byte	0x4
+ 318 0136 38       		.byte	0x38
+ 319 0137 48010000 		.4byte	0x148
+ 320 013b 0B       		.uleb128 0xb
+ 321 013c 08030000 		.4byte	.LASF20
+ 322 0140 04       		.byte	0x4
+ 323 0141 3A       		.byte	0x3a
+ 324 0142 48010000 		.4byte	0x148
+ 325 0146 00       		.byte	0
+ 326 0147 00       		.byte	0
+ 327 0148 08       		.uleb128 0x8
+ 328 0149 27010000 		.4byte	0x127
+ 329 014d 5E010000 		.4byte	0x15e
+ 330 0151 09       		.uleb128 0x9
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 15
+
+
+ 331 0152 DA000000 		.4byte	0xda
+ 332 0156 1F       		.byte	0x1f
+ 333 0157 09       		.uleb128 0x9
+ 334 0158 DA000000 		.4byte	0xda
+ 335 015c 01       		.byte	0x1
+ 336 015d 00       		.byte	0
+ 337 015e 0A       		.uleb128 0xa
+ 338 015f 5D020000 		.4byte	.LASF21
+ 339 0163 04       		.byte	0x4
+ 340 0164 3B       		.byte	0x3b
+ 341 0165 32010000 		.4byte	0x132
+ 342 0169 0E       		.uleb128 0xe
+ 343 016a 00000000 		.4byte	.LASF35
+ 344 016e 02       		.byte	0x2
+ 345 016f 5E       		.byte	0x5e
+ 346 0170 03       		.byte	0x3
+ 347 0171 0F       		.uleb128 0xf
+ 348 0172 7F000000 		.4byte	.LASF22
+ 349 0176 02       		.byte	0x2
+ 350 0177 1501     		.2byte	0x115
+ 351 0179 03       		.byte	0x3
+ 352 017a 8B010000 		.4byte	0x18b
+ 353 017e 10       		.uleb128 0x10
+ 354 017f 08030000 		.4byte	.LASF20
+ 355 0183 02       		.byte	0x2
+ 356 0184 1501     		.2byte	0x115
+ 357 0186 83000000 		.4byte	0x83
+ 358 018a 00       		.byte	0
+ 359 018b 0F       		.uleb128 0xf
+ 360 018c 3A010000 		.4byte	.LASF23
+ 361 0190 02       		.byte	0x2
+ 362 0191 7201     		.2byte	0x172
+ 363 0193 03       		.byte	0x3
+ 364 0194 B1010000 		.4byte	0x1b1
+ 365 0198 10       		.uleb128 0x10
+ 366 0199 08030000 		.4byte	.LASF20
+ 367 019d 02       		.byte	0x2
+ 368 019e 7201     		.2byte	0x172
+ 369 01a0 83000000 		.4byte	0x83
+ 370 01a4 10       		.uleb128 0x10
+ 371 01a5 36000000 		.4byte	.LASF24
+ 372 01a9 02       		.byte	0x2
+ 373 01aa 7201     		.2byte	0x172
+ 374 01ac 25010000 		.4byte	0x125
+ 375 01b0 00       		.byte	0
+ 376 01b1 0F       		.uleb128 0xf
+ 377 01b2 D6020000 		.4byte	.LASF25
+ 378 01b6 02       		.byte	0x2
+ 379 01b7 4401     		.2byte	0x144
+ 380 01b9 03       		.byte	0x3
+ 381 01ba D7010000 		.4byte	0x1d7
+ 382 01be 10       		.uleb128 0x10
+ 383 01bf 08030000 		.4byte	.LASF20
+ 384 01c3 02       		.byte	0x2
+ 385 01c4 4401     		.2byte	0x144
+ 386 01c6 83000000 		.4byte	0x83
+ 387 01ca 10       		.uleb128 0x10
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 16
+
+
+ 388 01cb A5020000 		.4byte	.LASF26
+ 389 01cf 02       		.byte	0x2
+ 390 01d0 4401     		.2byte	0x144
+ 391 01d2 25010000 		.4byte	0x125
+ 392 01d6 00       		.byte	0
+ 393 01d7 11       		.uleb128 0x11
+ 394 01d8 79020000 		.4byte	.LASF36
+ 395 01dc 01       		.byte	0x1
+ 396 01dd 4C       		.byte	0x4c
+ 397 01de 00000000 		.4byte	.LFB33
+ 398 01e2 30000000 		.4byte	.LFE33-.LFB33
+ 399 01e6 01       		.uleb128 0x1
+ 400 01e7 9C       		.byte	0x9c
+ 401 01e8 12       		.uleb128 0x12
+ 402 01e9 9C000000 		.4byte	.LASF37
+ 403 01ed 01       		.byte	0x1
+ 404 01ee 27       		.byte	0x27
+ 405 01ef 00000000 		.4byte	.LFB32
+ 406 01f3 44000000 		.4byte	.LFE32-.LFB32
+ 407 01f7 01       		.uleb128 0x1
+ 408 01f8 9C       		.byte	0x9c
+ 409 01f9 02030000 		.4byte	0x302
+ 410 01fd 13       		.uleb128 0x13
+ 411 01fe A5020000 		.4byte	.LASF26
+ 412 0202 01       		.byte	0x1
+ 413 0203 27       		.byte	0x27
+ 414 0204 25010000 		.4byte	0x125
+ 415 0208 00000000 		.4byte	.LLST0
+ 416 020c 13       		.uleb128 0x13
+ 417 020d 36000000 		.4byte	.LASF24
+ 418 0211 01       		.byte	0x1
+ 419 0212 27       		.byte	0x27
+ 420 0213 25010000 		.4byte	0x125
+ 421 0217 2C000000 		.4byte	.LLST1
+ 422 021b 14       		.uleb128 0x14
+ 423 021c B1010000 		.4byte	0x1b1
+ 424 0220 1C000000 		.4byte	.LBB10
+ 425 0224 0A000000 		.4byte	.LBE10-.LBB10
+ 426 0228 01       		.byte	0x1
+ 427 0229 2F       		.byte	0x2f
+ 428 022a 5B020000 		.4byte	0x25b
+ 429 022e 15       		.uleb128 0x15
+ 430 022f CA010000 		.4byte	0x1ca
+ 431 0233 58000000 		.4byte	.LLST2
+ 432 0237 15       		.uleb128 0x15
+ 433 0238 BE010000 		.4byte	0x1be
+ 434 023c 6B000000 		.4byte	.LLST3
+ 435 0240 16       		.uleb128 0x16
+ 436 0241 26000000 		.4byte	.LVL3
+ 437 0245 13030000 		.4byte	0x313
+ 438 0249 17       		.uleb128 0x17
+ 439 024a 01       		.uleb128 0x1
+ 440 024b 50       		.byte	0x50
+ 441 024c 01       		.uleb128 0x1
+ 442 024d 30       		.byte	0x30
+ 443 024e 17       		.uleb128 0x17
+ 444 024f 01       		.uleb128 0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 17
+
+
+ 445 0250 51       		.byte	0x51
+ 446 0251 01       		.uleb128 0x1
+ 447 0252 30       		.byte	0x30
+ 448 0253 17       		.uleb128 0x17
+ 449 0254 01       		.uleb128 0x1
+ 450 0255 52       		.byte	0x52
+ 451 0256 02       		.uleb128 0x2
+ 452 0257 75       		.byte	0x75
+ 453 0258 00       		.sleb128 0
+ 454 0259 00       		.byte	0
+ 455 025a 00       		.byte	0
+ 456 025b 14       		.uleb128 0x14
+ 457 025c 8B010000 		.4byte	0x18b
+ 458 0260 26000000 		.4byte	.LBB12
+ 459 0264 0A000000 		.4byte	.LBE12-.LBB12
+ 460 0268 01       		.byte	0x1
+ 461 0269 30       		.byte	0x30
+ 462 026a 9B020000 		.4byte	0x29b
+ 463 026e 15       		.uleb128 0x15
+ 464 026f A4010000 		.4byte	0x1a4
+ 465 0273 7F000000 		.4byte	.LLST4
+ 466 0277 15       		.uleb128 0x15
+ 467 0278 98010000 		.4byte	0x198
+ 468 027c 92000000 		.4byte	.LLST5
+ 469 0280 16       		.uleb128 0x16
+ 470 0281 30000000 		.4byte	.LVL4
+ 471 0285 1E030000 		.4byte	0x31e
+ 472 0289 17       		.uleb128 0x17
+ 473 028a 01       		.uleb128 0x1
+ 474 028b 50       		.byte	0x50
+ 475 028c 01       		.uleb128 0x1
+ 476 028d 30       		.byte	0x30
+ 477 028e 17       		.uleb128 0x17
+ 478 028f 01       		.uleb128 0x1
+ 479 0290 51       		.byte	0x51
+ 480 0291 01       		.uleb128 0x1
+ 481 0292 30       		.byte	0x30
+ 482 0293 17       		.uleb128 0x17
+ 483 0294 01       		.uleb128 0x1
+ 484 0295 52       		.byte	0x52
+ 485 0296 02       		.uleb128 0x2
+ 486 0297 74       		.byte	0x74
+ 487 0298 00       		.sleb128 0
+ 488 0299 00       		.byte	0
+ 489 029a 00       		.byte	0
+ 490 029b 14       		.uleb128 0x14
+ 491 029c 71010000 		.4byte	0x171
+ 492 02a0 30000000 		.4byte	.LBB14
+ 493 02a4 08000000 		.4byte	.LBE14-.LBB14
+ 494 02a8 01       		.byte	0x1
+ 495 02a9 31       		.byte	0x31
+ 496 02aa CC020000 		.4byte	0x2cc
+ 497 02ae 15       		.uleb128 0x15
+ 498 02af 7E010000 		.4byte	0x17e
+ 499 02b3 A6000000 		.4byte	.LLST6
+ 500 02b7 16       		.uleb128 0x16
+ 501 02b8 38000000 		.4byte	.LVL5
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 18
+
+
+ 502 02bc 29030000 		.4byte	0x329
+ 503 02c0 17       		.uleb128 0x17
+ 504 02c1 01       		.uleb128 0x1
+ 505 02c2 50       		.byte	0x50
+ 506 02c3 01       		.uleb128 0x1
+ 507 02c4 30       		.byte	0x30
+ 508 02c5 17       		.uleb128 0x17
+ 509 02c6 01       		.uleb128 0x1
+ 510 02c7 51       		.byte	0x51
+ 511 02c8 01       		.uleb128 0x1
+ 512 02c9 30       		.byte	0x30
+ 513 02ca 00       		.byte	0
+ 514 02cb 00       		.byte	0
+ 515 02cc 14       		.uleb128 0x14
+ 516 02cd 69010000 		.4byte	0x169
+ 517 02d1 38000000 		.4byte	.LBB16
+ 518 02d5 06000000 		.4byte	.LBE16-.LBB16
+ 519 02d9 01       		.byte	0x1
+ 520 02da 32       		.byte	0x32
+ 521 02db EF020000 		.4byte	0x2ef
+ 522 02df 16       		.uleb128 0x16
+ 523 02e0 3E000000 		.4byte	.LVL6
+ 524 02e4 34030000 		.4byte	0x334
+ 525 02e8 17       		.uleb128 0x17
+ 526 02e9 01       		.uleb128 0x1
+ 527 02ea 50       		.byte	0x50
+ 528 02eb 01       		.uleb128 0x1
+ 529 02ec 30       		.byte	0x30
+ 530 02ed 00       		.byte	0
+ 531 02ee 00       		.byte	0
+ 532 02ef 18       		.uleb128 0x18
+ 533 02f0 12000000 		.4byte	.LVL1
+ 534 02f4 D7010000 		.4byte	0x1d7
+ 535 02f8 18       		.uleb128 0x18
+ 536 02f9 1C000000 		.4byte	.LVL2
+ 537 02fd 3F030000 		.4byte	0x33f
+ 538 0301 00       		.byte	0
+ 539 0302 19       		.uleb128 0x19
+ 540 0303 2B020000 		.4byte	.LASF38
+ 541 0307 01       		.byte	0x1
+ 542 0308 11       		.byte	0x11
+ 543 0309 6B000000 		.4byte	0x6b
+ 544 030d 05       		.uleb128 0x5
+ 545 030e 03       		.byte	0x3
+ 546 030f 00000000 		.4byte	SPI_RxDMA_initVar
+ 547 0313 1A       		.uleb128 0x1a
+ 548 0314 59000000 		.4byte	.LASF27
+ 549 0318 59000000 		.4byte	.LASF27
+ 550 031c 04       		.byte	0x4
+ 551 031d 93       		.byte	0x93
+ 552 031e 1A       		.uleb128 0x1a
+ 553 031f DA010000 		.4byte	.LASF28
+ 554 0323 DA010000 		.4byte	.LASF28
+ 555 0327 04       		.byte	0x4
+ 556 0328 96       		.byte	0x96
+ 557 0329 1A       		.uleb128 0x1a
+ 558 032a 41000000 		.4byte	.LASF29
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 19
+
+
+ 559 032e 41000000 		.4byte	.LASF29
+ 560 0332 04       		.byte	0x4
+ 561 0333 8F       		.byte	0x8f
+ 562 0334 1A       		.uleb128 0x1a
+ 563 0335 EE020000 		.4byte	.LASF30
+ 564 0339 EE020000 		.4byte	.LASF30
+ 565 033d 04       		.byte	0x4
+ 566 033e 82       		.byte	0x82
+ 567 033f 1A       		.uleb128 0x1a
+ 568 0340 FC020000 		.4byte	.LASF31
+ 569 0344 FC020000 		.4byte	.LASF31
+ 570 0348 04       		.byte	0x4
+ 571 0349 6D       		.byte	0x6d
+ 572 034a 00       		.byte	0
+ 573              		.section	.debug_abbrev,"",%progbits
+ 574              	.Ldebug_abbrev0:
+ 575 0000 01       		.uleb128 0x1
+ 576 0001 11       		.uleb128 0x11
+ 577 0002 01       		.byte	0x1
+ 578 0003 25       		.uleb128 0x25
+ 579 0004 0E       		.uleb128 0xe
+ 580 0005 13       		.uleb128 0x13
+ 581 0006 0B       		.uleb128 0xb
+ 582 0007 03       		.uleb128 0x3
+ 583 0008 0E       		.uleb128 0xe
+ 584 0009 1B       		.uleb128 0x1b
+ 585 000a 0E       		.uleb128 0xe
+ 586 000b 55       		.uleb128 0x55
+ 587 000c 17       		.uleb128 0x17
+ 588 000d 11       		.uleb128 0x11
+ 589 000e 01       		.uleb128 0x1
+ 590 000f 10       		.uleb128 0x10
+ 591 0010 17       		.uleb128 0x17
+ 592 0011 00       		.byte	0
+ 593 0012 00       		.byte	0
+ 594 0013 02       		.uleb128 0x2
+ 595 0014 24       		.uleb128 0x24
+ 596 0015 00       		.byte	0
+ 597 0016 0B       		.uleb128 0xb
+ 598 0017 0B       		.uleb128 0xb
+ 599 0018 3E       		.uleb128 0x3e
+ 600 0019 0B       		.uleb128 0xb
+ 601 001a 03       		.uleb128 0x3
+ 602 001b 0E       		.uleb128 0xe
+ 603 001c 00       		.byte	0
+ 604 001d 00       		.byte	0
+ 605 001e 03       		.uleb128 0x3
+ 606 001f 24       		.uleb128 0x24
+ 607 0020 00       		.byte	0
+ 608 0021 0B       		.uleb128 0xb
+ 609 0022 0B       		.uleb128 0xb
+ 610 0023 3E       		.uleb128 0x3e
+ 611 0024 0B       		.uleb128 0xb
+ 612 0025 03       		.uleb128 0x3
+ 613 0026 08       		.uleb128 0x8
+ 614 0027 00       		.byte	0
+ 615 0028 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 20
+
+
+ 616 0029 04       		.uleb128 0x4
+ 617 002a 16       		.uleb128 0x16
+ 618 002b 00       		.byte	0
+ 619 002c 03       		.uleb128 0x3
+ 620 002d 0E       		.uleb128 0xe
+ 621 002e 3A       		.uleb128 0x3a
+ 622 002f 0B       		.uleb128 0xb
+ 623 0030 3B       		.uleb128 0x3b
+ 624 0031 05       		.uleb128 0x5
+ 625 0032 49       		.uleb128 0x49
+ 626 0033 13       		.uleb128 0x13
+ 627 0034 00       		.byte	0
+ 628 0035 00       		.byte	0
+ 629 0036 05       		.uleb128 0x5
+ 630 0037 35       		.uleb128 0x35
+ 631 0038 00       		.byte	0
+ 632 0039 49       		.uleb128 0x49
+ 633 003a 13       		.uleb128 0x13
+ 634 003b 00       		.byte	0
+ 635 003c 00       		.byte	0
+ 636 003d 06       		.uleb128 0x6
+ 637 003e 13       		.uleb128 0x13
+ 638 003f 01       		.byte	0x1
+ 639 0040 0B       		.uleb128 0xb
+ 640 0041 0B       		.uleb128 0xb
+ 641 0042 3A       		.uleb128 0x3a
+ 642 0043 0B       		.uleb128 0xb
+ 643 0044 3B       		.uleb128 0x3b
+ 644 0045 0B       		.uleb128 0xb
+ 645 0046 01       		.uleb128 0x1
+ 646 0047 13       		.uleb128 0x13
+ 647 0048 00       		.byte	0
+ 648 0049 00       		.byte	0
+ 649 004a 07       		.uleb128 0x7
+ 650 004b 0D       		.uleb128 0xd
+ 651 004c 00       		.byte	0
+ 652 004d 03       		.uleb128 0x3
+ 653 004e 08       		.uleb128 0x8
+ 654 004f 3A       		.uleb128 0x3a
+ 655 0050 0B       		.uleb128 0xb
+ 656 0051 3B       		.uleb128 0x3b
+ 657 0052 0B       		.uleb128 0xb
+ 658 0053 49       		.uleb128 0x49
+ 659 0054 13       		.uleb128 0x13
+ 660 0055 38       		.uleb128 0x38
+ 661 0056 0B       		.uleb128 0xb
+ 662 0057 00       		.byte	0
+ 663 0058 00       		.byte	0
+ 664 0059 08       		.uleb128 0x8
+ 665 005a 01       		.uleb128 0x1
+ 666 005b 01       		.byte	0x1
+ 667 005c 49       		.uleb128 0x49
+ 668 005d 13       		.uleb128 0x13
+ 669 005e 01       		.uleb128 0x1
+ 670 005f 13       		.uleb128 0x13
+ 671 0060 00       		.byte	0
+ 672 0061 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 21
+
+
+ 673 0062 09       		.uleb128 0x9
+ 674 0063 21       		.uleb128 0x21
+ 675 0064 00       		.byte	0
+ 676 0065 49       		.uleb128 0x49
+ 677 0066 13       		.uleb128 0x13
+ 678 0067 2F       		.uleb128 0x2f
+ 679 0068 0B       		.uleb128 0xb
+ 680 0069 00       		.byte	0
+ 681 006a 00       		.byte	0
+ 682 006b 0A       		.uleb128 0xa
+ 683 006c 16       		.uleb128 0x16
+ 684 006d 00       		.byte	0
+ 685 006e 03       		.uleb128 0x3
+ 686 006f 0E       		.uleb128 0xe
+ 687 0070 3A       		.uleb128 0x3a
+ 688 0071 0B       		.uleb128 0xb
+ 689 0072 3B       		.uleb128 0x3b
+ 690 0073 0B       		.uleb128 0xb
+ 691 0074 49       		.uleb128 0x49
+ 692 0075 13       		.uleb128 0x13
+ 693 0076 00       		.byte	0
+ 694 0077 00       		.byte	0
+ 695 0078 0B       		.uleb128 0xb
+ 696 0079 0D       		.uleb128 0xd
+ 697 007a 00       		.byte	0
+ 698 007b 03       		.uleb128 0x3
+ 699 007c 0E       		.uleb128 0xe
+ 700 007d 3A       		.uleb128 0x3a
+ 701 007e 0B       		.uleb128 0xb
+ 702 007f 3B       		.uleb128 0x3b
+ 703 0080 0B       		.uleb128 0xb
+ 704 0081 49       		.uleb128 0x49
+ 705 0082 13       		.uleb128 0x13
+ 706 0083 38       		.uleb128 0x38
+ 707 0084 0B       		.uleb128 0xb
+ 708 0085 00       		.byte	0
+ 709 0086 00       		.byte	0
+ 710 0087 0C       		.uleb128 0xc
+ 711 0088 0F       		.uleb128 0xf
+ 712 0089 00       		.byte	0
+ 713 008a 0B       		.uleb128 0xb
+ 714 008b 0B       		.uleb128 0xb
+ 715 008c 00       		.byte	0
+ 716 008d 00       		.byte	0
+ 717 008e 0D       		.uleb128 0xd
+ 718 008f 13       		.uleb128 0x13
+ 719 0090 01       		.byte	0x1
+ 720 0091 0B       		.uleb128 0xb
+ 721 0092 05       		.uleb128 0x5
+ 722 0093 3A       		.uleb128 0x3a
+ 723 0094 0B       		.uleb128 0xb
+ 724 0095 3B       		.uleb128 0x3b
+ 725 0096 0B       		.uleb128 0xb
+ 726 0097 01       		.uleb128 0x1
+ 727 0098 13       		.uleb128 0x13
+ 728 0099 00       		.byte	0
+ 729 009a 00       		.byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 22
+
+
+ 730 009b 0E       		.uleb128 0xe
+ 731 009c 2E       		.uleb128 0x2e
+ 732 009d 00       		.byte	0
+ 733 009e 03       		.uleb128 0x3
+ 734 009f 0E       		.uleb128 0xe
+ 735 00a0 3A       		.uleb128 0x3a
+ 736 00a1 0B       		.uleb128 0xb
+ 737 00a2 3B       		.uleb128 0x3b
+ 738 00a3 0B       		.uleb128 0xb
+ 739 00a4 27       		.uleb128 0x27
+ 740 00a5 19       		.uleb128 0x19
+ 741 00a6 20       		.uleb128 0x20
+ 742 00a7 0B       		.uleb128 0xb
+ 743 00a8 00       		.byte	0
+ 744 00a9 00       		.byte	0
+ 745 00aa 0F       		.uleb128 0xf
+ 746 00ab 2E       		.uleb128 0x2e
+ 747 00ac 01       		.byte	0x1
+ 748 00ad 03       		.uleb128 0x3
+ 749 00ae 0E       		.uleb128 0xe
+ 750 00af 3A       		.uleb128 0x3a
+ 751 00b0 0B       		.uleb128 0xb
+ 752 00b1 3B       		.uleb128 0x3b
+ 753 00b2 05       		.uleb128 0x5
+ 754 00b3 27       		.uleb128 0x27
+ 755 00b4 19       		.uleb128 0x19
+ 756 00b5 20       		.uleb128 0x20
+ 757 00b6 0B       		.uleb128 0xb
+ 758 00b7 01       		.uleb128 0x1
+ 759 00b8 13       		.uleb128 0x13
+ 760 00b9 00       		.byte	0
+ 761 00ba 00       		.byte	0
+ 762 00bb 10       		.uleb128 0x10
+ 763 00bc 05       		.uleb128 0x5
+ 764 00bd 00       		.byte	0
+ 765 00be 03       		.uleb128 0x3
+ 766 00bf 0E       		.uleb128 0xe
+ 767 00c0 3A       		.uleb128 0x3a
+ 768 00c1 0B       		.uleb128 0xb
+ 769 00c2 3B       		.uleb128 0x3b
+ 770 00c3 05       		.uleb128 0x5
+ 771 00c4 49       		.uleb128 0x49
+ 772 00c5 13       		.uleb128 0x13
+ 773 00c6 00       		.byte	0
+ 774 00c7 00       		.byte	0
+ 775 00c8 11       		.uleb128 0x11
+ 776 00c9 2E       		.uleb128 0x2e
+ 777 00ca 00       		.byte	0
+ 778 00cb 3F       		.uleb128 0x3f
+ 779 00cc 19       		.uleb128 0x19
+ 780 00cd 03       		.uleb128 0x3
+ 781 00ce 0E       		.uleb128 0xe
+ 782 00cf 3A       		.uleb128 0x3a
+ 783 00d0 0B       		.uleb128 0xb
+ 784 00d1 3B       		.uleb128 0x3b
+ 785 00d2 0B       		.uleb128 0xb
+ 786 00d3 27       		.uleb128 0x27
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 23
+
+
+ 787 00d4 19       		.uleb128 0x19
+ 788 00d5 11       		.uleb128 0x11
+ 789 00d6 01       		.uleb128 0x1
+ 790 00d7 12       		.uleb128 0x12
+ 791 00d8 06       		.uleb128 0x6
+ 792 00d9 40       		.uleb128 0x40
+ 793 00da 18       		.uleb128 0x18
+ 794 00db 9742     		.uleb128 0x2117
+ 795 00dd 19       		.uleb128 0x19
+ 796 00de 00       		.byte	0
+ 797 00df 00       		.byte	0
+ 798 00e0 12       		.uleb128 0x12
+ 799 00e1 2E       		.uleb128 0x2e
+ 800 00e2 01       		.byte	0x1
+ 801 00e3 3F       		.uleb128 0x3f
+ 802 00e4 19       		.uleb128 0x19
+ 803 00e5 03       		.uleb128 0x3
+ 804 00e6 0E       		.uleb128 0xe
+ 805 00e7 3A       		.uleb128 0x3a
+ 806 00e8 0B       		.uleb128 0xb
+ 807 00e9 3B       		.uleb128 0x3b
+ 808 00ea 0B       		.uleb128 0xb
+ 809 00eb 27       		.uleb128 0x27
+ 810 00ec 19       		.uleb128 0x19
+ 811 00ed 11       		.uleb128 0x11
+ 812 00ee 01       		.uleb128 0x1
+ 813 00ef 12       		.uleb128 0x12
+ 814 00f0 06       		.uleb128 0x6
+ 815 00f1 40       		.uleb128 0x40
+ 816 00f2 18       		.uleb128 0x18
+ 817 00f3 9742     		.uleb128 0x2117
+ 818 00f5 19       		.uleb128 0x19
+ 819 00f6 01       		.uleb128 0x1
+ 820 00f7 13       		.uleb128 0x13
+ 821 00f8 00       		.byte	0
+ 822 00f9 00       		.byte	0
+ 823 00fa 13       		.uleb128 0x13
+ 824 00fb 05       		.uleb128 0x5
+ 825 00fc 00       		.byte	0
+ 826 00fd 03       		.uleb128 0x3
+ 827 00fe 0E       		.uleb128 0xe
+ 828 00ff 3A       		.uleb128 0x3a
+ 829 0100 0B       		.uleb128 0xb
+ 830 0101 3B       		.uleb128 0x3b
+ 831 0102 0B       		.uleb128 0xb
+ 832 0103 49       		.uleb128 0x49
+ 833 0104 13       		.uleb128 0x13
+ 834 0105 02       		.uleb128 0x2
+ 835 0106 17       		.uleb128 0x17
+ 836 0107 00       		.byte	0
+ 837 0108 00       		.byte	0
+ 838 0109 14       		.uleb128 0x14
+ 839 010a 1D       		.uleb128 0x1d
+ 840 010b 01       		.byte	0x1
+ 841 010c 31       		.uleb128 0x31
+ 842 010d 13       		.uleb128 0x13
+ 843 010e 11       		.uleb128 0x11
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 24
+
+
+ 844 010f 01       		.uleb128 0x1
+ 845 0110 12       		.uleb128 0x12
+ 846 0111 06       		.uleb128 0x6
+ 847 0112 58       		.uleb128 0x58
+ 848 0113 0B       		.uleb128 0xb
+ 849 0114 59       		.uleb128 0x59
+ 850 0115 0B       		.uleb128 0xb
+ 851 0116 01       		.uleb128 0x1
+ 852 0117 13       		.uleb128 0x13
+ 853 0118 00       		.byte	0
+ 854 0119 00       		.byte	0
+ 855 011a 15       		.uleb128 0x15
+ 856 011b 05       		.uleb128 0x5
+ 857 011c 00       		.byte	0
+ 858 011d 31       		.uleb128 0x31
+ 859 011e 13       		.uleb128 0x13
+ 860 011f 02       		.uleb128 0x2
+ 861 0120 17       		.uleb128 0x17
+ 862 0121 00       		.byte	0
+ 863 0122 00       		.byte	0
+ 864 0123 16       		.uleb128 0x16
+ 865 0124 898201   		.uleb128 0x4109
+ 866 0127 01       		.byte	0x1
+ 867 0128 11       		.uleb128 0x11
+ 868 0129 01       		.uleb128 0x1
+ 869 012a 31       		.uleb128 0x31
+ 870 012b 13       		.uleb128 0x13
+ 871 012c 00       		.byte	0
+ 872 012d 00       		.byte	0
+ 873 012e 17       		.uleb128 0x17
+ 874 012f 8A8201   		.uleb128 0x410a
+ 875 0132 00       		.byte	0
+ 876 0133 02       		.uleb128 0x2
+ 877 0134 18       		.uleb128 0x18
+ 878 0135 9142     		.uleb128 0x2111
+ 879 0137 18       		.uleb128 0x18
+ 880 0138 00       		.byte	0
+ 881 0139 00       		.byte	0
+ 882 013a 18       		.uleb128 0x18
+ 883 013b 898201   		.uleb128 0x4109
+ 884 013e 00       		.byte	0
+ 885 013f 11       		.uleb128 0x11
+ 886 0140 01       		.uleb128 0x1
+ 887 0141 31       		.uleb128 0x31
+ 888 0142 13       		.uleb128 0x13
+ 889 0143 00       		.byte	0
+ 890 0144 00       		.byte	0
+ 891 0145 19       		.uleb128 0x19
+ 892 0146 34       		.uleb128 0x34
+ 893 0147 00       		.byte	0
+ 894 0148 03       		.uleb128 0x3
+ 895 0149 0E       		.uleb128 0xe
+ 896 014a 3A       		.uleb128 0x3a
+ 897 014b 0B       		.uleb128 0xb
+ 898 014c 3B       		.uleb128 0x3b
+ 899 014d 0B       		.uleb128 0xb
+ 900 014e 49       		.uleb128 0x49
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 25
+
+
+ 901 014f 13       		.uleb128 0x13
+ 902 0150 3F       		.uleb128 0x3f
+ 903 0151 19       		.uleb128 0x19
+ 904 0152 02       		.uleb128 0x2
+ 905 0153 18       		.uleb128 0x18
+ 906 0154 00       		.byte	0
+ 907 0155 00       		.byte	0
+ 908 0156 1A       		.uleb128 0x1a
+ 909 0157 2E       		.uleb128 0x2e
+ 910 0158 00       		.byte	0
+ 911 0159 3F       		.uleb128 0x3f
+ 912 015a 19       		.uleb128 0x19
+ 913 015b 3C       		.uleb128 0x3c
+ 914 015c 19       		.uleb128 0x19
+ 915 015d 6E       		.uleb128 0x6e
+ 916 015e 0E       		.uleb128 0xe
+ 917 015f 03       		.uleb128 0x3
+ 918 0160 0E       		.uleb128 0xe
+ 919 0161 3A       		.uleb128 0x3a
+ 920 0162 0B       		.uleb128 0xb
+ 921 0163 3B       		.uleb128 0x3b
+ 922 0164 0B       		.uleb128 0xb
+ 923 0165 00       		.byte	0
+ 924 0166 00       		.byte	0
+ 925 0167 00       		.byte	0
+ 926              		.section	.debug_loc,"",%progbits
+ 927              	.Ldebug_loc0:
+ 928              	.LLST0:
+ 929 0000 00000000 		.4byte	.LVL0
+ 930 0004 11000000 		.4byte	.LVL1-1
+ 931 0008 0100     		.2byte	0x1
+ 932 000a 50       		.byte	0x50
+ 933 000b 11000000 		.4byte	.LVL1-1
+ 934 000f 3E000000 		.4byte	.LVL8
+ 935 0013 0100     		.2byte	0x1
+ 936 0015 55       		.byte	0x55
+ 937 0016 3E000000 		.4byte	.LVL8
+ 938 001a 44000000 		.4byte	.LFE32
+ 939 001e 0400     		.2byte	0x4
+ 940 0020 F3       		.byte	0xf3
+ 941 0021 01       		.uleb128 0x1
+ 942 0022 50       		.byte	0x50
+ 943 0023 9F       		.byte	0x9f
+ 944 0024 00000000 		.4byte	0
+ 945 0028 00000000 		.4byte	0
+ 946              	.LLST1:
+ 947 002c 00000000 		.4byte	.LVL0
+ 948 0030 11000000 		.4byte	.LVL1-1
+ 949 0034 0100     		.2byte	0x1
+ 950 0036 51       		.byte	0x51
+ 951 0037 11000000 		.4byte	.LVL1-1
+ 952 003b 3E000000 		.4byte	.LVL7
+ 953 003f 0100     		.2byte	0x1
+ 954 0041 54       		.byte	0x54
+ 955 0042 3E000000 		.4byte	.LVL7
+ 956 0046 44000000 		.4byte	.LFE32
+ 957 004a 0400     		.2byte	0x4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 26
+
+
+ 958 004c F3       		.byte	0xf3
+ 959 004d 01       		.uleb128 0x1
+ 960 004e 51       		.byte	0x51
+ 961 004f 9F       		.byte	0x9f
+ 962 0050 00000000 		.4byte	0
+ 963 0054 00000000 		.4byte	0
+ 964              	.LLST2:
+ 965 0058 1C000000 		.4byte	.LVL2
+ 966 005c 26000000 		.4byte	.LVL3
+ 967 0060 0100     		.2byte	0x1
+ 968 0062 55       		.byte	0x55
+ 969 0063 00000000 		.4byte	0
+ 970 0067 00000000 		.4byte	0
+ 971              	.LLST3:
+ 972 006b 1C000000 		.4byte	.LVL2
+ 973 006f 26000000 		.4byte	.LVL3
+ 974 0073 0200     		.2byte	0x2
+ 975 0075 30       		.byte	0x30
+ 976 0076 9F       		.byte	0x9f
+ 977 0077 00000000 		.4byte	0
+ 978 007b 00000000 		.4byte	0
+ 979              	.LLST4:
+ 980 007f 26000000 		.4byte	.LVL3
+ 981 0083 30000000 		.4byte	.LVL4
+ 982 0087 0100     		.2byte	0x1
+ 983 0089 54       		.byte	0x54
+ 984 008a 00000000 		.4byte	0
+ 985 008e 00000000 		.4byte	0
+ 986              	.LLST5:
+ 987 0092 26000000 		.4byte	.LVL3
+ 988 0096 30000000 		.4byte	.LVL4
+ 989 009a 0200     		.2byte	0x2
+ 990 009c 30       		.byte	0x30
+ 991 009d 9F       		.byte	0x9f
+ 992 009e 00000000 		.4byte	0
+ 993 00a2 00000000 		.4byte	0
+ 994              	.LLST6:
+ 995 00a6 30000000 		.4byte	.LVL4
+ 996 00aa 38000000 		.4byte	.LVL5
+ 997 00ae 0200     		.2byte	0x2
+ 998 00b0 30       		.byte	0x30
+ 999 00b1 9F       		.byte	0x9f
+ 1000 00b2 00000000 		.4byte	0
+ 1001 00b6 00000000 		.4byte	0
+ 1002              		.section	.debug_aranges,"",%progbits
+ 1003 0000 24000000 		.4byte	0x24
+ 1004 0004 0200     		.2byte	0x2
+ 1005 0006 00000000 		.4byte	.Ldebug_info0
+ 1006 000a 04       		.byte	0x4
+ 1007 000b 00       		.byte	0
+ 1008 000c 0000     		.2byte	0
+ 1009 000e 0000     		.2byte	0
+ 1010 0010 00000000 		.4byte	.LFB33
+ 1011 0014 30000000 		.4byte	.LFE33-.LFB33
+ 1012 0018 00000000 		.4byte	.LFB32
+ 1013 001c 44000000 		.4byte	.LFE32-.LFB32
+ 1014 0020 00000000 		.4byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 27
+
+
+ 1015 0024 00000000 		.4byte	0
+ 1016              		.section	.debug_ranges,"",%progbits
+ 1017              	.Ldebug_ranges0:
+ 1018 0000 00000000 		.4byte	.LFB33
+ 1019 0004 30000000 		.4byte	.LFE33
+ 1020 0008 00000000 		.4byte	.LFB32
+ 1021 000c 44000000 		.4byte	.LFE32
+ 1022 0010 00000000 		.4byte	0
+ 1023 0014 00000000 		.4byte	0
+ 1024              		.section	.debug_line,"",%progbits
+ 1025              	.Ldebug_line0:
+ 1026 0000 A4000000 		.section	.debug_str,"MS",%progbits,1
+ 1026      02006000 
+ 1026      00000201 
+ 1026      FB0E0D00 
+ 1026      01010101 
+ 1027              	.LASF35:
+ 1028 0000 5350495F 		.ascii	"SPI_RxDMA_ChEnable\000"
+ 1028      5278444D 
+ 1028      415F4368 
+ 1028      456E6162 
+ 1028      6C6500
+ 1029              	.LASF33:
+ 1030 0013 47656E65 		.ascii	"Generated_Source\\PSoC4\\SPI_RxDMA.c\000"
+ 1030      72617465 
+ 1030      645F536F 
+ 1030      75726365 
+ 1030      5C50536F 
+ 1031              	.LASF24:
+ 1032 0036 64737441 		.ascii	"dstAddress\000"
+ 1032      64647265 
+ 1032      737300
+ 1033              	.LASF29:
+ 1034 0041 4379446D 		.ascii	"CyDmaValidateDescriptor\000"
+ 1034      6156616C 
+ 1034      69646174 
+ 1034      65446573 
+ 1034      63726970 
+ 1035              	.LASF27:
+ 1036 0059 4379446D 		.ascii	"CyDmaSetSrcAddress\000"
+ 1036      61536574 
+ 1036      53726341 
+ 1036      64647265 
+ 1036      737300
+ 1037              	.LASF2:
+ 1038 006c 73686F72 		.ascii	"short int\000"
+ 1038      7420696E 
+ 1038      7400
+ 1039              	.LASF16:
+ 1040 0076 73697A65 		.ascii	"sizetype\000"
+ 1040      74797065 
+ 1040      00
+ 1041              	.LASF22:
+ 1042 007f 5350495F 		.ascii	"SPI_RxDMA_ValidateDescriptor\000"
+ 1042      5278444D 
+ 1042      415F5661 
+ 1042      6C696461 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 28
+
+
+ 1042      74654465 
+ 1043              	.LASF37:
+ 1044 009c 5350495F 		.ascii	"SPI_RxDMA_Start\000"
+ 1044      5278444D 
+ 1044      415F5374 
+ 1044      61727400 
+ 1045              	.LASF32:
+ 1046 00ac 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1046      43313120 
+ 1046      352E342E 
+ 1046      31203230 
+ 1046      31363036 
+ 1047 00df 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1047      20726576 
+ 1047      6973696F 
+ 1047      6E203233 
+ 1047      37373135 
+ 1048 0112 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1048      66756E63 
+ 1048      74696F6E 
+ 1048      2D736563 
+ 1048      74696F6E 
+ 1049              	.LASF23:
+ 1050 013a 5350495F 		.ascii	"SPI_RxDMA_SetDstAddress\000"
+ 1050      5278444D 
+ 1050      415F5365 
+ 1050      74447374 
+ 1050      41646472 
+ 1051              	.LASF17:
+ 1052 0152 6379646D 		.ascii	"cydma_channel_ctl_struct\000"
+ 1052      615F6368 
+ 1052      616E6E65 
+ 1052      6C5F6374 
+ 1052      6C5F7374 
+ 1053              	.LASF9:
+ 1054 016b 75696E74 		.ascii	"uint8\000"
+ 1054      3800
+ 1055              	.LASF34:
+ 1056 0171 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 1056      6F63756D 
+ 1056      656E7473 
+ 1056      5C456E67 
+ 1056      696E6565 
+ 1057 019f 43797072 		.ascii	"Cypress\\synth-wavetable.cydsn\000"
+ 1057      6573735C 
+ 1057      73796E74 
+ 1057      682D7761 
+ 1057      76657461 
+ 1058              	.LASF12:
+ 1059 01bd 666C6F61 		.ascii	"float\000"
+ 1059      7400
+ 1060              	.LASF6:
+ 1061 01c3 6C6F6E67 		.ascii	"long long int\000"
+ 1061      206C6F6E 
+ 1061      6720696E 
+ 1061      7400
+ 1062              	.LASF4:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 29
+
+
+ 1063 01d1 6C6F6E67 		.ascii	"long int\000"
+ 1063      20696E74 
+ 1063      00
+ 1064              	.LASF28:
+ 1065 01da 4379446D 		.ascii	"CyDmaSetDstAddress\000"
+ 1065      61536574 
+ 1065      44737441 
+ 1065      64647265 
+ 1065      737300
+ 1066              	.LASF1:
+ 1067 01ed 756E7369 		.ascii	"unsigned char\000"
+ 1067      676E6564 
+ 1067      20636861 
+ 1067      7200
+ 1068              	.LASF0:
+ 1069 01fb 7369676E 		.ascii	"signed char\000"
+ 1069      65642063 
+ 1069      68617200 
+ 1070              	.LASF7:
+ 1071 0207 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1071      206C6F6E 
+ 1071      6720756E 
+ 1071      7369676E 
+ 1071      65642069 
+ 1072              	.LASF8:
+ 1073 021e 756E7369 		.ascii	"unsigned int\000"
+ 1073      676E6564 
+ 1073      20696E74 
+ 1073      00
+ 1074              	.LASF38:
+ 1075 022b 5350495F 		.ascii	"SPI_RxDMA_initVar\000"
+ 1075      5278444D 
+ 1075      415F696E 
+ 1075      69745661 
+ 1075      7200
+ 1076              	.LASF15:
+ 1077 023d 72656733 		.ascii	"reg32\000"
+ 1077      3200
+ 1078              	.LASF3:
+ 1079 0243 73686F72 		.ascii	"short unsigned int\000"
+ 1079      7420756E 
+ 1079      7369676E 
+ 1079      65642069 
+ 1079      6E7400
+ 1080              	.LASF18:
+ 1081 0256 73746174 		.ascii	"status\000"
+ 1081      757300
+ 1082              	.LASF21:
+ 1083 025d 6379646D 		.ascii	"cydma_descriptor_ram_struct\000"
+ 1083      615F6465 
+ 1083      73637269 
+ 1083      70746F72 
+ 1083      5F72616D 
+ 1084              	.LASF36:
+ 1085 0279 5350495F 		.ascii	"SPI_RxDMA_Init\000"
+ 1085      5278444D 
+ 1085      415F496E 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5h2rEl.s 			page 30
+
+
+ 1085      697400
+ 1086              	.LASF14:
+ 1087 0288 63686172 		.ascii	"char\000"
+ 1087      00
+ 1088              	.LASF19:
+ 1089 028d 6379646D 		.ascii	"cydma_descriptor_struct\000"
+ 1089      615F6465 
+ 1089      73637269 
+ 1089      70746F72 
+ 1089      5F737472 
+ 1090              	.LASF26:
+ 1091 02a5 73726341 		.ascii	"srcAddress\000"
+ 1091      64647265 
+ 1091      737300
+ 1092              	.LASF10:
+ 1093 02b0 75696E74 		.ascii	"uint32\000"
+ 1093      333200
+ 1094              	.LASF5:
+ 1095 02b7 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1095      20756E73 
+ 1095      69676E65 
+ 1095      6420696E 
+ 1095      7400
+ 1096              	.LASF11:
+ 1097 02c9 696E7433 		.ascii	"int32\000"
+ 1097      3200
+ 1098              	.LASF13:
+ 1099 02cf 646F7562 		.ascii	"double\000"
+ 1099      6C6500
+ 1100              	.LASF25:
+ 1101 02d6 5350495F 		.ascii	"SPI_RxDMA_SetSrcAddress\000"
+ 1101      5278444D 
+ 1101      415F5365 
+ 1101      74537263 
+ 1101      41646472 
+ 1102              	.LASF30:
+ 1103 02ee 4379446D 		.ascii	"CyDmaChEnable\000"
+ 1103      61436845 
+ 1103      6E61626C 
+ 1103      6500
+ 1104              	.LASF31:
+ 1105 02fc 4379446D 		.ascii	"CyDmaEnable\000"
+ 1105      61456E61 
+ 1105      626C6500 
+ 1106              	.LASF20:
+ 1107 0308 64657363 		.ascii	"descriptor\000"
+ 1107      72697074 
+ 1107      6F7200
+ 1108              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

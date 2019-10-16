@@ -1,0 +1,1764 @@
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m0
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 0
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"waves.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.global	__aeabi_i2d
+  20              		.global	__aeabi_dmul
+  21              		.global	__aeabi_d2iz
+  22              		.section	.text.generate_base_sine,"ax",%progbits
+  23              		.align	2
+  24              		.global	generate_base_sine
+  25              		.code	16
+  26              		.thumb_func
+  27              		.type	generate_base_sine, %function
+  28              	generate_base_sine:
+  29              	.LFB131:
+  30              		.file 1 "waves.c"
+   1:waves.c       **** #include <project.h>
+   2:waves.c       **** #include <AudioControl.h>
+   3:waves.c       **** #include "waves.h"
+   4:waves.c       **** #include <math.h>
+   5:waves.c       **** 
+   6:waves.c       **** void init_wavetable(){   
+   7:waves.c       ****     //double * base_sine = malloc(((int)N) * sizeof(double)); // one period's worth of samples at f
+   8:waves.c       ****     //double * base_pos_saw = malloc(((int)N) * sizeof(double));
+   9:waves.c       ****     //double * base_neg_saw = malloc(((int)N) * sizeof(double));
+  10:waves.c       ****     //double * base_tri = malloc(((int)N) * sizeof(double));
+  11:waves.c       ****     //double * base_sq = malloc(((int)N) * sizeof(double)); // probably makes no sense to store thi
+  12:waves.c       ****     
+  13:waves.c       ****     generate_base_sine(base_sine);
+  14:waves.c       ****     generate_base_pos_saw(base_pos_saw);
+  15:waves.c       ****     //generate_base_neg_saw(base_neg_saw);
+  16:waves.c       ****     //generate_base_tri(base_tri);
+  17:waves.c       ****     generate_base_sq(base_sq);
+  18:waves.c       ****     
+  19:waves.c       ****     generate_lfo_sine(lfo_sine);
+  20:waves.c       **** }
+  21:waves.c       **** 
+  22:waves.c       **** void generate_base_sine(int16_t* buffer){
+  31              		.loc 1 22 0
+  32              		.cfi_startproc
+  33              		@ args = 0, pretend = 0, frame = 0
+  34              		@ frame_needed = 0, uses_anonymous_args = 0
+  35              	.LVL0:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 2
+
+
+  36 0000 70B5     		push	{r4, r5, r6, lr}
+  37              		.cfi_def_cfa_offset 16
+  38              		.cfi_offset 4, -16
+  39              		.cfi_offset 5, -12
+  40              		.cfi_offset 6, -8
+  41              		.cfi_offset 14, -4
+  42 0002 0600     		movs	r6, r0
+  43              	.LVL1:
+  44              	.LBB2:
+  23:waves.c       ****   for(int i = 0; i < N; i++){
+  45              		.loc 1 23 0
+  46 0004 0024     		movs	r4, #0
+  47 0006 12E0     		b	.L2
+  48              	.LVL2:
+  49              	.L3:
+  50              	.LBB3:
+  24:waves.c       ****     double delta = 2*M_PI/N;
+  25:waves.c       ****     double x = delta * i;
+  51              		.loc 1 25 0 discriminator 3
+  52 0008 2000     		movs	r0, r4
+  53 000a FFF7FEFF 		bl	__aeabi_i2d
+  54              	.LVL3:
+  55 000e 0A4A     		ldr	r2, .L4
+  56 0010 0A4B     		ldr	r3, .L4+4
+  57 0012 FFF7FEFF 		bl	__aeabi_dmul
+  58              	.LVL4:
+  26:waves.c       ****     buffer[i] = AMPLITUDE * sin(x);
+  59              		.loc 1 26 0 discriminator 3
+  60 0016 6500     		lsls	r5, r4, #1
+  61 0018 7519     		adds	r5, r6, r5
+  62 001a FFF7FEFF 		bl	sin
+  63              	.LVL5:
+  64 001e 0022     		movs	r2, #0
+  65 0020 074B     		ldr	r3, .L4+8
+  66 0022 FFF7FEFF 		bl	__aeabi_dmul
+  67              	.LVL6:
+  68 0026 FFF7FEFF 		bl	__aeabi_d2iz
+  69              	.LVL7:
+  70 002a 2880     		strh	r0, [r5]
+  71              	.LBE3:
+  23:waves.c       ****   for(int i = 0; i < N; i++){
+  72              		.loc 1 23 0 discriminator 3
+  73 002c 0134     		adds	r4, r4, #1
+  74              	.LVL8:
+  75              	.L2:
+  23:waves.c       ****   for(int i = 0; i < N; i++){
+  76              		.loc 1 23 0 is_stmt 0 discriminator 1
+  77 002e 054B     		ldr	r3, .L4+12
+  78 0030 9C42     		cmp	r4, r3
+  79 0032 E9DD     		ble	.L3
+  80              	.LBE2:
+  27:waves.c       ****   }
+  28:waves.c       **** }
+  81              		.loc 1 28 0 is_stmt 1
+  82              		@ sp needed
+  83              	.LVL9:
+  84              	.LVL10:
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 3
+
+
+  85 0034 70BD     		pop	{r4, r5, r6, pc}
+  86              	.L5:
+  87 0036 C046     		.align	2
+  88              	.L4:
+  89 0038 182D4454 		.word	1413754136
+  90 003c FB21593F 		.word	1062806011
+  91 0040 00805F40 		.word	1080000512
+  92 0044 FF0F0000 		.word	4095
+  93              		.cfi_endproc
+  94              	.LFE131:
+  95              		.size	generate_base_sine, .-generate_base_sine
+  96              		.section	.text.generate_base_pos_saw,"ax",%progbits
+  97              		.align	2
+  98              		.global	generate_base_pos_saw
+  99              		.code	16
+ 100              		.thumb_func
+ 101              		.type	generate_base_pos_saw, %function
+ 102              	generate_base_pos_saw:
+ 103              	.LFB132:
+  29:waves.c       **** 
+  30:waves.c       **** void generate_base_pos_saw(int8_t* buffer){
+ 104              		.loc 1 30 0
+ 105              		.cfi_startproc
+ 106              		@ args = 0, pretend = 0, frame = 0
+ 107              		@ frame_needed = 0, uses_anonymous_args = 0
+ 108              		@ link register save eliminated.
+ 109              	.LVL11:
+ 110              	.LBB4:
+  31:waves.c       ****   for(int i = 0; i < N; i++){
+ 111              		.loc 1 31 0
+ 112 0000 0022     		movs	r2, #0
+ 113 0002 09E0     		b	.L7
+ 114              	.LVL12:
+ 115              	.L8:
+  32:waves.c       ****     buffer[i] = (AMPLITUDE * i)/N;
+ 116              		.loc 1 32 0 discriminator 3
+ 117 0004 9101     		lsls	r1, r2, #6
+ 118 0006 891A     		subs	r1, r1, r2
+ 119 0008 4B00     		lsls	r3, r1, #1
+ 120 000a D917     		asrs	r1, r3, #31
+ 121 000c 0905     		lsls	r1, r1, #20
+ 122 000e 090D     		lsrs	r1, r1, #20
+ 123 0010 CB18     		adds	r3, r1, r3
+ 124 0012 1B13     		asrs	r3, r3, #12
+ 125 0014 8354     		strb	r3, [r0, r2]
+  31:waves.c       ****   for(int i = 0; i < N; i++){
+ 126              		.loc 1 31 0 discriminator 3
+ 127 0016 0132     		adds	r2, r2, #1
+ 128              	.LVL13:
+ 129              	.L7:
+  31:waves.c       ****   for(int i = 0; i < N; i++){
+ 130              		.loc 1 31 0 is_stmt 0 discriminator 1
+ 131 0018 014B     		ldr	r3, .L9
+ 132 001a 9A42     		cmp	r2, r3
+ 133 001c F2DD     		ble	.L8
+ 134              	.LBE4:
+  33:waves.c       ****   }
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 4
+
+
+  34:waves.c       **** }
+ 135              		.loc 1 34 0 is_stmt 1
+ 136              		@ sp needed
+ 137 001e 7047     		bx	lr
+ 138              	.L10:
+ 139              		.align	2
+ 140              	.L9:
+ 141 0020 FF0F0000 		.word	4095
+ 142              		.cfi_endproc
+ 143              	.LFE132:
+ 144              		.size	generate_base_pos_saw, .-generate_base_pos_saw
+ 145              		.section	.text.generate_base_neg_saw,"ax",%progbits
+ 146              		.align	2
+ 147              		.global	generate_base_neg_saw
+ 148              		.code	16
+ 149              		.thumb_func
+ 150              		.type	generate_base_neg_saw, %function
+ 151              	generate_base_neg_saw:
+ 152              	.LFB133:
+  35:waves.c       **** 
+  36:waves.c       **** void generate_base_neg_saw(int8_t* buffer){
+ 153              		.loc 1 36 0
+ 154              		.cfi_startproc
+ 155              		@ args = 0, pretend = 0, frame = 0
+ 156              		@ frame_needed = 0, uses_anonymous_args = 0
+ 157              	.LVL14:
+ 158 0000 10B5     		push	{r4, lr}
+ 159              		.cfi_def_cfa_offset 8
+ 160              		.cfi_offset 4, -8
+ 161              		.cfi_offset 14, -4
+ 162              	.LVL15:
+ 163              	.LBB5:
+  37:waves.c       ****   for(int i = 0; i < N; i++){
+ 164              		.loc 1 37 0
+ 165 0002 0022     		movs	r2, #0
+ 166 0004 0BE0     		b	.L12
+ 167              	.LVL16:
+ 168              	.L13:
+  38:waves.c       ****     buffer[(int)N-i-1] = (AMPLITUDE * i)/N;
+ 169              		.loc 1 38 0 discriminator 3
+ 170 0006 084C     		ldr	r4, .L14
+ 171 0008 A41A     		subs	r4, r4, r2
+ 172 000a 9101     		lsls	r1, r2, #6
+ 173 000c 891A     		subs	r1, r1, r2
+ 174 000e 4B00     		lsls	r3, r1, #1
+ 175 0010 D917     		asrs	r1, r3, #31
+ 176 0012 0905     		lsls	r1, r1, #20
+ 177 0014 090D     		lsrs	r1, r1, #20
+ 178 0016 CB18     		adds	r3, r1, r3
+ 179 0018 1B13     		asrs	r3, r3, #12
+ 180 001a 0355     		strb	r3, [r0, r4]
+  37:waves.c       ****   for(int i = 0; i < N; i++){
+ 181              		.loc 1 37 0 discriminator 3
+ 182 001c 0132     		adds	r2, r2, #1
+ 183              	.LVL17:
+ 184              	.L12:
+  37:waves.c       ****   for(int i = 0; i < N; i++){
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 5
+
+
+ 185              		.loc 1 37 0 is_stmt 0 discriminator 1
+ 186 001e 024B     		ldr	r3, .L14
+ 187 0020 9A42     		cmp	r2, r3
+ 188 0022 F0DD     		ble	.L13
+ 189              	.LBE5:
+  39:waves.c       ****   }
+  40:waves.c       **** }
+ 190              		.loc 1 40 0 is_stmt 1
+ 191              		@ sp needed
+ 192 0024 10BD     		pop	{r4, pc}
+ 193              	.L15:
+ 194 0026 C046     		.align	2
+ 195              	.L14:
+ 196 0028 FF0F0000 		.word	4095
+ 197              		.cfi_endproc
+ 198              	.LFE133:
+ 199              		.size	generate_base_neg_saw, .-generate_base_neg_saw
+ 200              		.section	.text.generate_base_tri,"ax",%progbits
+ 201              		.align	2
+ 202              		.global	generate_base_tri
+ 203              		.code	16
+ 204              		.thumb_func
+ 205              		.type	generate_base_tri, %function
+ 206              	generate_base_tri:
+ 207              	.LFB134:
+  41:waves.c       **** 
+  42:waves.c       **** void generate_base_tri(int8_t* buffer){
+ 208              		.loc 1 42 0
+ 209              		.cfi_startproc
+ 210              		@ args = 0, pretend = 0, frame = 0
+ 211              		@ frame_needed = 0, uses_anonymous_args = 0
+ 212              		@ link register save eliminated.
+ 213              	.LVL18:
+ 214              	.LBB6:
+  43:waves.c       ****   for(int i = 0; i < N/2; i++){
+ 215              		.loc 1 43 0
+ 216 0000 0022     		movs	r2, #0
+ 217 0002 09E0     		b	.L17
+ 218              	.LVL19:
+ 219              	.L18:
+  44:waves.c       ****     buffer[i] = (AMPLITUDE * 2*i)/N;
+ 220              		.loc 1 44 0 discriminator 3
+ 221 0004 9101     		lsls	r1, r2, #6
+ 222 0006 891A     		subs	r1, r1, r2
+ 223 0008 8B00     		lsls	r3, r1, #2
+ 224 000a D917     		asrs	r1, r3, #31
+ 225 000c 0905     		lsls	r1, r1, #20
+ 226 000e 090D     		lsrs	r1, r1, #20
+ 227 0010 CB18     		adds	r3, r1, r3
+ 228 0012 1B13     		asrs	r3, r3, #12
+ 229 0014 8354     		strb	r3, [r0, r2]
+  43:waves.c       ****   for(int i = 0; i < N/2; i++){
+ 230              		.loc 1 43 0 discriminator 3
+ 231 0016 0132     		adds	r2, r2, #1
+ 232              	.LVL20:
+ 233              	.L17:
+  43:waves.c       ****   for(int i = 0; i < N/2; i++){
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 6
+
+
+ 234              		.loc 1 43 0 is_stmt 0 discriminator 1
+ 235 0018 0B4B     		ldr	r3, .L21
+ 236 001a 9A42     		cmp	r2, r3
+ 237 001c F2DD     		ble	.L18
+ 238 001e 8021     		movs	r1, #128
+ 239 0020 0901     		lsls	r1, r1, #4
+ 240 0022 0CE0     		b	.L19
+ 241              	.LVL21:
+ 242              	.L20:
+ 243              	.LBE6:
+ 244              	.LBB7:
+  45:waves.c       ****   }
+  46:waves.c       ****   for(int i = N/2; i < N; i++){
+  47:waves.c       ****     buffer[i] = (AMPLITUDE * 2*(N-i))/N;
+ 245              		.loc 1 47 0 is_stmt 1 discriminator 3
+ 246 0024 8022     		movs	r2, #128
+ 247 0026 5201     		lsls	r2, r2, #5
+ 248 0028 521A     		subs	r2, r2, r1
+ 249 002a 9301     		lsls	r3, r2, #6
+ 250 002c 9A1A     		subs	r2, r3, r2
+ 251 002e 9300     		lsls	r3, r2, #2
+ 252 0030 DA17     		asrs	r2, r3, #31
+ 253 0032 1205     		lsls	r2, r2, #20
+ 254 0034 120D     		lsrs	r2, r2, #20
+ 255 0036 D318     		adds	r3, r2, r3
+ 256 0038 1B13     		asrs	r3, r3, #12
+ 257 003a 4354     		strb	r3, [r0, r1]
+  46:waves.c       ****     buffer[i] = (AMPLITUDE * 2*(N-i))/N;
+ 258              		.loc 1 46 0 discriminator 3
+ 259 003c 0131     		adds	r1, r1, #1
+ 260              	.LVL22:
+ 261              	.L19:
+  46:waves.c       ****     buffer[i] = (AMPLITUDE * 2*(N-i))/N;
+ 262              		.loc 1 46 0 is_stmt 0 discriminator 1
+ 263 003e 034B     		ldr	r3, .L21+4
+ 264 0040 9942     		cmp	r1, r3
+ 265 0042 EFDD     		ble	.L20
+ 266              	.LBE7:
+  48:waves.c       ****   }
+  49:waves.c       **** }
+ 267              		.loc 1 49 0 is_stmt 1
+ 268              		@ sp needed
+ 269 0044 7047     		bx	lr
+ 270              	.L22:
+ 271 0046 C046     		.align	2
+ 272              	.L21:
+ 273 0048 FF070000 		.word	2047
+ 274 004c FF0F0000 		.word	4095
+ 275              		.cfi_endproc
+ 276              	.LFE134:
+ 277              		.size	generate_base_tri, .-generate_base_tri
+ 278              		.section	.text.generate_base_sq,"ax",%progbits
+ 279              		.align	2
+ 280              		.global	generate_base_sq
+ 281              		.code	16
+ 282              		.thumb_func
+ 283              		.type	generate_base_sq, %function
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 7
+
+
+ 284              	generate_base_sq:
+ 285              	.LFB135:
+  50:waves.c       **** 
+  51:waves.c       **** void generate_base_sq(int8_t* buffer){
+ 286              		.loc 1 51 0
+ 287              		.cfi_startproc
+ 288              		@ args = 0, pretend = 0, frame = 0
+ 289              		@ frame_needed = 0, uses_anonymous_args = 0
+ 290              		@ link register save eliminated.
+ 291              	.LVL23:
+ 292              	.LBB8:
+  52:waves.c       ****   for(int i = 0; i < N; i++){
+ 293              		.loc 1 52 0
+ 294 0000 0023     		movs	r3, #0
+ 295 0002 08E0     		b	.L24
+ 296              	.LVL24:
+ 297              	.L27:
+  53:waves.c       ****     if(i < N/2){
+ 298              		.loc 1 53 0
+ 299 0004 064A     		ldr	r2, .L28
+ 300 0006 9342     		cmp	r3, r2
+ 301 0008 02DC     		bgt	.L25
+  54:waves.c       ****       buffer[i] = AMPLITUDE;
+ 302              		.loc 1 54 0
+ 303 000a 7E22     		movs	r2, #126
+ 304 000c C254     		strb	r2, [r0, r3]
+ 305 000e 01E0     		b	.L26
+ 306              	.L25:
+  55:waves.c       ****     }
+  56:waves.c       ****     else{
+  57:waves.c       ****       buffer[i] = -AMPLITUDE;
+ 307              		.loc 1 57 0
+ 308 0010 8222     		movs	r2, #130
+ 309 0012 C254     		strb	r2, [r0, r3]
+ 310              	.L26:
+  52:waves.c       ****     if(i < N/2){
+ 311              		.loc 1 52 0 discriminator 2
+ 312 0014 0133     		adds	r3, r3, #1
+ 313              	.LVL25:
+ 314              	.L24:
+  52:waves.c       ****     if(i < N/2){
+ 315              		.loc 1 52 0 is_stmt 0 discriminator 1
+ 316 0016 034A     		ldr	r2, .L28+4
+ 317 0018 9342     		cmp	r3, r2
+ 318 001a F3DD     		ble	.L27
+ 319              	.LBE8:
+  58:waves.c       ****     }
+  59:waves.c       ****   }
+  60:waves.c       **** }
+ 320              		.loc 1 60 0 is_stmt 1
+ 321              		@ sp needed
+ 322 001c 7047     		bx	lr
+ 323              	.L29:
+ 324 001e C046     		.align	2
+ 325              	.L28:
+ 326 0020 FF070000 		.word	2047
+ 327 0024 FF0F0000 		.word	4095
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 8
+
+
+ 328              		.cfi_endproc
+ 329              	.LFE135:
+ 330              		.size	generate_base_sq, .-generate_base_sq
+ 331              		.global	__aeabi_dadd
+ 332              		.global	__aeabi_d2uiz
+ 333              		.section	.text.generate_lfo_sine,"ax",%progbits
+ 334              		.align	2
+ 335              		.global	generate_lfo_sine
+ 336              		.code	16
+ 337              		.thumb_func
+ 338              		.type	generate_lfo_sine, %function
+ 339              	generate_lfo_sine:
+ 340              	.LFB136:
+  61:waves.c       **** 
+  62:waves.c       **** void generate_lfo_sine(uint8_t* buffer){
+ 341              		.loc 1 62 0
+ 342              		.cfi_startproc
+ 343              		@ args = 0, pretend = 0, frame = 0
+ 344              		@ frame_needed = 0, uses_anonymous_args = 0
+ 345              	.LVL26:
+ 346 0000 70B5     		push	{r4, r5, r6, lr}
+ 347              		.cfi_def_cfa_offset 16
+ 348              		.cfi_offset 4, -16
+ 349              		.cfi_offset 5, -12
+ 350              		.cfi_offset 6, -8
+ 351              		.cfi_offset 14, -4
+ 352 0002 0600     		movs	r6, r0
+ 353              	.LVL27:
+ 354              	.LBB9:
+  63:waves.c       ****     for(int i = 0; i < 256; i++){
+ 355              		.loc 1 63 0
+ 356 0004 0024     		movs	r4, #0
+ 357 0006 15E0     		b	.L31
+ 358              	.LVL28:
+ 359              	.L32:
+ 360              	.LBB10:
+  64:waves.c       ****         double delta = 2*M_PI/256;
+  65:waves.c       ****         double x = delta * i;
+ 361              		.loc 1 65 0 discriminator 3
+ 362 0008 2000     		movs	r0, r4
+ 363 000a FFF7FEFF 		bl	__aeabi_i2d
+ 364              	.LVL29:
+ 365 000e 0B4A     		ldr	r2, .L33
+ 366 0010 0B4B     		ldr	r3, .L33+4
+ 367 0012 FFF7FEFF 		bl	__aeabi_dmul
+ 368              	.LVL30:
+  66:waves.c       ****         buffer[i] = sin(x) * 126 + 126;
+ 369              		.loc 1 66 0 discriminator 3
+ 370 0016 3519     		adds	r5, r6, r4
+ 371 0018 FFF7FEFF 		bl	sin
+ 372              	.LVL31:
+ 373 001c 0022     		movs	r2, #0
+ 374 001e 094B     		ldr	r3, .L33+8
+ 375 0020 FFF7FEFF 		bl	__aeabi_dmul
+ 376              	.LVL32:
+ 377 0024 0022     		movs	r2, #0
+ 378 0026 074B     		ldr	r3, .L33+8
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 9
+
+
+ 379 0028 FFF7FEFF 		bl	__aeabi_dadd
+ 380              	.LVL33:
+ 381 002c FFF7FEFF 		bl	__aeabi_d2uiz
+ 382              	.LVL34:
+ 383 0030 2870     		strb	r0, [r5]
+ 384              	.LBE10:
+  63:waves.c       ****     for(int i = 0; i < 256; i++){
+ 385              		.loc 1 63 0 discriminator 3
+ 386 0032 0134     		adds	r4, r4, #1
+ 387              	.LVL35:
+ 388              	.L31:
+  63:waves.c       ****     for(int i = 0; i < 256; i++){
+ 389              		.loc 1 63 0 is_stmt 0 discriminator 1
+ 390 0034 FF2C     		cmp	r4, #255
+ 391 0036 E7DD     		ble	.L32
+ 392              	.LBE9:
+  67:waves.c       ****     }
+  68:waves.c       **** }
+ 393              		.loc 1 68 0 is_stmt 1
+ 394              		@ sp needed
+ 395              	.LVL36:
+ 396              	.LVL37:
+ 397 0038 70BD     		pop	{r4, r5, r6, pc}
+ 398              	.L34:
+ 399 003a C046     		.align	2
+ 400              	.L33:
+ 401 003c 182D4454 		.word	1413754136
+ 402 0040 FB21993F 		.word	1067000315
+ 403 0044 00805F40 		.word	1080000512
+ 404              		.cfi_endproc
+ 405              	.LFE136:
+ 406              		.size	generate_lfo_sine, .-generate_lfo_sine
+ 407              		.section	.text.init_wavetable,"ax",%progbits
+ 408              		.align	2
+ 409              		.global	init_wavetable
+ 410              		.code	16
+ 411              		.thumb_func
+ 412              		.type	init_wavetable, %function
+ 413              	init_wavetable:
+ 414              	.LFB130:
+   6:waves.c       ****     //double * base_sine = malloc(((int)N) * sizeof(double)); // one period's worth of samples at f
+ 415              		.loc 1 6 0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 0
+ 418              		@ frame_needed = 0, uses_anonymous_args = 0
+ 419 0000 10B5     		push	{r4, lr}
+ 420              		.cfi_def_cfa_offset 8
+ 421              		.cfi_offset 4, -8
+ 422              		.cfi_offset 14, -4
+  13:waves.c       ****     generate_base_pos_saw(base_pos_saw);
+ 423              		.loc 1 13 0
+ 424 0002 0648     		ldr	r0, .L36
+ 425 0004 FFF7FEFF 		bl	generate_base_sine
+ 426              	.LVL38:
+  14:waves.c       ****     //generate_base_neg_saw(base_neg_saw);
+ 427              		.loc 1 14 0
+ 428 0008 0548     		ldr	r0, .L36+4
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 10
+
+
+ 429 000a FFF7FEFF 		bl	generate_base_pos_saw
+ 430              	.LVL39:
+  17:waves.c       ****     
+ 431              		.loc 1 17 0
+ 432 000e 0548     		ldr	r0, .L36+8
+ 433 0010 FFF7FEFF 		bl	generate_base_sq
+ 434              	.LVL40:
+  19:waves.c       **** }
+ 435              		.loc 1 19 0
+ 436 0014 0448     		ldr	r0, .L36+12
+ 437 0016 FFF7FEFF 		bl	generate_lfo_sine
+ 438              	.LVL41:
+  20:waves.c       **** 
+ 439              		.loc 1 20 0
+ 440              		@ sp needed
+ 441 001a 10BD     		pop	{r4, pc}
+ 442              	.L37:
+ 443              		.align	2
+ 444              	.L36:
+ 445 001c 00000000 		.word	base_sine
+ 446 0020 00000000 		.word	base_pos_saw
+ 447 0024 00000000 		.word	base_sq
+ 448 0028 00000000 		.word	lfo_sine
+ 449              		.cfi_endproc
+ 450              	.LFE130:
+ 451              		.size	init_wavetable, .-init_wavetable
+ 452              		.comm	lfo_sine,256,4
+ 453              		.comm	base_sq,4096,4
+ 454              		.comm	base_pos_saw,4096,4
+ 455              		.comm	base_sine,8192,4
+ 456              		.text
+ 457              	.Letext0:
+ 458              		.file 2 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 459              		.file 3 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 460              		.file 4 "waves.h"
+ 461              		.file 5 "c:\\program files (x86)\\cypress\\psoc creator\\4.2\\psoc creator\\import\\gnu\\arm\\5.4.
+ 462              		.section	.debug_info,"",%progbits
+ 463              	.Ldebug_info0:
+ 464 0000 A5030000 		.4byte	0x3a5
+ 465 0004 0400     		.2byte	0x4
+ 466 0006 00000000 		.4byte	.Ldebug_abbrev0
+ 467 000a 04       		.byte	0x4
+ 468 000b 01       		.uleb128 0x1
+ 469 000c 32010000 		.4byte	.LASF33
+ 470 0010 0C       		.byte	0xc
+ 471 0011 B5000000 		.4byte	.LASF34
+ 472 0015 0C020000 		.4byte	.LASF35
+ 473 0019 00000000 		.4byte	.Ldebug_ranges0+0
+ 474 001d 00000000 		.4byte	0
+ 475 0021 00000000 		.4byte	.Ldebug_line0
+ 476 0025 02       		.uleb128 0x2
+ 477 0026 1E000000 		.4byte	.LASF0
+ 478 002a 02       		.byte	0x2
+ 479 002b 1B       		.byte	0x1b
+ 480 002c 30000000 		.4byte	0x30
+ 481 0030 03       		.uleb128 0x3
+ 482 0031 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 11
+
+
+ 483 0032 06       		.byte	0x6
+ 484 0033 64020000 		.4byte	.LASF2
+ 485 0037 02       		.uleb128 0x2
+ 486 0038 27000000 		.4byte	.LASF1
+ 487 003c 02       		.byte	0x2
+ 488 003d 1D       		.byte	0x1d
+ 489 003e 42000000 		.4byte	0x42
+ 490 0042 03       		.uleb128 0x3
+ 491 0043 01       		.byte	0x1
+ 492 0044 08       		.byte	0x8
+ 493 0045 7A000000 		.4byte	.LASF3
+ 494 0049 02       		.uleb128 0x2
+ 495 004a 31000000 		.4byte	.LASF4
+ 496 004e 02       		.byte	0x2
+ 497 004f 29       		.byte	0x29
+ 498 0050 54000000 		.4byte	0x54
+ 499 0054 03       		.uleb128 0x3
+ 500 0055 02       		.byte	0x2
+ 501 0056 05       		.byte	0x5
+ 502 0057 DC010000 		.4byte	.LASF5
+ 503 005b 03       		.uleb128 0x3
+ 504 005c 02       		.byte	0x2
+ 505 005d 07       		.byte	0x7
+ 506 005e 9A000000 		.4byte	.LASF6
+ 507 0062 03       		.uleb128 0x3
+ 508 0063 04       		.byte	0x4
+ 509 0064 05       		.byte	0x5
+ 510 0065 03020000 		.4byte	.LASF7
+ 511 0069 03       		.uleb128 0x3
+ 512 006a 04       		.byte	0x4
+ 513 006b 07       		.byte	0x7
+ 514 006c 88000000 		.4byte	.LASF8
+ 515 0070 03       		.uleb128 0x3
+ 516 0071 08       		.byte	0x8
+ 517 0072 05       		.byte	0x5
+ 518 0073 C9010000 		.4byte	.LASF9
+ 519 0077 03       		.uleb128 0x3
+ 520 0078 08       		.byte	0x8
+ 521 0079 07       		.byte	0x7
+ 522 007a 0B010000 		.4byte	.LASF10
+ 523 007e 04       		.uleb128 0x4
+ 524 007f 04       		.byte	0x4
+ 525 0080 05       		.byte	0x5
+ 526 0081 696E7400 		.ascii	"int\000"
+ 527 0085 03       		.uleb128 0x3
+ 528 0086 04       		.byte	0x4
+ 529 0087 07       		.byte	0x7
+ 530 0088 FE000000 		.4byte	.LASF11
+ 531 008c 02       		.uleb128 0x2
+ 532 008d 63000000 		.4byte	.LASF12
+ 533 0091 03       		.byte	0x3
+ 534 0092 14       		.byte	0x14
+ 535 0093 25000000 		.4byte	0x25
+ 536 0097 02       		.uleb128 0x2
+ 537 0098 22010000 		.4byte	.LASF13
+ 538 009c 03       		.byte	0x3
+ 539 009d 18       		.byte	0x18
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 12
+
+
+ 540 009e 37000000 		.4byte	0x37
+ 541 00a2 02       		.uleb128 0x2
+ 542 00a3 2A010000 		.4byte	.LASF14
+ 543 00a7 03       		.byte	0x3
+ 544 00a8 20       		.byte	0x20
+ 545 00a9 49000000 		.4byte	0x49
+ 546 00ad 03       		.uleb128 0x3
+ 547 00ae 04       		.byte	0x4
+ 548 00af 04       		.byte	0x4
+ 549 00b0 74000000 		.4byte	.LASF15
+ 550 00b4 03       		.uleb128 0x3
+ 551 00b5 08       		.byte	0x8
+ 552 00b6 04       		.byte	0x4
+ 553 00b7 CF000000 		.4byte	.LASF16
+ 554 00bb 03       		.uleb128 0x3
+ 555 00bc 01       		.byte	0x1
+ 556 00bd 08       		.byte	0x8
+ 557 00be D7010000 		.4byte	.LASF17
+ 558 00c2 03       		.uleb128 0x3
+ 559 00c3 08       		.byte	0x8
+ 560 00c4 04       		.byte	0x4
+ 561 00c5 58020000 		.4byte	.LASF18
+ 562 00c9 03       		.uleb128 0x3
+ 563 00ca 04       		.byte	0x4
+ 564 00cb 07       		.byte	0x7
+ 565 00cc C0010000 		.4byte	.LASF19
+ 566 00d0 05       		.uleb128 0x5
+ 567 00d1 50000000 		.4byte	.LASF21
+ 568 00d5 01       		.byte	0x1
+ 569 00d6 16       		.byte	0x16
+ 570 00d7 00000000 		.4byte	.LFB131
+ 571 00db 48000000 		.4byte	.LFE131-.LFB131
+ 572 00df 01       		.uleb128 0x1
+ 573 00e0 9C       		.byte	0x9c
+ 574 00e1 3B010000 		.4byte	0x13b
+ 575 00e5 06       		.uleb128 0x6
+ 576 00e6 E6010000 		.4byte	.LASF23
+ 577 00ea 01       		.byte	0x1
+ 578 00eb 16       		.byte	0x16
+ 579 00ec 3B010000 		.4byte	0x13b
+ 580 00f0 00000000 		.4byte	.LLST0
+ 581 00f4 07       		.uleb128 0x7
+ 582 00f5 04000000 		.4byte	.LBB2
+ 583 00f9 30000000 		.4byte	.LBE2-.LBB2
+ 584 00fd 08       		.uleb128 0x8
+ 585 00fe 6900     		.ascii	"i\000"
+ 586 0100 01       		.byte	0x1
+ 587 0101 17       		.byte	0x17
+ 588 0102 7E000000 		.4byte	0x7e
+ 589 0106 2C000000 		.4byte	.LLST1
+ 590 010a 07       		.uleb128 0x7
+ 591 010b 08000000 		.4byte	.LBB3
+ 592 010f 24000000 		.4byte	.LBE3-.LBB3
+ 593 0113 09       		.uleb128 0x9
+ 594 0114 4A000000 		.4byte	.LASF20
+ 595 0118 01       		.byte	0x1
+ 596 0119 18       		.byte	0x18
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 13
+
+
+ 597 011a B4000000 		.4byte	0xb4
+ 598 011e 4B000000 		.4byte	.LLST2
+ 599 0122 08       		.uleb128 0x8
+ 600 0123 7800     		.ascii	"x\000"
+ 601 0125 01       		.byte	0x1
+ 602 0126 19       		.byte	0x19
+ 603 0127 B4000000 		.4byte	0xb4
+ 604 012b 67000000 		.4byte	.LLST3
+ 605 012f 0A       		.uleb128 0xa
+ 606 0130 1E000000 		.4byte	.LVL5
+ 607 0134 9D030000 		.4byte	0x39d
+ 608 0138 00       		.byte	0
+ 609 0139 00       		.byte	0
+ 610 013a 00       		.byte	0
+ 611 013b 0B       		.uleb128 0xb
+ 612 013c 04       		.byte	0x4
+ 613 013d A2000000 		.4byte	0xa2
+ 614 0141 0C       		.uleb128 0xc
+ 615 0142 ED010000 		.4byte	.LASF22
+ 616 0146 01       		.byte	0x1
+ 617 0147 1E       		.byte	0x1e
+ 618 0148 00000000 		.4byte	.LFB132
+ 619 014c 24000000 		.4byte	.LFE132-.LFB132
+ 620 0150 01       		.uleb128 0x1
+ 621 0151 9C       		.byte	0x9c
+ 622 0152 7B010000 		.4byte	0x17b
+ 623 0156 0D       		.uleb128 0xd
+ 624 0157 E6010000 		.4byte	.LASF23
+ 625 015b 01       		.byte	0x1
+ 626 015c 1E       		.byte	0x1e
+ 627 015d 7B010000 		.4byte	0x17b
+ 628 0161 01       		.uleb128 0x1
+ 629 0162 50       		.byte	0x50
+ 630 0163 07       		.uleb128 0x7
+ 631 0164 00000000 		.4byte	.LBB4
+ 632 0168 1E000000 		.4byte	.LBE4-.LBB4
+ 633 016c 08       		.uleb128 0x8
+ 634 016d 6900     		.ascii	"i\000"
+ 635 016f 01       		.byte	0x1
+ 636 0170 1F       		.byte	0x1f
+ 637 0171 7E000000 		.4byte	0x7e
+ 638 0175 7F000000 		.4byte	.LLST4
+ 639 0179 00       		.byte	0
+ 640 017a 00       		.byte	0
+ 641 017b 0B       		.uleb128 0xb
+ 642 017c 04       		.byte	0x4
+ 643 017d 8C000000 		.4byte	0x8c
+ 644 0181 0C       		.uleb128 0xc
+ 645 0182 E8000000 		.4byte	.LASF24
+ 646 0186 01       		.byte	0x1
+ 647 0187 24       		.byte	0x24
+ 648 0188 00000000 		.4byte	.LFB133
+ 649 018c 2C000000 		.4byte	.LFE133-.LFB133
+ 650 0190 01       		.uleb128 0x1
+ 651 0191 9C       		.byte	0x9c
+ 652 0192 BB010000 		.4byte	0x1bb
+ 653 0196 0D       		.uleb128 0xd
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 14
+
+
+ 654 0197 E6010000 		.4byte	.LASF23
+ 655 019b 01       		.byte	0x1
+ 656 019c 24       		.byte	0x24
+ 657 019d 7B010000 		.4byte	0x17b
+ 658 01a1 01       		.uleb128 0x1
+ 659 01a2 50       		.byte	0x50
+ 660 01a3 07       		.uleb128 0x7
+ 661 01a4 02000000 		.4byte	.LBB5
+ 662 01a8 22000000 		.4byte	.LBE5-.LBB5
+ 663 01ac 08       		.uleb128 0x8
+ 664 01ad 6900     		.ascii	"i\000"
+ 665 01af 01       		.byte	0x1
+ 666 01b0 25       		.byte	0x25
+ 667 01b1 7E000000 		.4byte	0x7e
+ 668 01b5 9E000000 		.4byte	.LLST5
+ 669 01b9 00       		.byte	0
+ 670 01ba 00       		.byte	0
+ 671 01bb 0C       		.uleb128 0xc
+ 672 01bc BD000000 		.4byte	.LASF25
+ 673 01c0 01       		.byte	0x1
+ 674 01c1 2A       		.byte	0x2a
+ 675 01c2 00000000 		.4byte	.LFB134
+ 676 01c6 50000000 		.4byte	.LFE134-.LFB134
+ 677 01ca 01       		.uleb128 0x1
+ 678 01cb 9C       		.byte	0x9c
+ 679 01cc 0E020000 		.4byte	0x20e
+ 680 01d0 0D       		.uleb128 0xd
+ 681 01d1 E6010000 		.4byte	.LASF23
+ 682 01d5 01       		.byte	0x1
+ 683 01d6 2A       		.byte	0x2a
+ 684 01d7 7B010000 		.4byte	0x17b
+ 685 01db 01       		.uleb128 0x1
+ 686 01dc 50       		.byte	0x50
+ 687 01dd 0E       		.uleb128 0xe
+ 688 01de 00000000 		.4byte	.LBB6
+ 689 01e2 24000000 		.4byte	.LBE6-.LBB6
+ 690 01e6 F8010000 		.4byte	0x1f8
+ 691 01ea 08       		.uleb128 0x8
+ 692 01eb 6900     		.ascii	"i\000"
+ 693 01ed 01       		.byte	0x1
+ 694 01ee 2B       		.byte	0x2b
+ 695 01ef 7E000000 		.4byte	0x7e
+ 696 01f3 BD000000 		.4byte	.LLST6
+ 697 01f7 00       		.byte	0
+ 698 01f8 07       		.uleb128 0x7
+ 699 01f9 24000000 		.4byte	.LBB7
+ 700 01fd 20000000 		.4byte	.LBE7-.LBB7
+ 701 0201 0F       		.uleb128 0xf
+ 702 0202 6900     		.ascii	"i\000"
+ 703 0204 01       		.byte	0x1
+ 704 0205 2E       		.byte	0x2e
+ 705 0206 7E000000 		.4byte	0x7e
+ 706 020a 01       		.uleb128 0x1
+ 707 020b 51       		.byte	0x51
+ 708 020c 00       		.byte	0
+ 709 020d 00       		.byte	0
+ 710 020e 0C       		.uleb128 0xc
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 15
+
+
+ 711 020f 0D000000 		.4byte	.LASF26
+ 712 0213 01       		.byte	0x1
+ 713 0214 33       		.byte	0x33
+ 714 0215 00000000 		.4byte	.LFB135
+ 715 0219 28000000 		.4byte	.LFE135-.LFB135
+ 716 021d 01       		.uleb128 0x1
+ 717 021e 9C       		.byte	0x9c
+ 718 021f 48020000 		.4byte	0x248
+ 719 0223 0D       		.uleb128 0xd
+ 720 0224 E6010000 		.4byte	.LASF23
+ 721 0228 01       		.byte	0x1
+ 722 0229 33       		.byte	0x33
+ 723 022a 7B010000 		.4byte	0x17b
+ 724 022e 01       		.uleb128 0x1
+ 725 022f 50       		.byte	0x50
+ 726 0230 07       		.uleb128 0x7
+ 727 0231 00000000 		.4byte	.LBB8
+ 728 0235 1C000000 		.4byte	.LBE8-.LBB8
+ 729 0239 08       		.uleb128 0x8
+ 730 023a 6900     		.ascii	"i\000"
+ 731 023c 01       		.byte	0x1
+ 732 023d 34       		.byte	0x34
+ 733 023e 7E000000 		.4byte	0x7e
+ 734 0242 DC000000 		.4byte	.LLST7
+ 735 0246 00       		.byte	0
+ 736 0247 00       		.byte	0
+ 737 0248 05       		.uleb128 0x5
+ 738 0249 D6000000 		.4byte	.LASF27
+ 739 024d 01       		.byte	0x1
+ 740 024e 3E       		.byte	0x3e
+ 741 024f 00000000 		.4byte	.LFB136
+ 742 0253 48000000 		.4byte	.LFE136-.LFB136
+ 743 0257 01       		.uleb128 0x1
+ 744 0258 9C       		.byte	0x9c
+ 745 0259 B3020000 		.4byte	0x2b3
+ 746 025d 06       		.uleb128 0x6
+ 747 025e E6010000 		.4byte	.LASF23
+ 748 0262 01       		.byte	0x1
+ 749 0263 3E       		.byte	0x3e
+ 750 0264 B3020000 		.4byte	0x2b3
+ 751 0268 FB000000 		.4byte	.LLST8
+ 752 026c 07       		.uleb128 0x7
+ 753 026d 04000000 		.4byte	.LBB9
+ 754 0271 34000000 		.4byte	.LBE9-.LBB9
+ 755 0275 08       		.uleb128 0x8
+ 756 0276 6900     		.ascii	"i\000"
+ 757 0278 01       		.byte	0x1
+ 758 0279 3F       		.byte	0x3f
+ 759 027a 7E000000 		.4byte	0x7e
+ 760 027e 27010000 		.4byte	.LLST9
+ 761 0282 07       		.uleb128 0x7
+ 762 0283 08000000 		.4byte	.LBB10
+ 763 0287 2A000000 		.4byte	.LBE10-.LBB10
+ 764 028b 09       		.uleb128 0x9
+ 765 028c 4A000000 		.4byte	.LASF20
+ 766 0290 01       		.byte	0x1
+ 767 0291 40       		.byte	0x40
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 16
+
+
+ 768 0292 B4000000 		.4byte	0xb4
+ 769 0296 46010000 		.4byte	.LLST10
+ 770 029a 08       		.uleb128 0x8
+ 771 029b 7800     		.ascii	"x\000"
+ 772 029d 01       		.byte	0x1
+ 773 029e 41       		.byte	0x41
+ 774 029f B4000000 		.4byte	0xb4
+ 775 02a3 62010000 		.4byte	.LLST11
+ 776 02a7 0A       		.uleb128 0xa
+ 777 02a8 1C000000 		.4byte	.LVL31
+ 778 02ac 9D030000 		.4byte	0x39d
+ 779 02b0 00       		.byte	0
+ 780 02b1 00       		.byte	0
+ 781 02b2 00       		.byte	0
+ 782 02b3 0B       		.uleb128 0xb
+ 783 02b4 04       		.byte	0x4
+ 784 02b5 97000000 		.4byte	0x97
+ 785 02b9 0C       		.uleb128 0xc
+ 786 02ba 3B000000 		.4byte	.LASF28
+ 787 02be 01       		.byte	0x1
+ 788 02bf 06       		.byte	0x6
+ 789 02c0 00000000 		.4byte	.LFB130
+ 790 02c4 2C000000 		.4byte	.LFE130-.LFB130
+ 791 02c8 01       		.uleb128 0x1
+ 792 02c9 9C       		.byte	0x9c
+ 793 02ca 27030000 		.4byte	0x327
+ 794 02ce 10       		.uleb128 0x10
+ 795 02cf 08000000 		.4byte	.LVL38
+ 796 02d3 D0000000 		.4byte	0xd0
+ 797 02d7 E5020000 		.4byte	0x2e5
+ 798 02db 11       		.uleb128 0x11
+ 799 02dc 01       		.uleb128 0x1
+ 800 02dd 50       		.byte	0x50
+ 801 02de 05       		.uleb128 0x5
+ 802 02df 03       		.byte	0x3
+ 803 02e0 00000000 		.4byte	base_sine
+ 804 02e4 00       		.byte	0
+ 805 02e5 10       		.uleb128 0x10
+ 806 02e6 0E000000 		.4byte	.LVL39
+ 807 02ea 41010000 		.4byte	0x141
+ 808 02ee FC020000 		.4byte	0x2fc
+ 809 02f2 11       		.uleb128 0x11
+ 810 02f3 01       		.uleb128 0x1
+ 811 02f4 50       		.byte	0x50
+ 812 02f5 05       		.uleb128 0x5
+ 813 02f6 03       		.byte	0x3
+ 814 02f7 00000000 		.4byte	base_pos_saw
+ 815 02fb 00       		.byte	0
+ 816 02fc 10       		.uleb128 0x10
+ 817 02fd 14000000 		.4byte	.LVL40
+ 818 0301 0E020000 		.4byte	0x20e
+ 819 0305 13030000 		.4byte	0x313
+ 820 0309 11       		.uleb128 0x11
+ 821 030a 01       		.uleb128 0x1
+ 822 030b 50       		.byte	0x50
+ 823 030c 05       		.uleb128 0x5
+ 824 030d 03       		.byte	0x3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 17
+
+
+ 825 030e 00000000 		.4byte	base_sq
+ 826 0312 00       		.byte	0
+ 827 0313 12       		.uleb128 0x12
+ 828 0314 1A000000 		.4byte	.LVL41
+ 829 0318 48020000 		.4byte	0x248
+ 830 031c 11       		.uleb128 0x11
+ 831 031d 01       		.uleb128 0x1
+ 832 031e 50       		.byte	0x50
+ 833 031f 05       		.uleb128 0x5
+ 834 0320 03       		.byte	0x3
+ 835 0321 00000000 		.4byte	lfo_sine
+ 836 0325 00       		.byte	0
+ 837 0326 00       		.byte	0
+ 838 0327 13       		.uleb128 0x13
+ 839 0328 A2000000 		.4byte	0xa2
+ 840 032c 38030000 		.4byte	0x338
+ 841 0330 14       		.uleb128 0x14
+ 842 0331 C9000000 		.4byte	0xc9
+ 843 0335 FF0F     		.2byte	0xfff
+ 844 0337 00       		.byte	0
+ 845 0338 15       		.uleb128 0x15
+ 846 0339 6A000000 		.4byte	.LASF29
+ 847 033d 04       		.byte	0x4
+ 848 033e 0F       		.byte	0xf
+ 849 033f 27030000 		.4byte	0x327
+ 850 0343 05       		.uleb128 0x5
+ 851 0344 03       		.byte	0x3
+ 852 0345 00000000 		.4byte	base_sine
+ 853 0349 13       		.uleb128 0x13
+ 854 034a 8C000000 		.4byte	0x8c
+ 855 034e 5A030000 		.4byte	0x35a
+ 856 0352 14       		.uleb128 0x14
+ 857 0353 C9000000 		.4byte	0xc9
+ 858 0357 FF0F     		.2byte	0xfff
+ 859 0359 00       		.byte	0
+ 860 035a 15       		.uleb128 0x15
+ 861 035b 00000000 		.4byte	.LASF30
+ 862 035f 04       		.byte	0x4
+ 863 0360 10       		.byte	0x10
+ 864 0361 49030000 		.4byte	0x349
+ 865 0365 05       		.uleb128 0x5
+ 866 0366 03       		.byte	0x3
+ 867 0367 00000000 		.4byte	base_pos_saw
+ 868 036b 15       		.uleb128 0x15
+ 869 036c AD000000 		.4byte	.LASF31
+ 870 0370 04       		.byte	0x4
+ 871 0371 13       		.byte	0x13
+ 872 0372 49030000 		.4byte	0x349
+ 873 0376 05       		.uleb128 0x5
+ 874 0377 03       		.byte	0x3
+ 875 0378 00000000 		.4byte	base_sq
+ 876 037c 13       		.uleb128 0x13
+ 877 037d 97000000 		.4byte	0x97
+ 878 0381 8C030000 		.4byte	0x38c
+ 879 0385 16       		.uleb128 0x16
+ 880 0386 C9000000 		.4byte	0xc9
+ 881 038a FF       		.byte	0xff
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 18
+
+
+ 882 038b 00       		.byte	0
+ 883 038c 15       		.uleb128 0x15
+ 884 038d 70020000 		.4byte	.LASF32
+ 885 0391 04       		.byte	0x4
+ 886 0392 15       		.byte	0x15
+ 887 0393 7C030000 		.4byte	0x37c
+ 888 0397 05       		.uleb128 0x5
+ 889 0398 03       		.byte	0x3
+ 890 0399 00000000 		.4byte	lfo_sine
+ 891 039d 17       		.uleb128 0x17
+ 892 039e 73696E00 		.ascii	"sin\000"
+ 893 03a2 73696E00 		.ascii	"sin\000"
+ 894 03a6 05       		.byte	0x5
+ 895 03a7 6F       		.byte	0x6f
+ 896 03a8 00       		.byte	0
+ 897              		.section	.debug_abbrev,"",%progbits
+ 898              	.Ldebug_abbrev0:
+ 899 0000 01       		.uleb128 0x1
+ 900 0001 11       		.uleb128 0x11
+ 901 0002 01       		.byte	0x1
+ 902 0003 25       		.uleb128 0x25
+ 903 0004 0E       		.uleb128 0xe
+ 904 0005 13       		.uleb128 0x13
+ 905 0006 0B       		.uleb128 0xb
+ 906 0007 03       		.uleb128 0x3
+ 907 0008 0E       		.uleb128 0xe
+ 908 0009 1B       		.uleb128 0x1b
+ 909 000a 0E       		.uleb128 0xe
+ 910 000b 55       		.uleb128 0x55
+ 911 000c 17       		.uleb128 0x17
+ 912 000d 11       		.uleb128 0x11
+ 913 000e 01       		.uleb128 0x1
+ 914 000f 10       		.uleb128 0x10
+ 915 0010 17       		.uleb128 0x17
+ 916 0011 00       		.byte	0
+ 917 0012 00       		.byte	0
+ 918 0013 02       		.uleb128 0x2
+ 919 0014 16       		.uleb128 0x16
+ 920 0015 00       		.byte	0
+ 921 0016 03       		.uleb128 0x3
+ 922 0017 0E       		.uleb128 0xe
+ 923 0018 3A       		.uleb128 0x3a
+ 924 0019 0B       		.uleb128 0xb
+ 925 001a 3B       		.uleb128 0x3b
+ 926 001b 0B       		.uleb128 0xb
+ 927 001c 49       		.uleb128 0x49
+ 928 001d 13       		.uleb128 0x13
+ 929 001e 00       		.byte	0
+ 930 001f 00       		.byte	0
+ 931 0020 03       		.uleb128 0x3
+ 932 0021 24       		.uleb128 0x24
+ 933 0022 00       		.byte	0
+ 934 0023 0B       		.uleb128 0xb
+ 935 0024 0B       		.uleb128 0xb
+ 936 0025 3E       		.uleb128 0x3e
+ 937 0026 0B       		.uleb128 0xb
+ 938 0027 03       		.uleb128 0x3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 19
+
+
+ 939 0028 0E       		.uleb128 0xe
+ 940 0029 00       		.byte	0
+ 941 002a 00       		.byte	0
+ 942 002b 04       		.uleb128 0x4
+ 943 002c 24       		.uleb128 0x24
+ 944 002d 00       		.byte	0
+ 945 002e 0B       		.uleb128 0xb
+ 946 002f 0B       		.uleb128 0xb
+ 947 0030 3E       		.uleb128 0x3e
+ 948 0031 0B       		.uleb128 0xb
+ 949 0032 03       		.uleb128 0x3
+ 950 0033 08       		.uleb128 0x8
+ 951 0034 00       		.byte	0
+ 952 0035 00       		.byte	0
+ 953 0036 05       		.uleb128 0x5
+ 954 0037 2E       		.uleb128 0x2e
+ 955 0038 01       		.byte	0x1
+ 956 0039 3F       		.uleb128 0x3f
+ 957 003a 19       		.uleb128 0x19
+ 958 003b 03       		.uleb128 0x3
+ 959 003c 0E       		.uleb128 0xe
+ 960 003d 3A       		.uleb128 0x3a
+ 961 003e 0B       		.uleb128 0xb
+ 962 003f 3B       		.uleb128 0x3b
+ 963 0040 0B       		.uleb128 0xb
+ 964 0041 27       		.uleb128 0x27
+ 965 0042 19       		.uleb128 0x19
+ 966 0043 11       		.uleb128 0x11
+ 967 0044 01       		.uleb128 0x1
+ 968 0045 12       		.uleb128 0x12
+ 969 0046 06       		.uleb128 0x6
+ 970 0047 40       		.uleb128 0x40
+ 971 0048 18       		.uleb128 0x18
+ 972 0049 9642     		.uleb128 0x2116
+ 973 004b 19       		.uleb128 0x19
+ 974 004c 01       		.uleb128 0x1
+ 975 004d 13       		.uleb128 0x13
+ 976 004e 00       		.byte	0
+ 977 004f 00       		.byte	0
+ 978 0050 06       		.uleb128 0x6
+ 979 0051 05       		.uleb128 0x5
+ 980 0052 00       		.byte	0
+ 981 0053 03       		.uleb128 0x3
+ 982 0054 0E       		.uleb128 0xe
+ 983 0055 3A       		.uleb128 0x3a
+ 984 0056 0B       		.uleb128 0xb
+ 985 0057 3B       		.uleb128 0x3b
+ 986 0058 0B       		.uleb128 0xb
+ 987 0059 49       		.uleb128 0x49
+ 988 005a 13       		.uleb128 0x13
+ 989 005b 02       		.uleb128 0x2
+ 990 005c 17       		.uleb128 0x17
+ 991 005d 00       		.byte	0
+ 992 005e 00       		.byte	0
+ 993 005f 07       		.uleb128 0x7
+ 994 0060 0B       		.uleb128 0xb
+ 995 0061 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 20
+
+
+ 996 0062 11       		.uleb128 0x11
+ 997 0063 01       		.uleb128 0x1
+ 998 0064 12       		.uleb128 0x12
+ 999 0065 06       		.uleb128 0x6
+ 1000 0066 00       		.byte	0
+ 1001 0067 00       		.byte	0
+ 1002 0068 08       		.uleb128 0x8
+ 1003 0069 34       		.uleb128 0x34
+ 1004 006a 00       		.byte	0
+ 1005 006b 03       		.uleb128 0x3
+ 1006 006c 08       		.uleb128 0x8
+ 1007 006d 3A       		.uleb128 0x3a
+ 1008 006e 0B       		.uleb128 0xb
+ 1009 006f 3B       		.uleb128 0x3b
+ 1010 0070 0B       		.uleb128 0xb
+ 1011 0071 49       		.uleb128 0x49
+ 1012 0072 13       		.uleb128 0x13
+ 1013 0073 02       		.uleb128 0x2
+ 1014 0074 17       		.uleb128 0x17
+ 1015 0075 00       		.byte	0
+ 1016 0076 00       		.byte	0
+ 1017 0077 09       		.uleb128 0x9
+ 1018 0078 34       		.uleb128 0x34
+ 1019 0079 00       		.byte	0
+ 1020 007a 03       		.uleb128 0x3
+ 1021 007b 0E       		.uleb128 0xe
+ 1022 007c 3A       		.uleb128 0x3a
+ 1023 007d 0B       		.uleb128 0xb
+ 1024 007e 3B       		.uleb128 0x3b
+ 1025 007f 0B       		.uleb128 0xb
+ 1026 0080 49       		.uleb128 0x49
+ 1027 0081 13       		.uleb128 0x13
+ 1028 0082 02       		.uleb128 0x2
+ 1029 0083 17       		.uleb128 0x17
+ 1030 0084 00       		.byte	0
+ 1031 0085 00       		.byte	0
+ 1032 0086 0A       		.uleb128 0xa
+ 1033 0087 898201   		.uleb128 0x4109
+ 1034 008a 00       		.byte	0
+ 1035 008b 11       		.uleb128 0x11
+ 1036 008c 01       		.uleb128 0x1
+ 1037 008d 31       		.uleb128 0x31
+ 1038 008e 13       		.uleb128 0x13
+ 1039 008f 00       		.byte	0
+ 1040 0090 00       		.byte	0
+ 1041 0091 0B       		.uleb128 0xb
+ 1042 0092 0F       		.uleb128 0xf
+ 1043 0093 00       		.byte	0
+ 1044 0094 0B       		.uleb128 0xb
+ 1045 0095 0B       		.uleb128 0xb
+ 1046 0096 49       		.uleb128 0x49
+ 1047 0097 13       		.uleb128 0x13
+ 1048 0098 00       		.byte	0
+ 1049 0099 00       		.byte	0
+ 1050 009a 0C       		.uleb128 0xc
+ 1051 009b 2E       		.uleb128 0x2e
+ 1052 009c 01       		.byte	0x1
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 21
+
+
+ 1053 009d 3F       		.uleb128 0x3f
+ 1054 009e 19       		.uleb128 0x19
+ 1055 009f 03       		.uleb128 0x3
+ 1056 00a0 0E       		.uleb128 0xe
+ 1057 00a1 3A       		.uleb128 0x3a
+ 1058 00a2 0B       		.uleb128 0xb
+ 1059 00a3 3B       		.uleb128 0x3b
+ 1060 00a4 0B       		.uleb128 0xb
+ 1061 00a5 27       		.uleb128 0x27
+ 1062 00a6 19       		.uleb128 0x19
+ 1063 00a7 11       		.uleb128 0x11
+ 1064 00a8 01       		.uleb128 0x1
+ 1065 00a9 12       		.uleb128 0x12
+ 1066 00aa 06       		.uleb128 0x6
+ 1067 00ab 40       		.uleb128 0x40
+ 1068 00ac 18       		.uleb128 0x18
+ 1069 00ad 9742     		.uleb128 0x2117
+ 1070 00af 19       		.uleb128 0x19
+ 1071 00b0 01       		.uleb128 0x1
+ 1072 00b1 13       		.uleb128 0x13
+ 1073 00b2 00       		.byte	0
+ 1074 00b3 00       		.byte	0
+ 1075 00b4 0D       		.uleb128 0xd
+ 1076 00b5 05       		.uleb128 0x5
+ 1077 00b6 00       		.byte	0
+ 1078 00b7 03       		.uleb128 0x3
+ 1079 00b8 0E       		.uleb128 0xe
+ 1080 00b9 3A       		.uleb128 0x3a
+ 1081 00ba 0B       		.uleb128 0xb
+ 1082 00bb 3B       		.uleb128 0x3b
+ 1083 00bc 0B       		.uleb128 0xb
+ 1084 00bd 49       		.uleb128 0x49
+ 1085 00be 13       		.uleb128 0x13
+ 1086 00bf 02       		.uleb128 0x2
+ 1087 00c0 18       		.uleb128 0x18
+ 1088 00c1 00       		.byte	0
+ 1089 00c2 00       		.byte	0
+ 1090 00c3 0E       		.uleb128 0xe
+ 1091 00c4 0B       		.uleb128 0xb
+ 1092 00c5 01       		.byte	0x1
+ 1093 00c6 11       		.uleb128 0x11
+ 1094 00c7 01       		.uleb128 0x1
+ 1095 00c8 12       		.uleb128 0x12
+ 1096 00c9 06       		.uleb128 0x6
+ 1097 00ca 01       		.uleb128 0x1
+ 1098 00cb 13       		.uleb128 0x13
+ 1099 00cc 00       		.byte	0
+ 1100 00cd 00       		.byte	0
+ 1101 00ce 0F       		.uleb128 0xf
+ 1102 00cf 34       		.uleb128 0x34
+ 1103 00d0 00       		.byte	0
+ 1104 00d1 03       		.uleb128 0x3
+ 1105 00d2 08       		.uleb128 0x8
+ 1106 00d3 3A       		.uleb128 0x3a
+ 1107 00d4 0B       		.uleb128 0xb
+ 1108 00d5 3B       		.uleb128 0x3b
+ 1109 00d6 0B       		.uleb128 0xb
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 22
+
+
+ 1110 00d7 49       		.uleb128 0x49
+ 1111 00d8 13       		.uleb128 0x13
+ 1112 00d9 02       		.uleb128 0x2
+ 1113 00da 18       		.uleb128 0x18
+ 1114 00db 00       		.byte	0
+ 1115 00dc 00       		.byte	0
+ 1116 00dd 10       		.uleb128 0x10
+ 1117 00de 898201   		.uleb128 0x4109
+ 1118 00e1 01       		.byte	0x1
+ 1119 00e2 11       		.uleb128 0x11
+ 1120 00e3 01       		.uleb128 0x1
+ 1121 00e4 31       		.uleb128 0x31
+ 1122 00e5 13       		.uleb128 0x13
+ 1123 00e6 01       		.uleb128 0x1
+ 1124 00e7 13       		.uleb128 0x13
+ 1125 00e8 00       		.byte	0
+ 1126 00e9 00       		.byte	0
+ 1127 00ea 11       		.uleb128 0x11
+ 1128 00eb 8A8201   		.uleb128 0x410a
+ 1129 00ee 00       		.byte	0
+ 1130 00ef 02       		.uleb128 0x2
+ 1131 00f0 18       		.uleb128 0x18
+ 1132 00f1 9142     		.uleb128 0x2111
+ 1133 00f3 18       		.uleb128 0x18
+ 1134 00f4 00       		.byte	0
+ 1135 00f5 00       		.byte	0
+ 1136 00f6 12       		.uleb128 0x12
+ 1137 00f7 898201   		.uleb128 0x4109
+ 1138 00fa 01       		.byte	0x1
+ 1139 00fb 11       		.uleb128 0x11
+ 1140 00fc 01       		.uleb128 0x1
+ 1141 00fd 31       		.uleb128 0x31
+ 1142 00fe 13       		.uleb128 0x13
+ 1143 00ff 00       		.byte	0
+ 1144 0100 00       		.byte	0
+ 1145 0101 13       		.uleb128 0x13
+ 1146 0102 01       		.uleb128 0x1
+ 1147 0103 01       		.byte	0x1
+ 1148 0104 49       		.uleb128 0x49
+ 1149 0105 13       		.uleb128 0x13
+ 1150 0106 01       		.uleb128 0x1
+ 1151 0107 13       		.uleb128 0x13
+ 1152 0108 00       		.byte	0
+ 1153 0109 00       		.byte	0
+ 1154 010a 14       		.uleb128 0x14
+ 1155 010b 21       		.uleb128 0x21
+ 1156 010c 00       		.byte	0
+ 1157 010d 49       		.uleb128 0x49
+ 1158 010e 13       		.uleb128 0x13
+ 1159 010f 2F       		.uleb128 0x2f
+ 1160 0110 05       		.uleb128 0x5
+ 1161 0111 00       		.byte	0
+ 1162 0112 00       		.byte	0
+ 1163 0113 15       		.uleb128 0x15
+ 1164 0114 34       		.uleb128 0x34
+ 1165 0115 00       		.byte	0
+ 1166 0116 03       		.uleb128 0x3
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 23
+
+
+ 1167 0117 0E       		.uleb128 0xe
+ 1168 0118 3A       		.uleb128 0x3a
+ 1169 0119 0B       		.uleb128 0xb
+ 1170 011a 3B       		.uleb128 0x3b
+ 1171 011b 0B       		.uleb128 0xb
+ 1172 011c 49       		.uleb128 0x49
+ 1173 011d 13       		.uleb128 0x13
+ 1174 011e 3F       		.uleb128 0x3f
+ 1175 011f 19       		.uleb128 0x19
+ 1176 0120 02       		.uleb128 0x2
+ 1177 0121 18       		.uleb128 0x18
+ 1178 0122 00       		.byte	0
+ 1179 0123 00       		.byte	0
+ 1180 0124 16       		.uleb128 0x16
+ 1181 0125 21       		.uleb128 0x21
+ 1182 0126 00       		.byte	0
+ 1183 0127 49       		.uleb128 0x49
+ 1184 0128 13       		.uleb128 0x13
+ 1185 0129 2F       		.uleb128 0x2f
+ 1186 012a 0B       		.uleb128 0xb
+ 1187 012b 00       		.byte	0
+ 1188 012c 00       		.byte	0
+ 1189 012d 17       		.uleb128 0x17
+ 1190 012e 2E       		.uleb128 0x2e
+ 1191 012f 00       		.byte	0
+ 1192 0130 3F       		.uleb128 0x3f
+ 1193 0131 19       		.uleb128 0x19
+ 1194 0132 3C       		.uleb128 0x3c
+ 1195 0133 19       		.uleb128 0x19
+ 1196 0134 6E       		.uleb128 0x6e
+ 1197 0135 08       		.uleb128 0x8
+ 1198 0136 03       		.uleb128 0x3
+ 1199 0137 08       		.uleb128 0x8
+ 1200 0138 3A       		.uleb128 0x3a
+ 1201 0139 0B       		.uleb128 0xb
+ 1202 013a 3B       		.uleb128 0x3b
+ 1203 013b 0B       		.uleb128 0xb
+ 1204 013c 00       		.byte	0
+ 1205 013d 00       		.byte	0
+ 1206 013e 00       		.byte	0
+ 1207              		.section	.debug_loc,"",%progbits
+ 1208              	.Ldebug_loc0:
+ 1209              	.LLST0:
+ 1210 0000 00000000 		.4byte	.LVL0
+ 1211 0004 08000000 		.4byte	.LVL2
+ 1212 0008 0100     		.2byte	0x1
+ 1213 000a 50       		.byte	0x50
+ 1214 000b 08000000 		.4byte	.LVL2
+ 1215 000f 34000000 		.4byte	.LVL10
+ 1216 0013 0100     		.2byte	0x1
+ 1217 0015 56       		.byte	0x56
+ 1218 0016 34000000 		.4byte	.LVL10
+ 1219 001a 48000000 		.4byte	.LFE131
+ 1220 001e 0400     		.2byte	0x4
+ 1221 0020 F3       		.byte	0xf3
+ 1222 0021 01       		.uleb128 0x1
+ 1223 0022 50       		.byte	0x50
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 24
+
+
+ 1224 0023 9F       		.byte	0x9f
+ 1225 0024 00000000 		.4byte	0
+ 1226 0028 00000000 		.4byte	0
+ 1227              	.LLST1:
+ 1228 002c 04000000 		.4byte	.LVL1
+ 1229 0030 08000000 		.4byte	.LVL2
+ 1230 0034 0200     		.2byte	0x2
+ 1231 0036 30       		.byte	0x30
+ 1232 0037 9F       		.byte	0x9f
+ 1233 0038 08000000 		.4byte	.LVL2
+ 1234 003c 34000000 		.4byte	.LVL9
+ 1235 0040 0100     		.2byte	0x1
+ 1236 0042 54       		.byte	0x54
+ 1237 0043 00000000 		.4byte	0
+ 1238 0047 00000000 		.4byte	0
+ 1239              	.LLST2:
+ 1240 004b 08000000 		.4byte	.LVL2
+ 1241 004f 2E000000 		.4byte	.LVL8
+ 1242 0053 0A00     		.2byte	0xa
+ 1243 0055 9E       		.byte	0x9e
+ 1244 0056 08       		.uleb128 0x8
+ 1245 0057 182D4454 		.4byte	0x54442d18
+ 1246 005b FB21593F 		.4byte	0x3f5921fb
+ 1247 005f 00000000 		.4byte	0
+ 1248 0063 00000000 		.4byte	0
+ 1249              	.LLST3:
+ 1250 0067 16000000 		.4byte	.LVL4
+ 1251 006b 1D000000 		.4byte	.LVL5-1
+ 1252 006f 0600     		.2byte	0x6
+ 1253 0071 50       		.byte	0x50
+ 1254 0072 93       		.byte	0x93
+ 1255 0073 04       		.uleb128 0x4
+ 1256 0074 51       		.byte	0x51
+ 1257 0075 93       		.byte	0x93
+ 1258 0076 04       		.uleb128 0x4
+ 1259 0077 00000000 		.4byte	0
+ 1260 007b 00000000 		.4byte	0
+ 1261              	.LLST4:
+ 1262 007f 00000000 		.4byte	.LVL11
+ 1263 0083 04000000 		.4byte	.LVL12
+ 1264 0087 0200     		.2byte	0x2
+ 1265 0089 30       		.byte	0x30
+ 1266 008a 9F       		.byte	0x9f
+ 1267 008b 04000000 		.4byte	.LVL12
+ 1268 008f 24000000 		.4byte	.LFE132
+ 1269 0093 0100     		.2byte	0x1
+ 1270 0095 52       		.byte	0x52
+ 1271 0096 00000000 		.4byte	0
+ 1272 009a 00000000 		.4byte	0
+ 1273              	.LLST5:
+ 1274 009e 02000000 		.4byte	.LVL15
+ 1275 00a2 06000000 		.4byte	.LVL16
+ 1276 00a6 0200     		.2byte	0x2
+ 1277 00a8 30       		.byte	0x30
+ 1278 00a9 9F       		.byte	0x9f
+ 1279 00aa 06000000 		.4byte	.LVL16
+ 1280 00ae 2C000000 		.4byte	.LFE133
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 25
+
+
+ 1281 00b2 0100     		.2byte	0x1
+ 1282 00b4 52       		.byte	0x52
+ 1283 00b5 00000000 		.4byte	0
+ 1284 00b9 00000000 		.4byte	0
+ 1285              	.LLST6:
+ 1286 00bd 00000000 		.4byte	.LVL18
+ 1287 00c1 04000000 		.4byte	.LVL19
+ 1288 00c5 0200     		.2byte	0x2
+ 1289 00c7 30       		.byte	0x30
+ 1290 00c8 9F       		.byte	0x9f
+ 1291 00c9 04000000 		.4byte	.LVL19
+ 1292 00cd 24000000 		.4byte	.LVL21
+ 1293 00d1 0100     		.2byte	0x1
+ 1294 00d3 52       		.byte	0x52
+ 1295 00d4 00000000 		.4byte	0
+ 1296 00d8 00000000 		.4byte	0
+ 1297              	.LLST7:
+ 1298 00dc 00000000 		.4byte	.LVL23
+ 1299 00e0 04000000 		.4byte	.LVL24
+ 1300 00e4 0200     		.2byte	0x2
+ 1301 00e6 30       		.byte	0x30
+ 1302 00e7 9F       		.byte	0x9f
+ 1303 00e8 04000000 		.4byte	.LVL24
+ 1304 00ec 28000000 		.4byte	.LFE135
+ 1305 00f0 0100     		.2byte	0x1
+ 1306 00f2 53       		.byte	0x53
+ 1307 00f3 00000000 		.4byte	0
+ 1308 00f7 00000000 		.4byte	0
+ 1309              	.LLST8:
+ 1310 00fb 00000000 		.4byte	.LVL26
+ 1311 00ff 08000000 		.4byte	.LVL28
+ 1312 0103 0100     		.2byte	0x1
+ 1313 0105 50       		.byte	0x50
+ 1314 0106 08000000 		.4byte	.LVL28
+ 1315 010a 38000000 		.4byte	.LVL37
+ 1316 010e 0100     		.2byte	0x1
+ 1317 0110 56       		.byte	0x56
+ 1318 0111 38000000 		.4byte	.LVL37
+ 1319 0115 48000000 		.4byte	.LFE136
+ 1320 0119 0400     		.2byte	0x4
+ 1321 011b F3       		.byte	0xf3
+ 1322 011c 01       		.uleb128 0x1
+ 1323 011d 50       		.byte	0x50
+ 1324 011e 9F       		.byte	0x9f
+ 1325 011f 00000000 		.4byte	0
+ 1326 0123 00000000 		.4byte	0
+ 1327              	.LLST9:
+ 1328 0127 04000000 		.4byte	.LVL27
+ 1329 012b 08000000 		.4byte	.LVL28
+ 1330 012f 0200     		.2byte	0x2
+ 1331 0131 30       		.byte	0x30
+ 1332 0132 9F       		.byte	0x9f
+ 1333 0133 08000000 		.4byte	.LVL28
+ 1334 0137 38000000 		.4byte	.LVL36
+ 1335 013b 0100     		.2byte	0x1
+ 1336 013d 54       		.byte	0x54
+ 1337 013e 00000000 		.4byte	0
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 26
+
+
+ 1338 0142 00000000 		.4byte	0
+ 1339              	.LLST10:
+ 1340 0146 08000000 		.4byte	.LVL28
+ 1341 014a 34000000 		.4byte	.LVL35
+ 1342 014e 0A00     		.2byte	0xa
+ 1343 0150 9E       		.byte	0x9e
+ 1344 0151 08       		.uleb128 0x8
+ 1345 0152 182D4454 		.4byte	0x54442d18
+ 1346 0156 FB21993F 		.4byte	0x3f9921fb
+ 1347 015a 00000000 		.4byte	0
+ 1348 015e 00000000 		.4byte	0
+ 1349              	.LLST11:
+ 1350 0162 16000000 		.4byte	.LVL30
+ 1351 0166 1B000000 		.4byte	.LVL31-1
+ 1352 016a 0600     		.2byte	0x6
+ 1353 016c 50       		.byte	0x50
+ 1354 016d 93       		.byte	0x93
+ 1355 016e 04       		.uleb128 0x4
+ 1356 016f 51       		.byte	0x51
+ 1357 0170 93       		.byte	0x93
+ 1358 0171 04       		.uleb128 0x4
+ 1359 0172 00000000 		.4byte	0
+ 1360 0176 00000000 		.4byte	0
+ 1361              		.section	.debug_aranges,"",%progbits
+ 1362 0000 4C000000 		.4byte	0x4c
+ 1363 0004 0200     		.2byte	0x2
+ 1364 0006 00000000 		.4byte	.Ldebug_info0
+ 1365 000a 04       		.byte	0x4
+ 1366 000b 00       		.byte	0
+ 1367 000c 0000     		.2byte	0
+ 1368 000e 0000     		.2byte	0
+ 1369 0010 00000000 		.4byte	.LFB131
+ 1370 0014 48000000 		.4byte	.LFE131-.LFB131
+ 1371 0018 00000000 		.4byte	.LFB132
+ 1372 001c 24000000 		.4byte	.LFE132-.LFB132
+ 1373 0020 00000000 		.4byte	.LFB133
+ 1374 0024 2C000000 		.4byte	.LFE133-.LFB133
+ 1375 0028 00000000 		.4byte	.LFB134
+ 1376 002c 50000000 		.4byte	.LFE134-.LFB134
+ 1377 0030 00000000 		.4byte	.LFB135
+ 1378 0034 28000000 		.4byte	.LFE135-.LFB135
+ 1379 0038 00000000 		.4byte	.LFB136
+ 1380 003c 48000000 		.4byte	.LFE136-.LFB136
+ 1381 0040 00000000 		.4byte	.LFB130
+ 1382 0044 2C000000 		.4byte	.LFE130-.LFB130
+ 1383 0048 00000000 		.4byte	0
+ 1384 004c 00000000 		.4byte	0
+ 1385              		.section	.debug_ranges,"",%progbits
+ 1386              	.Ldebug_ranges0:
+ 1387 0000 00000000 		.4byte	.LFB131
+ 1388 0004 48000000 		.4byte	.LFE131
+ 1389 0008 00000000 		.4byte	.LFB132
+ 1390 000c 24000000 		.4byte	.LFE132
+ 1391 0010 00000000 		.4byte	.LFB133
+ 1392 0014 2C000000 		.4byte	.LFE133
+ 1393 0018 00000000 		.4byte	.LFB134
+ 1394 001c 50000000 		.4byte	.LFE134
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 27
+
+
+ 1395 0020 00000000 		.4byte	.LFB135
+ 1396 0024 28000000 		.4byte	.LFE135
+ 1397 0028 00000000 		.4byte	.LFB136
+ 1398 002c 48000000 		.4byte	.LFE136
+ 1399 0030 00000000 		.4byte	.LFB130
+ 1400 0034 2C000000 		.4byte	.LFE130
+ 1401 0038 00000000 		.4byte	0
+ 1402 003c 00000000 		.4byte	0
+ 1403              		.section	.debug_line,"",%progbits
+ 1404              	.Ldebug_line0:
+ 1405 0000 95020000 		.section	.debug_str,"MS",%progbits,1
+ 1405      02009801 
+ 1405      00000201 
+ 1405      FB0E0D00 
+ 1405      01010101 
+ 1406              	.LASF30:
+ 1407 0000 62617365 		.ascii	"base_pos_saw\000"
+ 1407      5F706F73 
+ 1407      5F736177 
+ 1407      00
+ 1408              	.LASF26:
+ 1409 000d 67656E65 		.ascii	"generate_base_sq\000"
+ 1409      72617465 
+ 1409      5F626173 
+ 1409      655F7371 
+ 1409      00
+ 1410              	.LASF0:
+ 1411 001e 5F5F696E 		.ascii	"__int8_t\000"
+ 1411      74385F74 
+ 1411      00
+ 1412              	.LASF1:
+ 1413 0027 5F5F7569 		.ascii	"__uint8_t\000"
+ 1413      6E74385F 
+ 1413      7400
+ 1414              	.LASF4:
+ 1415 0031 5F5F696E 		.ascii	"__int16_t\000"
+ 1415      7431365F 
+ 1415      7400
+ 1416              	.LASF28:
+ 1417 003b 696E6974 		.ascii	"init_wavetable\000"
+ 1417      5F776176 
+ 1417      65746162 
+ 1417      6C6500
+ 1418              	.LASF20:
+ 1419 004a 64656C74 		.ascii	"delta\000"
+ 1419      6100
+ 1420              	.LASF21:
+ 1421 0050 67656E65 		.ascii	"generate_base_sine\000"
+ 1421      72617465 
+ 1421      5F626173 
+ 1421      655F7369 
+ 1421      6E6500
+ 1422              	.LASF12:
+ 1423 0063 696E7438 		.ascii	"int8_t\000"
+ 1423      5F7400
+ 1424              	.LASF29:
+ 1425 006a 62617365 		.ascii	"base_sine\000"
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 28
+
+
+ 1425      5F73696E 
+ 1425      6500
+ 1426              	.LASF15:
+ 1427 0074 666C6F61 		.ascii	"float\000"
+ 1427      7400
+ 1428              	.LASF3:
+ 1429 007a 756E7369 		.ascii	"unsigned char\000"
+ 1429      676E6564 
+ 1429      20636861 
+ 1429      7200
+ 1430              	.LASF8:
+ 1431 0088 6C6F6E67 		.ascii	"long unsigned int\000"
+ 1431      20756E73 
+ 1431      69676E65 
+ 1431      6420696E 
+ 1431      7400
+ 1432              	.LASF6:
+ 1433 009a 73686F72 		.ascii	"short unsigned int\000"
+ 1433      7420756E 
+ 1433      7369676E 
+ 1433      65642069 
+ 1433      6E7400
+ 1434              	.LASF31:
+ 1435 00ad 62617365 		.ascii	"base_sq\000"
+ 1435      5F737100 
+ 1436              	.LASF34:
+ 1437 00b5 77617665 		.ascii	"waves.c\000"
+ 1437      732E6300 
+ 1438              	.LASF25:
+ 1439 00bd 67656E65 		.ascii	"generate_base_tri\000"
+ 1439      72617465 
+ 1439      5F626173 
+ 1439      655F7472 
+ 1439      6900
+ 1440              	.LASF16:
+ 1441 00cf 646F7562 		.ascii	"double\000"
+ 1441      6C6500
+ 1442              	.LASF27:
+ 1443 00d6 67656E65 		.ascii	"generate_lfo_sine\000"
+ 1443      72617465 
+ 1443      5F6C666F 
+ 1443      5F73696E 
+ 1443      6500
+ 1444              	.LASF24:
+ 1445 00e8 67656E65 		.ascii	"generate_base_neg_saw\000"
+ 1445      72617465 
+ 1445      5F626173 
+ 1445      655F6E65 
+ 1445      675F7361 
+ 1446              	.LASF11:
+ 1447 00fe 756E7369 		.ascii	"unsigned int\000"
+ 1447      676E6564 
+ 1447      20696E74 
+ 1447      00
+ 1448              	.LASF10:
+ 1449 010b 6C6F6E67 		.ascii	"long long unsigned int\000"
+ 1449      206C6F6E 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 29
+
+
+ 1449      6720756E 
+ 1449      7369676E 
+ 1449      65642069 
+ 1450              	.LASF13:
+ 1451 0122 75696E74 		.ascii	"uint8_t\000"
+ 1451      385F7400 
+ 1452              	.LASF14:
+ 1453 012a 696E7431 		.ascii	"int16_t\000"
+ 1453      365F7400 
+ 1454              	.LASF33:
+ 1455 0132 474E5520 		.ascii	"GNU C11 5.4.1 20160609 (release) [ARM/embedded-5-br"
+ 1455      43313120 
+ 1455      352E342E 
+ 1455      31203230 
+ 1455      31363036 
+ 1456 0165 616E6368 		.ascii	"anch revision 237715] -mcpu=cortex-m0 -mthumb -g -O"
+ 1456      20726576 
+ 1456      6973696F 
+ 1456      6E203233 
+ 1456      37373135 
+ 1457 0198 67202D66 		.ascii	"g -ffunction-sections -ffat-lto-objects\000"
+ 1457      66756E63 
+ 1457      74696F6E 
+ 1457      2D736563 
+ 1457      74696F6E 
+ 1458              	.LASF19:
+ 1459 01c0 73697A65 		.ascii	"sizetype\000"
+ 1459      74797065 
+ 1459      00
+ 1460              	.LASF9:
+ 1461 01c9 6C6F6E67 		.ascii	"long long int\000"
+ 1461      206C6F6E 
+ 1461      6720696E 
+ 1461      7400
+ 1462              	.LASF17:
+ 1463 01d7 63686172 		.ascii	"char\000"
+ 1463      00
+ 1464              	.LASF5:
+ 1465 01dc 73686F72 		.ascii	"short int\000"
+ 1465      7420696E 
+ 1465      7400
+ 1466              	.LASF23:
+ 1467 01e6 62756666 		.ascii	"buffer\000"
+ 1467      657200
+ 1468              	.LASF22:
+ 1469 01ed 67656E65 		.ascii	"generate_base_pos_saw\000"
+ 1469      72617465 
+ 1469      5F626173 
+ 1469      655F706F 
+ 1469      735F7361 
+ 1470              	.LASF7:
+ 1471 0203 6C6F6E67 		.ascii	"long int\000"
+ 1471      20696E74 
+ 1471      00
+ 1472              	.LASF35:
+ 1473 020c 453A5C44 		.ascii	"E:\\Documents\\Engineering\\Code\\synth-wavetable\\"
+ 1473      6F63756D 
+ARM GAS  C:\Users\psmus\AppData\Local\Temp\cc5k9kBp.s 			page 30
+
+
+ 1473      656E7473 
+ 1473      5C456E67 
+ 1473      696E6565 
+ 1474 023a 43797072 		.ascii	"Cypress\\synth-wavetable.cydsn\000"
+ 1474      6573735C 
+ 1474      73796E74 
+ 1474      682D7761 
+ 1474      76657461 
+ 1475              	.LASF18:
+ 1476 0258 6C6F6E67 		.ascii	"long double\000"
+ 1476      20646F75 
+ 1476      626C6500 
+ 1477              	.LASF2:
+ 1478 0264 7369676E 		.ascii	"signed char\000"
+ 1478      65642063 
+ 1478      68617200 
+ 1479              	.LASF32:
+ 1480 0270 6C666F5F 		.ascii	"lfo_sine\000"
+ 1480      73696E65 
+ 1480      00
+ 1481              		.ident	"GCC: (GNU Tools for ARM Embedded Processors) 5.4.1 20160609 (release) [ARM/embedded-5-bran

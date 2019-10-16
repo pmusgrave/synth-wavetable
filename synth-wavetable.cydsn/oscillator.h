@@ -6,7 +6,7 @@ struct voice {
     uint32_t env_index;
     uint16_t env_multiplier;
     uint8_t current_env_mode;
-    int freq;
+    uint16_t freq;
     uint8_t note_index;
 };
 

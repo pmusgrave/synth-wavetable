@@ -150,7 +150,7 @@ void ProcessAudioOut(int8_t* buffer)
     
     static uint32_t lfo_index;
     lfo_index += lfo_freq;
-    lfo_multiplier = lfo_sine[(lfo_index>>8) % 256];
+    //lfo_multiplier = lfo_sine[(lfo_index>>8) % 256];
     
     //*index = *index + freq;
     //buffer[0] = base_sine[((*index)>>10)%N];
@@ -174,6 +174,7 @@ void ProcessAudioOut(int8_t* buffer)
         + (base_sine[(index8>>8) & 0xFFF])
         */
         
+        /*
         uint32_t sq_portion = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * ((65535-waveshape)>>8)
         + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * ((65535-waveshape)>>8)
         + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * ((65535-waveshape)>>8)
@@ -192,10 +193,12 @@ void ProcessAudioOut(int8_t* buffer)
         + ((base_sine[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * (waveshape>>8)
         + ((base_sine[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * (waveshape>>8);
         //buffer[i] = value;
+        */
+        
         
         //int8_t sine_portion = (base_sine[(index>>8) & 0xFFF] * waveshape>>6)>>8;
         //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (65535-waveshape)>>6)>>8;
-        buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
+        //buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
         
         ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
     }

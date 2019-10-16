@@ -1,0 +1,16 @@
+<sld_project_info>
+  <project>
+    <hash md5_digest_80b="8b5f09767174726df1df"/>
+  </project>
+  <file_info>
+    <file device="EP4CE22F17C6" path="dds.sof" usercode="0xFFFFFFFF"/>
+  </file_info>
+  <sld_infos>
+    <sld_info hpath="spi_slave:spi0" name="spi0">
+      <assignment_values>
+        <assignment_value text="QSYS_NAME spi_slave HAS_SOPCINFO 1 GENERATION_ID 1571084901"/>
+      </assignment_values>
+      <parameters/>
+    </sld_info>
+  </sld_infos>
+</sld_project_info>

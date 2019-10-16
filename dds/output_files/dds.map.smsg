@@ -1,0 +1,2 @@
+Warning (10268): Verilog HDL information at dds.v(92): always construct contains both blocking and non-blocking assignments File: E:/Documents/Engineering/Code/training/FPGA/dds/dds.v Line: 92
+Warning (10268): Verilog HDL information at dds.v(141): always construct contains both blocking and non-blocking assignments File: E:/Documents/Engineering/Code/training/FPGA/dds/dds.v Line: 141
