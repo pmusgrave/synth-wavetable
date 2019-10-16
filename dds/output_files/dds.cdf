@@ -4,7 +4,7 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EP4CE22F17) Path("E:/Documents/Engineering/Code/training/FPGA/dds/output_files/") File("dds.sof") MfrSpec(OpMask(1));
+		Device PartName(EP4CE22F17) Path("E:/Documents/Engineering/Code/synth-wavetable/dds/output_files/") File("dds.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 

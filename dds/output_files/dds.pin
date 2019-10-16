@@ -196,8 +196,8 @@ MSEL0                        : H13       :        :                   :         
 CONF_DONE                    : H14       :        :                   :         : 6         :                
 GND                          : H15       : gnd    :                   :         :           :                
 GND                          : H16       : gnd    :                   :         :           :                
-R2R_out[7]                   : J1        : output : 2.5 V             :         : 2         : N              
-R2R_out[6]                   : J2        : output : 2.5 V             :         : 2         : N              
+R2R_out[6]                   : J1        : output : 2.5 V             :         : 2         : N              
+R2R_out[7]                   : J2        : output : 2.5 V             :         : 2         : N              
 nCE                          : J3        :        :                   :         : 1         :                
 TDO                          : J4        : output :                   :         : 1         :                
 TMS                          : J5        : input  :                   :         : 1         :                
