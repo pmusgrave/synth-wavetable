@@ -99,13 +99,13 @@ module dds (
 	reg [31:0]  phase_accumulator8;
 	rom_table_addr_mux phase_accumulator_mux (
 		.data0x ( phase_accumulator>>10 ),
-		.data1x ( phase_accumulator>>10 ),
+		.data1x ( phase_accumulator2>>10 ),
 		.data2x ( phase_accumulator>>10 ),
-		.data3x ( phase_accumulator>>10 ),
+		.data3x ( phase_accumulator2>>10 ),
 		.data4x ( phase_accumulator>>10 ),
-		.data5x ( phase_accumulator>>10 ),
+		.data5x ( phase_accumulator2>>10 ),
 		.data6x ( phase_accumulator>>10 ),
-		.data7x ( phase_accumulator>>10 ),
+		.data7x ( phase_accumulator2>>10 ),
 		.sel ( phase_accumulator_sel ),
 		.result ( phase_accumulator_wire )
 	);
@@ -115,7 +115,9 @@ module dds (
 	*************************************************************************/
 	reg [31:0] counter;
 	reg [15:0] freq;
+	reg [15:0] freq2;
 	reg [7:0] env;
+	reg [7:0] env2;
 	always@(posedge clk) begin
 		wave_sel = 0;
 		nreset = 1;
@@ -124,29 +126,30 @@ module dds (
 			nreset = 0;
 	    end
 
-	    phase_accumulator_sel <= 0;
+	    phase_accumulator_sel <= phase_accumulator_sel + 1;
 		case(phase_accumulator_sel)
 			0:	output_val <= output_val_wire;
-			1:	output_val <= output_val_wire;
+			1:	output_val2 <= output_val_wire;
 			2:	output_val <= output_val_wire;
-			3:	output_val <= output_val_wire;
+			3:	output_val2 <= output_val_wire;
 			4:	output_val <= output_val_wire;
-			5:	output_val <= output_val_wire;
+			5:	output_val2 <= output_val_wire;
 			6:	output_val <= output_val_wire;
-			7:	output_val <= output_val_wire;
+			7:	output_val2 <= output_val_wire;
 			default: output_val <= output_val_wire;
 		endcase
 		
-		R2R_out <= output_val>>16;
+		R2R_out <= ((output_val>>1) + (output_val2>>1))>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
 		// sample rate.
-		if(counter < 500) begin
+		if(counter < 100) begin
 			counter <= counter + 1;
 		end else begin
 			counter <= 0;
 			phase_accumulator <= phase_accumulator + freq;
+			phase_accumulator2 <= phase_accumulator2 + freq2;
 		end
 	end
 
@@ -159,8 +162,11 @@ module dds (
 	reg [7:0] mosi_data;
 	reg [15:0] mosi_data_16bit;
 	reg freq_update_start;
+	reg freq2_update_start;
 	reg freq_update_complete;
+	reg freq2_update_complete;
 	reg env_update_flag;
+	reg env2_update_flag;
 	always@(posedge source_valid) begin
 		spi_byte_counter = spi_byte_counter + 1;
 		mosi_data_16bit <= (mosi_data_16bit<<8) + mosi_data;
@@ -173,6 +179,8 @@ module dds (
 				//mosi_data_16bit <= 0;
 				freq_update_start = 0;
 				freq_update_complete = 0;
+				freq2_update_start = 0;
+				freq2_update_complete = 0;
 			end
 
 			default: begin
@@ -181,6 +189,10 @@ module dds (
 					if(freq_update_start) begin
 						freq_update_start = 0;
 						freq_update_complete = 1;
+					end
+					if(freq2_update_start) begin
+						freq2_update_start = 0;
+						freq2_update_complete = 1;
 					end
 				end
 			end
@@ -194,6 +206,15 @@ module dds (
 
 			2: begin
 				env_update_flag <= 1;
+				spi_byte_counter_max <= 2;
+			end
+			3: begin
+				freq2_update_start = 1;
+				spi_byte_counter_max <= 3;
+			end
+
+			4: begin
+				env2_update_flag <= 1;
 				spi_byte_counter_max <= 2;
 			end
 
@@ -211,7 +232,11 @@ module dds (
 			freq <= mosi_data_16bit;
 			freq_update_complete = 0;
 		end
+		if(freq2_update_complete) begin
+			freq2 <= mosi_data_16bit;
+			freq2_update_complete = 0;
+		end
 
-		led <= freq;
+		led <= freq2;
 	end
 endmodule
