@@ -283,7 +283,7 @@ void ProcessSpiToFpga(){
             break;
         case 4:
             masterTxBuffer[0] = (uint8_t)(100);
-            spi_byte_counter = 0;
+            spi_byte_counter++;
             break;
         case 5:
             masterTxBuffer[0] = 3;

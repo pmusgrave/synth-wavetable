@@ -208,6 +208,10 @@ module dds (
 					env_update_start = 0;
 					env_update_complete = 1;
 				end
+				if(env2_update_start) begin
+					env2_update_start = 0;
+					env2_update_complete = 1;
+				end
 			end
 		end
 
@@ -279,6 +283,10 @@ module dds (
 		if(env_update_complete) begin
 			env <= mosi_data;
 			env_update_complete = 0;
+		end
+		if(env2_update_complete) begin
+			env2 <= mosi_data;
+			env2_update_complete = 0;
 		end
 	end
 endmodule
