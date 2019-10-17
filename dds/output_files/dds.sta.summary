@@ -3,159 +3,159 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1200mV 85C Model Setup 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
-Slack : -2.863
-TNS   : -88.788
-
-Type  : Slow 1200mV 85C Model Setup 'clk'
-Slack : -2.648
-TNS   : -226.594
+Slack : -1.964
+TNS   : -16.494
 
 Type  : Slow 1200mV 85C Model Setup 'spi_sclk'
-Slack : -0.823
-TNS   : -12.680
+Slack : -1.481
+TNS   : -16.269
+
+Type  : Slow 1200mV 85C Model Setup 'clk'
+Slack : -1.171
+TNS   : -10.265
+
+Type  : Slow 1200mV 85C Model Hold 'clk'
+Slack : 0.273
+TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
-Slack : 0.266
+Slack : 0.324
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Hold 'spi_sclk'
-Slack : 0.288
-TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Hold 'clk'
-Slack : 0.336
+Slack : 0.381
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Recovery 'spi_sclk'
-Slack : -1.197
-TNS   : -32.240
+Slack : -1.219
+TNS   : -35.414
 
 Type  : Slow 1200mV 85C Model Recovery 'clk'
-Slack : -0.741
-TNS   : -8.867
+Slack : -0.754
+TNS   : -9.549
 
 Type  : Slow 1200mV 85C Model Removal 'clk'
-Slack : 0.748
+Slack : 1.053
 TNS   : 0.000
 
 Type  : Slow 1200mV 85C Model Removal 'spi_sclk'
-Slack : 1.332
+Slack : 1.425
 TNS   : 0.000
-
-Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
-Slack : -3.000
-TNS   : -232.712
 
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'spi_sclk'
 Slack : -3.000
 TNS   : -38.000
 
+Type  : Slow 1200mV 85C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -30.000
+
 Type  : Slow 1200mV 85C Model Minimum Pulse Width 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
 Slack : -1.000
-TNS   : -51.000
+TNS   : -9.000
 
 Type  : Slow 1200mV 0C Model Setup 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
-Slack : -2.505
-TNS   : -75.250
-
-Type  : Slow 1200mV 0C Model Setup 'clk'
-Slack : -2.283
-TNS   : -189.703
+Slack : -1.664
+TNS   : -13.783
 
 Type  : Slow 1200mV 0C Model Setup 'spi_sclk'
-Slack : -0.594
-TNS   : -9.004
+Slack : -1.216
+TNS   : -12.190
 
-Type  : Slow 1200mV 0C Model Hold 'spi_sclk'
+Type  : Slow 1200mV 0C Model Setup 'clk'
+Slack : -0.975
+TNS   : -7.414
+
+Type  : Slow 1200mV 0C Model Hold 'clk'
 Slack : 0.260
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Hold 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
-Slack : 0.271
+Slack : 0.280
 TNS   : 0.000
 
-Type  : Slow 1200mV 0C Model Hold 'clk'
-Slack : 0.300
+Type  : Slow 1200mV 0C Model Hold 'spi_sclk'
+Slack : 0.333
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Recovery 'spi_sclk'
-Slack : -1.021
-TNS   : -25.783
+Slack : -1.038
+TNS   : -28.663
 
 Type  : Slow 1200mV 0C Model Recovery 'clk'
-Slack : -0.558
-TNS   : -6.481
+Slack : -0.561
+TNS   : -6.997
 
 Type  : Slow 1200mV 0C Model Removal 'clk'
-Slack : 0.688
+Slack : 0.942
 TNS   : 0.000
 
 Type  : Slow 1200mV 0C Model Removal 'spi_sclk'
-Slack : 1.128
+Slack : 1.223
 TNS   : 0.000
-
-Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
-Slack : -3.000
-TNS   : -232.712
 
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'spi_sclk'
 Slack : -3.000
 TNS   : -38.000
 
+Type  : Slow 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -30.000
+
 Type  : Slow 1200mV 0C Model Minimum Pulse Width 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
 Slack : -1.000
-TNS   : -51.000
+TNS   : -9.000
 
 Type  : Fast 1200mV 0C Model Setup 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
-Slack : -1.107
-TNS   : -27.421
-
-Type  : Fast 1200mV 0C Model Setup 'clk'
-Slack : -1.100
-TNS   : -72.283
+Slack : -0.638
+TNS   : -5.184
 
 Type  : Fast 1200mV 0C Model Setup 'spi_sclk'
-Slack : -0.084
-TNS   : -0.232
+Slack : -0.456
+TNS   : -1.575
+
+Type  : Fast 1200mV 0C Model Setup 'clk'
+Slack : -0.248
+TNS   : -2.683
 
 Type  : Fast 1200mV 0C Model Hold 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
-Slack : 0.062
-TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Hold 'spi_sclk'
-Slack : 0.100
+Slack : 0.117
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Hold 'clk'
-Slack : 0.172
+Slack : 0.187
+TNS   : 0.000
+
+Type  : Fast 1200mV 0C Model Hold 'spi_sclk'
+Slack : 0.199
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Recovery 'spi_sclk'
-Slack : -0.154
-TNS   : -2.913
+Slack : -0.171
+TNS   : -4.576
 
 Type  : Fast 1200mV 0C Model Recovery 'clk'
-Slack : -0.011
-TNS   : -0.066
+Slack : -0.010
+TNS   : -0.037
 
 Type  : Fast 1200mV 0C Model Removal 'clk'
-Slack : 0.402
+Slack : 0.586
 TNS   : 0.000
 
 Type  : Fast 1200mV 0C Model Removal 'spi_sclk'
-Slack : 0.629
+Slack : 0.776
 TNS   : 0.000
-
-Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
-Slack : -3.000
-TNS   : -162.956
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'spi_sclk'
 Slack : -3.000
-TNS   : -44.060
+TNS   : -43.067
+
+Type  : Fast 1200mV 0C Model Minimum Pulse Width 'clk'
+Slack : -3.000
+TNS   : -31.582
 
 Type  : Fast 1200mV 0C Model Minimum Pulse Width 'spi_slave:spi0|SPIPhy:spislave_0|single_output_pipeline_stage:SPIPhy_single_output_pipeline_stage|out_valid'
 Slack : -1.000
-TNS   : -51.000
+TNS   : -9.000
 
 ------------------------------------------------------------
