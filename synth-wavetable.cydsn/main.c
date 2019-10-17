@@ -268,13 +268,13 @@ void ProcessSpiToFpga(){
             spi_byte_counter++;
             break;
         case 1:
-            //masterTxBuffer[0] = (uint8_t)(14531>>8);
-            masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
+            masterTxBuffer[0] = (uint8_t)(14531>>8);
+            //masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
             spi_byte_counter++;
             break;
         case 2:
-            //masterTxBuffer[0] = (uint8_t)(14531);
-            masterTxBuffer[0] = (uint8_t)(attack_freq);
+            masterTxBuffer[0] = (uint8_t)(14531);
+            //masterTxBuffer[0] = (uint8_t)(attack_freq);
             spi_byte_counter++;
             break;
         case 3:
@@ -282,20 +282,18 @@ void ProcessSpiToFpga(){
             spi_byte_counter++;
             break;
         case 4:
-            masterTxBuffer[0] = (uint8_t)(60);
-            spi_byte_counter++;
+            masterTxBuffer[0] = (uint8_t)(100);
+            spi_byte_counter = 0;
             break;
         case 5:
             masterTxBuffer[0] = 3;
             spi_byte_counter++;
             break;
         case 6:
-            //masterTxBuffer[0] = (uint8_t)(14531>>8);
             masterTxBuffer[0] = (uint8_t)(5000>>8);
             spi_byte_counter++;
             break;
         case 7:
-            //masterTxBuffer[0] = (uint8_t)(14531);
             masterTxBuffer[0] = (uint8_t)(5000);
             spi_byte_counter++;
             break;
@@ -305,6 +303,46 @@ void ProcessSpiToFpga(){
             break;
         case 9:
             masterTxBuffer[0] = (uint8_t)(60);
+            spi_byte_counter++;
+            break;
+        case 10:
+            masterTxBuffer[0] = 5;
+            spi_byte_counter++;
+            break;
+        case 11:
+            masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
+            spi_byte_counter++;
+            break;
+        case 12:
+            masterTxBuffer[0] = (uint8_t)(attack_freq);
+            spi_byte_counter++;
+            break;
+        case 13:
+            masterTxBuffer[0] = 6;
+            spi_byte_counter++;
+            break;
+        case 14:
+            masterTxBuffer[0] = (uint8_t)(v1.env_multiplier);
+            spi_byte_counter++;
+            break;
+        case 15:
+            masterTxBuffer[0] = 7;
+            spi_byte_counter++;
+            break;
+        case 16:
+            masterTxBuffer[0] = (uint8_t)(5000>>8);
+            spi_byte_counter++;
+            break;
+        case 17:
+            masterTxBuffer[0] = (uint8_t)(5000);
+            spi_byte_counter++;
+            break;
+        case 18:
+            masterTxBuffer[0] = 8;
+            spi_byte_counter++;
+            break;
+        case 19:
+            masterTxBuffer[0] = (uint8_t)(v2.env_multiplier);
             spi_byte_counter = 0;
             break;
         }
