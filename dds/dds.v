@@ -15,6 +15,7 @@ module dds (
 	reg nreset;
 	wire source_ready;
 	wire source_valid;
+	wire [7:0] mosi_data_bus;
 	spi_slave spi0 (
 		.sysclk        (clk),   	    //              clock_sink.clk
 		.nreset        (nreset),        //        clock_sink_reset.reset_n
@@ -121,8 +122,10 @@ module dds (
 		if(source_valid) begin
 			mosi_data <= mosi_data_bus;
 			nreset = 0;
+			//mosi_data_16bit <= (mosi_data_16bit<<8) + mosi_data_bus;
 	    end
 
+	    phase_accumulator_sel <= 0;
 		case(phase_accumulator_sel)
 			0:	output_val <= output_val_wire;
 			1:	output_val <= output_val_wire;
@@ -135,8 +138,8 @@ module dds (
 			default: output_val <= output_val_wire;
 		endcase
 
-		led <= spi_current_command;
-		R2R_out <= ((output_val * env)>>16);
+		
+		R2R_out <= output_val;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -155,32 +158,39 @@ module dds (
 	reg [7:0] spi_current_command;
 	reg [4:0] spi_byte_counter;
 	reg [4:0] spi_byte_counter_max;
-	wire [7:0] mosi_data_bus;
 	reg [7:0] mosi_data;
 	reg [15:0] mosi_data_16bit;
 	reg freq_update_start;
 	reg freq_update_complete;
 	reg env_update_flag;
 	always@(posedge source_valid) begin
+		spi_byte_counter = spi_byte_counter + 1;
+		mosi_data_16bit <= (mosi_data_16bit<<8) + mosi_data;
+
 		case(spi_byte_counter)
 			// first byte is a command message
 			// this indicates what data will follow
-			0:	begin 
+			1:	begin 
 				spi_current_command = mosi_data;
+				//mosi_data_16bit <= 0;
+				freq_update_start = 0;
+				freq_update_complete = 0;
 			end
 
 			default: begin
-				if(spi_byte_counter < spi_byte_counter_max) begin
-					spi_byte_counter <= spi_byte_counter + 1;
-				end else begin
-					spi_byte_counter <= 0;
+				if(spi_byte_counter > spi_byte_counter_max) begin
+					spi_byte_counter = 0;
+					if(freq_update_start) begin
+						freq_update_start = 0;
+						freq_update_complete = 1;
+					end
 				end
 			end
 		endcase
 
 		case(spi_current_command)
 			1: begin
-				freq_update_start <= 1;
+				freq_update_start = 1;
 				spi_byte_counter_max <= 3;
 			end
 
@@ -189,12 +199,21 @@ module dds (
 				spi_byte_counter_max <= 2;
 			end
 
+			// if the current command is not a known command in the above list,
+			// reset byte counter to wait for a new command
 			default: begin
 				spi_current_command = 0;
-				spi_byte_counter <= 0;
+				spi_byte_counter = 0;
 				spi_byte_counter_max <= 0;
 			end
 			
 		endcase
+
+		if(freq_update_complete) begin
+			freq <= mosi_data_16bit;
+			freq_update_complete = 0;
+		end
+
+		led <= freq;
 	end
 endmodule

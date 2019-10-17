@@ -1,4 +1,4 @@
---------------- Build Started: 10/17/2019 14:33:15 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Build Started: 10/17/2019 16:30:18 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 The code generation step is up to date.
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM0\ARM_GCC_541\Debug\main.o
 main.c: In function 'ProcessSpiToFpga':
@@ -15,4 +15,4 @@ Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S E:\Documents\Engineering\Code\synth-wavetable\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf
 Flash used: 22560 of 262144 bytes (8.6%).
 SRAM used: 18424 of 32768 bytes (56.2%). Stack: 2048 bytes. Heap: 2048 bytes.
---------------- Build Succeeded: 10/17/2019 14:33:18 ---------------
+--------------- Build Succeeded: 10/17/2019 16:30:19 ---------------

@@ -1,2 +1,2 @@
-Warning (10268): Verilog HDL information at dds.v(118): always construct contains both blocking and non-blocking assignments File: E:/Documents/Engineering/Code/synth-wavetable/dds/dds.v Line: 118
-Warning (10268): Verilog HDL information at dds.v(164): always construct contains both blocking and non-blocking assignments File: E:/Documents/Engineering/Code/synth-wavetable/dds/dds.v Line: 164
+Warning (10268): Verilog HDL information at dds.v(119): always construct contains both blocking and non-blocking assignments File: E:/Documents/Engineering/Code/synth-wavetable/dds/dds.v Line: 119
+Warning (10268): Verilog HDL information at dds.v(166): always construct contains both blocking and non-blocking assignments File: E:/Documents/Engineering/Code/synth-wavetable/dds/dds.v Line: 166
