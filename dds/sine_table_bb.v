@@ -4,7 +4,7 @@
 // MODULE: altsyncram 
 
 // ============================================================
-// File Name: rom.v
+// File Name: sine_table.v
 // Megafunction Name(s):
 // 			altsyncram
 //
@@ -31,14 +31,14 @@
 //Intel and sold by Intel or its authorized distributors.  Please
 //refer to the applicable agreement for further details.
 
-module rom (
+module sine_table (
 	address,
 	clock,
 	q);
 
 	input	[11:0]  address;
 	input	  clock;
-	output	[31:0]  q;
+	output	[23:0]  q;
 `ifndef ALTERA_RESERVED_QIS
 // synopsys translate_off
 `endif
@@ -69,7 +69,7 @@ endmodule
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 // Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "sine_table.hex"
+// Retrieval info: PRIVATE: MIFfilename STRING "../sine_table_unsigned_ints.mif"
 // Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "4096"
 // Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "0"
 // Retrieval info: PRIVATE: RegAddr NUMERIC "1"
@@ -78,13 +78,13 @@ endmodule
 // Retrieval info: PRIVATE: SingleClock NUMERIC "1"
 // Retrieval info: PRIVATE: UseDQRAM NUMERIC "0"
 // Retrieval info: PRIVATE: WidthAddr NUMERIC "12"
-// Retrieval info: PRIVATE: WidthData NUMERIC "32"
+// Retrieval info: PRIVATE: WidthData NUMERIC "24"
 // Retrieval info: PRIVATE: rden NUMERIC "0"
 // Retrieval info: LIBRARY: altera_mf altera_mf.altera_mf_components.all
 // Retrieval info: CONSTANT: ADDRESS_ACLR_A STRING "NONE"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
-// Retrieval info: CONSTANT: INIT_FILE STRING "sine_table.hex"
+// Retrieval info: CONSTANT: INIT_FILE STRING "../sine_table_unsigned_ints.mif"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
 // Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=NO"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
@@ -93,18 +93,18 @@ endmodule
 // Retrieval info: CONSTANT: OUTDATA_ACLR_A STRING "NONE"
 // Retrieval info: CONSTANT: OUTDATA_REG_A STRING "CLOCK0"
 // Retrieval info: CONSTANT: WIDTHAD_A NUMERIC "12"
-// Retrieval info: CONSTANT: WIDTH_A NUMERIC "32"
+// Retrieval info: CONSTANT: WIDTH_A NUMERIC "24"
 // Retrieval info: CONSTANT: WIDTH_BYTEENA_A NUMERIC "1"
 // Retrieval info: USED_PORT: address 0 0 12 0 INPUT NODEFVAL "address[11..0]"
 // Retrieval info: USED_PORT: clock 0 0 0 0 INPUT VCC "clock"
-// Retrieval info: USED_PORT: q 0 0 32 0 OUTPUT NODEFVAL "q[31..0]"
+// Retrieval info: USED_PORT: q 0 0 24 0 OUTPUT NODEFVAL "q[23..0]"
 // Retrieval info: CONNECT: @address_a 0 0 12 0 address 0 0 12 0
 // Retrieval info: CONNECT: @clock0 0 0 0 0 clock 0 0 0 0
-// Retrieval info: CONNECT: q 0 0 32 0 @q_a 0 0 32 0
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom.inc FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom.bsf TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom_inst.v TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom_bb.v TRUE
+// Retrieval info: CONNECT: q 0 0 24 0 @q_a 0 0 24 0
+// Retrieval info: GEN_FILE: TYPE_NORMAL sine_table.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sine_table.inc FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sine_table.cmp FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sine_table.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sine_table_inst.v FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL sine_table_bb.v TRUE
 // Retrieval info: LIB_FILE: altera_mf

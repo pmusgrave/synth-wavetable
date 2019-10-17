@@ -37,6 +37,9 @@ module wave_mux (
 	data2x,
 	data3x,
 	data4x,
+	data5x,
+	data6x,
+	data7x,
 	sel,
 	result);
 
@@ -45,6 +48,9 @@ module wave_mux (
 	input	[23:0]  data2x;
 	input	[23:0]  data3x;
 	input	[23:0]  data4x;
+	input	[23:0]  data5x;
+	input	[23:0]  data6x;
+	input	[23:0]  data7x;
 	input	[2:0]  sel;
 	output	[23:0]  result;
 
@@ -57,7 +63,7 @@ endmodule
 // Retrieval info: PRIVATE: SYNTH_WRAPPER_GEN_POSTFIX STRING "0"
 // Retrieval info: PRIVATE: new_diagram STRING "1"
 // Retrieval info: LIBRARY: lpm lpm.lpm_components.all
-// Retrieval info: CONSTANT: LPM_SIZE NUMERIC "5"
+// Retrieval info: CONSTANT: LPM_SIZE NUMERIC "8"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "LPM_MUX"
 // Retrieval info: CONSTANT: LPM_WIDTH NUMERIC "24"
 // Retrieval info: CONSTANT: LPM_WIDTHS NUMERIC "3"
@@ -66,6 +72,9 @@ endmodule
 // Retrieval info: USED_PORT: data2x 0 0 24 0 INPUT NODEFVAL "data2x[23..0]"
 // Retrieval info: USED_PORT: data3x 0 0 24 0 INPUT NODEFVAL "data3x[23..0]"
 // Retrieval info: USED_PORT: data4x 0 0 24 0 INPUT NODEFVAL "data4x[23..0]"
+// Retrieval info: USED_PORT: data5x 0 0 24 0 INPUT NODEFVAL "data5x[23..0]"
+// Retrieval info: USED_PORT: data6x 0 0 24 0 INPUT NODEFVAL "data6x[23..0]"
+// Retrieval info: USED_PORT: data7x 0 0 24 0 INPUT NODEFVAL "data7x[23..0]"
 // Retrieval info: USED_PORT: result 0 0 24 0 OUTPUT NODEFVAL "result[23..0]"
 // Retrieval info: USED_PORT: sel 0 0 3 0 INPUT NODEFVAL "sel[2..0]"
 // Retrieval info: CONNECT: @data 0 0 24 0 data0x 0 0 24 0
@@ -73,12 +82,15 @@ endmodule
 // Retrieval info: CONNECT: @data 0 0 24 48 data2x 0 0 24 0
 // Retrieval info: CONNECT: @data 0 0 24 72 data3x 0 0 24 0
 // Retrieval info: CONNECT: @data 0 0 24 96 data4x 0 0 24 0
+// Retrieval info: CONNECT: @data 0 0 24 120 data5x 0 0 24 0
+// Retrieval info: CONNECT: @data 0 0 24 144 data6x 0 0 24 0
+// Retrieval info: CONNECT: @data 0 0 24 168 data7x 0 0 24 0
 // Retrieval info: CONNECT: @sel 0 0 3 0 sel 0 0 3 0
 // Retrieval info: CONNECT: result 0 0 24 0 @result 0 0 24 0
 // Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux.bsf TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux.bsf FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux_inst.v FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL wave_mux_bb.v TRUE
 // Retrieval info: LIB_FILE: lpm

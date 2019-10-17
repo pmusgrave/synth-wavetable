@@ -269,12 +269,12 @@ void ProcessSpiToFpga(){
             break;
         case 1:
             //masterTxBuffer[0] = (uint8_t)(14531>>8);
-            masterTxBuffer[0] = (uint8_t)(258>>8);
+            masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
             spi_byte_counter++;
             break;
         case 2:
             //masterTxBuffer[0] = (uint8_t)(14531);
-            masterTxBuffer[0] = (uint8_t)(258);
+            masterTxBuffer[0] = (uint8_t)(attack_freq);
             spi_byte_counter++;
             break;
         case 3:
@@ -287,7 +287,7 @@ void ProcessSpiToFpga(){
             break;
         }
         
-        CyDelay(1000);
+        CyDelay(4);
         
         /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
         * to the slave and correspondingly the number of bytes returned by the

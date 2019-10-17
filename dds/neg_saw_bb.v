@@ -69,7 +69,7 @@ endmodule
 // Retrieval info: PRIVATE: JTAG_ENABLED NUMERIC "0"
 // Retrieval info: PRIVATE: JTAG_ID STRING "NONE"
 // Retrieval info: PRIVATE: MAXIMUM_DEPTH NUMERIC "0"
-// Retrieval info: PRIVATE: MIFfilename STRING "neg_saw.mif"
+// Retrieval info: PRIVATE: MIFfilename STRING "../pos_saw.mif"
 // Retrieval info: PRIVATE: NUMWORDS_A NUMERIC "4096"
 // Retrieval info: PRIVATE: RAM_BLOCK_TYPE NUMERIC "0"
 // Retrieval info: PRIVATE: RegAddr NUMERIC "1"
@@ -84,7 +84,7 @@ endmodule
 // Retrieval info: CONSTANT: ADDRESS_ACLR_A STRING "NONE"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_INPUT_A STRING "BYPASS"
 // Retrieval info: CONSTANT: CLOCK_ENABLE_OUTPUT_A STRING "BYPASS"
-// Retrieval info: CONSTANT: INIT_FILE STRING "neg_saw.mif"
+// Retrieval info: CONSTANT: INIT_FILE STRING "../pos_saw.mif"
 // Retrieval info: CONSTANT: INTENDED_DEVICE_FAMILY STRING "Cyclone IV E"
 // Retrieval info: CONSTANT: LPM_HINT STRING "ENABLE_RUNTIME_MOD=NO"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "altsyncram"
@@ -104,7 +104,7 @@ endmodule
 // Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw.bsf TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw.bsf FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw_inst.v FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL neg_saw_bb.v TRUE
 // Retrieval info: LIB_FILE: altera_mf

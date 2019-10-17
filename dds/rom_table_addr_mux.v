@@ -48,28 +48,28 @@ module rom_table_addr_mux (
 	sel,
 	result);
 
-	input	[11:0]  data0x;
-	input	[11:0]  data1x;
-	input	[11:0]  data2x;
-	input	[11:0]  data3x;
-	input	[11:0]  data4x;
-	input	[11:0]  data5x;
-	input	[11:0]  data6x;
-	input	[11:0]  data7x;
+	input	[31:0]  data0x;
+	input	[31:0]  data1x;
+	input	[31:0]  data2x;
+	input	[31:0]  data3x;
+	input	[31:0]  data4x;
+	input	[31:0]  data5x;
+	input	[31:0]  data6x;
+	input	[31:0]  data7x;
 	input	[2:0]  sel;
-	output	[11:0]  result;
+	output	[31:0]  result;
 
-	wire [11:0] sub_wire9;
-	wire [11:0] sub_wire8 = data7x[11:0];
-	wire [11:0] sub_wire7 = data6x[11:0];
-	wire [11:0] sub_wire6 = data5x[11:0];
-	wire [11:0] sub_wire5 = data4x[11:0];
-	wire [11:0] sub_wire4 = data3x[11:0];
-	wire [11:0] sub_wire3 = data2x[11:0];
-	wire [11:0] sub_wire2 = data1x[11:0];
-	wire [11:0] sub_wire0 = data0x[11:0];
-	wire [95:0] sub_wire1 = {sub_wire8, sub_wire7, sub_wire6, sub_wire5, sub_wire4, sub_wire3, sub_wire2, sub_wire0};
-	wire [11:0] result = sub_wire9[11:0];
+	wire [31:0] sub_wire9;
+	wire [31:0] sub_wire8 = data7x[31:0];
+	wire [31:0] sub_wire7 = data6x[31:0];
+	wire [31:0] sub_wire6 = data5x[31:0];
+	wire [31:0] sub_wire5 = data4x[31:0];
+	wire [31:0] sub_wire4 = data3x[31:0];
+	wire [31:0] sub_wire3 = data2x[31:0];
+	wire [31:0] sub_wire2 = data1x[31:0];
+	wire [31:0] sub_wire0 = data0x[31:0];
+	wire [255:0] sub_wire1 = {sub_wire8, sub_wire7, sub_wire6, sub_wire5, sub_wire4, sub_wire3, sub_wire2, sub_wire0};
+	wire [31:0] result = sub_wire9[31:0];
 
 	lpm_mux	LPM_MUX_component (
 				.data (sub_wire1),
@@ -85,7 +85,7 @@ module rom_table_addr_mux (
 	defparam
 		LPM_MUX_component.lpm_size = 8,
 		LPM_MUX_component.lpm_type = "LPM_MUX",
-		LPM_MUX_component.lpm_width = 12,
+		LPM_MUX_component.lpm_width = 32,
 		LPM_MUX_component.lpm_widths = 3;
 
 
@@ -100,32 +100,32 @@ endmodule
 // Retrieval info: LIBRARY: lpm lpm.lpm_components.all
 // Retrieval info: CONSTANT: LPM_SIZE NUMERIC "8"
 // Retrieval info: CONSTANT: LPM_TYPE STRING "LPM_MUX"
-// Retrieval info: CONSTANT: LPM_WIDTH NUMERIC "12"
+// Retrieval info: CONSTANT: LPM_WIDTH NUMERIC "32"
 // Retrieval info: CONSTANT: LPM_WIDTHS NUMERIC "3"
-// Retrieval info: USED_PORT: data0x 0 0 12 0 INPUT NODEFVAL "data0x[11..0]"
-// Retrieval info: USED_PORT: data1x 0 0 12 0 INPUT NODEFVAL "data1x[11..0]"
-// Retrieval info: USED_PORT: data2x 0 0 12 0 INPUT NODEFVAL "data2x[11..0]"
-// Retrieval info: USED_PORT: data3x 0 0 12 0 INPUT NODEFVAL "data3x[11..0]"
-// Retrieval info: USED_PORT: data4x 0 0 12 0 INPUT NODEFVAL "data4x[11..0]"
-// Retrieval info: USED_PORT: data5x 0 0 12 0 INPUT NODEFVAL "data5x[11..0]"
-// Retrieval info: USED_PORT: data6x 0 0 12 0 INPUT NODEFVAL "data6x[11..0]"
-// Retrieval info: USED_PORT: data7x 0 0 12 0 INPUT NODEFVAL "data7x[11..0]"
-// Retrieval info: USED_PORT: result 0 0 12 0 OUTPUT NODEFVAL "result[11..0]"
+// Retrieval info: USED_PORT: data0x 0 0 32 0 INPUT NODEFVAL "data0x[31..0]"
+// Retrieval info: USED_PORT: data1x 0 0 32 0 INPUT NODEFVAL "data1x[31..0]"
+// Retrieval info: USED_PORT: data2x 0 0 32 0 INPUT NODEFVAL "data2x[31..0]"
+// Retrieval info: USED_PORT: data3x 0 0 32 0 INPUT NODEFVAL "data3x[31..0]"
+// Retrieval info: USED_PORT: data4x 0 0 32 0 INPUT NODEFVAL "data4x[31..0]"
+// Retrieval info: USED_PORT: data5x 0 0 32 0 INPUT NODEFVAL "data5x[31..0]"
+// Retrieval info: USED_PORT: data6x 0 0 32 0 INPUT NODEFVAL "data6x[31..0]"
+// Retrieval info: USED_PORT: data7x 0 0 32 0 INPUT NODEFVAL "data7x[31..0]"
+// Retrieval info: USED_PORT: result 0 0 32 0 OUTPUT NODEFVAL "result[31..0]"
 // Retrieval info: USED_PORT: sel 0 0 3 0 INPUT NODEFVAL "sel[2..0]"
-// Retrieval info: CONNECT: @data 0 0 12 0 data0x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 12 data1x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 24 data2x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 36 data3x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 48 data4x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 60 data5x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 72 data6x 0 0 12 0
-// Retrieval info: CONNECT: @data 0 0 12 84 data7x 0 0 12 0
+// Retrieval info: CONNECT: @data 0 0 32 0 data0x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 32 data1x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 64 data2x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 96 data3x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 128 data4x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 160 data5x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 192 data6x 0 0 32 0
+// Retrieval info: CONNECT: @data 0 0 32 224 data7x 0 0 32 0
 // Retrieval info: CONNECT: @sel 0 0 3 0 sel 0 0 3 0
-// Retrieval info: CONNECT: result 0 0 12 0 @result 0 0 12 0
+// Retrieval info: CONNECT: result 0 0 32 0 @result 0 0 32 0
 // Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux.v TRUE
 // Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux.inc FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux.cmp FALSE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux.bsf TRUE
-// Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux_inst.v TRUE
+// Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux.bsf FALSE
+// Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux_inst.v FALSE
 // Retrieval info: GEN_FILE: TYPE_NORMAL rom_table_addr_mux_bb.v TRUE
 // Retrieval info: LIB_FILE: lpm

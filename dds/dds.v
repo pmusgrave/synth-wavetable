@@ -34,22 +34,22 @@ module dds (
 	/************************************************************************
 	* Wavetables and wave selection mux
 	*************************************************************************/
-	wire [31:0] sine_val_wire;
- 	wire [31:0] pos_saw_val_wire;
- 	wire [31:0] neg_saw_val_wire;
- 	wire [31:0] tri_val_wire;
- 	wire [31:0] sq_val_wire;
+	wire [23:0] sine_val_wire;
+ 	wire [23:0] pos_saw_val_wire;
+ 	wire [23:0] neg_saw_val_wire;
+ 	wire [23:0] tri_val_wire;
+ 	wire [23:0] sq_val_wire;
  	reg [4:0] wave_sel;
- 	reg [31:0] output_val;
-	reg [31:0] output_val2;
-	reg [31:0] output_val3;
-	reg [31:0] output_val4;
-	reg [31:0] output_val5;
-	reg [31:0] output_val6;
-	reg [31:0] output_val7;
-	reg [31:0] output_val8;
-	wire [31:0] output_val_wire;
-	rom  sine_table(
+ 	reg [23:0] output_val;
+	reg [23:0] output_val2;
+	reg [23:0] output_val3;
+	reg [23:0] output_val4;
+	reg [23:0] output_val5;
+	reg [23:0] output_val6;
+	reg [23:0] output_val7;
+	reg [23:0] output_val8;
+	wire [23:0] output_val_wire;
+	sine_table  sine(
 		.address (phase_accumulator_wire),
 		.clock (clk),
 		.q (sine_val_wire)
@@ -88,7 +88,7 @@ module dds (
 	* Voice selection
 	*************************************************************************/
 	reg [4:0] phase_accumulator_sel;
-	wire [11:0]  phase_accumulator_wire;
+	wire [31:0]  phase_accumulator_wire;
 	reg [31:0]  phase_accumulator;
 	reg [31:0]  phase_accumulator2;
 	reg [31:0]  phase_accumulator3;
@@ -122,7 +122,6 @@ module dds (
 		if(source_valid) begin
 			mosi_data <= mosi_data_bus;
 			nreset = 0;
-			//mosi_data_16bit <= (mosi_data_16bit<<8) + mosi_data_bus;
 	    end
 
 	    phase_accumulator_sel <= 0;
@@ -137,9 +136,8 @@ module dds (
 			7:	output_val <= output_val_wire;
 			default: output_val <= output_val_wire;
 		endcase
-
 		
-		R2R_out <= output_val;
+		R2R_out <= output_val>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
