@@ -122,28 +122,24 @@ module dds (
 			nreset = 0;
 	    end
 
-	    if(note_on) begin
-			case(phase_accumulator_sel)
-				0:	output_val <= output_val_wire;
-				1:	output_val2 <= output_val_wire;
-				// 2:	output_val <= output_val_wire;
-				// 3:	output_val2 <= output_val_wire;
-				// 4:	output_val <= output_val_wire;
-				// 5:	output_val2 <= output_val_wire;
-				// 6:	output_val <= output_val_wire;
-				// 7:	output_val2 <= output_val_wire;
-				default: output_val <= output_val_wire;
-			endcase
-			// phase_accumulator_sel <= 0;
-		    phase_accumulator_sel = phase_accumulator_sel + 1;
-		    if(phase_accumulator_sel == 1) begin
-		    	wave_sel <= 1;
-		    end else begin
-		    	wave_sel <= 0;
-		    end
-		end else begin
-			output_val2 <= 24'd0;
-		end
+		case(phase_accumulator_sel)
+			0:	output_val <= output_val_wire;
+			1:	output_val2 <= output_val_wire;
+			// 2:	output_val <= output_val_wire;
+			// 3:	output_val2 <= output_val_wire;
+			// 4:	output_val <= output_val_wire;
+			// 5:	output_val2 <= output_val_wire;
+			// 6:	output_val <= output_val_wire;
+			// 7:	output_val2 <= output_val_wire;
+			default: output_val <= output_val_wire;
+		endcase
+		// phase_accumulator_sel <= 0;
+	    phase_accumulator_sel = phase_accumulator_sel + 1;
+	    if(phase_accumulator_sel == 1) begin
+	    	wave_sel <= 1;
+	    end else begin
+	    	wave_sel <= 0;
+	    end
 		
 		R2R_out <= ((output_val>>8)*(output_val2>>16))>>16;
 
