@@ -18,8 +18,8 @@
 //#define SPI_CMD_NOTE_FF 7
 
 uint32_t sample;
-int8 masterTxBuffer[BUFFER_SIZE] = {1};
-int8 masterRxBuffer[BUFFER_SIZE] = {0};
+uint8_t masterTxBuffer[BUFFER_SIZE] = {1};
+uint8_t masterRxBuffer[BUFFER_SIZE] = {0};
 
 uint8_t current_env_mode = 0;
 uint16_t attack_freq = 0;
@@ -148,14 +148,14 @@ int main() {
     for(;;) {
         ProcessSpiToFpga();
         ProcessUSBMIDI();
-        ProcessVoice(&v1);
+        /*ProcessVoice(&v1);
         ProcessVoice(&v2);
         ProcessVoice(&v3);
         ProcessVoice(&v4);
         ProcessVoice(&v5);
         ProcessVoice(&v6);
         ProcessVoice(&v7);
-        ProcessVoice(&v8);
+        ProcessVoice(&v8);*/
         if(update_ADC_flag){
             attack_freq = ADC_GetResult16(0)&0xFFF;
             decay_freq = ADC_GetResult16(1)&0xFFF;
@@ -193,161 +193,34 @@ void ProcessSpiToFpga(){
         // this byte counting method needs to be more flexible to allow
         // sending different types of commands. Refactor.
         // Could fill a larger buffer and let DMA handle it, I suppose.
-        /*
         switch(spi_byte_counter){
         case 0:
-            masterTxBuffer[0] = SPI_CMD_FREQ;
+            masterTxBuffer[0] = USB_MIDI_NOTE_ON;
             spi_byte_counter++;
             break;
         case 1:
-            masterTxBuffer[0] = (uint8_t)(decay_freq>>8);
+            masterTxBuffer[0] = 60;
             spi_byte_counter++;
             break;
         case 2:
-            masterTxBuffer[0] = (uint8_t)(decay_freq);
+            masterTxBuffer[0] = 255;
             spi_byte_counter++;
             break;
         case 3:
-            masterTxBuffer[0] = SPI_CMD_ATTACK;
+            masterTxBuffer[0] = USB_MIDI_NOTE_OFF;
             spi_byte_counter++;
             break;
         case 4:
-            masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
+            masterTxBuffer[0] = 60;
             spi_byte_counter++;
             break;
         case 5:
-            masterTxBuffer[0] = (uint8_t)(attack_freq);
-            spi_byte_counter = 0;
-            break;
-            /*
-        case 6:
-            masterTxBuffer[0] = SPI_CMD_DECAY;
-            spi_byte_counter++;
-            break;
-        case 7:
-            masterTxBuffer[0] = (uint8_t)(decay_freq>>8);
-            spi_byte_counter++;
-            break;
-        case 8:
-            masterTxBuffer[0] = (uint8_t)(decay_freq);
-            spi_byte_counter++;
-            break;
-        case 9:
-            masterTxBuffer[0] = SPI_CMD_SUSTAIN;
-            spi_byte_counter++;
-            break;
-        case 10:
-            masterTxBuffer[0] = (uint8_t)(sustain_freq>>8);
-            spi_byte_counter++;
-            break;
-        case 11:
-            masterTxBuffer[0] = (uint8_t)(sustain_freq);
-            spi_byte_counter++;
-            break;
-        case 12:
-            masterTxBuffer[0] = SPI_CMD_RELEASE;
-            spi_byte_counter++;
-            break;
-        case 13:
-            masterTxBuffer[0] = (uint8_t)(release_freq>>8);
-            spi_byte_counter++;
-            break;
-        case 14:
-            masterTxBuffer[0] = (uint8_t)(release_freq);
-            spi_byte_counter++;
-            break;
-        default:
-            spi_byte_counter = 0;
-            break;
-        }
-        */
-        
-        switch(spi_byte_counter){
-        case 0:
-            masterTxBuffer[0] = SPI_CMD_FREQ;
-            spi_byte_counter++;
-            break;
-        case 1:
-            masterTxBuffer[0] = (uint8_t)(14531>>8);
-            //masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
-            spi_byte_counter++;
-            break;
-        case 2:
-            masterTxBuffer[0] = (uint8_t)(14531);
-            //masterTxBuffer[0] = (uint8_t)(attack_freq);
-            spi_byte_counter++;
-            break;
-        case 3:
-            masterTxBuffer[0] = SPI_CMD_ENV;
-            spi_byte_counter++;
-            break;
-        case 4:
-            masterTxBuffer[0] = (uint8_t)(100);
-            spi_byte_counter++;
-            break;
-        case 5:
-            masterTxBuffer[0] = 3;
-            spi_byte_counter++;
-            break;
-        case 6:
-            masterTxBuffer[0] = (uint8_t)(5000>>8);
-            spi_byte_counter++;
-            break;
-        case 7:
-            masterTxBuffer[0] = (uint8_t)(5000);
-            spi_byte_counter++;
-            break;
-        case 8:
-            masterTxBuffer[0] = 4;
-            spi_byte_counter++;
-            break;
-        case 9:
-            masterTxBuffer[0] = (uint8_t)(60);
-            spi_byte_counter++;
-            break;
-        case 10:
-            masterTxBuffer[0] = 5;
-            spi_byte_counter++;
-            break;
-        case 11:
-            masterTxBuffer[0] = (uint8_t)(attack_freq>>8);
-            spi_byte_counter++;
-            break;
-        case 12:
-            masterTxBuffer[0] = (uint8_t)(attack_freq);
-            spi_byte_counter++;
-            break;
-        case 13:
-            masterTxBuffer[0] = 6;
-            spi_byte_counter++;
-            break;
-        case 14:
-            masterTxBuffer[0] = (uint8_t)(v1.env_multiplier);
-            spi_byte_counter++;
-            break;
-        case 15:
-            masterTxBuffer[0] = 7;
-            spi_byte_counter++;
-            break;
-        case 16:
-            masterTxBuffer[0] = (uint8_t)(5000>>8);
-            spi_byte_counter++;
-            break;
-        case 17:
-            masterTxBuffer[0] = (uint8_t)(5000);
-            spi_byte_counter++;
-            break;
-        case 18:
-            masterTxBuffer[0] = 8;
-            spi_byte_counter++;
-            break;
-        case 19:
-            masterTxBuffer[0] = (uint8_t)(v2.env_multiplier);
+            masterTxBuffer[0] = 0;
             spi_byte_counter = 0;
             break;
         }
         
-        CyDelay(4);
+        CyDelay(1000);
         
         /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
         * to the slave and correspondingly the number of bytes returned by the

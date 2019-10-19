@@ -114,10 +114,6 @@ module dds (
 	* Main
 	*************************************************************************/
 	reg [31:0] counter;
-	reg [15:0] freq;
-	reg [15:0] freq2;
-	reg [7:0] env;
-	reg [7:0] env2;
 	always@(posedge clk) begin
 		wave_sel = 0;
 		nreset = 1;
@@ -139,7 +135,7 @@ module dds (
 			default: output_val <= output_val_wire;
 		endcase
 		
-		R2R_out <= ((output_val>>8)*env + (output_val2>>8)*env2)>>16;
+		//R2R_out <= ((output_val>>8)*env + (output_val2>>8)*env2)>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -148,8 +144,8 @@ module dds (
 			counter <= counter + 1;
 		end else begin
 			counter <= 0;
-			phase_accumulator <= phase_accumulator + freq;
-			phase_accumulator2 <= phase_accumulator2 + freq2;
+			//phase_accumulator <= phase_accumulator + freq;
+			//phase_accumulator2 <= phase_accumulator2 + freq2;
 		end
 	end
 
@@ -158,135 +154,35 @@ module dds (
 	*************************************************************************/
 	reg [7:0] spi_current_command;
 	reg [4:0] spi_byte_counter;
-	reg [4:0] spi_byte_counter_max;
+	reg [7:0] midi_note;
+	reg [7:0] midi_velocity;
 	reg [7:0] mosi_data;
-	reg [15:0] mosi_data_16bit;
-	reg freq_update_start;
-	reg freq2_update_start;
-	reg freq3_update_start;
-	reg freq4_update_start;
-	reg freq_update_complete;
-	reg freq2_update_complete;
-	reg freq3_update_complete;
-	reg freq4_update_complete;
-	reg env_update_start;
-	reg env2_update_start;
-	reg env3_update_start;
-	reg env4_update_start;
-	reg env_update_complete;
-	reg env2_update_complete;
-	reg env3_update_complete;
-	reg env4_update_complete;
 	always@(posedge source_valid) begin
 		spi_byte_counter = spi_byte_counter + 1;
-		mosi_data_16bit <= (mosi_data_16bit<<8) + mosi_data;
-
-		if(spi_byte_counter == 1) begin
-			// first byte is a command message
-			// this indicates what data will follow
-			spi_current_command = mosi_data;
-			//mosi_data_16bit <= 0;
-			freq_update_start = 0;
-			freq_update_complete = 0;
-			freq2_update_start = 0;
-			freq2_update_complete = 0;
-			env_update_start = 0;
-			env_update_complete = 0;
-			led<=0;
-		end else begin
-			if(spi_byte_counter > spi_byte_counter_max) begin
-				spi_byte_counter = 0;
-				if(freq_update_start) begin
-					freq_update_start = 0;
-					freq_update_complete = 1;
-				end
-				if(freq2_update_start) begin
-					freq2_update_start = 0;
-					freq2_update_complete = 1;
-				end
-				if(env_update_start) begin
-					env_update_start = 0;
-					env_update_complete = 1;
-				end
-				if(env2_update_start) begin
-					env2_update_start = 0;
-					env2_update_complete = 1;
-				end
-			end
-		end
-
-		case(spi_current_command)
+		case(spi_byte_counter)
 			1: begin
-				spi_current_command <= 0; // not sure why, but this is necessary
-				freq_update_start = 1;
-				spi_byte_counter_max <= 3;
+				if(mosi_data == 8'h90
+				|| mosi_data == 8'h80) begin
+					spi_current_command <= mosi_data;
+					led <= mosi_data;
+				end else begin
+					// reset byte counter until a valid command comes through
+					spi_byte_counter = 0;
+				end
 			end
-
-			2: begin
-				spi_current_command <= 0;
-				env_update_start = 1;
-				spi_byte_counter_max <= 1;
+			2: begin 
+				midi_note <= mosi_data;
 			end
-			
-			3: begin
-				spi_current_command <= 0;
-				freq2_update_start = 1;
-				spi_byte_counter_max <= 3;
+			3: begin 
+				midi_velocity <= mosi_data;
+				spi_byte_counter = 0;
 			end
-
-			4: begin
-				spi_current_command <= 0;
-				env2_update_start = 1;
-				spi_byte_counter_max <= 1;
-			end
-			5: begin
-				spi_current_command <= 0;
-				freq3_update_start = 1;
-				spi_byte_counter_max <= 1;
-			end
-
-			6: begin
-				spi_current_command <= 0;
-				env3_update_start = 1;
-				spi_byte_counter_max <= 1;
-			end
-			7: begin
-				spi_current_command <= 0;
-				freq4_update_start = 1;
-				spi_byte_counter_max <= 1;
-			end
-
-			8: begin
-				spi_current_command <= 0;
-				env4_update_start = 1;
-				spi_byte_counter_max <= 1;
-			end
-
-			// if the current command is not a known command in the above list,
-			// reset byte counter to wait for a new command
 			default: begin
-				spi_current_command = 0;
-				//spi_byte_counter = 0;
-				//spi_byte_counter_max <= 0;
+				spi_byte_counter = 0;
+				led <= 8'b01010101;
 			end
-			
 		endcase
 
-		if(freq_update_complete) begin
-			freq <= mosi_data_16bit;
-			freq_update_complete = 0;
-		end
-		if(freq2_update_complete) begin
-			freq2 <= mosi_data_16bit;
-			freq2_update_complete = 0;
-		end
-		if(env_update_complete) begin
-			env <= mosi_data;
-			env_update_complete = 0;
-		end
-		if(env2_update_complete) begin
-			env2 <= mosi_data;
-			env2_update_complete = 0;
-		end
+		led <= midi_velocity;
 	end
 endmodule

@@ -1,15 +1,15 @@
 #include <project.h>
 #include "oscillator.h"
 
-#define     BUFFER_SIZE        1
+#define     BUFFER_SIZE        3
 
 /* LED control defines. LED is active low. */
 #define     LED_ON              0
 #define     LED_OFF             1
 
 extern uint32_t sample;
-extern int8 CYCODE masterTxBuffer[BUFFER_SIZE];
-extern int8 masterRxBuffer[BUFFER_SIZE];
+extern uint8_t masterTxBuffer[BUFFER_SIZE];
+extern uint8_t masterRxBuffer[BUFFER_SIZE];
 extern volatile int8_t* current_buffer;
 
 extern uint16_t freq;

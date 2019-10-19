@@ -8,35 +8,35 @@
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[7]",
+					"name" : "led[7]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[6]",
+					"name" : "led[6]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[5]",
+					"name" : "led[5]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[4]",
+					"name" : "led[4]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[3]",
+					"name" : "led[3]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[2]",
+					"name" : "led[2]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[1]",
+					"name" : "led[1]",
 					"strict" : false
 				},
 				{
-					"name" : "R2R_out[0]",
+					"name" : "led[0]",
 					"strict" : false
 				},
 				{
@@ -44,11 +44,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "clk",
+					"name" : "spi_sclk",
 					"strict" : false
 				},
 				{
-					"name" : "spi_sclk",
+					"name" : "clk",
 					"strict" : false
 				},
 				{

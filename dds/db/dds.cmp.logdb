@@ -1,7 +1,4 @@
 v1
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,lpm_mult:Mult0|mult_pbt:auto_generated|mac_out2,
-DSP_BALANCING_IMPLEMENTATION,DSP_BLOCKS,lpm_mult:Mult1|mult_pbt:auto_generated|mac_out2,
-PORT_SWAPPING,PORT_SWAPPING_FINISHED,lpm_mult:Mult1|mult_pbt:auto_generated|mac_mult1,
 IO_RULES,NUM_PINS_NOT_EXCEED_LOC_AVAILABLE,PASS,IO_000001,Capacity Checks,Number of pins in an I/O bank should not exceed the number of locations available.,Critical,0 such failures found.,,I/O,,
 IO_RULES,NUM_CLKS_NOT_EXCEED_CLKS_AVAILABLE,INAPPLICABLE,IO_000002,Capacity Checks,Number of clocks in an I/O bank should not exceed the number of clocks available.,Critical,No Global Signal assignments found.,,I/O,,
 IO_RULES,NUM_VREF_NOT_EXCEED_LOC_AVAILABLE,PASS,IO_000003,Capacity Checks,Number of pins in a Vrefgroup should not exceed the number of locations available.,Critical,0 such failures found.,,I/O,,
@@ -56,8 +53,8 @@ IO_RULES_MATRIX,R2R_out[2],Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass
 IO_RULES_MATRIX,R2R_out[1],Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
 IO_RULES_MATRIX,R2R_out[0],Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
 IO_RULES_MATRIX,spi_nss,Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
-IO_RULES_MATRIX,clk,Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
 IO_RULES_MATRIX,spi_sclk,Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
+IO_RULES_MATRIX,clk,Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
 IO_RULES_MATRIX,spi_mosi,Pass;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Pass;Inapplicable;Pass;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Inapplicable;Pass;Inapplicable;Inapplicable,
 IO_RULES_SUMMARY,Total I/O Rules,30,
 IO_RULES_SUMMARY,Number of I/O Rules Passed,12,
