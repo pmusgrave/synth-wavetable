@@ -122,24 +122,28 @@ module dds (
 			nreset = 0;
 	    end
 
-		case(phase_accumulator_sel)
-			0:	output_val <= output_val_wire;
-			1:	output_val2 <= output_val_wire;
-			// 2:	output_val <= output_val_wire;
-			// 3:	output_val2 <= output_val_wire;
-			// 4:	output_val <= output_val_wire;
-			// 5:	output_val2 <= output_val_wire;
-			// 6:	output_val <= output_val_wire;
-			// 7:	output_val2 <= output_val_wire;
-			default: output_val <= output_val_wire;
-		endcase
-		// phase_accumulator_sel <= 0;
-	    phase_accumulator_sel = phase_accumulator_sel + 1;
-	    if(phase_accumulator_sel == 1) begin
-	    	wave_sel <= 1;
-	    end else begin
-	    	wave_sel <= 0;
-	    end
+	    if(note_on) begin
+			case(phase_accumulator_sel)
+				0:	output_val <= output_val_wire;
+				1:	output_val2 <= output_val_wire;
+				// 2:	output_val <= output_val_wire;
+				// 3:	output_val2 <= output_val_wire;
+				// 4:	output_val <= output_val_wire;
+				// 5:	output_val2 <= output_val_wire;
+				// 6:	output_val <= output_val_wire;
+				// 7:	output_val2 <= output_val_wire;
+				default: output_val <= output_val_wire;
+			endcase
+			// phase_accumulator_sel <= 0;
+		    phase_accumulator_sel = phase_accumulator_sel + 1;
+		    if(phase_accumulator_sel == 1) begin
+		    	wave_sel <= 1;
+		    end else begin
+		    	wave_sel <= 0;
+		    end
+		end else begin
+			output_val2 <= 24'd0;
+		end
 		
 		R2R_out <= ((output_val>>8)*(output_val2>>16))>>16;
 
@@ -159,6 +163,7 @@ module dds (
 			if (!note_on) begin
 				phase_accumulator <= 0;
 				phase_accumulator2 <= 0;
+				output_val2 <= 0;
 			end
 		end
 	end
@@ -178,7 +183,6 @@ module dds (
 				if(mosi_data == 8'h90
 				|| mosi_data == 8'h80) begin
 					spi_current_command <= mosi_data;
-					led <= mosi_data;
 				end else begin
 					// reset byte counter until a valid command comes through
 					spi_byte_counter = 0;
@@ -193,11 +197,10 @@ module dds (
 			end
 			default: begin
 				spi_byte_counter = 0;
-				led <= 8'b01010101;
 			end
 		endcase
 
-		led <= midi_velocity;
+		
 	end
 
 	/************************************************************************
@@ -205,11 +208,12 @@ module dds (
 	*************************************************************************/
 	reg note_on;
 	always@* begin
-		if(spi_current_command == 8'h90
-		|| spi_current_command == 8'h80) begin
+		if(spi_current_command == 8'h90) begin
 			note_on <= 1;
-		end else begin
+			led <= 8'hFF;
+		end else if(spi_current_command == 8'h80) begin
 			note_on <= 0;
+			led <= 8'h00;
 		end
 	end
 endmodule
