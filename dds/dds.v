@@ -87,7 +87,7 @@ module dds (
 	/************************************************************************
 	* Voice selection
 	*************************************************************************/
-	reg [4:0] phase_accumulator_sel;
+	reg [2:0] phase_accumulator_sel;
 	wire [31:0]  phase_accumulator_wire;
 	reg [31:0]  phase_accumulator;
 	reg [31:0]  phase_accumulator2;
@@ -122,8 +122,6 @@ module dds (
 			nreset = 0;
 	    end
 
-	    phase_accumulator_sel <= 0;
-	    // phase_accumulator_sel <= phase_accumulator_sel + 1;
 		case(phase_accumulator_sel)
 			0:	output_val <= output_val_wire;
 			1:	output_val2 <= output_val_wire;
@@ -135,8 +133,10 @@ module dds (
 			7:	output_val2 <= output_val_wire;
 			default: output_val <= output_val_wire;
 		endcase
+		// phase_accumulator_sel <= 0;
+	    phase_accumulator_sel = phase_accumulator_sel + 1;
 		
-		R2R_out <= ((output_val>>8)*(midi_velocity))>>16;
+		R2R_out <= ((output_val>>8)*(output_val2>>16))>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -149,7 +149,7 @@ module dds (
 			//phase_accumulator2 <= phase_accumulator2 + freq2;
 			if(note_on) begin
 				phase_accumulator <= phase_accumulator + 1000;
-				phase_accumulator2 <= phase_accumulator2 + 100;
+				phase_accumulator2 <= phase_accumulator2 + 1;
 			end
 			if (!note_on) begin
 				phase_accumulator <= 0;
