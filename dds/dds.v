@@ -32,6 +32,102 @@ module dds (
 	);
 
 	/************************************************************************
+	* MIDI Note to Frequency Conversion table
+	*************************************************************************/	
+	reg note_on[255];
+	reg [15:0]notes[255];
+	initial begin
+		notes[0] = 275;
+		notes[1] = 291;
+		notes[2] = 309;
+		notes[3] = 327;
+		notes[4] = 346;
+		notes[5] = 367;
+		notes[6] = 389;
+		notes[7] = 412;
+		notes[8] = 437;
+		notes[9] = 462;
+		notes[10] = 490;
+		notes[11] = 519;
+		notes[12] = 550;
+		notes[13] = 583;
+		notes[14] = 617;
+		notes[15] = 654;
+		notes[16] = 693;
+		notes[17] = 734;
+		notes[18] = 778;
+		notes[19] = 824;
+		notes[20] = 873;
+		notes[21] = 925;
+		notes[22] = 980;
+		notes[23] = 1038;
+		notes[24] = 1100;
+		notes[25] = 1165;
+		notes[26] = 1235;
+		notes[27] = 1308;
+		notes[28] = 1386;
+		notes[29] = 1468;
+		notes[30] = 1556;
+		notes[31] = 1648;
+		notes[32] = 1746;
+		notes[33] = 1850;
+		notes[34] = 1960;
+		notes[35] = 2077;
+		notes[36] = 2200;
+		notes[37] = 2331;
+		notes[38] = 2469;
+		notes[39] = 2616;
+		notes[40] = 2772;
+		notes[41] = 2937;
+		notes[42] = 3111;
+		notes[43] = 3296;
+		notes[44] = 3492;
+		notes[45] = 3700;
+		notes[46] = 3920;
+		notes[47] = 4153;
+		notes[48] = 4400;
+		notes[49] = 4662;
+		notes[50] = 4939;
+		notes[51] = 5233;
+		notes[52] = 5544;
+		notes[53] = 5873;
+		notes[54] = 6223;
+		notes[55] = 6593;
+		notes[56] = 6985;
+		notes[57] = 7400;
+		notes[58] = 7840;
+		notes[59] = 8306;
+		notes[60] = 8800;
+		notes[61] = 9323;
+		notes[62] = 9878;
+		notes[63] = 10465;
+		notes[64] = 11087;
+		notes[65] = 11747;
+		notes[66] = 12445;
+		notes[67] = 13185;
+		notes[68] = 13969;
+		notes[69] = 14800;
+		notes[70] = 15680;
+		notes[71] = 16612;
+		notes[72] = 17600;
+		notes[73] = 18647;
+		notes[74] = 19755;
+		notes[75] = 20930;
+		notes[76] = 22175;
+		notes[77] = 23493;
+		notes[78] = 24890;
+		notes[79] = 26370;
+		notes[80] = 27938;
+		notes[81] = 29600;
+		notes[82] = 31360;
+		notes[83] = 33224;
+		notes[84] = 35200;
+		notes[85] = 37293;
+		notes[86] = 39511;
+		notes[87] = 41860;
+	end
+
+	/************************************************************************
 	* Wavetables and wave selection mux
 	*************************************************************************/
 	wire [23:0] sine_val_wire;
@@ -141,7 +237,7 @@ module dds (
 	    	wave_sel <= 0;
 	    end
 		
-		R2R_out <= ((output_val>>8)*(output_val2>>16))>>16;
+		R2R_out <= (note_on[midi_note] * (output_val>>8) * (output_val2>>16))>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -152,11 +248,11 @@ module dds (
 			counter <= 0;
 			//phase_accumulator <= phase_accumulator + freq;
 			//phase_accumulator2 <= phase_accumulator2 + freq2;
-			if(note_on) begin
-				phase_accumulator <= phase_accumulator + 1000;
-				phase_accumulator2 <= phase_accumulator2 + 1;
+			if(note_on[midi_note]) begin
+				phase_accumulator <= phase_accumulator + notes[midi_note];
+				phase_accumulator2 <= phase_accumulator2 + 5;
 			end
-			if (!note_on) begin
+			if (!note_on[midi_note]) begin
 				phase_accumulator <= 0;
 				phase_accumulator2 <= 0;
 				output_val2 <= 0;
@@ -202,13 +298,12 @@ module dds (
 	/************************************************************************
 	* Testing envelope
 	*************************************************************************/
-	reg note_on;
 	always@* begin
 		if(spi_current_command == 8'h90) begin
-			note_on <= 1;
+			note_on[midi_note] <= 1;
 			led <= 8'hFF;
 		end else if(spi_current_command == 8'h80) begin
-			note_on <= 0;
+			note_on[midi_note] <= 0;
 			led <= 8'h00;
 		end
 	end
