@@ -122,7 +122,8 @@ module dds (
 			nreset = 0;
 	    end
 
-	    phase_accumulator_sel <= phase_accumulator_sel + 1;
+	    phase_accumulator_sel <= 0;
+	    // phase_accumulator_sel <= phase_accumulator_sel + 1;
 		case(phase_accumulator_sel)
 			0:	output_val <= output_val_wire;
 			1:	output_val2 <= output_val_wire;
@@ -135,7 +136,7 @@ module dds (
 			default: output_val <= output_val_wire;
 		endcase
 		
-		//R2R_out <= ((output_val>>8)*env + (output_val2>>8)*env2)>>16;
+		R2R_out <= ((output_val>>8)*(midi_velocity))>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -146,6 +147,14 @@ module dds (
 			counter <= 0;
 			//phase_accumulator <= phase_accumulator + freq;
 			//phase_accumulator2 <= phase_accumulator2 + freq2;
+			if(note_on) begin
+				phase_accumulator <= phase_accumulator + 1000;
+				phase_accumulator2 <= phase_accumulator2 + 100;
+			end
+			if (!note_on) begin
+				phase_accumulator <= 0;
+				phase_accumulator2 <= 0;
+			end
 		end
 	end
 
@@ -184,5 +193,18 @@ module dds (
 		endcase
 
 		led <= midi_velocity;
+	end
+
+	/************************************************************************
+	* Testing envelope
+	*************************************************************************/
+	reg note_on;
+	always@* begin
+		if(spi_current_command == 8'h90
+		|| spi_current_command == 8'h80) begin
+			note_on <= 1;
+		end else begin
+			note_on <= 0;
+		end
 	end
 endmodule
