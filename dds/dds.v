@@ -34,8 +34,8 @@ module dds (
 	/************************************************************************
 	* MIDI Note to Frequency Conversion table
 	*************************************************************************/	
-	reg note_on[255];
-	reg [15:0]notes[255];
+	reg note_on[60];
+	reg [15:0]notes[88];
 	initial begin
 		notes[0] = 275;
 		notes[1] = 291;
@@ -136,37 +136,31 @@ module dds (
  	wire [23:0] tri_val_wire;
  	wire [23:0] sq_val_wire;
  	reg [4:0] wave_sel;
- 	reg [23:0] output_val;
-	reg [23:0] output_val2;
-	reg [23:0] output_val3;
-	reg [23:0] output_val4;
-	reg [23:0] output_val5;
-	reg [23:0] output_val6;
-	reg [23:0] output_val7;
-	reg [23:0] output_val8;
+ 	reg [23:0] output_val[8];
+	reg [23:0] envelope;
 	wire [23:0] output_val_wire;
 	sine_table  sine(
-		.address (phase_accumulator_wire),
+		.address (current_phase_accumulator>>10),
 		.clock (clk),
 		.q (sine_val_wire)
 	);
 	pos_saw  pos_saw_table(
-		.address (phase_accumulator_wire),
+		.address (current_phase_accumulator>>10),
 		.clock (clk),
 		.q (pos_saw_val_wire)
 	);
 	neg_saw  neg_saw_table(
-		.address (phase_accumulator_wire),
+		.address (current_phase_accumulator>>10),
 		.clock (clk),
 		.q (neg_saw_val_wire)
 	);
 	base_tri  triangle_table(
-		.address (phase_accumulator_wire),
+		.address (current_phase_accumulator>>10),
 		.clock (clk),
 		.q (tri_val_wire)
 	);
 	base_sq  square_table(
-		.address (phase_accumulator_wire),
+		.address (current_phase_accumulator>>10),
 		.clock (clk),
 		.q (sq_val_wire)
 	);
@@ -183,33 +177,29 @@ module dds (
 	/************************************************************************
 	* Voice selection
 	*************************************************************************/
-	reg [2:0] phase_accumulator_sel;
+	reg [7:0] phase_accumulator_sel;
 	wire [31:0]  phase_accumulator_wire;
-	reg [31:0]  phase_accumulator;
-	reg [31:0]  phase_accumulator2;
-	reg [31:0]  phase_accumulator3;
-	reg [31:0]  phase_accumulator4;
-	reg [31:0]  phase_accumulator5;
-	reg [31:0]  phase_accumulator6;
-	reg [31:0]  phase_accumulator7;
-	reg [31:0]  phase_accumulator8;
-	rom_table_addr_mux phase_accumulator_mux (
-		.data0x ( phase_accumulator>>10 ),
-		.data1x ( phase_accumulator2>>10 ),
-		.data2x ( phase_accumulator>>10 ),
-		.data3x ( phase_accumulator2>>10 ),
-		.data4x ( phase_accumulator>>10 ),
-		.data5x ( phase_accumulator2>>10 ),
-		.data6x ( phase_accumulator>>10 ),
-		.data7x ( phase_accumulator2>>10 ),
-		.sel ( phase_accumulator_sel ),
-		.result ( phase_accumulator_wire )
-	);
+	reg [31:0]  current_phase_accumulator;
+	reg [31:0]  phase_accumulator[8];
+	reg [31:0]  envelope_accumulator;
+	// rom_table_addr_mux phase_accumulator_mux (
+	// 	.data0x ( envelope_accumulator>>10 ),
+	// 	.data1x ( envelope_accumulator>>10 ),
+	// 	.data2x ( envelope_accumulator>>10 ),
+	// 	.data3x ( envelope_accumulator>>10 ),
+	// 	.data4x ( envelope_accumulator>>10 ),
+	// 	.data5x ( envelope_accumulator>>10 ),
+	// 	.data6x ( phase_accumulator>>10 ), // ???
+	// 	.data7x ( envelope_accumulator>>10 ),
+	// 	.sel ( phase_accumulator_sel ),
+	// 	.result ( phase_accumulator_wire )
+	// );
 
 	/************************************************************************
 	* Main
 	*************************************************************************/
 	reg [31:0] counter;
+	reg [4:0] phase_counter;
 	always@(posedge clk) begin
 		wave_sel = 0;
 		nreset = 1;
@@ -218,26 +208,23 @@ module dds (
 			nreset = 0;
 	    end
 
-		case(phase_accumulator_sel)
-			0:	output_val <= output_val_wire;
-			1:	output_val2 <= output_val_wire;
-			// 2:	output_val <= output_val_wire;
-			// 3:	output_val2 <= output_val_wire;
-			// 4:	output_val <= output_val_wire;
-			// 5:	output_val2 <= output_val_wire;
-			// 6:	output_val <= output_val_wire;
-			// 7:	output_val2 <= output_val_wire;
-			default: output_val <= output_val_wire;
-		endcase
-		// phase_accumulator_sel <= 0;
-	    phase_accumulator_sel = phase_accumulator_sel + 1;
-	    if(phase_accumulator_sel == 1) begin
-	    	wave_sel <= 1;
-	    end else begin
-	    	wave_sel <= 0;
-	    end
+		output_val[phase_accumulator_sel] = output_val_wire;
+
+		phase_counter <= phase_counter + 1;
+		if(phase_counter >= 10) begin
+			phase_counter <= 0;
+			// phase_accumulator_sel <= 0;
+		    phase_accumulator_sel = phase_accumulator_sel + 1;
+		    current_phase_accumulator = phase_accumulator[phase_accumulator_sel];
+		    if(phase_accumulator_sel == 1) begin
+		    	wave_sel <= 1;
+		    end else begin
+		    	wave_sel <= 0;
+		    end
+		end
 		
-		R2R_out <= (note_on[midi_note] * (output_val>>8) * (output_val2>>16))>>16;
+		// R2R_out <= (note_on[midi_note] * (output_val>>8) * (envelope>>16))>>16;
+		R2R_out <= (note_on[midi_note] * (output_val[midi_note]))>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -247,15 +234,15 @@ module dds (
 		end else begin
 			counter <= 0;
 			//phase_accumulator <= phase_accumulator + freq;
-			//phase_accumulator2 <= phase_accumulator2 + freq2;
+			//envelope_accumulator <= envelope_accumulator + freq2;
 			if(note_on[midi_note]) begin
-				phase_accumulator <= phase_accumulator + notes[midi_note];
-				phase_accumulator2 <= phase_accumulator2 + 5;
+				phase_accumulator[midi_note] <= phase_accumulator[midi_note] + notes[midi_note];
+				envelope_accumulator <= envelope_accumulator + 5;
 			end
 			if (!note_on[midi_note]) begin
-				phase_accumulator <= 0;
-				phase_accumulator2 <= 0;
-				output_val2 <= 0;
+				phase_accumulator[0] <= 0;
+				envelope_accumulator <= 0;
+				envelope <= 0;
 			end
 		end
 	end
@@ -274,7 +261,14 @@ module dds (
 			1: begin
 				if(mosi_data == 8'h90
 				|| mosi_data == 8'h80) begin
-					spi_current_command <= mosi_data;
+					spi_current_command = mosi_data;
+					if(spi_current_command == 8'h90) begin
+						note_on[midi_note] <= 1;
+						led <= midi_note;
+					end else if(spi_current_command == 8'h80) begin
+						note_on[midi_note] <= 0;
+						led <= midi_note;
+					end
 				end else begin
 					// reset byte counter until a valid command comes through
 					spi_byte_counter = 0;
@@ -293,18 +287,5 @@ module dds (
 		endcase
 
 		
-	end
-
-	/************************************************************************
-	* Testing envelope
-	*************************************************************************/
-	always@* begin
-		if(spi_current_command == 8'h90) begin
-			note_on[midi_note] <= 1;
-			led <= 8'hFF;
-		end else if(spi_current_command == 8'h80) begin
-			note_on[midi_note] <= 0;
-			led <= 8'h00;
-		end
 	end
 endmodule

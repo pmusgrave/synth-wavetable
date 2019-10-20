@@ -199,7 +199,7 @@ void ProcessSpiToFpga(){
             spi_byte_counter++;
             break;
         case 1:
-            masterTxBuffer[0] = 60;
+            masterTxBuffer[0] = 6;
             spi_byte_counter++;
             break;
         case 2:
@@ -211,7 +211,7 @@ void ProcessSpiToFpga(){
             spi_byte_counter++;
             break;
         case 4:
-            masterTxBuffer[0] = 60;
+            masterTxBuffer[0] = 6;
             spi_byte_counter++;
             break;
         case 5:
