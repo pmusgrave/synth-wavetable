@@ -201,6 +201,7 @@ module dds (
 	reg [31:0] counter;
 	reg [4:0] phase_counter;
 	always@(posedge clk) begin
+		led <= voice_note[7];
 		wave_sel = 0;
 		nreset = 1;
 		if(source_valid) begin
@@ -211,20 +212,29 @@ module dds (
 		output_val[phase_accumulator_sel] = output_val_wire;
 
 		phase_counter <= phase_counter + 1;
-		if(phase_counter >= 10) begin
+		if(phase_counter >= 20) begin
 			phase_counter <= 0;
 			// phase_accumulator_sel <= 0;
 		    phase_accumulator_sel = phase_accumulator_sel + 1;
 		    current_phase_accumulator = phase_accumulator[phase_accumulator_sel];
-		    if(phase_accumulator_sel == 1) begin
-		    	wave_sel <= 1;
-		    end else begin
-		    	wave_sel <= 0;
-		    end
+		    // if(phase_accumulator_sel == 1) begin
+		    // 	wave_sel <= 1;
+		    // end else begin
+		    // 	wave_sel <= 2;
+		    // end
 		end
 		
 		// R2R_out <= (note_on[midi_note] * (output_val>>8) * (envelope>>16))>>16;
-		R2R_out <= (note_on[midi_note] * (output_val[midi_note]))>>16;
+		R2R_out <= (
+			((output_val[0])>>3) +
+			((output_val[1])>>3) +
+			((output_val[2])>>3) +
+			((output_val[3])>>3) +
+			((output_val[4])>>3) +
+			((output_val[5])>>3) +
+			((output_val[6])>>3) +
+			((output_val[7])>>3)
+			)>>16;
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -235,15 +245,18 @@ module dds (
 			counter <= 0;
 			//phase_accumulator <= phase_accumulator + freq;
 			//envelope_accumulator <= envelope_accumulator + freq2;
-			if(note_on[midi_note]) begin
-				phase_accumulator[midi_note] <= phase_accumulator[midi_note] + notes[midi_note];
-				envelope_accumulator <= envelope_accumulator + 5;
+			for(i = 0; i < 8; i = i + 1) begin
+				 if(note_on[voice_note[i]]) begin
+					phase_accumulator[i] <= phase_accumulator[i] + notes[voice_note[i]];
+					envelope_accumulator <= envelope_accumulator + 5;
+				 end else begin
+					 phase_accumulator[i] <= 0;
+					 envelope_accumulator <= envelope_accumulator + 5;
+					 output_val[i] = 0;
+					 envelope <= 0;
+				 end
 			end
-			if (!note_on[midi_note]) begin
-				phase_accumulator[0] <= 0;
-				envelope_accumulator <= 0;
-				envelope <= 0;
-			end
+			
 		end
 	end
 
@@ -255,30 +268,76 @@ module dds (
 	reg [7:0] midi_note;
 	reg [7:0] midi_velocity;
 	reg [7:0] mosi_data;
+	reg [7:0] voice_note[8];
+	reg [3:0] i;
+	reg note_unassigned;
 	always@(posedge source_valid) begin
 		spi_byte_counter = spi_byte_counter + 1;
+		note_unassigned = 1;
 		case(spi_byte_counter)
 			1: begin
 				if(mosi_data == 8'h90
 				|| mosi_data == 8'h80) begin
 					spi_current_command = mosi_data;
-					if(spi_current_command == 8'h90) begin
-						note_on[midi_note] <= 1;
-						led <= midi_note;
-					end else if(spi_current_command == 8'h80) begin
-						note_on[midi_note] <= 0;
-						led <= midi_note;
-					end
+					// if(spi_current_command == 8'h90) begin
+					// 	note_on[midi_note] <= 1;
+					// 	// led <= midi_note;
+					// end else if(spi_current_command == 8'h80) begin
+					// 	note_on[midi_note] <= 0;
+					// 	// led <= midi_note;
+					// end
 				end else begin
 					// reset byte counter until a valid command comes through
 					spi_byte_counter = 0;
 				end
 			end
 			2: begin 
-				midi_note <= mosi_data;
+				midi_note = mosi_data;
+				if(spi_current_command == 8'h90) begin
+					if(voice_note[0] == 0 && note_on[midi_note] == 0) begin
+						voice_note[0] = midi_note;
+						note_on[midi_note] = 1;
+					end
+					if(voice_note[1] == 0 && note_on[midi_note] == 0) begin
+						voice_note[1] = midi_note;
+						note_on[midi_note] = 1;
+					end
+					if(voice_note[2] == 0 && note_on[midi_note] == 0) begin
+						voice_note[2] = midi_note;
+						note_on[midi_note] = 1;
+					end
+					if(voice_note[3] == 0 && note_on[midi_note] == 0) begin
+						voice_note[3] = midi_note;
+						note_on[midi_note] = 1;
+						note_unassigned = 0;
+					end
+					if(voice_note[4] == 0 && note_on[midi_note] == 0) begin
+						voice_note[4] = midi_note;
+						note_on[midi_note] = 1;
+					end
+					if(voice_note[5] == 0 && note_on[midi_note] == 0) begin
+						voice_note[5] = midi_note;
+						note_on[midi_note] = 1;
+					end
+					if(voice_note[6] == 0 && note_on[midi_note] == 0) begin
+						voice_note[6] = midi_note;
+						note_on[midi_note] = 1;
+					end
+					if(voice_note[7] == 0 && note_on[midi_note] == 0) begin
+						voice_note[7] = midi_note;
+						note_on[midi_note] = 1;
+					end
+				end else if(spi_current_command == 8'h80) begin
+					for(i = 0; i < 8; i = i + 1) begin
+						if(voice_note[i] == midi_note) begin
+							voice_note[i] = 0;
+							note_on[midi_note] = 0;
+						end
+					end
+				end
 			end
 			3: begin 
-				midi_velocity <= mosi_data;
+				midi_velocity = mosi_data;
 				spi_byte_counter = 0;
 			end
 			default: begin

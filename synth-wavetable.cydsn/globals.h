@@ -1,7 +1,7 @@
 #include <project.h>
 #include "oscillator.h"
 
-#define     BUFFER_SIZE        3
+#define     BUFFER_SIZE        1
 
 /* LED control defines. LED is active low. */
 #define     LED_ON              0

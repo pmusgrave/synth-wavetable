@@ -8,6 +8,11 @@
 
 #include "oscillator.h"
 
+int8_t current_midi_note_trig;
+int8_t current_midi_note;
+int8_t current_midi_note_velocity;
+
+
 #define SPI_CMD_FREQ 1
 #define SPI_CMD_ENV 2
 //#define SPI_CMD_ATTACK 2
@@ -28,14 +33,15 @@ uint16_t sustain_freq = 0;
 uint16_t release_freq = 0;
 uint16_t waveshape = 0;
     
-struct voice v1 = {0,0,0,0,0};
-struct voice v2 = {0,0,0,0,0};
-struct voice v3 = {0,0,0,0,0};
-struct voice v4 = {0,0,0,0,0};
-struct voice v5 = {0,0,0,0,0};
-struct voice v6 = {0,0,0,0,0};
-struct voice v7 = {0,0,0,0,0};
-struct voice v8 = {0,0,0,0,0};
+struct voice v1;
+struct voice v2;
+struct voice v3;
+struct voice v4;
+struct voice v5;
+struct voice v6;
+struct voice v7;
+struct voice v8;
+struct voice voices[8];
 
 /*******************************************************************************
 * USB and MIDI stuff
@@ -145,10 +151,19 @@ int main() {
     //SPI_TxDMA_SetInterruptCallback(SPI_TxDMA_Done_Interrupt);
     //I2STxDMA_Start(output_buffer, (void *)I2S_TX_FIFO_0_PTR);
         
+    voices[0] = v1;
+    voices[1] = v2;
+    voices[2] = v3;
+    voices[3] = v4;
+    voices[4] = v5;
+    voices[5] = v6;
+    voices[6] = v7;
+    voices[7] = v8;
+    
     for(;;) {
         ProcessSpiToFpga();
-        ProcessUSBMIDI();
-        /*ProcessVoice(&v1);
+        ProcessUSBMIDI();/*
+        ProcessVoice(&v1);
         ProcessVoice(&v2);
         ProcessVoice(&v3);
         ProcessVoice(&v4);
@@ -157,10 +172,10 @@ int main() {
         ProcessVoice(&v7);
         ProcessVoice(&v8);*/
         if(update_ADC_flag){
-            attack_freq = ADC_GetResult16(0)&0xFFF;
-            decay_freq = ADC_GetResult16(1)&0xFFF;
-            sustain_freq = ADC_GetResult16(2)&0xFFF;
-            release_freq = ADC_GetResult16(3)&0xFFF;
+            //attack_freq = ADC_GetResult16(0)&0xFFF;
+            //decay_freq = ADC_GetResult16(1)&0xFFF;
+            //sustain_freq = ADC_GetResult16(2)&0xFFF;
+            //release_freq = ADC_GetResult16(3)&0xFFF;
             //attack_freq = 52275;
             //attack_freq = 60;
             update_ADC_flag = 0;
@@ -195,32 +210,102 @@ void ProcessSpiToFpga(){
         // Could fill a larger buffer and let DMA handle it, I suppose.
         switch(spi_byte_counter){
         case 0:
-            masterTxBuffer[0] = USB_MIDI_NOTE_ON;
+            masterTxBuffer[0] = v1.MIDI_note_status;
             spi_byte_counter++;
             break;
         case 1:
-            masterTxBuffer[0] = 6;
+            masterTxBuffer[0] = v1.note_index;
             spi_byte_counter++;
             break;
         case 2:
-            masterTxBuffer[0] = 255;
+            masterTxBuffer[0] = v1.MIDI_velocity;
             spi_byte_counter++;
             break;
         case 3:
-            masterTxBuffer[0] = USB_MIDI_NOTE_OFF;
+            masterTxBuffer[0] = v2.MIDI_note_status;
             spi_byte_counter++;
             break;
         case 4:
-            masterTxBuffer[0] = 6;
+            masterTxBuffer[0] = v2.note_index;
             spi_byte_counter++;
             break;
         case 5:
-            masterTxBuffer[0] = 0;
+            masterTxBuffer[0] = v2.MIDI_velocity;
+            spi_byte_counter++;
+            break;
+        case 6:
+            masterTxBuffer[0] = v3.MIDI_note_status;
+            spi_byte_counter++;
+            break;
+        case 7:
+            masterTxBuffer[0] = v3.note_index;
+            spi_byte_counter++;
+            break;
+        case 8:
+            masterTxBuffer[0] = v3.MIDI_velocity;
+            spi_byte_counter++;
+            break;
+        case 9:
+            masterTxBuffer[0] = v4.MIDI_note_status;
+            spi_byte_counter++;
+            break;
+        case 10:
+            masterTxBuffer[0] = v4.note_index;
+            spi_byte_counter++;
+            break;
+        case 11:
+            masterTxBuffer[0] = v4.MIDI_velocity;
+            spi_byte_counter++;
+            break;
+        case 12:
+            masterTxBuffer[0] = v5.MIDI_note_status;
+            spi_byte_counter++;
+            break;
+        case 13:
+            masterTxBuffer[0] = v5.note_index;
+            spi_byte_counter++;
+            break;
+        case 14:
+            masterTxBuffer[0] = v5.MIDI_velocity;
+            spi_byte_counter++;
+            break;
+        case 15:
+            masterTxBuffer[0] = v6.MIDI_note_status;
+            spi_byte_counter++;
+            break;
+        case 16:
+            masterTxBuffer[0] = v6.note_index;
+            spi_byte_counter++;
+            break;
+        case 17:
+            masterTxBuffer[0] = v6.MIDI_velocity;
+            spi_byte_counter++;
+            break;
+        case 18:
+            masterTxBuffer[0] = v7.MIDI_note_status;
+            spi_byte_counter++;
+            break;
+        case 19:
+            masterTxBuffer[0] = v7.note_index;
+            spi_byte_counter++;
+            break;
+        case 20:
+            masterTxBuffer[0] = v7.MIDI_velocity;
+            spi_byte_counter++;
+            break;
+        case 21:
+            masterTxBuffer[0] = v8.MIDI_note_status;
+            spi_byte_counter++;
+            break;
+        case 22:
+            masterTxBuffer[0] = v8.note_index;
+            spi_byte_counter++;
+            break;
+        case 23:
+            masterTxBuffer[0] = v8.MIDI_velocity;
             spi_byte_counter = 0;
             break;
         }
-        
-        CyDelay(1000);
         
         /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
         * to the slave and correspondingly the number of bytes returned by the
@@ -279,7 +364,7 @@ void ProcessUSBMIDI(){
 *******************************************************************************/
 void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
 {
-    uint8 note;
+    //uint8_t note;
     
     /* Support General System On/Off Message. */
     /*
@@ -304,14 +389,22 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     
     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
     {
-        note = midiMsg[USB_EVENT_BYTE1];
-        DispatchNote(note);
-        LED_Write(0);
+        uint8_t note_playing = 0;
+        for(int i = 0; i < 8; i++){
+            if(voices[i].note_index == midiMsg[USB_EVENT_BYTE1]){
+                note_playing = 1;
+            }
+        }
+        if(!note_playing){
+            //note = midiMsg[USB_EVENT_BYTE1];
+            DispatchNote(midiMsg);
+            LED_Write(0);
+        }
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
-        note = midiMsg[USB_EVENT_BYTE1];
-        NoteOff(note);
+        //note = midiMsg[USB_EVENT_BYTE1];
+        NoteOff(midiMsg);
         
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;
