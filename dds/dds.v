@@ -198,10 +198,28 @@ module dds (
 	/************************************************************************
 	* Main
 	*************************************************************************/
+	wire led_wire[7:0];
+	assign led_wire[0] = (voice_note[0] != 0);
+	assign led_wire[1] = (voice_note[1] != 0);
+	assign led_wire[2] = (voice_note[2] != 0);
+	assign led_wire[3] = (voice_note[3] != 0);
+	assign led_wire[4] = (voice_note[4] != 0);
+	assign led_wire[5] = (voice_note[5] != 0);
+	assign led_wire[6] = (voice_note[6] != 0);
+	assign led_wire[7] = (voice_note[7] != 0);
+
 	reg [31:0] counter;
 	reg [4:0] phase_counter;
 	always@(posedge clk) begin
-		led <= voice_note[7];
+		// led <= voice_note[7];
+		led[0] <= led_wire[0];
+		led[1] <= led_wire[1];
+		led[2] <= led_wire[2];
+		led[3] <= led_wire[3];
+		led[4] <= led_wire[4];
+		led[5] <= led_wire[5];
+		led[6] <= led_wire[6];
+		led[7] <= led_wire[7];
 		wave_sel = 0;
 		nreset = 1;
 		if(source_valid) begin
@@ -212,7 +230,7 @@ module dds (
 		output_val[phase_accumulator_sel] = output_val_wire;
 
 		phase_counter <= phase_counter + 1;
-		if(phase_counter >= 20) begin
+		if(phase_counter >= 3) begin
 			phase_counter <= 0;
 			// phase_accumulator_sel <= 0;
 		    phase_accumulator_sel = phase_accumulator_sel + 1;
@@ -250,9 +268,9 @@ module dds (
 					phase_accumulator[i] <= phase_accumulator[i] + notes[voice_note[i]];
 					envelope_accumulator <= envelope_accumulator + 5;
 				 end else begin
-					 phase_accumulator[i] <= 0;
-					 envelope_accumulator <= envelope_accumulator + 5;
-					 output_val[i] = 0;
+					 //phase_accumulator[i] <= 0;
+					 //envelope_accumulator <= envelope_accumulator + 5;
+					 //output_val[i] = 0;
 					 envelope <= 0;
 				 end
 			end
