@@ -198,53 +198,55 @@ int main() {
 //}
 
 void ProcessSpiToFpga(struct voice v){
-    //static uint8_t spi_byte_counter;
-    
     /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
     * configured to set an interrupt when they finish transferring all data
     * elements.
     */
-    if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
-    {
-        /* Once asserted, interrupt bits remain high until cleared. */
-        CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
+    uint8_t complete = 0;
+    while(!complete){
+        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
+        {
+            /* Once asserted, interrupt bits remain high until cleared. */
+            CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
 
-        /* Reset receive buffers. */
-        memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
-        //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
-        
-        masterTxBuffer[0] = v.MIDI_note_status;
-        masterTxBuffer[1] = v.note_index;
-        masterTxBuffer[2] = v.MIDI_velocity;
-        /*masterTxBuffer[3] = v2.MIDI_note_status;
-        masterTxBuffer[4] = v2.note_index;
-        masterTxBuffer[5] = v2.MIDI_velocity;
-        masterTxBuffer[6] = v3.MIDI_note_status;
-        masterTxBuffer[7] = v3.note_index;
-        masterTxBuffer[8] = v3.MIDI_velocity;
-        masterTxBuffer[9] = v4.MIDI_note_status;
-        masterTxBuffer[10] = v4.note_index;
-        masterTxBuffer[11] = v4.MIDI_velocity;
-        masterTxBuffer[12] = v5.MIDI_note_status;
-        masterTxBuffer[13] = v5.note_index;
-        masterTxBuffer[14] = v5.MIDI_velocity;
-        masterTxBuffer[15] = v6.MIDI_note_status;
-        masterTxBuffer[16] = v6.note_index;
-        masterTxBuffer[17] = v6.MIDI_velocity;
-        masterTxBuffer[18] = v7.MIDI_note_status;
-        masterTxBuffer[19] = v7.note_index;
-        masterTxBuffer[20] = v7.MIDI_velocity;
-        masterTxBuffer[21] = v8.MIDI_note_status;
-        masterTxBuffer[22] = v8.note_index;
-        masterTxBuffer[23] = v8.MIDI_velocity;*/
-        
-        /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
-        * to the slave and correspondingly the number of bytes returned by the
-        * slave. Therefore it is configured to be invalidated when it
-        * finishes a transfer.
-        */
-        SPI_TxDMA_ValidateDescriptor(0);
-        SPI_TxDMA_ChEnable();
+            /* Reset receive buffers. */
+            memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
+            //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
+            
+            masterTxBuffer[0] = v.MIDI_note_status;
+            masterTxBuffer[1] = v.note_index;
+            masterTxBuffer[2] = v.MIDI_velocity;
+            /*masterTxBuffer[3] = v2.MIDI_note_status;
+            masterTxBuffer[4] = v2.note_index;
+            masterTxBuffer[5] = v2.MIDI_velocity;
+            masterTxBuffer[6] = v3.MIDI_note_status;
+            masterTxBuffer[7] = v3.note_index;
+            masterTxBuffer[8] = v3.MIDI_velocity;
+            masterTxBuffer[9] = v4.MIDI_note_status;
+            masterTxBuffer[10] = v4.note_index;
+            masterTxBuffer[11] = v4.MIDI_velocity;
+            masterTxBuffer[12] = v5.MIDI_note_status;
+            masterTxBuffer[13] = v5.note_index;
+            masterTxBuffer[14] = v5.MIDI_velocity;
+            masterTxBuffer[15] = v6.MIDI_note_status;
+            masterTxBuffer[16] = v6.note_index;
+            masterTxBuffer[17] = v6.MIDI_velocity;
+            masterTxBuffer[18] = v7.MIDI_note_status;
+            masterTxBuffer[19] = v7.note_index;
+            masterTxBuffer[20] = v7.MIDI_velocity;
+            masterTxBuffer[21] = v8.MIDI_note_status;
+            masterTxBuffer[22] = v8.note_index;
+            masterTxBuffer[23] = v8.MIDI_velocity;*/
+            
+            /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+            * to the slave and correspondingly the number of bytes returned by the
+            * slave. Therefore it is configured to be invalidated when it
+            * finishes a transfer.
+            */
+            SPI_TxDMA_ValidateDescriptor(0);
+            SPI_TxDMA_ChEnable();
+            complete = 1;
+        }
     }
 }
 
