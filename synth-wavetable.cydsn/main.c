@@ -23,7 +23,7 @@ int8_t current_midi_note_velocity;
 //#define SPI_CMD_NOTE_FF 7
 
 uint32_t sample;
-uint8_t masterTxBuffer[BUFFER_SIZE] = {1};
+uint8_t masterTxBuffer[BUFFER_SIZE] = {0};
 uint8_t masterRxBuffer[BUFFER_SIZE] = {0};
 
 uint8_t current_env_mode = 0;
@@ -112,7 +112,7 @@ int main() {
     {
         /* Wait for the first byte exchange. */
     }
-    //SPI_SpiUartClearRxBuffer();
+    SPI_SpiUartClearRxBuffer();
     //UART_UartPutString("SPI initialized... \r\n");
     
     CodecI2CM_Start();	
@@ -160,8 +160,33 @@ int main() {
     voices[6] = v7;
     voices[7] = v8;
     
+//    v1.MIDI_note_status = 0x90;
+//    v1.note_index = 35;
+//    v1.MIDI_velocity = 127;
+//    v2.MIDI_note_status = 0x90;
+//    v2.note_index = 36;
+//    v2.MIDI_velocity = 127;
+//    v3.MIDI_note_status = 0x90;
+//    v3.note_index = 37;
+//    v3.MIDI_velocity = 127;
+//    v4.MIDI_note_status = 0x90;
+//    v4.note_index = 38;
+//    v4.MIDI_velocity = 127;
+//    v5.MIDI_note_status = 0x90;
+//    v5.note_index = 39;
+//    v5.MIDI_velocity = 127;
+//    v6.MIDI_note_status = 0x90;
+//    v6.note_index = 40;
+//    v6.MIDI_velocity = 127;
+//    v7.MIDI_note_status = 0x90;
+//    v7.note_index = 41;
+//    v7.MIDI_velocity = 127;
+//    v8.MIDI_note_status = 0x90;
+//    v8.note_index = 42;
+//    v8.MIDI_velocity = 127;
+    
     for(;;) {
-        ProcessSpiToFpga();
+        
         ProcessUSBMIDI();/*
         ProcessVoice(&v1);
         ProcessVoice(&v2);
@@ -184,13 +209,13 @@ int main() {
 }
 
 //void UART_PrintNumber(int32_t number){
-    //char string[30];
-    //sprintf(string, "%d\n",number);
-    //UART_UartPutString(string);
+//    char string[30];
+//    sprintf(string, "%d\n",number);
+//    UART_UartPutString(string);
 //}
 
 void ProcessSpiToFpga(){
-    static uint8_t spi_byte_counter;
+    //static uint8_t spi_byte_counter;
     
     /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
     * configured to set an interrupt when they finish transferring all data
@@ -208,104 +233,30 @@ void ProcessSpiToFpga(){
         // this byte counting method needs to be more flexible to allow
         // sending different types of commands. Refactor.
         // Could fill a larger buffer and let DMA handle it, I suppose.
-        switch(spi_byte_counter){
-        case 0:
-            masterTxBuffer[0] = v1.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 1:
-            masterTxBuffer[0] = v1.note_index;
-            spi_byte_counter++;
-            break;
-        case 2:
-            masterTxBuffer[0] = v1.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 3:
-            masterTxBuffer[0] = v2.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 4:
-            masterTxBuffer[0] = v2.note_index;
-            spi_byte_counter++;
-            break;
-        case 5:
-            masterTxBuffer[0] = v2.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 6:
-            masterTxBuffer[0] = v3.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 7:
-            masterTxBuffer[0] = v3.note_index;
-            spi_byte_counter++;
-            break;
-        case 8:
-            masterTxBuffer[0] = v3.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 9:
-            masterTxBuffer[0] = v4.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 10:
-            masterTxBuffer[0] = v4.note_index;
-            spi_byte_counter++;
-            break;
-        case 11:
-            masterTxBuffer[0] = v4.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 12:
-            masterTxBuffer[0] = v5.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 13:
-            masterTxBuffer[0] = v5.note_index;
-            spi_byte_counter++;
-            break;
-        case 14:
-            masterTxBuffer[0] = v5.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 15:
-            masterTxBuffer[0] = v6.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 16:
-            masterTxBuffer[0] = v6.note_index;
-            spi_byte_counter++;
-            break;
-        case 17:
-            masterTxBuffer[0] = v6.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 18:
-            masterTxBuffer[0] = v7.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 19:
-            masterTxBuffer[0] = v7.note_index;
-            spi_byte_counter++;
-            break;
-        case 20:
-            masterTxBuffer[0] = v7.MIDI_velocity;
-            spi_byte_counter++;
-            break;
-        case 21:
-            masterTxBuffer[0] = v8.MIDI_note_status;
-            spi_byte_counter++;
-            break;
-        case 22:
-            masterTxBuffer[0] = v8.note_index;
-            spi_byte_counter++;
-            break;
-        case 23:
-            masterTxBuffer[0] = v8.MIDI_velocity;
-            spi_byte_counter = 0;
-            break;
-        }
+        masterTxBuffer[0] = v1.MIDI_note_status;
+        masterTxBuffer[1] = v1.note_index;
+        masterTxBuffer[2] = v1.MIDI_velocity;
+        masterTxBuffer[3] = v2.MIDI_note_status;
+        masterTxBuffer[4] = v2.note_index;
+        masterTxBuffer[5] = v2.MIDI_velocity;
+        masterTxBuffer[6] = v3.MIDI_note_status;
+        masterTxBuffer[7] = v3.note_index;
+        masterTxBuffer[8] = v3.MIDI_velocity;
+        masterTxBuffer[9] = v4.MIDI_note_status;
+        masterTxBuffer[10] = v4.note_index;
+        masterTxBuffer[11] = v4.MIDI_velocity;
+        masterTxBuffer[12] = v5.MIDI_note_status;
+        masterTxBuffer[13] = v5.note_index;
+        masterTxBuffer[14] = v5.MIDI_velocity;
+        masterTxBuffer[15] = v6.MIDI_note_status;
+        masterTxBuffer[16] = v6.note_index;
+        masterTxBuffer[17] = v6.MIDI_velocity;
+        masterTxBuffer[18] = v7.MIDI_note_status;
+        masterTxBuffer[19] = v7.note_index;
+        masterTxBuffer[20] = v7.MIDI_velocity;
+        masterTxBuffer[21] = v8.MIDI_note_status;
+        masterTxBuffer[22] = v8.note_index;
+        masterTxBuffer[23] = v8.MIDI_velocity;
         
         /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
         * to the slave and correspondingly the number of bytes returned by the
@@ -391,13 +342,15 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     {
         uint8_t note_playing = 0;
         for(int i = 0; i < 8; i++){
-            if(voices[i].note_index == midiMsg[USB_EVENT_BYTE1]){
+            if(voices[i].note_index == midiMsg[USB_EVENT_BYTE1] 
+            && voices[i].MIDI_note_status == USB_MIDI_NOTE_ON){
                 note_playing = 1;
             }
         }
         if(!note_playing){
             //note = midiMsg[USB_EVENT_BYTE1];
             DispatchNote(midiMsg);
+            ProcessSpiToFpga();
             LED_Write(0);
         }
     }
@@ -405,6 +358,7 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     {
         //note = midiMsg[USB_EVENT_BYTE1];
         NoteOff(midiMsg);
+        ProcessSpiToFpga();
         
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;

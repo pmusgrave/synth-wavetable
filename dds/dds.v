@@ -212,14 +212,15 @@ module dds (
 	reg [4:0] phase_counter;
 	always@(posedge clk) begin
 		// led <= voice_note[7];
-		led[0] <= led_wire[0];
-		led[1] <= led_wire[1];
-		led[2] <= led_wire[2];
-		led[3] <= led_wire[3];
-		led[4] <= led_wire[4];
-		led[5] <= led_wire[5];
-		led[6] <= led_wire[6];
-		led[7] <= led_wire[7];
+		// led[0] <= led_wire[0];
+		// led[1] <= led_wire[1];
+		// led[2] <= led_wire[2];
+		// led[3] <= led_wire[3];
+		// led[4] <= led_wire[4];
+		// led[5] <= led_wire[5];
+		// led[6] <= led_wire[6];
+		// led[7] <= led_wire[7];
+
 		wave_sel = 0;
 		nreset = 1;
 		if(source_valid) begin
@@ -257,14 +258,14 @@ module dds (
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
 		// sample rate.
-		if(counter < 100) begin
+		if(counter < 99) begin
 			counter <= counter + 1;
 		end else begin
 			counter <= 0;
 			//phase_accumulator <= phase_accumulator + freq;
 			//envelope_accumulator <= envelope_accumulator + freq2;
 			for(i = 0; i < 8; i = i + 1) begin
-				 if(note_on[voice_note[i]]) begin
+				 if(note_on[voice_note[i]] && (voice_note[i] != 0)) begin
 					phase_accumulator[i] <= phase_accumulator[i] + notes[voice_note[i]];
 					envelope_accumulator <= envelope_accumulator + 5;
 				 end else begin
@@ -363,6 +364,6 @@ module dds (
 			end
 		endcase
 
-		
+		led <= midi_note;		
 	end
 endmodule
