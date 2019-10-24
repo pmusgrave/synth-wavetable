@@ -137,7 +137,7 @@ module dds (
  	wire [23:0] sq_val_wire;
  	reg [4:0] wave_sel;
  	reg [23:0] output_val[8];
-	reg [23:0] envelope;
+	// reg [23:0] envelope;
 	wire [23:0] output_val_wire;
 	sine_table  sine(
 		.address (current_phase_accumulator>>10),
@@ -181,7 +181,8 @@ module dds (
 	wire [31:0]  phase_accumulator_wire;
 	reg [31:0]  current_phase_accumulator;
 	reg [31:0]  phase_accumulator[8];
-	reg [31:0]  envelope_accumulator;
+	//reg [31:0]  envelope_accumulator[8];
+	reg [7:0] envelope[8];
 	// rom_table_addr_mux phase_accumulator_mux (
 	// 	.data0x ( envelope_accumulator>>10 ),
 	// 	.data1x ( envelope_accumulator>>10 ),
@@ -210,6 +211,7 @@ module dds (
 
 	reg [31:0] counter;
 	reg [4:0] phase_counter;
+	reg [31:0] envelope_counter;
 	always@(posedge clk) begin
 		// led <= voice_note[7];
 		// led[0] <= led_wire[0];
@@ -245,14 +247,14 @@ module dds (
 		
 		// R2R_out <= (note_on[midi_note] * (output_val>>8) * (envelope>>16))>>16;
 		R2R_out <= (
-			((output_val[0])>>3) +
-			((output_val[1])>>3) +
-			((output_val[2])>>3) +
-			((output_val[3])>>3) +
-			((output_val[4])>>3) +
-			((output_val[5])>>3) +
-			((output_val[6])>>3) +
-			((output_val[7])>>3)
+			(((output_val[0]>>8) * envelope[0])>>3) +
+			(((output_val[1]>>8) * envelope[1])>>3) +
+			(((output_val[2]>>8) * envelope[2])>>3) +
+			(((output_val[3]>>8) * envelope[3])>>3) +
+			(((output_val[4]>>8) * envelope[4])>>3) +
+			(((output_val[5]>>8) * envelope[5])>>3) +
+			(((output_val[6]>>8) * envelope[6])>>3) +
+			(((output_val[7]>>8) * envelope[7])>>3)
 			)>>16;
 
 	    // update sine wave table address.
@@ -267,15 +269,31 @@ module dds (
 			for(i = 0; i < 8; i = i + 1) begin
 				 if(note_on[voice_note[i]] && (voice_note[i] != 0)) begin
 					phase_accumulator[i] <= phase_accumulator[i] + notes[voice_note[i]];
-					envelope_accumulator <= envelope_accumulator + 5;
+					// envelope_accumulator[i] <= envelope_accumulator[i] + 5;
 				 end else begin
 					 //phase_accumulator[i] <= 0;
 					 //envelope_accumulator <= envelope_accumulator + 5;
 					 //output_val[i] = 0;
-					 envelope <= 0;
+					 // envelope <= 0;
 				 end
 			end
-			
+		end
+
+		if(envelope_counter < 100000) begin
+			envelope_counter <= envelope_counter + 1;
+		end else begin
+			envelope_counter <= 0;
+			for(i = 0; i < 8; i = i + 1) begin
+				if(note_on[voice_note[i]] && (voice_note[i] != 0)) begin
+					if(envelope[i] < 250) begin
+						envelope[i] <= envelope[i] + 1;
+					end else begin
+						envelope[i] <= 250;
+					end
+				end else begin
+					envelope[i] <= 0;
+				end
+			end
 		end
 	end
 

@@ -170,20 +170,12 @@ int main() {
     v8.MIDI_note_status = USB_MIDI_NOTE_OFF;
     
     for(;;) {
-        ProcessUSBMIDI();/*
-        ProcessVoice(&v1);
-        ProcessVoice(&v2);
-        ProcessVoice(&v3);
-        ProcessVoice(&v4);
-        ProcessVoice(&v5);
-        ProcessVoice(&v6);
-        ProcessVoice(&v7);
-        ProcessVoice(&v8);*/
+        ProcessUSBMIDI();
         if(update_ADC_flag){
-            //attack_freq = ADC_GetResult16(0)&0xFFF;
-            //decay_freq = ADC_GetResult16(1)&0xFFF;
-            //sustain_freq = ADC_GetResult16(2)&0xFFF;
-            //release_freq = ADC_GetResult16(3)&0xFFF;
+            attack_freq = ADC_GetResult16(0);
+            decay_freq = ADC_GetResult16(1);
+            sustain_freq = ADC_GetResult16(2);
+            release_freq = ADC_GetResult16(3);
             //attack_freq = 52275;
             //attack_freq = 60;
             update_ADC_flag = 0;
@@ -203,7 +195,10 @@ void ProcessSpiToFpga(struct voice v){
     * elements.
     */
     uint8_t complete = 0;
-    while(!complete){
+    // blocking here is probably not a good permanent solution, but it helps
+    // prevent missed MIDI messages for now.
+    // the better solution is most likely a queue of MIDI messages 
+    while(!complete){ 
         if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
         {
             /* Once asserted, interrupt bits remain high until cleared. */
