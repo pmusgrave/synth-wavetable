@@ -17,8 +17,8 @@ void DisableAllOscillators(void);
 void EnableSingleOscillator(void (*osc_enable_function)(void));
 void DisableSingleOscillator(void (*osc_disable_function)(void));
 double Quantize(float);
-void DispatchNote(uint8* midi_msg);
-void NoteOff(uint8* midi_msg);
+struct voice DispatchNote(uint8* midi_msg);
+struct voice NoteOff(uint8* midi_msg);
 
 void ProcessVoice(struct voice* v);
 

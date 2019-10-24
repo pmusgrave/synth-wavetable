@@ -1,25 +1,25 @@
 |dds
 clk => clk.IN6
 spi_mosi => spi_mosi.IN1
-spi_miso <= spi_slave:spi0.miso
+spi_miso << spi_slave:spi0.miso
 spi_nss => spi_nss.IN1
 spi_sclk => spi_sclk.IN1
-led[7] <= led[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[6] <= led[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[5] <= led[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[4] <= led[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[3] <= led[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[2] <= led[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[1] <= led[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-led[0] <= led[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[7] <= R2R_out[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[6] <= R2R_out[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[5] <= R2R_out[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[4] <= R2R_out[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[3] <= R2R_out[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[2] <= R2R_out[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[1] <= R2R_out[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
-R2R_out[0] <= R2R_out[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[7] << led[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[6] << led[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[5] << led[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[4] << led[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[3] << led[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[2] << led[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[1] << led[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+led[0] << led[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[7] << R2R_out[7]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[6] << R2R_out[6]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[5] << R2R_out[5]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[4] << R2R_out[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[3] << R2R_out[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[2] << R2R_out[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[1] << R2R_out[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+R2R_out[0] << R2R_out[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |dds|spi_slave:spi0

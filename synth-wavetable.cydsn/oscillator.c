@@ -140,108 +140,129 @@ void ProcessVoice(struct voice* v) {
     }
 }
 
-void DispatchNote(uint8* midi_msg) {
+struct voice DispatchNote(uint8* midi_msg) {
     //freq = (uint16_t)(music_notes[midi_msg[USB_EVENT_BYTE1]]/3);
+    struct voice v;
     
-    if(v1.current_env_mode == NOT_TRIGGERED){
+    if(v1.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v1.freq = freq;
         v1.note_index = midi_msg[USB_EVENT_BYTE1];
         v1.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v1.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v1.current_env_mode = SUSTAIN_MODE;
+        return v1;
     }
-    else if(v2.current_env_mode == NOT_TRIGGERED){
+    else if(v2.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v2.freq = freq;
         v2.note_index = midi_msg[USB_EVENT_BYTE1];
         v2.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v2.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v2.current_env_mode = SUSTAIN_MODE;
+        return v2;
     }
-    else if(v3.current_env_mode == NOT_TRIGGERED){
+    else if(v3.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v3.freq = freq;
         v3.note_index = midi_msg[USB_EVENT_BYTE1];
         v3.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v3.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v3.current_env_mode = SUSTAIN_MODE;
+        return v3;
     }
-    else if(v4.current_env_mode == NOT_TRIGGERED){
+    else if(v4.MIDI_note_status == USB_MIDI_NOTE_OFF){
         // v4.freq = freq;
         v4.note_index = midi_msg[USB_EVENT_BYTE1];
         v4.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v4.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v4.current_env_mode = SUSTAIN_MODE;
+        return v4;
     }
-    else if(v5.current_env_mode == NOT_TRIGGERED){
+    else if(v5.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v5.freq = freq;
         v5.note_index = midi_msg[USB_EVENT_BYTE1];
         v5.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v5.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v5.current_env_mode = SUSTAIN_MODE;
+        return v5;
     }
-    else if(v6.current_env_mode == NOT_TRIGGERED){
+    else if(v6.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v6.freq = freq;
         v6.note_index = midi_msg[USB_EVENT_BYTE1];
         v6.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v6.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v6.current_env_mode = SUSTAIN_MODE;
+        return v6;
     }
-    else if(v7.current_env_mode == NOT_TRIGGERED){
+    else if(v7.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v7.freq = freq;
         v7.note_index = midi_msg[USB_EVENT_BYTE1];
         v7.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v7.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v7.current_env_mode = SUSTAIN_MODE;
+        return v7;
     }
-    else if(v8.current_env_mode == NOT_TRIGGERED){
+    else if(v8.MIDI_note_status == USB_MIDI_NOTE_OFF){
         //v8.freq = freq;
         v8.note_index = midi_msg[USB_EVENT_BYTE1];
         v8.MIDI_note_status = USB_MIDI_NOTE_ON;
-        v8.current_env_mode = SUSTAIN_MODE;
-        return;
+        //v8.current_env_mode = SUSTAIN_MODE;
+        return v8;
     }
+    return v;
 }
 
-void NoteOff(uint8* midi_msg){
-    if(v1.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v1.current_env_mode = NOT_TRIGGERED;
+struct voice NoteOff(uint8* midi_msg){
+    struct voice v;
+    
+    if(v1.note_index == midi_msg[USB_EVENT_BYTE1] 
+    && v1.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v1.current_env_mode = NOT_TRIGGERED;
         v1.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v1.env_multiplier = 0;
+        return v1;
     }
-    else if(v2.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v2.current_env_mode = NOT_TRIGGERED;
+    else if(v2.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v2.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v2.current_env_mode = NOT_TRIGGERED;
         v2.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v2.env_multiplier = 0;
+        return v2;
     }
-    else if(v3.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v3.current_env_mode = NOT_TRIGGERED;
+    else if(v3.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v3.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v3.current_env_mode = NOT_TRIGGERED;
         v3.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v3.env_multiplier = 0;
+        return v3;
     }
-    else if(v4.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v4.current_env_mode = NOT_TRIGGERED;
+    else if(v4.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v4.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v4.current_env_mode = NOT_TRIGGERED;
         v4.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v4.env_multiplier = 0;
+        return v4;
     }
-    else if(v5.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v5.current_env_mode = NOT_TRIGGERED;
+    else if(v5.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v5.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v5.current_env_mode = NOT_TRIGGERED;
         v5.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v5.env_multiplier = 0;
+        return v5;
     }
-    else if(v6.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v6.current_env_mode = NOT_TRIGGERED;
+    else if(v6.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v6.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v6.current_env_mode = NOT_TRIGGERED;
         v6.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v6.env_multiplier = 0;
+        return v6;
     }
-    else if(v7.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v7.current_env_mode = NOT_TRIGGERED;
+    else if(v7.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v7.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v7.current_env_mode = NOT_TRIGGERED;
         v7.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v7.env_multiplier = 0;
+        return v7;
     }
-    else if(v8.note_index == midi_msg[USB_EVENT_BYTE1]){
-        v8.current_env_mode = NOT_TRIGGERED;
+    else if(v8.note_index == midi_msg[USB_EVENT_BYTE1]
+    && v8.MIDI_note_status == USB_MIDI_NOTE_ON){
+        //v8.current_env_mode = NOT_TRIGGERED;
         v8.MIDI_note_status = USB_MIDI_NOTE_OFF;
         //v8.env_multiplier = 0;
+        return v8;
     }
+    return v;
 }
 
 /* [] END OF FILE */

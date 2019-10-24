@@ -81,7 +81,7 @@ char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
 void ProcessUSBMIDI();
-void ProcessSpiToFpga();
+void ProcessSpiToFpga(struct voice);
 void UART_PrintNumber(int32_t);
 
 /*******************************************************************************
@@ -160,33 +160,16 @@ int main() {
     voices[6] = v7;
     voices[7] = v8;
     
-//    v1.MIDI_note_status = 0x90;
-//    v1.note_index = 35;
-//    v1.MIDI_velocity = 127;
-//    v2.MIDI_note_status = 0x90;
-//    v2.note_index = 36;
-//    v2.MIDI_velocity = 127;
-//    v3.MIDI_note_status = 0x90;
-//    v3.note_index = 37;
-//    v3.MIDI_velocity = 127;
-//    v4.MIDI_note_status = 0x90;
-//    v4.note_index = 38;
-//    v4.MIDI_velocity = 127;
-//    v5.MIDI_note_status = 0x90;
-//    v5.note_index = 39;
-//    v5.MIDI_velocity = 127;
-//    v6.MIDI_note_status = 0x90;
-//    v6.note_index = 40;
-//    v6.MIDI_velocity = 127;
-//    v7.MIDI_note_status = 0x90;
-//    v7.note_index = 41;
-//    v7.MIDI_velocity = 127;
-//    v8.MIDI_note_status = 0x90;
-//    v8.note_index = 42;
-//    v8.MIDI_velocity = 127;
+    v1.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v2.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v3.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v4.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v5.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v6.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v7.MIDI_note_status = USB_MIDI_NOTE_OFF;
+    v8.MIDI_note_status = USB_MIDI_NOTE_OFF;
     
     for(;;) {
-        
         ProcessUSBMIDI();/*
         ProcessVoice(&v1);
         ProcessVoice(&v2);
@@ -214,7 +197,7 @@ int main() {
 //    UART_UartPutString(string);
 //}
 
-void ProcessSpiToFpga(){
+void ProcessSpiToFpga(struct voice v){
     //static uint8_t spi_byte_counter;
     
     /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
@@ -230,13 +213,10 @@ void ProcessSpiToFpga(){
         memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
         //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
         
-        // this byte counting method needs to be more flexible to allow
-        // sending different types of commands. Refactor.
-        // Could fill a larger buffer and let DMA handle it, I suppose.
-        masterTxBuffer[0] = v1.MIDI_note_status;
-        masterTxBuffer[1] = v1.note_index;
-        masterTxBuffer[2] = v1.MIDI_velocity;
-        masterTxBuffer[3] = v2.MIDI_note_status;
+        masterTxBuffer[0] = v.MIDI_note_status;
+        masterTxBuffer[1] = v.note_index;
+        masterTxBuffer[2] = v.MIDI_velocity;
+        /*masterTxBuffer[3] = v2.MIDI_note_status;
         masterTxBuffer[4] = v2.note_index;
         masterTxBuffer[5] = v2.MIDI_velocity;
         masterTxBuffer[6] = v3.MIDI_note_status;
@@ -256,7 +236,7 @@ void ProcessSpiToFpga(){
         masterTxBuffer[20] = v7.MIDI_velocity;
         masterTxBuffer[21] = v8.MIDI_note_status;
         masterTxBuffer[22] = v8.note_index;
-        masterTxBuffer[23] = v8.MIDI_velocity;
+        masterTxBuffer[23] = v8.MIDI_velocity;*/
         
         /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
         * to the slave and correspondingly the number of bytes returned by the
@@ -349,16 +329,16 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         }
         if(!note_playing){
             //note = midiMsg[USB_EVENT_BYTE1];
-            DispatchNote(midiMsg);
-            ProcessSpiToFpga();
+            
+            ProcessSpiToFpga(DispatchNote(midiMsg));
             LED_Write(0);
         }
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
         //note = midiMsg[USB_EVENT_BYTE1];
-        NoteOff(midiMsg);
-        ProcessSpiToFpga();
+        
+        ProcessSpiToFpga(NoteOff(midiMsg));
         
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;
