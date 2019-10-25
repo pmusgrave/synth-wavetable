@@ -209,6 +209,8 @@ module dds (
 	assign led_wire[6] = (voice_note[6] != 0);
 	assign led_wire[7] = (voice_note[7] != 0);
 
+	reg [3:0] env_state[8];
+
 	reg [31:0] counter;
 	reg [4:0] phase_counter;
 	reg [31:0] envelope_counter;
@@ -223,7 +225,7 @@ module dds (
 		// led[6] <= led_wire[6];
 		// led[7] <= led_wire[7];
 
-		wave_sel = 0;
+		wave_sel = 2;
 		nreset = 1;
 		if(source_valid) begin
 			mosi_data <= mosi_data_bus;
@@ -284,15 +286,55 @@ module dds (
 		end else begin
 			envelope_counter <= 0;
 			for(i = 0; i < 8; i = i + 1) begin
-				if(note_on[voice_note[i]] && (voice_note[i] != 0)) begin
-					if(envelope[i] < 250) begin
-						envelope[i] <= envelope[i] + 1;
-					end else begin
-						envelope[i] <= 250;
+				case(env_state[i])
+					0: begin
+						if(note_on[voice_note[i]])begin
+							env_state[i] <= 1;
+						end else begin
+							env_state[i] <= 4;
+						end
 					end
-				end else begin
-					envelope[i] <= 0;
-				end
+					1: begin
+						if(note_on[voice_note[i]]) begin
+							if(envelope[i] < 250) begin
+								envelope[i] <= envelope[i] + 1;
+							end else begin
+								envelope[i] <= 250;
+								env_state[i] <= env_state[i] + 1;
+							end
+						end else begin
+							env_state[i] <= 4;
+						end
+					end
+					2: begin
+						if(note_on[voice_note[i]]) begin
+							if(envelope[i] > 185) begin
+								envelope[i] <= envelope[i] - 1;
+							end else begin
+								envelope[i] <= 185;
+								env_state[i] <= env_state[i] + 1;
+							end
+						end else begin
+							env_state[i] <= 4;
+						end
+					end
+					3: begin
+						if(note_on[voice_note[i]]) begin
+							envelope[i] <= 185;
+						end else begin
+							env_state[i] <= 4;							
+						end
+					end
+					4: begin
+						if(envelope[i] >= 1) begin
+							envelope[i] <= envelope[i] - 1;
+						end else begin
+							envelope[i] <= 0;
+							env_state[i] <= 0;
+						end
+					end
+					default: env_state[i] <= 0;
+				endcase
 			end
 		end
 	end
