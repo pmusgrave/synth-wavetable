@@ -203,12 +203,12 @@ module dds (
 	wire[63:0] fp_result[2];
 	fixed_to_float fp_converter0(
 		.clock (clk),
-		.dataa (output_val[0]<<8),
+		.dataa (output_val[0]),
 		.result(fp_result[0])
 	); // conversion latency is 6 clock cycles
 	fixed_to_float fp_converter1(
 		.clock (clk),
-		.dataa (output_val[1]<<8),
+		.dataa (output_val[1]),
 		.result(fp_result[1])
 	); // conversion latency is 6 clock cycles
 
@@ -226,7 +226,15 @@ module dds (
 		.dataa (fp_result[0]),
 		.datab (fp_result[1]),
 		.result(fp_mult_result)
-	); // this takes 11 cycles to complete a multiplication operation
+	);
+
+	wire[63:0] fp_div_result;
+	fp_mult fp_div_voice_compression(
+		.clock (clk),
+		.dataa (fp_mult_result),
+		.datab (16'h3FE0000000000000),
+		.result(fp_div_result)
+	);
 
 	/************************************************************************
 	* Main
@@ -295,28 +303,9 @@ module dds (
 		// 	(((output_val[7]>>8) * envelope[7])>>3)
 		// 	)>>16;
 		R2R_out <= (
-			fp_mult_result
-		)>>24;
+			fixed_result
+		)>>16;
 
-		// FP CONVERSION
-		// Floating point conversion operations take 6 cycles to complete.
-		if(!fp_conversion_complete) begin
-			fp_converter_counter <= fp_converter_counter + 1;
-			if(fp_converter_counter >= 6) begin
-				fp_converter_counter <= 0;
-				fp_conversion_complete <= 1;
-			end
-		end
-
-		// FP MULTIPLICATION
-		// The floating point multiplication operation takes 11 cycles to complete.
-		if(fp_conversion_complete) begin
-			fp_mult_counter <= fp_mult_counter + 1;
-			if(fp_mult_counter >= 11) begin
-				fp_mult_counter <= 0;
-				fp_conversion_complete <= 0;
-			end
-		end
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
