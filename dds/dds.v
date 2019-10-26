@@ -199,40 +199,106 @@ module dds (
 	/************************************************************************
 	* Floating point arithmetic modules
 	*************************************************************************/
-	reg [3:0] fp_converter_counter;
-	wire[63:0] fp_result[2];
+	// conversion latency is 6 clock cycles
+	reg[3:0] fp_conversion_counter;
+	wire[63:0] fp_result[8];
 	fixed_to_float fp_converter0(
 		.clock (clk),
 		.dataa (output_val[0]),
 		.result(fp_result[0])
-	); // conversion latency is 6 clock cycles
+	);
 	fixed_to_float fp_converter1(
 		.clock (clk),
 		.dataa (output_val[1]),
 		.result(fp_result[1])
-	); // conversion latency is 6 clock cycles
+	);
+	fixed_to_float fp_converter2(
+		.clock (clk),
+		.dataa (output_val[2]),
+		.result(fp_result[2])
+	);
+	fixed_to_float fp_converter3(
+		.clock (clk),
+		.dataa (output_val[3]),
+		.result(fp_result[3])
+	);
+	fixed_to_float fp_converter4(
+		.clock (clk),
+		.dataa (output_val[4]),
+		.result(fp_result[4])
+	);
+	fixed_to_float fp_converter5(
+		.clock (clk),
+		.dataa (output_val[5]),
+		.result(fp_result[5])
+	);
+	fixed_to_float fp_converter6(
+		.clock (clk),
+		.dataa (output_val[6]),
+		.result(fp_result[6])
+	);
+	fixed_to_float fp_converter7(
+		.clock (clk),
+		.dataa (output_val[7]),
+		.result(fp_result[7])
+	);
 
 	wire[31:0] fixed_result;
 	float_to_fixed fixed_converter(
 		.clock (clk),
-		.dataa (fp_mult_result),
+		.dataa (fp_add_result[6]),
 		.result(fixed_result)
-	); // conversion latency is 6 clock cycles
+	); 
 
-	reg [4:0] fp_mult_counter;
-	wire[63:0] fp_mult_result;
-	fp_add_sub floating_point_adder(
+	wire[63:0] fp_add_result[8];
+	fp_add_sub floating_point_adder0(
 		.clock (clk),
 		.dataa (fp_result[0]),
 		.datab (fp_result[1]),
-		.result(fp_mult_result)
+		.result(fp_add_result[0])
+	);
+	fp_add_sub floating_point_adder1(
+		.clock (clk),
+		.dataa (fp_add_result[0]),
+		.datab (fp_result[2]),
+		.result(fp_add_result[1])
+	);
+	fp_add_sub floating_point_adder2(
+		.clock (clk),
+		.dataa (fp_result[3]),
+		.datab (fp_add_result[1]),
+		.result(fp_add_result[2])
+	);
+	fp_add_sub floating_point_adder3(
+		.clock (clk),
+		.dataa (fp_result[4]),
+		.datab (fp_add_result[2]),
+		.result(fp_add_result[3])
+	);
+	fp_add_sub floating_point_adder4(
+		.clock (clk),
+		.dataa (fp_result[5]),
+		.datab (fp_add_result[3]),
+		.result(fp_add_result[4])
+	);
+	fp_add_sub floating_point_adder5(
+		.clock (clk),
+		.dataa (fp_result[6]),
+		.datab (fp_add_result[4]),
+		.result(fp_add_result[5])
+	);
+	fp_add_sub floating_point_adder6(
+		.clock (clk),
+		.dataa (fp_result[7]),
+		.datab (fp_add_result[5]),
+		.result(fp_add_result[6])
 	);
 
 	wire[63:0] fp_div_result;
 	fp_mult fp_div_voice_compression(
 		.clock (clk),
-		.dataa (fp_mult_result),
-		.datab (16'h3FE0000000000000),
+		.dataa (fp_add_result[1]),
+		.datab (16'h3FE0000000000000), // 0.5 constant in double float format
 		.result(fp_div_result)
 	);
 
@@ -303,9 +369,8 @@ module dds (
 		// 	(((output_val[7]>>8) * envelope[7])>>3)
 		// 	)>>16;
 		R2R_out <= (
-			fixed_result
+			fixed_result>>3
 		)>>16;
-
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio

@@ -1,14 +1,14 @@
-Analysis & Synthesis Status : Successful - Sat Oct 26 15:14:42 2019
+Analysis & Synthesis Status : Successful - Sat Oct 26 16:41:10 2019
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : dds
 Top-level Entity Name : dds
 Family : Cyclone IV E
-Total logic elements : 5,774
-    Total combinational functions : 4,986
-    Dedicated logic registers : 2,310
-Total registers : 2310
+Total logic elements : 20,594
+    Total combinational functions : 17,192
+    Dedicated logic registers : 11,338
+Total registers : 11338
 Total pins : 21
 Total virtual pins : 0
-Total memory bits : 98,705
+Total memory bits : 100,529
 Embedded Multiplier 9-bit elements : 0
 Total PLLs : 0
