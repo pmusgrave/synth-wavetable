@@ -201,7 +201,7 @@ module dds (
 	*************************************************************************/
 	// conversion latency is 6 clock cycles
 	reg[3:0] fp_conversion_counter;
-	wire[63:0] fp_result[8];
+	wire[63:0] fp_result[9];
 	fixed_to_float fp_converter0(
 		.clock (clk),
 		.dataa (output_val[0]),
@@ -243,10 +243,17 @@ module dds (
 		.result(fp_result[7])
 	);
 
+	// testing, convert constant to fp
+	fixed_to_float fp_converter8(
+		.clock (clk),
+		.dataa (active_voice_counter),
+		.result(fp_result[8])
+	);
+
 	wire[31:0] fixed_result;
 	float_to_fixed fixed_converter(
 		.clock (clk),
-		.dataa (fp_add_result[6]),
+		.dataa (fp_div_result),
 		.result(fixed_result)
 	); 
 
@@ -295,10 +302,10 @@ module dds (
 	);
 
 	wire[63:0] fp_div_result;
-	fp_mult fp_div_voice_compression(
+	fp_div fp_div_voice_compression(
 		.clock (clk),
-		.dataa (fp_add_result[1]),
-		.datab (16'h3FE0000000000000), // 0.5 constant in double float format
+		.dataa (fp_add_result[6]),
+		.datab (fp_result[8]),
 		.result(fp_div_result)
 	);
 
@@ -323,16 +330,41 @@ module dds (
 
 	reg fp_conversion_result_counter;
 	reg fp_conversion_complete;
+
+	reg[7:0] active_voice_array;
+	reg[7:0] active_voice_counter;
+
 	always@(posedge clk) begin
 		// led <= voice_note[7];
-		// led[0] <= led_wire[0];
-		// led[1] <= led_wire[1];
-		// led[2] <= led_wire[2];
-		// led[3] <= led_wire[3];
-		// led[4] <= led_wire[4];
-		// led[5] <= led_wire[5];
-		// led[6] <= led_wire[6];
-		// led[7] <= led_wire[7];
+		active_voice_array[0] <= led_wire[0];
+		active_voice_array[1] <= led_wire[1];
+		active_voice_array[2] <= led_wire[2];
+		active_voice_array[3] <= led_wire[3];
+		active_voice_array[4] <= led_wire[4];
+		active_voice_array[5] <= led_wire[5];
+		active_voice_array[6] <= led_wire[6];
+		active_voice_array[7] <= led_wire[7];
+
+		case(active_voice_array)
+			0: active_voice_counter <= 1;
+			1: active_voice_counter <= 1;
+			3: active_voice_counter <= 2;
+			7: active_voice_counter <= 3;
+			15: active_voice_counter <= 4;
+			31: active_voice_counter <= 5;
+			63: active_voice_counter <= 6;
+			127: active_voice_counter <= 7;
+			255: active_voice_counter <= 8;
+
+			128: active_voice_counter <= 1;
+			192: active_voice_counter <= 2;
+			224: active_voice_counter <= 3;
+			240: active_voice_counter <= 4;
+			248: active_voice_counter <= 5;
+			252: active_voice_counter <= 6;
+			254: active_voice_counter <= 7;
+			default: active_voice_counter <= 8;
+		endcase
 
 		wave_sel = 0;
 		nreset = 1;
@@ -369,7 +401,7 @@ module dds (
 		// 	(((output_val[7]>>8) * envelope[7])>>3)
 		// 	)>>16;
 		R2R_out <= (
-			fixed_result>>3
+			fixed_result
 		)>>16;
 
 	    // update sine wave table address.
