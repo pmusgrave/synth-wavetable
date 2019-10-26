@@ -130,15 +130,15 @@ module dds (
 	/************************************************************************
 	* Wavetables and wave selection mux
 	*************************************************************************/
-	wire [23:0] sine_val_wire;
- 	wire [23:0] pos_saw_val_wire;
- 	wire [23:0] neg_saw_val_wire;
- 	wire [23:0] tri_val_wire;
- 	wire [23:0] sq_val_wire;
+	wire [31:0] sine_val_wire;
+ 	wire [31:0] pos_saw_val_wire;
+ 	wire [31:0] neg_saw_val_wire;
+ 	wire [31:0] tri_val_wire;
+ 	wire [31:0] sq_val_wire;
  	reg [4:0] wave_sel;
- 	reg [23:0] output_val[8];
+ 	reg [31:0] output_val[8];
 	// reg [23:0] envelope;
-	wire [23:0] output_val_wire;
+	wire [31:0] output_val_wire;
 	sine_table  sine(
 		.address (current_phase_accumulator>>10),
 		.clock (clk),
@@ -197,6 +197,38 @@ module dds (
 	// );
 
 	/************************************************************************
+	* Floating point arithmetic modules
+	*************************************************************************/
+	reg [3:0] fp_converter_counter;
+	wire[63:0] fp_result[2];
+	fixed_to_float fp_converter0(
+		.clock (clk),
+		.dataa (output_val[0]<<8),
+		.result(fp_result[0])
+	); // conversion latency is 6 clock cycles
+	fixed_to_float fp_converter1(
+		.clock (clk),
+		.dataa (output_val[1]<<8),
+		.result(fp_result[1])
+	); // conversion latency is 6 clock cycles
+
+	wire[31:0] fixed_result;
+	float_to_fixed fixed_converter(
+		.clock (clk),
+		.dataa (fp_mult_result),
+		.result(fixed_result)
+	); // conversion latency is 6 clock cycles
+
+	reg [4:0] fp_mult_counter;
+	wire[63:0] fp_mult_result;
+	fp_add_sub floating_point_adder(
+		.clock (clk),
+		.dataa (fp_result[0]),
+		.datab (fp_result[1]),
+		.result(fp_mult_result)
+	); // this takes 11 cycles to complete a multiplication operation
+
+	/************************************************************************
 	* Main
 	*************************************************************************/
 	wire led_wire[7:0];
@@ -214,6 +246,9 @@ module dds (
 	reg [31:0] counter;
 	reg [4:0] phase_counter;
 	reg [31:0] envelope_counter;
+
+	reg fp_conversion_result_counter;
+	reg fp_conversion_complete;
 	always@(posedge clk) begin
 		// led <= voice_note[7];
 		// led[0] <= led_wire[0];
@@ -225,14 +260,16 @@ module dds (
 		// led[6] <= led_wire[6];
 		// led[7] <= led_wire[7];
 
-		wave_sel = 2;
+		wave_sel = 0;
 		nreset = 1;
 		if(source_valid) begin
 			mosi_data <= mosi_data_bus;
 			nreset = 0;
 	    end
 
-		output_val[phase_accumulator_sel] = output_val_wire;
+	    if(phase_accumulator_sel < 8) begin
+			output_val[phase_accumulator_sel] = output_val_wire;
+		end
 
 		phase_counter <= phase_counter + 1;
 		if(phase_counter >= 3) begin
@@ -247,17 +284,39 @@ module dds (
 		    // end
 		end
 		
-		// R2R_out <= (note_on[midi_note] * (output_val>>8) * (envelope>>16))>>16;
+		// R2R_out <= (
+		// 	(((output_val[0]>>8) * envelope[0])>>3) +
+		// 	(((output_val[1]>>8) * envelope[1])>>3) +
+		// 	(((output_val[2]>>8) * envelope[2])>>3) +
+		// 	(((output_val[3]>>8) * envelope[3])>>3) +
+		// 	(((output_val[4]>>8) * envelope[4])>>3) +
+		// 	(((output_val[5]>>8) * envelope[5])>>3) +
+		// 	(((output_val[6]>>8) * envelope[6])>>3) +
+		// 	(((output_val[7]>>8) * envelope[7])>>3)
+		// 	)>>16;
 		R2R_out <= (
-			(((output_val[0]>>8) * envelope[0])>>3) +
-			(((output_val[1]>>8) * envelope[1])>>3) +
-			(((output_val[2]>>8) * envelope[2])>>3) +
-			(((output_val[3]>>8) * envelope[3])>>3) +
-			(((output_val[4]>>8) * envelope[4])>>3) +
-			(((output_val[5]>>8) * envelope[5])>>3) +
-			(((output_val[6]>>8) * envelope[6])>>3) +
-			(((output_val[7]>>8) * envelope[7])>>3)
-			)>>16;
+			fp_mult_result
+		)>>24;
+
+		// FP CONVERSION
+		// Floating point conversion operations take 6 cycles to complete.
+		if(!fp_conversion_complete) begin
+			fp_converter_counter <= fp_converter_counter + 1;
+			if(fp_converter_counter >= 6) begin
+				fp_converter_counter <= 0;
+				fp_conversion_complete <= 1;
+			end
+		end
+
+		// FP MULTIPLICATION
+		// The floating point multiplication operation takes 11 cycles to complete.
+		if(fp_conversion_complete) begin
+			fp_mult_counter <= fp_mult_counter + 1;
+			if(fp_mult_counter >= 11) begin
+				fp_mult_counter <= 0;
+				fp_conversion_complete <= 0;
+			end
+		end
 
 	    // update sine wave table address.
 		// this clock divider (counter) controls the audio
@@ -275,13 +334,13 @@ module dds (
 				 end else begin
 					 //phase_accumulator[i] <= 0;
 					 //envelope_accumulator <= envelope_accumulator + 5;
-					 //output_val[i] = 0;
+					 output_val[i] = 0;
 					 // envelope <= 0;
 				 end
 			end
 		end
 
-		if(envelope_counter < 100000) begin
+		if(envelope_counter < 5000) begin
 			envelope_counter <= envelope_counter + 1;
 		end else begin
 			envelope_counter <= 0;
