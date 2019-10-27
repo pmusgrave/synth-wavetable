@@ -21,7 +21,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "waves.h"
-
+#include "midi.h"
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
@@ -50,9 +50,6 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
-/* USER CODE BEGIN PFP */
-
-/* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -74,25 +71,27 @@ int main(void)
   MX_USART1_UART_Init();
 
   init_wavetable();
-  uint32_t index = 0;
-  uint16_t freq = 1000;
-  uint16_t output_val;
-
-  SPI_HandleTypeDef* hspi;
-  hspi = &hspi5;
+  uint32_t index[8] = {0};
+  uint16_t freq[8] = {1000,2000,3000,4000,5000,6000,7000,8000};
+  uint16_t output_val = 0;
 
   while (1)
   {
-    if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
-       HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
-      //      uint8_t data = 0xAB;
-      //      HAL_SPI_Transmit(hspi, &data, 8, 20);
-      //      HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_0);
+    Receive_MIDI(&hspi5);
+
+    for(int i = 0; i < 8; i++) {
+      index[i] += freq[i];
+      //output_val += base_sine[(index[i]>>10)&0xfff] / 8;
     }
+    output_val = base_sine[(index[0]>>10)&0xfff] / 8
+      + base_sine[(index[1]>>10)&0xfff] / 8
+      + base_sine[(index[2]>>10)&0xfff] / 8
+      + base_sine[(index[3]>>10)&0xfff] / 8
+      + base_sine[(index[4]>>10)&0xfff] / 8
+      + base_sine[(index[5]>>10)&0xfff] / 8
+      + base_sine[(index[6]>>10)&0xfff] / 8
+      + base_sine[(index[7]>>10)&0xfff] / 8;
 
-    index += freq;
-
-    output_val = base_sine[(index>>10)&0xFFF];
     ((output_val>>8)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
     ((output_val>>9)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
     ((output_val>>10)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
@@ -476,9 +475,6 @@ static void MX_GPIO_Init(void)
 
 }
 
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
