@@ -92,60 +92,10 @@ const uint16_t midi_notes[127] = {
   41860
 };
 
-
-void Receive_MIDI(SPI_HandleTypeDef* hspi) {
-  static uint8_t spi_receive_buffer = 0;
-  static uint8_t spi_byte_counter = 0;
-  static struct midi_note_msg current_midi_note_msg = {0,0,0};
-
-  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
-     HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
+void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer) {
+  //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
+  //     HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
     uint8_t data = 0xAB;
-    HAL_SPI_TransmitReceive(hspi, &data, &spi_receive_buffer, 8, 20);
-
-    spi_byte_counter++;
-
-    if(spi_byte_counter == 1) {
-      switch(spi_receive_buffer){
-      case (MIDI_NOTE_ON):
-        spi_byte_counter = 0;
-        current_midi_note_msg.command = MIDI_NOTE_ON;
-        break;
-      case(MIDI_NOTE_OFF):
-        spi_byte_counter = 0;
-        current_midi_note_msg.command = MIDI_NOTE_OFF;
-        break;
-      default:
-        current_midi_note_msg.command = 0;
-      }
-    }
-
-    switch(current_midi_note_msg.command){
-    case(MIDI_NOTE_ON):
-      if(spi_byte_counter == 1){
-        current_midi_note_msg.note = spi_receive_buffer;
-      }
-      else if(spi_byte_counter == 2){
-        current_midi_note_msg.velocity = spi_receive_buffer;
-      }
-      else {
-        spi_byte_counter = 0;
-      }
-      break;
-    case(MIDI_NOTE_OFF):
-      if(spi_byte_counter == 1){
-        current_midi_note_msg.note = spi_receive_buffer;
-      }
-      else if(spi_byte_counter == 2){
-        current_midi_note_msg.velocity = spi_receive_buffer;
-      }
-      else {
-        spi_byte_counter = 0;
-      }
-      break;
-    case(0):
-      spi_byte_counter = 0;
-      break;
-    }
-  }
+    HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 3);
+    //  }
 }

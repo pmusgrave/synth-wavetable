@@ -56,7 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-
+extern SPI_HandleTypeDef hspi5;
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -196,6 +196,20 @@ void SysTick_Handler(void)
 /* For the available peripheral interrupt handler names,                      */
 /* please refer to the startup file (startup_stm32f4xx.s).                    */
 /******************************************************************************/
+
+/**
+  * @brief This function handles SPI5 global interrupt.
+  */
+void SPI5_IRQHandler(void)
+{
+  /* USER CODE BEGIN SPI5_IRQn 0 */
+
+  /* USER CODE END SPI5_IRQn 0 */
+  HAL_SPI_IRQHandler(&hspi5);
+  /* USER CODE BEGIN SPI5_IRQn 1 */
+
+  /* USER CODE END SPI5_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

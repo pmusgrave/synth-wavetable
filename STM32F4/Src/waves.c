@@ -16,7 +16,7 @@ void generate_base_sine(uint16_t* buffer){
   for(int i = 0; i < N; i++){
     double delta = 2*M_PI/N;
     double x = delta * i;
-    buffer[i] = (65536/2) * sin(x) + (65536/2);
+    buffer[i] = (65530/2) * sin(x) + (65530/2);
   }
 }
 

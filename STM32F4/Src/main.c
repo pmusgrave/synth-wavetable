@@ -1,4 +1,3 @@
-/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file           : main.c
@@ -16,12 +15,15 @@
   *
   ******************************************************************************
   */
-/* USER CODE END Header */
-
-/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "waves.h"
 #include "midi.h"
+
+/* Private includes ----------------------------------------------------------*/
+/* USER CODE BEGIN Includes */
+
+/* USER CODE END Includes */
+
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 
@@ -40,7 +42,9 @@
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi5;
 UART_HandleTypeDef huart1;
-
+uint8_t spi_tx_buffer[3] = {49,50,51};
+uint8_t spi_rx_buffer[3];
+struct midi_note_msg current_midi_note_msg = {0,0,0};
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -50,6 +54,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
+/* USER CODE BEGIN PFP */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
+/* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
@@ -71,18 +78,35 @@ int main(void)
   MX_USART1_UART_Init();
 
   init_wavetable();
-  uint32_t index[8] = {0};
-  uint16_t freq[8] = {1000,2000,3000,4000,5000,6000,7000,8000};
-  uint16_t output_val = 0;
+  uint16_t output_val;
+  struct midi_note_msg current_midi_note_msg = {0};
+  struct midi_note_msg test_note_on = {0x90, 68, 127};
+  struct midi_note_msg test_note_off = {0x80, 68, 127};
+  uint8_t note_on[127] = {0};
+  uint32_t index[127] = {0};
 
   while (1)
   {
-    Receive_MIDI(&hspi5);
+    Receive_MIDI(&hspi5, spi_rx_buffer);
 
-    for(int i = 0; i < 8; i++) {
-      index[i] += freq[i];
-      //output_val += base_sine[(index[i]>>10)&0xfff] / 8;
+    if(current_midi_note_msg.command != 0
+    && current_midi_note_msg.note != 0
+    && current_midi_note_msg.velocity != 0)
+    {
+      note_on[current_midi_note_msg.note] = current_midi_note_msg.command;
     }
+
+    note_on[test_note_on.note] = test_note_on.command;
+
+    output_val = 0;
+    for(int i = 0; i < 127; i++) {
+      if(note_on[i] == MIDI_NOTE_ON){
+        index[i] += midi_notes[i];
+        output_val += base_sine[(index[i]>>10)&0xfff] / 8;
+      }
+    }
+
+    /*
     output_val = base_sine[(index[0]>>10)&0xfff] / 8
       + base_sine[(index[1]>>10)&0xfff] / 8
       + base_sine[(index[2]>>10)&0xfff] / 8
@@ -91,6 +115,7 @@ int main(void)
       + base_sine[(index[5]>>10)&0xfff] / 8
       + base_sine[(index[6]>>10)&0xfff] / 8
       + base_sine[(index[7]>>10)&0xfff] / 8;
+    */
 
     ((output_val>>8)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
     ((output_val>>9)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
@@ -102,6 +127,7 @@ int main(void)
     ((output_val>>15)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
   }
 }
+
 
 /**
   * @brief System Clock Configuration
@@ -475,9 +501,23 @@ static void MX_GPIO_Init(void)
 
 }
 
+/* USER CODE BEGIN 4 */
+void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
+  uint8_t uart_tx_buffer;
+  static uint8_t spi_byte_counter;
+  spi_byte_counter++;
 
-/**
-  * @brief  This function is executed in case of error occurrence.
+  if(spi_rx_buffer[0] == 0x80){
+    uart_tx_buffer = 't';
+  }
+  else{
+    uart_tx_buffer = 'f';
+  }
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+}
+/* USER CODE END 4 */
+
+/**  * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
 void Error_Handler(void)

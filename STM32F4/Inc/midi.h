@@ -15,6 +15,6 @@ struct midi_note_msg {
 
 extern const uint16_t midi_notes[127];
 
-void Receive_MIDI(SPI_HandleTypeDef* hspi);
+void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer);
 
 #endif
