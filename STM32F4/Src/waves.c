@@ -2,7 +2,7 @@
 #include <math.h>
 #include <stdint.h>
 
-void init_wavetable(){   
+void init_wavetable(){
     generate_base_sine(base_sine);
     //generate_base_pos_saw(base_pos_saw);
     //generate_base_neg_saw(base_neg_saw);

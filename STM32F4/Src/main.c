@@ -79,7 +79,7 @@ int main(void)
 
   init_wavetable();
   uint16_t output_val;
-  struct midi_note_msg current_midi_note_msg = {0};
+  //  struct midi_note_msg current_midi_note_msg = {0};
   struct midi_note_msg test_note_on = {0x90, 68, 127};
   struct midi_note_msg test_note_off = {0x80, 68, 127};
   uint8_t note_on[127] = {0};
@@ -89,14 +89,14 @@ int main(void)
   {
     Receive_MIDI(&hspi5, spi_rx_buffer);
 
-    if(current_midi_note_msg.command != 0
-    && current_midi_note_msg.note != 0
-    && current_midi_note_msg.velocity != 0)
-    {
+    //    if(current_midi_note_msg.command != 0
+    //    && current_midi_note_msg.note != 0
+    //    && current_midi_note_msg.velocity != 0)
+    //    {
       note_on[current_midi_note_msg.note] = current_midi_note_msg.command;
-    }
+      //    }
 
-    note_on[test_note_on.note] = test_note_on.command;
+    //note_on[test_note_on.note] = test_note_on.command;
 
     output_val = 0;
     for(int i = 0; i < 127; i++) {
@@ -192,8 +192,8 @@ static void MX_SPI5_Init(void)
   hspi5.Init.Mode = SPI_MODE_SLAVE;
   hspi5.Init.Direction = SPI_DIRECTION_2LINES;
   hspi5.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
-  hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
+  hspi5.Init.CLKPolarity = SPI_POLARITY_HIGH;
+  hspi5.Init.CLKPhase = SPI_PHASE_2EDGE;
   hspi5.Init.NSS = SPI_NSS_HARD_INPUT;
   hspi5.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi5.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -504,16 +504,21 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   uint8_t uart_tx_buffer;
-  static uint8_t spi_byte_counter;
-  spi_byte_counter++;
 
-  if(spi_rx_buffer[0] == 0x80){
-    uart_tx_buffer = 't';
-  }
-  else{
-    uart_tx_buffer = 'f';
-  }
+  current_midi_note_msg.command = spi_rx_buffer[0];
+  current_midi_note_msg.note = spi_rx_buffer[1];
+  current_midi_note_msg.velocity = spi_rx_buffer[2];
+
+  /*
+  uart_tx_buffer = spi_rx_buffer[0];
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = spi_rx_buffer[1];
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = spi_rx_buffer[2];
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = '\n';
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  */
 }
 /* USER CODE END 4 */
 

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccPoUljW.s 			page 1
+ARM GAS  /tmp/ccxcdVsp.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccPoUljW.s 			page 1
   29:Src/midi.c    ****   1100,
   30:Src/midi.c    ****   1165,
   31:Src/midi.c    ****   1235,
-ARM GAS  /tmp/ccPoUljW.s 			page 2
+ARM GAS  /tmp/ccxcdVsp.s 			page 2
 
 
   32:Src/midi.c    ****   1308,
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccPoUljW.s 			page 1
   86:Src/midi.c    ****   29600,
   87:Src/midi.c    ****   31360,
   88:Src/midi.c    ****   33224,
-ARM GAS  /tmp/ccPoUljW.s 			page 3
+ARM GAS  /tmp/ccxcdVsp.s 			page 3
 
 
   89:Src/midi.c    ****   35200,
@@ -133,163 +133,202 @@ ARM GAS  /tmp/ccPoUljW.s 			page 1
   30              		@ args = 0, pretend = 0, frame = 8
   31              		@ frame_needed = 0, uses_anonymous_args = 0
   32              	.LVL0:
-  33 0000 10B5     		push	{r4, lr}
+  33 0000 30B5     		push	{r4, r5, lr}
   34              	.LCFI0:
-  35              		.cfi_def_cfa_offset 8
-  36              		.cfi_offset 4, -8
-  37              		.cfi_offset 14, -4
-  38 0002 82B0     		sub	sp, sp, #8
-  39              	.LCFI1:
-  40              		.cfi_def_cfa_offset 16
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  39 0002 83B0     		sub	sp, sp, #12
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 24
+  42 0004 0446     		mov	r4, r0
+  43 0006 0D46     		mov	r5, r1
   96:Src/midi.c    ****   //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
-  97:Src/midi.c    ****   //     HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
-  98:Src/midi.c    ****     uint8_t data = 0xAB;
-  41              		.loc 1 98 0
-  42 0004 02AC     		add	r4, sp, #8
-  43 0006 AB23     		movs	r3, #171
-  44 0008 04F8013D 		strb	r3, [r4, #-1]!
-  99:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 3);
-  45              		.loc 1 99 0
-  46 000c 0323     		movs	r3, #3
-  47 000e 0A46     		mov	r2, r1
-  48 0010 2146     		mov	r1, r4
-  49              	.LVL1:
-  50 0012 FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
-  51              	.LVL2:
- 100:Src/midi.c    ****     //  }
+  97:Src/midi.c    ****   if( HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
+  44              		.loc 1 97 0
+  45 0008 FFF7FEFF 		bl	HAL_SPI_GetState
+  46              	.LVL1:
+  47 000c 0128     		cmp	r0, #1
+  48 000e 01D0     		beq	.L4
+  49              	.L1:
+  98:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
+  99:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 1);
+ 100:Src/midi.c    ****   }
  101:Src/midi.c    **** }
-  52              		.loc 1 101 0
-  53 0016 02B0     		add	sp, sp, #8
-  54              	.LCFI2:
-  55              		.cfi_def_cfa_offset 8
-  56              		@ sp needed
-  57 0018 10BD     		pop	{r4, pc}
-  58              		.cfi_endproc
-  59              	.LFE130:
-  61              		.global	midi_notes
-  62              		.section	.rodata.midi_notes,"a",%progbits
-  63              		.align	2
-  66              	midi_notes:
-  67 0000 1301     		.short	275
-  68 0002 2301     		.short	291
-  69 0004 3501     		.short	309
-  70 0006 4701     		.short	327
-  71 0008 5A01     		.short	346
-  72 000a 6F01     		.short	367
-  73 000c 8501     		.short	389
-  74 000e 9C01     		.short	412
-ARM GAS  /tmp/ccPoUljW.s 			page 4
+  50              		.loc 1 101 0
+  51 0010 03B0     		add	sp, sp, #12
+  52              	.LCFI2:
+  53              		.cfi_remember_state
+  54              		.cfi_def_cfa_offset 12
+  55              		@ sp needed
+  56 0012 30BD     		pop	{r4, r5, pc}
+  57              	.LVL2:
+  58              	.L4:
+  59              	.LCFI3:
+  60              		.cfi_restore_state
+  61              	.LBB2:
+  98:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
+  62              		.loc 1 98 0
+  63 0014 064B     		ldr	r3, .L5
+  64 0016 1B68     		ldr	r3, [r3]
+  65 0018 ADF80430 		strh	r3, [sp, #4]	@ movhi
+  66 001c 1B0C     		lsrs	r3, r3, #16
+  67 001e 8DF80630 		strb	r3, [sp, #6]
+  99:Src/midi.c    ****   }
+  68              		.loc 1 99 0
+  69 0022 0123     		movs	r3, #1
+ARM GAS  /tmp/ccxcdVsp.s 			page 4
 
 
-  75 0010 B501     		.short	437
-  76 0012 CE01     		.short	462
-  77 0014 EA01     		.short	490
-  78 0016 0702     		.short	519
-  79 0018 2602     		.short	550
-  80 001a 4702     		.short	583
-  81 001c 6902     		.short	617
-  82 001e 8E02     		.short	654
-  83 0020 B502     		.short	693
-  84 0022 DE02     		.short	734
-  85 0024 0A03     		.short	778
-  86 0026 3803     		.short	824
-  87 0028 6903     		.short	873
-  88 002a 9D03     		.short	925
-  89 002c D403     		.short	980
-  90 002e 0E04     		.short	1038
-  91 0030 4C04     		.short	1100
-  92 0032 8D04     		.short	1165
-  93 0034 D304     		.short	1235
-  94 0036 1C05     		.short	1308
-  95 0038 6A05     		.short	1386
-  96 003a BC05     		.short	1468
-  97 003c 1406     		.short	1556
-  98 003e 7006     		.short	1648
-  99 0040 D206     		.short	1746
- 100 0042 3A07     		.short	1850
- 101 0044 A807     		.short	1960
- 102 0046 1D08     		.short	2077
- 103 0048 9808     		.short	2200
- 104 004a 1B09     		.short	2331
- 105 004c A509     		.short	2469
- 106 004e 380A     		.short	2616
- 107 0050 D40A     		.short	2772
- 108 0052 790B     		.short	2937
- 109 0054 270C     		.short	3111
- 110 0056 E00C     		.short	3296
- 111 0058 A40D     		.short	3492
- 112 005a 740E     		.short	3700
- 113 005c 500F     		.short	3920
- 114 005e 3910     		.short	4153
- 115 0060 3011     		.short	4400
- 116 0062 3612     		.short	4662
- 117 0064 4B13     		.short	4939
- 118 0066 7114     		.short	5233
- 119 0068 A815     		.short	5544
- 120 006a F116     		.short	5873
- 121 006c 4F18     		.short	6223
- 122 006e C119     		.short	6593
- 123 0070 491B     		.short	6985
- 124 0072 E81C     		.short	7400
- 125 0074 A01E     		.short	7840
- 126 0076 7220     		.short	8306
- 127 0078 6022     		.short	8800
- 128 007a 6B24     		.short	9323
- 129 007c 9626     		.short	9878
- 130 007e E128     		.short	10465
- 131 0080 4F2B     		.short	11087
-ARM GAS  /tmp/ccPoUljW.s 			page 5
+  70 0024 2A46     		mov	r2, r5
+  71 0026 01A9     		add	r1, sp, #4
+  72 0028 2046     		mov	r0, r4
+  73 002a FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
+  74              	.LVL3:
+  75              	.LBE2:
+  76              		.loc 1 101 0
+  77 002e EFE7     		b	.L1
+  78              	.L6:
+  79              		.align	2
+  80              	.L5:
+  81 0030 00000000 		.word	.LANCHOR0
+  82              		.cfi_endproc
+  83              	.LFE130:
+  85              		.global	midi_notes
+  86              		.section	.rodata
+  87              		.align	2
+  88              		.set	.LANCHOR0,. + 0
+  89              	.LC0:
+  90 0000 AB       		.byte	-85
+  91 0001 AB       		.byte	-85
+  92 0002 AB       		.byte	-85
+  93              		.section	.rodata.midi_notes,"a",%progbits
+  94              		.align	2
+  97              	midi_notes:
+  98 0000 1301     		.short	275
+  99 0002 2301     		.short	291
+ 100 0004 3501     		.short	309
+ 101 0006 4701     		.short	327
+ 102 0008 5A01     		.short	346
+ 103 000a 6F01     		.short	367
+ 104 000c 8501     		.short	389
+ 105 000e 9C01     		.short	412
+ 106 0010 B501     		.short	437
+ 107 0012 CE01     		.short	462
+ 108 0014 EA01     		.short	490
+ 109 0016 0702     		.short	519
+ 110 0018 2602     		.short	550
+ 111 001a 4702     		.short	583
+ 112 001c 6902     		.short	617
+ 113 001e 8E02     		.short	654
+ 114 0020 B502     		.short	693
+ 115 0022 DE02     		.short	734
+ 116 0024 0A03     		.short	778
+ 117 0026 3803     		.short	824
+ 118 0028 6903     		.short	873
+ 119 002a 9D03     		.short	925
+ 120 002c D403     		.short	980
+ 121 002e 0E04     		.short	1038
+ 122 0030 4C04     		.short	1100
+ 123 0032 8D04     		.short	1165
+ 124 0034 D304     		.short	1235
+ 125 0036 1C05     		.short	1308
+ 126 0038 6A05     		.short	1386
+ 127 003a BC05     		.short	1468
+ 128 003c 1406     		.short	1556
+ 129 003e 7006     		.short	1648
+ARM GAS  /tmp/ccxcdVsp.s 			page 5
 
 
- 132 0082 E32D     		.short	11747
- 133 0084 9D30     		.short	12445
- 134 0086 8133     		.short	13185
- 135 0088 9136     		.short	13969
- 136 008a D039     		.short	14800
- 137 008c 403D     		.short	15680
- 138 008e E440     		.short	16612
- 139 0090 C044     		.short	17600
- 140 0092 D748     		.short	18647
- 141 0094 2B4D     		.short	19755
- 142 0096 C251     		.short	20930
- 143 0098 9F56     		.short	22175
- 144 009a C55B     		.short	23493
- 145 009c 3A61     		.short	24890
- 146 009e 0267     		.short	26370
- 147 00a0 226D     		.short	27938
- 148 00a2 A073     		.short	29600
- 149 00a4 807A     		.short	31360
- 150 00a6 C881     		.short	-32312
- 151 00a8 8089     		.short	-30336
- 152 00aa AD91     		.short	-28243
- 153 00ac 579A     		.short	-26025
- 154 00ae 84A3     		.short	-23676
- 155 00b0 00000000 		.space	78
- 155      00000000 
- 155      00000000 
- 155      00000000 
- 155      00000000 
- 156              		.text
- 157              	.Letext0:
- 158              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 159              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 160              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 161              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 162              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 163              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 164              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 165              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 166              		.file 10 "Inc/midi.h"
-ARM GAS  /tmp/ccPoUljW.s 			page 6
+ 130 0040 D206     		.short	1746
+ 131 0042 3A07     		.short	1850
+ 132 0044 A807     		.short	1960
+ 133 0046 1D08     		.short	2077
+ 134 0048 9808     		.short	2200
+ 135 004a 1B09     		.short	2331
+ 136 004c A509     		.short	2469
+ 137 004e 380A     		.short	2616
+ 138 0050 D40A     		.short	2772
+ 139 0052 790B     		.short	2937
+ 140 0054 270C     		.short	3111
+ 141 0056 E00C     		.short	3296
+ 142 0058 A40D     		.short	3492
+ 143 005a 740E     		.short	3700
+ 144 005c 500F     		.short	3920
+ 145 005e 3910     		.short	4153
+ 146 0060 3011     		.short	4400
+ 147 0062 3612     		.short	4662
+ 148 0064 4B13     		.short	4939
+ 149 0066 7114     		.short	5233
+ 150 0068 A815     		.short	5544
+ 151 006a F116     		.short	5873
+ 152 006c 4F18     		.short	6223
+ 153 006e C119     		.short	6593
+ 154 0070 491B     		.short	6985
+ 155 0072 E81C     		.short	7400
+ 156 0074 A01E     		.short	7840
+ 157 0076 7220     		.short	8306
+ 158 0078 6022     		.short	8800
+ 159 007a 6B24     		.short	9323
+ 160 007c 9626     		.short	9878
+ 161 007e E128     		.short	10465
+ 162 0080 4F2B     		.short	11087
+ 163 0082 E32D     		.short	11747
+ 164 0084 9D30     		.short	12445
+ 165 0086 8133     		.short	13185
+ 166 0088 9136     		.short	13969
+ 167 008a D039     		.short	14800
+ 168 008c 403D     		.short	15680
+ 169 008e E440     		.short	16612
+ 170 0090 C044     		.short	17600
+ 171 0092 D748     		.short	18647
+ 172 0094 2B4D     		.short	19755
+ 173 0096 C251     		.short	20930
+ 174 0098 9F56     		.short	22175
+ 175 009a C55B     		.short	23493
+ 176 009c 3A61     		.short	24890
+ 177 009e 0267     		.short	26370
+ 178 00a0 226D     		.short	27938
+ 179 00a2 A073     		.short	29600
+ 180 00a4 807A     		.short	31360
+ 181 00a6 C881     		.short	-32312
+ 182 00a8 8089     		.short	-30336
+ 183 00aa AD91     		.short	-28243
+ 184 00ac 579A     		.short	-26025
+ 185 00ae 84A3     		.short	-23676
+ 186 00b0 00000000 		.space	78
+ARM GAS  /tmp/ccxcdVsp.s 			page 6
+
+
+ 186      00000000 
+ 186      00000000 
+ 186      00000000 
+ 186      00000000 
+ 187              		.text
+ 188              	.Letext0:
+ 189              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 190              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 191              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 192              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 193              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 194              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 195              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 196              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 197              		.file 10 "Inc/midi.h"
+ARM GAS  /tmp/ccxcdVsp.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 midi.c
-     /tmp/ccPoUljW.s:18     .text.Receive_MIDI:0000000000000000 $t
-     /tmp/ccPoUljW.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
-     /tmp/ccPoUljW.s:66     .rodata.midi_notes:0000000000000000 midi_notes
-     /tmp/ccPoUljW.s:63     .rodata.midi_notes:0000000000000000 $d
+     /tmp/ccxcdVsp.s:18     .text.Receive_MIDI:0000000000000000 $t
+     /tmp/ccxcdVsp.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
+     /tmp/ccxcdVsp.s:81     .text.Receive_MIDI:0000000000000030 $d
+     /tmp/ccxcdVsp.s:97     .rodata.midi_notes:0000000000000000 midi_notes
+     /tmp/ccxcdVsp.s:87     .rodata:0000000000000000 $d
+     /tmp/ccxcdVsp.s:94     .rodata.midi_notes:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
+HAL_SPI_GetState
 HAL_SPI_TransmitReceive_IT
