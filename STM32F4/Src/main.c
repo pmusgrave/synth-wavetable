@@ -35,6 +35,11 @@ nn  ****************************************************************************
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define DDS_SCALE_FACTOR 89.4745833
+#define NOT_TRIGGERED 0
+#define ATTACK_MODE 1
+#define DECAY_MODE 2
+#define SUSTAIN_MODE 3
+#define RELEASE_MODE 4
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -54,6 +59,7 @@ volatile struct midi_note_msg current_midi_note_msg = {0,0,0};
 volatile uint8_t output_val = 0;
 volatile float envelope = 0;
 volatile uint32_t envelope_index = 0;
+volatile uint8_t env_state = ATTACK_MODE;
 volatile uint8_t note_on[88] = {0};
 volatile uint32_t phase_accumulator[88] = {0};
 volatile uint32_t test_phase_accumulator = 0;
@@ -576,12 +582,53 @@ void UpdateOutputValue() {
   */
 
   test_phase_accumulator += (uint32_t)(440*DDS_SCALE_FACTOR);
-  output_val = base_sq[(test_phase_accumulator>>10)%4096] * (envelope / AMPLITUDE);
+  output_val = base_sq[(test_phase_accumulator>>10)%4096] * envelope / AMPLITUDE;
 }
 
 void UpdateEnvelope() {
-  envelope_index += (uint32_t)(10*DDS_SCALE_FACTOR);
-  envelope = base_tri[(envelope_index>>10)%4096];
+  switch(env_state){
+  case NOT_TRIGGERED:
+    envelope_index = 0;
+    envelope = 0;
+    break;
+  case ATTACK_MODE:
+    //    if((UINT32_MAX - envelope_index) < DDS_SCALE_FACTOR){
+    if(envelope_index <= 4200000) {
+      envelope_index += (uint32_t)(DDS_SCALE_FACTOR);
+      envelope = base_pos_saw[(envelope_index>>10)%4096];
+    }
+    else {
+      // env_state++;
+      envelope_index = 0;
+      env_state = DECAY_MODE;
+    }
+    break;
+  case DECAY_MODE:
+    //    if(envelope <= base_neg_saw[sustain_level]){
+    //if(envelope <= base_neg_saw[UINT32_MAX]){
+    if(envelope_index <= 4200000) {
+      envelope_index += (uint32_t)(DDS_SCALE_FACTOR);
+      envelope = base_neg_saw[(envelope_index>>10)%4096];
+    }
+    else {
+      //env_state++;
+      envelope_index = 0;
+      env_state = ATTACK_MODE;
+    }
+    break;
+  case SUSTAIN_MODE:
+    env_state++;
+    break;
+  case RELEASE_MODE:
+    if((UINT32_MAX - envelope_index) < DDS_SCALE_FACTOR){
+      envelope_index += (uint32_t)(DDS_SCALE_FACTOR);
+      envelope = base_neg_saw[(envelope_index>>10)%4096];
+    }
+    else {
+      env_state = NOT_TRIGGERED;
+    }
+    break;
+  }
 }
 
 void Update_R2R_DAC() {
