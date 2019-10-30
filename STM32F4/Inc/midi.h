@@ -13,7 +13,7 @@ struct midi_note_msg {
   uint8_t velocity;
 };
 
-extern const uint16_t midi_notes[127];
+extern const float midi_notes[88];
 
 void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer);
 

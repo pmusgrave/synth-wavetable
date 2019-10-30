@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccNu5QHq.s 			page 1
+ARM GAS  /tmp/ccNLDLoj.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -30,105 +30,104 @@ ARM GAS  /tmp/ccNu5QHq.s 			page 1
    1:Src/midi.c    **** #include "midi.h"
    2:Src/midi.c    **** #include <stdint.h>
    3:Src/midi.c    **** 
-   4:Src/midi.c    **** const uint16_t midi_notes[127] = {
-   5:Src/midi.c    ****   275,
-   6:Src/midi.c    ****   291,
-   7:Src/midi.c    ****   309,
-   8:Src/midi.c    ****   327,
-   9:Src/midi.c    ****   346,
-  10:Src/midi.c    ****   367,
-  11:Src/midi.c    ****   389,
-  12:Src/midi.c    ****   412,
-  13:Src/midi.c    ****   437,
-  14:Src/midi.c    ****   462,
-  15:Src/midi.c    ****   490,
-  16:Src/midi.c    ****   519,
-  17:Src/midi.c    ****   550,
-  18:Src/midi.c    ****   583,
-  19:Src/midi.c    ****   617,
-  20:Src/midi.c    ****   654,
-  21:Src/midi.c    ****   693,
-  22:Src/midi.c    ****   734,
-  23:Src/midi.c    ****   778,
-  24:Src/midi.c    ****   824,
-  25:Src/midi.c    ****   873,
-  26:Src/midi.c    ****   925,
-  27:Src/midi.c    ****   980,
-  28:Src/midi.c    ****   1038,
-  29:Src/midi.c    ****   1100,
-  30:Src/midi.c    ****   1165,
-  31:Src/midi.c    ****   1235,
-ARM GAS  /tmp/ccNu5QHq.s 			page 2
+   4:Src/midi.c    **** const float midi_notes[88] = {
+   5:Src/midi.c    ****                                27.5,
+   6:Src/midi.c    ****                                29.13524,
+   7:Src/midi.c    ****                                30.86771,
+   8:Src/midi.c    ****                                32.7032,
+   9:Src/midi.c    ****                                34.64783,
+  10:Src/midi.c    ****                                36.7081,
+  11:Src/midi.c    ****                                38.89087,
+  12:Src/midi.c    ****                                41.20344,
+  13:Src/midi.c    ****                                43.65353,
+  14:Src/midi.c    ****                                46.2493,
+  15:Src/midi.c    ****                                48.99943,
+  16:Src/midi.c    ****                                51.91309,
+  17:Src/midi.c    ****                                55,
+  18:Src/midi.c    ****                                58.27047,
+  19:Src/midi.c    ****                                61.73541,
+  20:Src/midi.c    ****                                65.40639,
+  21:Src/midi.c    ****                                69.29566,
+  22:Src/midi.c    ****                                73.41619,
+  23:Src/midi.c    ****                                77.78175,
+  24:Src/midi.c    ****                                82.40689,
+  25:Src/midi.c    ****                                87.30706,
+  26:Src/midi.c    ****                                92.49861,
+  27:Src/midi.c    ****                                97.99886,
+  28:Src/midi.c    ****                                103.8262,
+  29:Src/midi.c    ****                                110,
+  30:Src/midi.c    ****                                116.5409,
+  31:Src/midi.c    ****                                123.4708,
+ARM GAS  /tmp/ccNLDLoj.s 			page 2
 
 
-  32:Src/midi.c    ****   1308,
-  33:Src/midi.c    ****   1386,
-  34:Src/midi.c    ****   1468,
-  35:Src/midi.c    ****   1556,
-  36:Src/midi.c    ****   1648,
-  37:Src/midi.c    ****   1746,
-  38:Src/midi.c    ****   1850,
-  39:Src/midi.c    ****   1960,
-  40:Src/midi.c    ****   2077,
-  41:Src/midi.c    ****   2200,
-  42:Src/midi.c    ****   2331,
-  43:Src/midi.c    ****   2469,
-  44:Src/midi.c    ****   2616,
-  45:Src/midi.c    ****   2772,
-  46:Src/midi.c    ****   2937,
-  47:Src/midi.c    ****   3111,
-  48:Src/midi.c    ****   3296,
-  49:Src/midi.c    ****   3492,
-  50:Src/midi.c    ****   3700,
-  51:Src/midi.c    ****   3920,
-  52:Src/midi.c    ****   4153,
-  53:Src/midi.c    ****   4400,
-  54:Src/midi.c    ****   4662,
-  55:Src/midi.c    ****   4939,
-  56:Src/midi.c    ****   5233,
-  57:Src/midi.c    ****   5544,
-  58:Src/midi.c    ****   5873,
-  59:Src/midi.c    ****   6223,
-  60:Src/midi.c    ****   6593,
-  61:Src/midi.c    ****   6985,
-  62:Src/midi.c    ****   7400,
-  63:Src/midi.c    ****   7840,
-  64:Src/midi.c    ****   8306,
-  65:Src/midi.c    ****   8800,
-  66:Src/midi.c    ****   9323,
-  67:Src/midi.c    ****   9878,
-  68:Src/midi.c    ****   10465,
-  69:Src/midi.c    ****   11087,
-  70:Src/midi.c    ****   11747,
-  71:Src/midi.c    ****   12445,
-  72:Src/midi.c    ****   13185,
-  73:Src/midi.c    ****   13969,
-  74:Src/midi.c    ****   14800,
-  75:Src/midi.c    ****   15680,
-  76:Src/midi.c    ****   16612,
-  77:Src/midi.c    ****   17600,
-  78:Src/midi.c    ****   18647,
-  79:Src/midi.c    ****   19755,
-  80:Src/midi.c    ****   20930,
-  81:Src/midi.c    ****   22175,
-  82:Src/midi.c    ****   23493,
-  83:Src/midi.c    ****   24890,
-  84:Src/midi.c    ****   26370,
-  85:Src/midi.c    ****   27938,
-  86:Src/midi.c    ****   29600,
-  87:Src/midi.c    ****   31360,
-  88:Src/midi.c    ****   33224,
-ARM GAS  /tmp/ccNu5QHq.s 			page 3
+  32:Src/midi.c    ****                                130.8128,
+  33:Src/midi.c    ****                                138.5913,
+  34:Src/midi.c    ****                                146.8324,
+  35:Src/midi.c    ****                                155.5635,
+  36:Src/midi.c    ****                                164.8138,
+  37:Src/midi.c    ****                                174.6141,
+  38:Src/midi.c    ****                                184.9972,
+  39:Src/midi.c    ****                                195.9977,
+  40:Src/midi.c    ****                                207.6523,
+  41:Src/midi.c    ****                                220,
+  42:Src/midi.c    ****                                233.0819,
+  43:Src/midi.c    ****                                246.9417,
+  44:Src/midi.c    ****                                261.6256,
+  45:Src/midi.c    ****                                277.1826,
+  46:Src/midi.c    ****                                293.6648,
+  47:Src/midi.c    ****                                311.127,
+  48:Src/midi.c    ****                                329.6276,
+  49:Src/midi.c    ****                                349.2282,
+  50:Src/midi.c    ****                                369.9944,
+  51:Src/midi.c    ****                                391.9954,
+  52:Src/midi.c    ****                                415.3047,
+  53:Src/midi.c    ****                                440,
+  54:Src/midi.c    ****                                466.1638,
+  55:Src/midi.c    ****                                493.8833,
+  56:Src/midi.c    ****                                523.2511,
+  57:Src/midi.c    ****                                554.3653,
+  58:Src/midi.c    ****                                587.3295,
+  59:Src/midi.c    ****                                622.254,
+  60:Src/midi.c    ****                                659.2551,
+  61:Src/midi.c    ****                                698.4565,
+  62:Src/midi.c    ****                                739.9888,
+  63:Src/midi.c    ****                                783.9909,
+  64:Src/midi.c    ****                                830.6094,
+  65:Src/midi.c    ****                                880     ,
+  66:Src/midi.c    ****                                932.3275,
+  67:Src/midi.c    ****                                987.7666,
+  68:Src/midi.c    ****                                1046.502,
+  69:Src/midi.c    ****                                1108.731,
+  70:Src/midi.c    ****                                1174.659,
+  71:Src/midi.c    ****                                1244.508,
+  72:Src/midi.c    ****                                1318.51 ,
+  73:Src/midi.c    ****                                1396.913,
+  74:Src/midi.c    ****                                1479.978,
+  75:Src/midi.c    ****                                1567.982,
+  76:Src/midi.c    ****                                1661.219,
+  77:Src/midi.c    ****                                1760    ,
+  78:Src/midi.c    ****                                1864.655,
+  79:Src/midi.c    ****                                1975.533,
+  80:Src/midi.c    ****                                2093.005,
+  81:Src/midi.c    ****                                2217.461,
+  82:Src/midi.c    ****                                2349.318,
+  83:Src/midi.c    ****                                2489.016,
+  84:Src/midi.c    ****                                2637.02 ,
+  85:Src/midi.c    ****                                2793.826,
+  86:Src/midi.c    ****                                2959.955,
+  87:Src/midi.c    ****                                3135.963,
+  88:Src/midi.c    ****                                3322.438,
+ARM GAS  /tmp/ccNLDLoj.s 			page 3
 
 
-  89:Src/midi.c    ****   35200,
-  90:Src/midi.c    ****   37293,
-  91:Src/midi.c    ****   39511,
-  92:Src/midi.c    ****   41860
-  93:Src/midi.c    **** };
-  94:Src/midi.c    **** 
-  95:Src/midi.c    **** void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer) {
-  28              		.loc 1 95 0
+  89:Src/midi.c    ****                                3520    ,
+  90:Src/midi.c    ****                                3729.31 ,
+  91:Src/midi.c    ****                                3951.066,
+  92:Src/midi.c    **** };
+  93:Src/midi.c    **** 
+  94:Src/midi.c    **** void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer) {
+  28              		.loc 1 94 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 8
   31              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -144,19 +143,19 @@ ARM GAS  /tmp/ccNu5QHq.s 			page 1
   41              		.cfi_def_cfa_offset 24
   42 0004 0446     		mov	r4, r0
   43 0006 0D46     		mov	r5, r1
-  96:Src/midi.c    ****   //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
-  97:Src/midi.c    ****   if( HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
-  44              		.loc 1 97 0
+  95:Src/midi.c    ****   //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
+  96:Src/midi.c    ****   if( HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
+  44              		.loc 1 96 0
   45 0008 FFF7FEFF 		bl	HAL_SPI_GetState
   46              	.LVL1:
   47 000c 0128     		cmp	r0, #1
   48 000e 01D0     		beq	.L4
   49              	.L1:
-  98:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
-  99:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 1);
- 100:Src/midi.c    ****   }
- 101:Src/midi.c    **** }
-  50              		.loc 1 101 0
+  97:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
+  98:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, data, spi_rx_buffer, 1);
+  99:Src/midi.c    ****   }
+ 100:Src/midi.c    **** }
+  50              		.loc 1 100 0
   51 0010 03B0     		add	sp, sp, #12
   52              	.LCFI2:
   53              		.cfi_remember_state
@@ -168,26 +167,26 @@ ARM GAS  /tmp/ccNu5QHq.s 			page 1
   59              	.LCFI3:
   60              		.cfi_restore_state
   61              	.LBB2:
-  98:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
-  62              		.loc 1 98 0
+  97:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
+  62              		.loc 1 97 0
   63 0014 064B     		ldr	r3, .L5
   64 0016 1B68     		ldr	r3, [r3]
   65 0018 ADF80430 		strh	r3, [sp, #4]	@ movhi
   66 001c 1B0C     		lsrs	r3, r3, #16
   67 001e 8DF80630 		strb	r3, [sp, #6]
-  99:Src/midi.c    ****   }
-  68              		.loc 1 99 0
+  98:Src/midi.c    ****   }
+  68              		.loc 1 98 0
   69 0022 0123     		movs	r3, #1
-ARM GAS  /tmp/ccNu5QHq.s 			page 4
-
-
   70 0024 2A46     		mov	r2, r5
+ARM GAS  /tmp/ccNLDLoj.s 			page 4
+
+
   71 0026 01A9     		add	r1, sp, #4
   72 0028 2046     		mov	r0, r4
   73 002a FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
   74              	.LVL3:
   75              	.LBE2:
-  76              		.loc 1 101 0
+  76              		.loc 1 100 0
   77 002e EFE7     		b	.L1
   78              	.L6:
   79              		.align	2
@@ -206,127 +205,122 @@ ARM GAS  /tmp/ccNu5QHq.s 			page 1
   93              		.section	.rodata.midi_notes,"a",%progbits
   94              		.align	2
   97              	midi_notes:
-  98 0000 1301     		.short	275
-  99 0002 2301     		.short	291
- 100 0004 3501     		.short	309
- 101 0006 4701     		.short	327
- 102 0008 5A01     		.short	346
- 103 000a 6F01     		.short	367
- 104 000c 8501     		.short	389
- 105 000e 9C01     		.short	412
- 106 0010 B501     		.short	437
- 107 0012 CE01     		.short	462
- 108 0014 EA01     		.short	490
- 109 0016 0702     		.short	519
- 110 0018 2602     		.short	550
- 111 001a 4702     		.short	583
- 112 001c 6902     		.short	617
- 113 001e 8E02     		.short	654
- 114 0020 B502     		.short	693
- 115 0022 DE02     		.short	734
- 116 0024 0A03     		.short	778
- 117 0026 3803     		.short	824
- 118 0028 6903     		.short	873
- 119 002a 9D03     		.short	925
- 120 002c D403     		.short	980
- 121 002e 0E04     		.short	1038
- 122 0030 4C04     		.short	1100
- 123 0032 8D04     		.short	1165
- 124 0034 D304     		.short	1235
- 125 0036 1C05     		.short	1308
- 126 0038 6A05     		.short	1386
- 127 003a BC05     		.short	1468
- 128 003c 1406     		.short	1556
- 129 003e 7006     		.short	1648
-ARM GAS  /tmp/ccNu5QHq.s 			page 5
+  98 0000 0000DC41 		.word	1104936960
+  99 0004 F914E941 		.word	1105794297
+ 100 0008 12F1F641 		.word	1106702610
+ 101 000c 14D00242 		.word	1107480596
+ 102 0010 61970A42 		.word	1107990369
+ 103 0014 18D51242 		.word	1108530456
+ 104 0018 40901B42 		.word	1109102656
+ 105 001c 53D02442 		.word	1109708883
+ 106 0020 379D2E42 		.word	1110351159
+ 107 0024 48FF3842 		.word	1111031624
+ 108 0028 6BFF4342 		.word	1111752555
+ 109 002c 01A74F42 		.word	1112516353
+ 110 0030 00005C42 		.word	1113325568
+ 111 0034 F6146942 		.word	1114182902
+ 112 0038 0FF17642 		.word	1115091215
+ 113 003c 12D08242 		.word	1115869202
+ 114 0040 61978A42 		.word	1116378977
+ 115 0044 17D59242 		.word	1116919063
+ 116 0048 42909B42 		.word	1117491266
+ 117 004c 54D0A442 		.word	1118097492
+ 118 0050 379DAE42 		.word	1118739767
+ 119 0054 4AFFB842 		.word	1119420234
+ 120 0058 6BFFC342 		.word	1120141163
+ 121 005c 04A7CF42 		.word	1120904964
+ 122 0060 0000DC42 		.word	1121714176
+ 123 0064 F114E942 		.word	1122571505
+ 124 0068 0DF1F642 		.word	1123479821
+ 125 006c 14D00243 		.word	1124257812
+ 126 0070 5F970A43 		.word	1124767583
+ 127 0074 18D51243 		.word	1125307672
+ 128 0078 42901B43 		.word	1125879874
+ 129 007c 55D02443 		.word	1126486101
+ 130 0080 369D2E43 		.word	1127128374
+ARM GAS  /tmp/ccNLDLoj.s 			page 5
 
 
- 130 0040 D206     		.short	1746
- 131 0042 3A07     		.short	1850
- 132 0044 A807     		.short	1960
- 133 0046 1D08     		.short	2077
- 134 0048 9808     		.short	2200
- 135 004a 1B09     		.short	2331
- 136 004c A509     		.short	2469
- 137 004e 380A     		.short	2616
- 138 0050 D40A     		.short	2772
- 139 0052 790B     		.short	2937
- 140 0054 270C     		.short	3111
- 141 0056 E00C     		.short	3296
- 142 0058 A40D     		.short	3492
- 143 005a 740E     		.short	3700
- 144 005c 500F     		.short	3920
- 145 005e 3910     		.short	4153
- 146 0060 3011     		.short	4400
- 147 0062 3612     		.short	4662
- 148 0064 4B13     		.short	4939
- 149 0066 7114     		.short	5233
- 150 0068 A815     		.short	5544
- 151 006a F116     		.short	5873
- 152 006c 4F18     		.short	6223
- 153 006e C119     		.short	6593
- 154 0070 491B     		.short	6985
- 155 0072 E81C     		.short	7400
- 156 0074 A01E     		.short	7840
- 157 0076 7220     		.short	8306
- 158 0078 6022     		.short	8800
- 159 007a 6B24     		.short	9323
- 160 007c 9626     		.short	9878
- 161 007e E128     		.short	10465
- 162 0080 4F2B     		.short	11087
- 163 0082 E32D     		.short	11747
- 164 0084 9D30     		.short	12445
- 165 0086 8133     		.short	13185
- 166 0088 9136     		.short	13969
- 167 008a D039     		.short	14800
- 168 008c 403D     		.short	15680
- 169 008e E440     		.short	16612
- 170 0090 C044     		.short	17600
- 171 0092 D748     		.short	18647
- 172 0094 2B4D     		.short	19755
- 173 0096 C251     		.short	20930
- 174 0098 9F56     		.short	22175
- 175 009a C55B     		.short	23493
- 176 009c 3A61     		.short	24890
- 177 009e 0267     		.short	26370
- 178 00a0 226D     		.short	27938
- 179 00a2 A073     		.short	29600
- 180 00a4 807A     		.short	31360
- 181 00a6 C881     		.short	-32312
- 182 00a8 8089     		.short	-30336
- 183 00aa AD91     		.short	-28243
- 184 00ac 579A     		.short	-26025
- 185 00ae 84A3     		.short	-23676
- 186 00b0 00000000 		.space	78
-ARM GAS  /tmp/ccNu5QHq.s 			page 6
+ 131 0084 48FF3843 		.word	1127808840
+ 132 0088 69FF4343 		.word	1128529769
+ 133 008c FDA64F43 		.word	1129293565
+ 134 0090 00005C43 		.word	1130102784
+ 135 0094 F7146943 		.word	1130960119
+ 136 0098 13F17643 		.word	1131868435
+ 137 009c 14D08243 		.word	1132646420
+ 138 00a0 5F978A43 		.word	1133156191
+ 139 00a4 18D59243 		.word	1133696280
+ 140 00a8 42909B43 		.word	1134268482
+ 141 00ac 55D0A443 		.word	1134874709
+ 142 00b0 369DAE43 		.word	1135516982
+ 143 00b4 48FFB843 		.word	1136197448
+ 144 00b8 69FFC343 		.word	1136918377
+ 145 00bc 00A7CF43 		.word	1137682176
+ 146 00c0 0000DC43 		.word	1138491392
+ 147 00c4 F714E943 		.word	1139348727
+ 148 00c8 10F1F643 		.word	1140257040
+ 149 00cc 12D00244 		.word	1141035026
+ 150 00d0 61970A44 		.word	1141544801
+ 151 00d4 17D51244 		.word	1142084887
+ 152 00d8 42901B44 		.word	1142657090
+ 153 00dc 54D02444 		.word	1143263316
+ 154 00e0 379D2E44 		.word	1143905591
+ 155 00e4 48FF3844 		.word	1144586056
+ 156 00e8 6BFF4344 		.word	1145306987
+ 157 00ec 00A74F44 		.word	1146070784
+ 158 00f0 00005C44 		.word	1146880000
+ 159 00f4 F6146944 		.word	1147737334
+ 160 00f8 10F17644 		.word	1148645648
+ 161 00fc 10D08244 		.word	1149423632
+ 162 0100 64978A44 		.word	1149933412
+ 163 0104 17D59244 		.word	1150473495
+ 164 0108 42909B44 		.word	1151045698
+ 165 010c 52D0A444 		.word	1151651922
+ 166 0110 379DAE44 		.word	1152294199
+ 167 0114 4CFFB844 		.word	1152974668
+ 168 0118 6DFFC344 		.word	1153695597
+ 169 011c 02A7CF44 		.word	1154459394
+ 170 0120 0000DC44 		.word	1155268608
+ 171 0124 F614E944 		.word	1156125942
+ 172 0128 0EF1F644 		.word	1157034254
+ 173 012c 14D00245 		.word	1157812244
+ 174 0130 60970A45 		.word	1158322016
+ 175 0134 17D51245 		.word	1158862103
+ 176 0138 42901B45 		.word	1159434306
+ 177 013c 52D02445 		.word	1160040530
+ 178 0140 379D2E45 		.word	1160682807
+ 179 0144 48FF3845 		.word	1161363272
+ 180 0148 68FF4345 		.word	1162084200
+ 181 014c 02A74F45 		.word	1162848002
+ 182 0150 00005C45 		.word	1163657216
+ 183 0154 F6146945 		.word	1164514550
+ 184 0158 0EF17645 		.word	1165422862
+ 185 015c 00000000 		.space	4
+ 186              		.text
+ 187              	.Letext0:
+ARM GAS  /tmp/ccNLDLoj.s 			page 6
 
 
- 186      00000000 
- 186      00000000 
- 186      00000000 
- 186      00000000 
- 187              		.text
- 188              	.Letext0:
- 189              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 190              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 191              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 192              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 193              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 194              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 195              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 196              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 197              		.file 10 "Inc/midi.h"
-ARM GAS  /tmp/ccNu5QHq.s 			page 7
+ 188              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 189              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 190              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 191              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 192              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 193              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 194              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 195              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 196              		.file 10 "Inc/midi.h"
+ARM GAS  /tmp/ccNLDLoj.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 midi.c
-     /tmp/ccNu5QHq.s:18     .text.Receive_MIDI:0000000000000000 $t
-     /tmp/ccNu5QHq.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
-     /tmp/ccNu5QHq.s:81     .text.Receive_MIDI:0000000000000030 $d
-     /tmp/ccNu5QHq.s:97     .rodata.midi_notes:0000000000000000 midi_notes
-     /tmp/ccNu5QHq.s:87     .rodata:0000000000000000 $d
-     /tmp/ccNu5QHq.s:94     .rodata.midi_notes:0000000000000000 $d
+     /tmp/ccNLDLoj.s:18     .text.Receive_MIDI:0000000000000000 $t
+     /tmp/ccNLDLoj.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
+     /tmp/ccNLDLoj.s:81     .text.Receive_MIDI:0000000000000030 $d
+     /tmp/ccNLDLoj.s:97     .rodata.midi_notes:0000000000000000 midi_notes
+     /tmp/ccNLDLoj.s:87     .rodata:0000000000000000 $d
+     /tmp/ccNLDLoj.s:94     .rodata.midi_notes:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

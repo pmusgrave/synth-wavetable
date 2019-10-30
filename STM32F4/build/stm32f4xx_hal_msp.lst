@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc1UtXGt.s 			page 1
+ARM GAS  /tmp/ccBxSycs.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
   29:Src/stm32f4xx_hal_msp.c **** /* USER CODE BEGIN TD */
   30:Src/stm32f4xx_hal_msp.c **** 
   31:Src/stm32f4xx_hal_msp.c **** /* USER CODE END TD */
-ARM GAS  /tmp/cc1UtXGt.s 			page 2
+ARM GAS  /tmp/ccBxSycs.s 			page 2
 
 
   32:Src/stm32f4xx_hal_msp.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
   43 0008 0C4B     		ldr	r3, .L3
   44 000a 5A6C     		ldr	r2, [r3, #68]
   45 000c 42F48042 		orr	r2, r2, #16384
-ARM GAS  /tmp/cc1UtXGt.s 			page 3
+ARM GAS  /tmp/ccBxSycs.s 			page 3
 
 
   46 0010 5A64     		str	r2, [r3, #68]
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
   83:Src/stm32f4xx_hal_msp.c **** * @brief SPI MSP Initialization
   84:Src/stm32f4xx_hal_msp.c **** * This function configures the hardware resources used in this example
   85:Src/stm32f4xx_hal_msp.c **** * @param hspi: SPI handle pointer
-ARM GAS  /tmp/cc1UtXGt.s 			page 4
+ARM GAS  /tmp/ccBxSycs.s 			page 4
 
 
   86:Src/stm32f4xx_hal_msp.c **** * @retval None
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  110:Src/stm32f4xx_hal_msp.c ****     GPIO_InitStruct.Alternate = GPIO_AF5_SPI5;
  111:Src/stm32f4xx_hal_msp.c ****     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
  112:Src/stm32f4xx_hal_msp.c **** 
-ARM GAS  /tmp/cc1UtXGt.s 			page 5
+ARM GAS  /tmp/ccBxSycs.s 			page 5
 
 
  113:Src/stm32f4xx_hal_msp.c ****     GPIO_InitStruct.Pin = SPI5_SCK_Pin|SPI5_MISO_Pin|SPI5_MOSI_Pin;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  155              		.loc 1 106 0
  156 004a 4023     		movs	r3, #64
  157 004c 0393     		str	r3, [sp, #12]
-ARM GAS  /tmp/cc1UtXGt.s 			page 6
+ARM GAS  /tmp/ccBxSycs.s 			page 6
 
 
  107:Src/stm32f4xx_hal_msp.c ****     GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  200              		.loc 1 128 0
  201 008a C5E7     		b	.L5
  202              	.L10:
-ARM GAS  /tmp/cc1UtXGt.s 			page 7
+ARM GAS  /tmp/ccBxSycs.s 			page 7
 
 
  203              		.align	2
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  243 0010 23F48013 		bic	r3, r3, #1048576
  244 0014 5364     		str	r3, [r2, #68]
  145:Src/stm32f4xx_hal_msp.c ****   
-ARM GAS  /tmp/cc1UtXGt.s 			page 8
+ARM GAS  /tmp/ccBxSycs.s 			page 8
 
 
  146:Src/stm32f4xx_hal_msp.c ****     /**SPI5 GPIO Configuration    
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  276              		.loc 1 170 0
  277              		.cfi_startproc
  278              		@ args = 0, pretend = 0, frame = 8
-ARM GAS  /tmp/cc1UtXGt.s 			page 9
+ARM GAS  /tmp/ccBxSycs.s 			page 9
 
 
  279              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  184:Src/stm32f4xx_hal_msp.c ****   }
  185:Src/stm32f4xx_hal_msp.c **** 
  186:Src/stm32f4xx_hal_msp.c **** }
-ARM GAS  /tmp/cc1UtXGt.s 			page 10
+ARM GAS  /tmp/ccBxSycs.s 			page 10
 
 
  319              		.loc 1 186 0
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  200:Src/stm32f4xx_hal_msp.c ****   /* USER CODE END TIM6_MspDeInit 0 */
  201:Src/stm32f4xx_hal_msp.c ****     /* Peripheral clock disable */
  202:Src/stm32f4xx_hal_msp.c ****     __HAL_RCC_TIM6_CLK_DISABLE();
-ARM GAS  /tmp/cc1UtXGt.s 			page 11
+ARM GAS  /tmp/ccBxSycs.s 			page 11
 
 
  362              		.loc 1 202 0
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  400              		.cfi_offset 14, -4
  401 0002 89B0     		sub	sp, sp, #36
  402              	.LCFI13:
-ARM GAS  /tmp/cc1UtXGt.s 			page 12
+ARM GAS  /tmp/ccBxSycs.s 			page 12
 
 
  403              		.cfi_def_cfa_offset 40
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  430              	.LBB7:
  228:Src/stm32f4xx_hal_msp.c ****   
  431              		.loc 1 228 0
-ARM GAS  /tmp/cc1UtXGt.s 			page 13
+ARM GAS  /tmp/ccBxSycs.s 			page 13
 
 
  432 0024 0021     		movs	r1, #0
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  479              	.L36:
  480 0074 00000240 		.word	1073872896
  481              		.cfi_endproc
-ARM GAS  /tmp/cc1UtXGt.s 			page 14
+ARM GAS  /tmp/ccBxSycs.s 			page 14
 
 
  482              	.LFE135:
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  267:Src/stm32f4xx_hal_msp.c ****     PA10     ------> USART1_RX 
  268:Src/stm32f4xx_hal_msp.c ****     */
  269:Src/stm32f4xx_hal_msp.c ****     HAL_GPIO_DeInit(GPIOA, STLINK_RX_Pin|STLINK_TX_Pin);
-ARM GAS  /tmp/cc1UtXGt.s 			page 15
+ARM GAS  /tmp/ccBxSycs.s 			page 15
 
 
  519              		.loc 1 269 0
@@ -878,32 +878,32 @@ ARM GAS  /tmp/cc1UtXGt.s 			page 1
  547              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
  548              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
  549              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
-ARM GAS  /tmp/cc1UtXGt.s 			page 16
+ARM GAS  /tmp/ccBxSycs.s 			page 16
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_hal_msp.c
-     /tmp/cc1UtXGt.s:18     .text.HAL_MspInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:25     .text.HAL_MspInit:0000000000000000 HAL_MspInit
-     /tmp/cc1UtXGt.s:76     .text.HAL_MspInit:000000000000003c $d
-     /tmp/cc1UtXGt.s:81     .text.HAL_SPI_MspInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:88     .text.HAL_SPI_MspInit:0000000000000000 HAL_SPI_MspInit
-     /tmp/cc1UtXGt.s:205    .text.HAL_SPI_MspInit:000000000000008c $d
-     /tmp/cc1UtXGt.s:211    .text.HAL_SPI_MspDeInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:218    .text.HAL_SPI_MspDeInit:0000000000000000 HAL_SPI_MspDeInit
-     /tmp/cc1UtXGt.s:260    .text.HAL_SPI_MspDeInit:0000000000000028 $d
-     /tmp/cc1UtXGt.s:267    .text.HAL_TIM_Base_MspInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:274    .text.HAL_TIM_Base_MspInit:0000000000000000 HAL_TIM_Base_MspInit
-     /tmp/cc1UtXGt.s:328    .text.HAL_TIM_Base_MspInit:000000000000003c $d
-     /tmp/cc1UtXGt.s:333    .text.HAL_TIM_Base_MspDeInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:340    .text.HAL_TIM_Base_MspDeInit:0000000000000000 HAL_TIM_Base_MspDeInit
-     /tmp/cc1UtXGt.s:377    .text.HAL_TIM_Base_MspDeInit:0000000000000020 $d
-     /tmp/cc1UtXGt.s:383    .text.HAL_UART_MspInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:390    .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
-     /tmp/cc1UtXGt.s:480    .text.HAL_UART_MspInit:0000000000000074 $d
-     /tmp/cc1UtXGt.s:485    .text.HAL_UART_MspDeInit:0000000000000000 $t
-     /tmp/cc1UtXGt.s:492    .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
-     /tmp/cc1UtXGt.s:530    .text.HAL_UART_MspDeInit:0000000000000024 $d
+     /tmp/ccBxSycs.s:18     .text.HAL_MspInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:25     .text.HAL_MspInit:0000000000000000 HAL_MspInit
+     /tmp/ccBxSycs.s:76     .text.HAL_MspInit:000000000000003c $d
+     /tmp/ccBxSycs.s:81     .text.HAL_SPI_MspInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:88     .text.HAL_SPI_MspInit:0000000000000000 HAL_SPI_MspInit
+     /tmp/ccBxSycs.s:205    .text.HAL_SPI_MspInit:000000000000008c $d
+     /tmp/ccBxSycs.s:211    .text.HAL_SPI_MspDeInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:218    .text.HAL_SPI_MspDeInit:0000000000000000 HAL_SPI_MspDeInit
+     /tmp/ccBxSycs.s:260    .text.HAL_SPI_MspDeInit:0000000000000028 $d
+     /tmp/ccBxSycs.s:267    .text.HAL_TIM_Base_MspInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:274    .text.HAL_TIM_Base_MspInit:0000000000000000 HAL_TIM_Base_MspInit
+     /tmp/ccBxSycs.s:328    .text.HAL_TIM_Base_MspInit:000000000000003c $d
+     /tmp/ccBxSycs.s:333    .text.HAL_TIM_Base_MspDeInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:340    .text.HAL_TIM_Base_MspDeInit:0000000000000000 HAL_TIM_Base_MspDeInit
+     /tmp/ccBxSycs.s:377    .text.HAL_TIM_Base_MspDeInit:0000000000000020 $d
+     /tmp/ccBxSycs.s:383    .text.HAL_UART_MspInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:390    .text.HAL_UART_MspInit:0000000000000000 HAL_UART_MspInit
+     /tmp/ccBxSycs.s:480    .text.HAL_UART_MspInit:0000000000000074 $d
+     /tmp/ccBxSycs.s:485    .text.HAL_UART_MspDeInit:0000000000000000 $t
+     /tmp/ccBxSycs.s:492    .text.HAL_UART_MspDeInit:0000000000000000 HAL_UART_MspDeInit
+     /tmp/ccBxSycs.s:530    .text.HAL_UART_MspDeInit:0000000000000024 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

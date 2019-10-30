@@ -34,7 +34,7 @@ nn  ****************************************************************************
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define DDS_SCALE_FACTOR 89.4745833
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -50,10 +50,13 @@ UART_HandleTypeDef huart1;
 /* USER CODE BEGIN PV */
 uint8_t spi_tx_buffer[3] = {49,50,51};
 uint8_t spi_rx_buffer[3];
-struct midi_note_msg current_midi_note_msg = {0,0,0};
-volatile uint16_t output_val;
-volatile uint8_t note_on[127] = {0};
-volatile uint32_t phase_accumulator[127] = {0};
+volatile struct midi_note_msg current_midi_note_msg = {0,0,0};
+volatile uint8_t output_val = 0;
+volatile float envelope = 0;
+volatile uint32_t envelope_index = 0;
+volatile uint8_t note_on[88] = {0};
+volatile uint32_t phase_accumulator[88] = {0};
+volatile uint32_t test_phase_accumulator = 0;
 volatile uint8_t update_value_flag = 0;
 /* USER CODE END PV */
 
@@ -536,34 +539,55 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   uart_tx_buffer = '\n';
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+
+  if(spi_rx_buffer[0] == MIDI_NOTE_ON){
+    uart_tx_buffer = 'n';
+    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  }
+  else if (spi_rx_buffer[0] == MIDI_NOTE_OFF){
+    uart_tx_buffer = 'f';
+    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  }
+  uart_tx_buffer = '\n';
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   */
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
   update_value_flag = 1;
-  //UpdateOutputValue();
+  //  UpdateOutputValue();
 }
 
 void UpdateOutputValue() {
+  /*
   output_val = 0;
-  for(int i = 0; i < 127; i++) {
+  for(int i = 0; i < 88; i++) {
     if(note_on[i] == MIDI_NOTE_ON){
-      phase_accumulator[i] += midi_notes[i] *  10;
-      output_val += base_sine[(phase_accumulator[i]>>10)&0xfff] * 0.125;
+      phase_accumulator[i] += (uint32_t)(midi_notes[i] * 89.47848533);
+      output_val += base_sine[(phase_accumulator[i]>>10)%4096];
+    }
+    else {
+      phase_accumulator[i] = 0;
     }
   }
+  */
+
+  envelope_index += (uint32_t)(10*DDS_SCALE_FACTOR);
+  envelope = base_tri[(envelope_index>>10)%4096];
+  test_phase_accumulator += (uint32_t)(440*DDS_SCALE_FACTOR);
+  output_val = base_sq[(test_phase_accumulator>>10)%4096] * (envelope / AMPLITUDE);
 }
 
 void Update_R2R_DAC() {
-  ((output_val>>8)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
-  ((output_val>>9)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-  ((output_val>>10)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
-  ((output_val>>11)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
-  ((output_val>>12)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
-  ((output_val>>13)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
-  ((output_val>>14)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
-  ((output_val>>15)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+  ((output_val>>0)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
+  ((output_val>>1)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
+  ((output_val>>2)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+  ((output_val>>3)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
+  ((output_val>>4)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+  ((output_val>>5)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
+  ((output_val>>6)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
+  ((output_val>>7)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
 }
 /* USER CODE END 4 */
 

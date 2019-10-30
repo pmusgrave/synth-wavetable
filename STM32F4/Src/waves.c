@@ -8,31 +8,30 @@ void init_wavetable(){
     generate_base_neg_saw(base_neg_saw);
     generate_base_tri(base_tri);
     generate_base_sq(base_sq);
-
     generate_lfo_sine(lfo_sine);
 }
 
-void generate_base_sine(uint16_t* buffer){
+void generate_base_sine(uint8_t* buffer){
   for(int i = 0; i < N; i++){
     double delta = 2*M_PI/N;
     double x = delta * i;
-    buffer[i] = (65530/2) * sin(x) + (65530/2);
+    buffer[i] = (AMPLITUDE/2) * sin(x) + (AMPLITUDE/2);
   }
 }
 
-void generate_base_pos_saw(int8_t* buffer){
+void generate_base_pos_saw(uint8_t* buffer){
   for(int i = 0; i < N; i++){
     buffer[i] = (AMPLITUDE * i)/N;
   }
 }
 
-void generate_base_neg_saw(int8_t* buffer){
+void generate_base_neg_saw(uint8_t* buffer){
   for(int i = 0; i < N; i++){
     buffer[(int)N-i-1] = (AMPLITUDE * i)/N;
   }
 }
 
-void generate_base_tri(int8_t* buffer){
+void generate_base_tri(uint8_t* buffer){
   for(int i = 0; i < N/2; i++){
     buffer[i] = (AMPLITUDE * 2*i)/N;
   }
@@ -41,13 +40,13 @@ void generate_base_tri(int8_t* buffer){
   }
 }
 
-void generate_base_sq(int8_t* buffer){
+void generate_base_sq(uint8_t* buffer){
   for(int i = 0; i < N; i++){
     if(i < N/2){
       buffer[i] = AMPLITUDE;
     }
     else{
-      buffer[i] = -AMPLITUDE;
+      buffer[i] = 0;
     }
   }
 }
