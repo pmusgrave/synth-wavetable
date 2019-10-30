@@ -70,6 +70,7 @@ static void MX_TIM6_Init(void);
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void UpdateOutputValue(void);
+void UpdateEnvelope(void);
 void Update_R2R_DAC(void);
 /* USER CODE END PFP */
 
@@ -102,6 +103,7 @@ int main(void)
     Receive_MIDI(&hspi5, spi_rx_buffer);
 
     if(update_value_flag) {
+      UpdateEnvelope();
       UpdateOutputValue();
       update_value_flag = 0;
     }
@@ -573,10 +575,13 @@ void UpdateOutputValue() {
   }
   */
 
-  envelope_index += (uint32_t)(10*DDS_SCALE_FACTOR);
-  envelope = base_tri[(envelope_index>>10)%4096];
   test_phase_accumulator += (uint32_t)(440*DDS_SCALE_FACTOR);
   output_val = base_sq[(test_phase_accumulator>>10)%4096] * (envelope / AMPLITUDE);
+}
+
+void UpdateEnvelope() {
+  envelope_index += (uint32_t)(10*DDS_SCALE_FACTOR);
+  envelope = base_tri[(envelope_index>>10)%4096];
 }
 
 void Update_R2R_DAC() {
