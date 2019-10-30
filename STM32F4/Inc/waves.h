@@ -11,10 +11,10 @@
 
 
 uint16_t base_sine[(int)N];
-//int8_t base_pos_saw[(int)N];
-//int8_t base_neg_saw[(int)N];
-//int8_t base_tri[(int)N];
-//int8_t base_sq[(int)N];
+int8_t base_pos_saw[(int)N];
+int8_t base_neg_saw[(int)N];
+int8_t base_tri[(int)N];
+int8_t base_sq[(int)N];
 
 uint8_t lfo_sine[256];
 

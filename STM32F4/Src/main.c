@@ -53,7 +53,7 @@ uint8_t spi_rx_buffer[3];
 struct midi_note_msg current_midi_note_msg = {0,0,0};
 volatile uint16_t output_val;
 volatile uint8_t note_on[127] = {0};
-volatile uint32_t index[127] = {0};
+volatile uint32_t phase_accumulator[127] = {0};
 volatile uint8_t update_value_flag = 0;
 /* USER CODE END PV */
 
@@ -97,10 +97,12 @@ int main(void)
   while (1)
   {
     Receive_MIDI(&hspi5, spi_rx_buffer);
+
     if(update_value_flag) {
       UpdateOutputValue();
       update_value_flag = 0;
     }
+
     Update_R2R_DAC();
   }
 }
@@ -517,7 +519,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
-  uint8_t uart_tx_buffer;
+  //  uint8_t uart_tx_buffer;
 
   current_midi_note_msg.command = spi_rx_buffer[0];
   current_midi_note_msg.note = spi_rx_buffer[1];
@@ -547,8 +549,8 @@ void UpdateOutputValue() {
   output_val = 0;
   for(int i = 0; i < 127; i++) {
     if(note_on[i] == MIDI_NOTE_ON){
-      index[i] += midi_notes[i] *  10;
-      output_val += base_sine[(index[i]>>10)&0xfff] * 0.125;
+      phase_accumulator[i] += midi_notes[i] *  10;
+      output_val += base_sine[(phase_accumulator[i]>>10)&0xfff] * 0.125;
     }
   }
 }

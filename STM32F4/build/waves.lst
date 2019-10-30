@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccLTJXCm.s 			page 1
+ARM GAS  /tmp/ccNWZcD8.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -37,10 +37,10 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
    4:Src/waves.c   **** 
    5:Src/waves.c   **** void init_wavetable(){
    6:Src/waves.c   ****     generate_base_sine(base_sine);
-   7:Src/waves.c   ****     //generate_base_pos_saw(base_pos_saw);
-   8:Src/waves.c   ****     //generate_base_neg_saw(base_neg_saw);
-   9:Src/waves.c   ****     //generate_base_tri(base_tri);
-  10:Src/waves.c   ****     //generate_base_sq(base_sq);
+   7:Src/waves.c   ****     generate_base_pos_saw(base_pos_saw);
+   8:Src/waves.c   ****     generate_base_neg_saw(base_neg_saw);
+   9:Src/waves.c   ****     generate_base_tri(base_tri);
+  10:Src/waves.c   ****     generate_base_sq(base_sq);
   11:Src/waves.c   **** 
   12:Src/waves.c   ****     generate_lfo_sine(lfo_sine);
   13:Src/waves.c   **** }
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
   41              		.cfi_offset 4, -12
   42              		.cfi_offset 5, -8
   43              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccLTJXCm.s 			page 2
+ARM GAS  /tmp/ccNWZcD8.s 			page 2
 
 
   44 0002 0546     		mov	r5, r0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
   90 004a 00BFAFF3 		.align	3
   90      0080
   91              	.L5:
-ARM GAS  /tmp/ccLTJXCm.s 			page 3
+ARM GAS  /tmp/ccNWZcD8.s 			page 3
 
 
   92 0050 182D4454 		.word	1413754136
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  142 001e 5100     		lsls	r1, r2, #1
  143 0020 0A46     		mov	r2, r1
  144 0022 0029     		cmp	r1, #0
-ARM GAS  /tmp/ccLTJXCm.s 			page 4
+ARM GAS  /tmp/ccNWZcD8.s 			page 4
 
 
  145 0024 F2DA     		bge	.L9
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  194 000e 0255     		strb	r2, [r0, r4]
   30:Src/waves.c   ****   for(int i = 0; i < N; i++){
  195              		.loc 1 30 0 discriminator 3
-ARM GAS  /tmp/ccLTJXCm.s 			page 5
+ARM GAS  /tmp/ccNWZcD8.s 			page 5
 
 
  196 0010 0133     		adds	r3, r3, #1
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  247 0002 0023     		movs	r3, #0
  248 0004 02E0     		b	.L26
  249              	.LVL19:
-ARM GAS  /tmp/ccLTJXCm.s 			page 6
+ARM GAS  /tmp/ccNWZcD8.s 			page 6
 
 
  250              	.L27:
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  296 004e EDE7     		b	.L30
  297              	.L34:
  298              	.LBE9:
-ARM GAS  /tmp/ccLTJXCm.s 			page 7
+ARM GAS  /tmp/ccNWZcD8.s 			page 7
 
 
   41:Src/waves.c   ****   }
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  342 0010 B3F5006F 		cmp	r3, #2048
  343 0014 F6DA     		bge	.L37
   47:Src/waves.c   ****     }
-ARM GAS  /tmp/ccLTJXCm.s 			page 8
+ARM GAS  /tmp/ccNWZcD8.s 			page 8
 
 
  344              		.loc 1 47 0
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  392 0014 FFF7FEFF 		bl	__aeabi_dmul
  393              	.LVL30:
   59:Src/waves.c   ****         buffer[i] = sin(x) * 126 + 126;
-ARM GAS  /tmp/ccLTJXCm.s 			page 9
+ARM GAS  /tmp/ccNWZcD8.s 			page 9
 
 
  394              		.loc 1 59 0 discriminator 3
@@ -538,66 +538,101 @@ ARM GAS  /tmp/ccLTJXCm.s 			page 1
  444              		@ frame_needed = 0, uses_anonymous_args = 0
  445 0000 08B5     		push	{r3, lr}
  446              	.LCFI8:
-ARM GAS  /tmp/ccLTJXCm.s 			page 10
+ARM GAS  /tmp/ccNWZcD8.s 			page 10
 
 
  447              		.cfi_def_cfa_offset 8
  448              		.cfi_offset 3, -8
  449              		.cfi_offset 14, -4
-   6:Src/waves.c   ****     //generate_base_pos_saw(base_pos_saw);
+   6:Src/waves.c   ****     generate_base_pos_saw(base_pos_saw);
  450              		.loc 1 6 0
- 451 0002 0348     		ldr	r0, .L49
+ 451 0002 0948     		ldr	r0, .L49
  452 0004 FFF7FEFF 		bl	generate_base_sine
  453              	.LVL37:
-  12:Src/waves.c   **** }
- 454              		.loc 1 12 0
- 455 0008 0248     		ldr	r0, .L49+4
- 456 000a FFF7FEFF 		bl	generate_lfo_sine
+   7:Src/waves.c   ****     generate_base_neg_saw(base_neg_saw);
+ 454              		.loc 1 7 0
+ 455 0008 0848     		ldr	r0, .L49+4
+ 456 000a FFF7FEFF 		bl	generate_base_pos_saw
  457              	.LVL38:
- 458 000e 08BD     		pop	{r3, pc}
- 459              	.L50:
- 460              		.align	2
- 461              	.L49:
- 462 0010 00000000 		.word	base_sine
- 463 0014 00000000 		.word	lfo_sine
- 464              		.cfi_endproc
- 465              	.LFE0:
- 467              		.comm	lfo_sine,256,4
- 468              		.comm	base_sine,8192,4
- 469              		.text
- 470              	.Letext0:
- 471              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 472              		.file 3 "/usr/include/newlib/sys/lock.h"
- 473              		.file 4 "/usr/include/newlib/sys/_types.h"
- 474              		.file 5 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 475              		.file 6 "/usr/include/newlib/sys/reent.h"
- 476              		.file 7 "/usr/include/newlib/stdlib.h"
- 477              		.file 8 "/usr/include/newlib/sys/_stdint.h"
- 478              		.file 9 "Inc/waves.h"
- 479              		.file 10 "/usr/include/newlib/math.h"
-ARM GAS  /tmp/ccLTJXCm.s 			page 11
+   8:Src/waves.c   ****     generate_base_tri(base_tri);
+ 458              		.loc 1 8 0
+ 459 000e 0848     		ldr	r0, .L49+8
+ 460 0010 FFF7FEFF 		bl	generate_base_neg_saw
+ 461              	.LVL39:
+   9:Src/waves.c   ****     generate_base_sq(base_sq);
+ 462              		.loc 1 9 0
+ 463 0014 0748     		ldr	r0, .L49+12
+ 464 0016 FFF7FEFF 		bl	generate_base_tri
+ 465              	.LVL40:
+  10:Src/waves.c   **** 
+ 466              		.loc 1 10 0
+ 467 001a 0748     		ldr	r0, .L49+16
+ 468 001c FFF7FEFF 		bl	generate_base_sq
+ 469              	.LVL41:
+  12:Src/waves.c   **** }
+ 470              		.loc 1 12 0
+ 471 0020 0648     		ldr	r0, .L49+20
+ 472 0022 FFF7FEFF 		bl	generate_lfo_sine
+ 473              	.LVL42:
+ 474 0026 08BD     		pop	{r3, pc}
+ 475              	.L50:
+ 476              		.align	2
+ 477              	.L49:
+ 478 0028 00000000 		.word	base_sine
+ 479 002c 00000000 		.word	base_pos_saw
+ 480 0030 00000000 		.word	base_neg_saw
+ 481 0034 00000000 		.word	base_tri
+ 482 0038 00000000 		.word	base_sq
+ 483 003c 00000000 		.word	lfo_sine
+ 484              		.cfi_endproc
+ 485              	.LFE0:
+ 487              		.comm	lfo_sine,256,4
+ 488              		.comm	base_sq,4096,4
+ 489              		.comm	base_tri,4096,4
+ 490              		.comm	base_neg_saw,4096,4
+ 491              		.comm	base_pos_saw,4096,4
+ 492              		.comm	base_sine,8192,4
+ 493              		.text
+ 494              	.Letext0:
+ 495              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 496              		.file 3 "/usr/include/newlib/sys/lock.h"
+ 497              		.file 4 "/usr/include/newlib/sys/_types.h"
+ 498              		.file 5 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ARM GAS  /tmp/ccNWZcD8.s 			page 11
+
+
+ 499              		.file 6 "/usr/include/newlib/sys/reent.h"
+ 500              		.file 7 "/usr/include/newlib/stdlib.h"
+ 501              		.file 8 "/usr/include/newlib/sys/_stdint.h"
+ 502              		.file 9 "Inc/waves.h"
+ 503              		.file 10 "/usr/include/newlib/math.h"
+ARM GAS  /tmp/ccNWZcD8.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 waves.c
-     /tmp/ccLTJXCm.s:22     .text.generate_base_sine:0000000000000000 $t
-     /tmp/ccLTJXCm.s:29     .text.generate_base_sine:0000000000000000 generate_base_sine
-     /tmp/ccLTJXCm.s:92     .text.generate_base_sine:0000000000000050 $d
-     /tmp/ccLTJXCm.s:100    .text.generate_base_pos_saw:0000000000000000 $t
-     /tmp/ccLTJXCm.s:107    .text.generate_base_pos_saw:0000000000000000 generate_base_pos_saw
-     /tmp/ccLTJXCm.s:162    .text.generate_base_neg_saw:0000000000000000 $t
-     /tmp/ccLTJXCm.s:169    .text.generate_base_neg_saw:0000000000000000 generate_base_neg_saw
-     /tmp/ccLTJXCm.s:225    .text.generate_base_tri:0000000000000000 $t
-     /tmp/ccLTJXCm.s:232    .text.generate_base_tri:0000000000000000 generate_base_tri
-     /tmp/ccLTJXCm.s:309    .text.generate_base_sq:0000000000000000 $t
-     /tmp/ccLTJXCm.s:316    .text.generate_base_sq:0000000000000000 generate_base_sq
-     /tmp/ccLTJXCm.s:356    .text.generate_lfo_sine:0000000000000000 $t
-     /tmp/ccLTJXCm.s:363    .text.generate_lfo_sine:0000000000000000 generate_lfo_sine
-     /tmp/ccLTJXCm.s:425    .text.generate_lfo_sine:0000000000000048 $d
-     /tmp/ccLTJXCm.s:432    .text.init_wavetable:0000000000000000 $t
-     /tmp/ccLTJXCm.s:439    .text.init_wavetable:0000000000000000 init_wavetable
-     /tmp/ccLTJXCm.s:462    .text.init_wavetable:0000000000000010 $d
+     /tmp/ccNWZcD8.s:22     .text.generate_base_sine:0000000000000000 $t
+     /tmp/ccNWZcD8.s:29     .text.generate_base_sine:0000000000000000 generate_base_sine
+     /tmp/ccNWZcD8.s:92     .text.generate_base_sine:0000000000000050 $d
+     /tmp/ccNWZcD8.s:100    .text.generate_base_pos_saw:0000000000000000 $t
+     /tmp/ccNWZcD8.s:107    .text.generate_base_pos_saw:0000000000000000 generate_base_pos_saw
+     /tmp/ccNWZcD8.s:162    .text.generate_base_neg_saw:0000000000000000 $t
+     /tmp/ccNWZcD8.s:169    .text.generate_base_neg_saw:0000000000000000 generate_base_neg_saw
+     /tmp/ccNWZcD8.s:225    .text.generate_base_tri:0000000000000000 $t
+     /tmp/ccNWZcD8.s:232    .text.generate_base_tri:0000000000000000 generate_base_tri
+     /tmp/ccNWZcD8.s:309    .text.generate_base_sq:0000000000000000 $t
+     /tmp/ccNWZcD8.s:316    .text.generate_base_sq:0000000000000000 generate_base_sq
+     /tmp/ccNWZcD8.s:356    .text.generate_lfo_sine:0000000000000000 $t
+     /tmp/ccNWZcD8.s:363    .text.generate_lfo_sine:0000000000000000 generate_lfo_sine
+     /tmp/ccNWZcD8.s:425    .text.generate_lfo_sine:0000000000000048 $d
+     /tmp/ccNWZcD8.s:432    .text.init_wavetable:0000000000000000 $t
+     /tmp/ccNWZcD8.s:439    .text.init_wavetable:0000000000000000 init_wavetable
+     /tmp/ccNWZcD8.s:478    .text.init_wavetable:0000000000000028 $d
                             *COM*:0000000000002000 base_sine
+                            *COM*:0000000000001000 base_pos_saw
+                            *COM*:0000000000001000 base_neg_saw
+                            *COM*:0000000000001000 base_tri
+                            *COM*:0000000000001000 base_sq
                             *COM*:0000000000000100 lfo_sine
                      .debug_frame:0000000000000010 $d
 
