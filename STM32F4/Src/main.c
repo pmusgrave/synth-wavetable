@@ -1,3 +1,4 @@
+/* USER CODE BEGIN Header */
 /**
   ******************************************************************************
   * @file           : main.c
@@ -13,12 +14,14 @@
   * License. You may obtain a copy of the License at:
   *                        opensource.org/licenses/BSD-3-Clause
   *
-  ******************************************************************************
+nn  ******************************************************************************
   */
+/* USER CODE END Header */
+
+/* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "waves.h"
 #include "midi.h"
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
@@ -41,12 +44,17 @@
 
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi5;
+TIM_HandleTypeDef htim6;
 UART_HandleTypeDef huart1;
+
+/* USER CODE BEGIN PV */
 uint8_t spi_tx_buffer[3] = {49,50,51};
 uint8_t spi_rx_buffer[3];
 struct midi_note_msg current_midi_note_msg = {0,0,0};
-/* USER CODE BEGIN PV */
-
+volatile uint16_t output_val;
+volatile uint8_t note_on[127] = {0};
+volatile uint32_t index[127] = {0};
+volatile uint8_t update_value_flag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -54,8 +62,12 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+void UpdateOutputValue(void);
+void Update_R2R_DAC(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -76,58 +88,22 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI5_Init();
   MX_USART1_UART_Init();
+  MX_TIM6_Init();
 
   init_wavetable();
-  uint16_t output_val;
-  //  struct midi_note_msg current_midi_note_msg = {0};
-  struct midi_note_msg test_note_on = {0x90, 68, 127};
-  struct midi_note_msg test_note_off = {0x80, 68, 127};
-  uint8_t note_on[127] = {0};
-  uint32_t index[127] = {0};
+
+  HAL_TIM_Base_Start_IT(&htim6);
 
   while (1)
   {
     Receive_MIDI(&hspi5, spi_rx_buffer);
-
-    //    if(current_midi_note_msg.command != 0
-    //    && current_midi_note_msg.note != 0
-    //    && current_midi_note_msg.velocity != 0)
-    //    {
-      note_on[current_midi_note_msg.note] = current_midi_note_msg.command;
-      //    }
-
-    //note_on[test_note_on.note] = test_note_on.command;
-
-    output_val = 0;
-    for(int i = 0; i < 127; i++) {
-      if(note_on[i] == MIDI_NOTE_ON){
-        index[i] += midi_notes[i];
-        output_val += base_sine[(index[i]>>10)&0xfff] / 8;
-      }
+    if(update_value_flag) {
+      UpdateOutputValue();
+      update_value_flag = 0;
     }
-
-    /*
-    output_val = base_sine[(index[0]>>10)&0xfff] / 8
-      + base_sine[(index[1]>>10)&0xfff] / 8
-      + base_sine[(index[2]>>10)&0xfff] / 8
-      + base_sine[(index[3]>>10)&0xfff] / 8
-      + base_sine[(index[4]>>10)&0xfff] / 8
-      + base_sine[(index[5]>>10)&0xfff] / 8
-      + base_sine[(index[6]>>10)&0xfff] / 8
-      + base_sine[(index[7]>>10)&0xfff] / 8;
-    */
-
-    ((output_val>>8)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
-    ((output_val>>9)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-    ((output_val>>10)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
-    ((output_val>>11)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
-    ((output_val>>12)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
-    ((output_val>>13)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
-    ((output_val>>14)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
-    ((output_val>>15)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+    Update_R2R_DAC();
   }
 }
-
 
 /**
   * @brief System Clock Configuration
@@ -206,6 +182,44 @@ static void MX_SPI5_Init(void)
   /* USER CODE BEGIN SPI5_Init 2 */
 
   /* USER CODE END SPI5_Init 2 */
+
+}
+
+/**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 0;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 129;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
 
 }
 
@@ -509,6 +523,8 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   current_midi_note_msg.note = spi_rx_buffer[1];
   current_midi_note_msg.velocity = spi_rx_buffer[2];
 
+  note_on[current_midi_note_msg.note] = current_midi_note_msg.command;
+
   /*
   uart_tx_buffer = spi_rx_buffer[0];
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
@@ -520,9 +536,37 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   */
 }
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
+  update_value_flag = 1;
+  //UpdateOutputValue();
+}
+
+void UpdateOutputValue() {
+  output_val = 0;
+  for(int i = 0; i < 127; i++) {
+    if(note_on[i] == MIDI_NOTE_ON){
+      index[i] += midi_notes[i] *  10;
+      output_val += base_sine[(index[i]>>10)&0xfff] * 0.125;
+    }
+  }
+}
+
+void Update_R2R_DAC() {
+  ((output_val>>8)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
+  ((output_val>>9)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
+  ((output_val>>10)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+  ((output_val>>11)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
+  ((output_val>>12)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+  ((output_val>>13)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
+  ((output_val>>14)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
+  ((output_val>>15)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+}
 /* USER CODE END 4 */
 
-/**  * @brief  This function is executed in case of error occurrence.
+/**
+  * @brief  This function is executed in case of error occurrence.
   * @retval None
   */
 void Error_Handler(void)
@@ -541,7 +585,7 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
+vnnoid assert_failed(uint8_t *file, uint32_t line)
 { 
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
