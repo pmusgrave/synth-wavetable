@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 #define N 4096
-#define AMPLITUDE (126) // divide by number of voices here?
+#define AMPLITUDE (255) // divide by number of voices here?
 
 uint8_t base_sine[N];
 uint8_t base_pos_saw[N];

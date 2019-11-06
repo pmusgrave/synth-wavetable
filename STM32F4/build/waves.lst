@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccWuJaHE.s 			page 1
+ARM GAS  /tmp/ccF1Z8R1.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
   42              		.cfi_offset 5, -8
   43              		.cfi_offset 14, -4
   44 0002 0546     		mov	r5, r0
-ARM GAS  /tmp/ccWuJaHE.s 			page 2
+ARM GAS  /tmp/ccF1Z8R1.s 			page 2
 
 
   45              	.LVL1:
@@ -66,7 +66,7 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
   15:Src/waves.c   ****   for(int i = 0; i < N; i++){
   47              		.loc 1 15 0
   48 0004 0024     		movs	r4, #0
-  49 0006 19E0     		b	.L2
+  49 0006 1BE0     		b	.L2
   50              	.LVL2:
   51              	.L3:
   52              	.LBB3:
@@ -76,7 +76,7 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
   54 0008 2046     		mov	r0, r4
   55 000a FFF7FEFF 		bl	__aeabi_i2d
   56              	.LVL3:
-  57 000e 0FA3     		adr	r3, .L5+4
+  57 000e 0EA3     		adr	r3, .L5
   58 0010 D3E90023 		ldrd	r2, [r3]
   59 0014 FFF7FEFF 		bl	__aeabi_dmul
   60              	.LVL4:
@@ -85,100 +85,100 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
   62 0018 41EC100B 		vmov	d0, r0, r1
   63 001c FFF7FEFF 		bl	sin
   64              	.LVL5:
-  65 0020 0022     		movs	r2, #0
-  66 0022 094B     		ldr	r3, .L5
-  67 0024 51EC100B 		vmov	r0, r1, d0
-  68 0028 FFF7FEFF 		bl	__aeabi_dmul
+  65 0020 0BA3     		adr	r3, .L5+8
+  66 0022 D3E90023 		ldrd	r2, [r3]
+  67 0026 51EC100B 		vmov	r0, r1, d0
+  68 002a FFF7FEFF 		bl	__aeabi_dmul
   69              	.LVL6:
-  70 002c 0022     		movs	r2, #0
-  71 002e 064B     		ldr	r3, .L5
-  72 0030 FFF7FEFF 		bl	__aeabi_dadd
+  70 002e 08A3     		adr	r3, .L5+8
+  71 0030 D3E90023 		ldrd	r2, [r3]
+  72 0034 FFF7FEFF 		bl	__aeabi_dadd
   73              	.LVL7:
-  74 0034 FFF7FEFF 		bl	__aeabi_d2uiz
+  74 0038 FFF7FEFF 		bl	__aeabi_d2uiz
   75              	.LVL8:
-  76 0038 2855     		strb	r0, [r5, r4]
+  76 003c 2855     		strb	r0, [r5, r4]
   77              	.LBE3:
   15:Src/waves.c   ****   for(int i = 0; i < N; i++){
   78              		.loc 1 15 0 discriminator 3
-  79 003a 0134     		adds	r4, r4, #1
+  79 003e 0134     		adds	r4, r4, #1
   80              	.LVL9:
   81              	.L2:
   15:Src/waves.c   ****   for(int i = 0; i < N; i++){
   82              		.loc 1 15 0 is_stmt 0 discriminator 1
-  83 003c B4F5805F 		cmp	r4, #4096
-  84 0040 E2DB     		blt	.L3
+  83 0040 B4F5805F 		cmp	r4, #4096
+  84 0044 E0DB     		blt	.L3
   85              	.LBE2:
   19:Src/waves.c   ****   }
   20:Src/waves.c   **** }
   86              		.loc 1 20 0 is_stmt 1
-  87 0042 38BD     		pop	{r3, r4, r5, pc}
+  87 0046 38BD     		pop	{r3, r4, r5, pc}
   88              	.LVL10:
   89              	.L6:
-  90 0044 AFF30080 		.align	3
+  90              		.align	3
   91              	.L5:
-  92 0048 00804F40 		.word	1078951936
-  93 004c 182D4454 		.word	1413754136
-ARM GAS  /tmp/ccWuJaHE.s 			page 3
+  92 0048 182D4454 		.word	1413754136
+  93 004c FB21593F 		.word	1062806011
+ARM GAS  /tmp/ccF1Z8R1.s 			page 3
 
 
-  94 0050 FB21593F 		.word	1062806011
-  95              		.cfi_endproc
-  96              	.LFE1:
-  98              		.section	.text.generate_base_pos_saw,"ax",%progbits
-  99              		.align	1
- 100              		.global	generate_base_pos_saw
- 101              		.syntax unified
- 102              		.thumb
- 103              		.thumb_func
- 104              		.fpu fpv4-sp-d16
- 106              	generate_base_pos_saw:
- 107              	.LFB2:
+  94 0050 00000000 		.word	0
+  95 0054 00C05F40 		.word	1080016896
+  96              		.cfi_endproc
+  97              	.LFE1:
+  99              		.section	.text.generate_base_pos_saw,"ax",%progbits
+ 100              		.align	1
+ 101              		.global	generate_base_pos_saw
+ 102              		.syntax unified
+ 103              		.thumb
+ 104              		.thumb_func
+ 105              		.fpu fpv4-sp-d16
+ 107              	generate_base_pos_saw:
+ 108              	.LFB2:
   21:Src/waves.c   **** 
   22:Src/waves.c   **** void generate_base_pos_saw(uint8_t* buffer){
- 108              		.loc 1 22 0
- 109              		.cfi_startproc
- 110              		@ args = 0, pretend = 0, frame = 0
- 111              		@ frame_needed = 0, uses_anonymous_args = 0
- 112              		@ link register save eliminated.
- 113              	.LVL11:
- 114              	.LBB4:
+ 109              		.loc 1 22 0
+ 110              		.cfi_startproc
+ 111              		@ args = 0, pretend = 0, frame = 0
+ 112              		@ frame_needed = 0, uses_anonymous_args = 0
+ 113              		@ link register save eliminated.
+ 114              	.LVL11:
+ 115              	.LBB4:
   23:Src/waves.c   ****   for(int i = 0; i < N; i++){
- 115              		.loc 1 23 0
- 116 0000 0023     		movs	r3, #0
- 117              	.LVL12:
- 118 0002 B3F5805F 		cmp	r3, #4096
- 119 0006 14DA     		bge	.L14
- 120              	.LBE4:
+ 116              		.loc 1 23 0
+ 117 0000 0023     		movs	r3, #0
+ 118              	.LVL12:
+ 119 0002 B3F5805F 		cmp	r3, #4096
+ 120 0006 13DA     		bge	.L14
+ 121              	.LBE4:
   22:Src/waves.c   ****   for(int i = 0; i < N; i++){
- 121              		.loc 1 22 0
- 122 0008 10B4     		push	{r4}
- 123              	.LCFI1:
- 124              		.cfi_def_cfa_offset 4
- 125              		.cfi_offset 4, -4
- 126 000a 05E0     		b	.L10
- 127              	.L9:
- 128              	.LBB5:
+ 122              		.loc 1 22 0
+ 123 0008 10B4     		push	{r4}
+ 124              	.LCFI1:
+ 125              		.cfi_def_cfa_offset 4
+ 126              		.cfi_offset 4, -4
+ 127 000a 05E0     		b	.L10
+ 128              	.L9:
+ 129              	.LBB5:
   24:Src/waves.c   ****     buffer[i] = (AMPLITUDE * i)/N;
- 129              		.loc 1 24 0 discriminator 3
- 130 000c 1213     		asrs	r2, r2, #12
- 131 000e 2270     		strb	r2, [r4]
+ 130              		.loc 1 24 0 discriminator 3
+ 131 000c 1213     		asrs	r2, r2, #12
+ 132 000e 2270     		strb	r2, [r4]
   23:Src/waves.c   ****   for(int i = 0; i < N; i++){
- 132              		.loc 1 23 0 discriminator 3
- 133 0010 0133     		adds	r3, r3, #1
- 134              	.LVL13:
- 135 0012 B3F5805F 		cmp	r3, #4096
- 136 0016 09DA     		bge	.L15
- 137              	.L10:
- 138              		.loc 1 24 0 discriminator 3
- 139 0018 C418     		adds	r4, r0, r3
- 140 001a C3EB8312 		rsb	r2, r3, r3, lsl #6
- 141 001e 5100     		lsls	r1, r2, #1
- 142 0020 0A46     		mov	r2, r1
- 143 0022 0029     		cmp	r1, #0
- 144 0024 F2DA     		bge	.L9
- 145 0026 01F6FF72 		addw	r2, r1, #4095
- 146 002a EFE7     		b	.L9
-ARM GAS  /tmp/ccWuJaHE.s 			page 4
+ 133              		.loc 1 23 0 discriminator 3
+ 134 0010 0133     		adds	r3, r3, #1
+ 135              	.LVL13:
+ 136 0012 B3F5805F 		cmp	r3, #4096
+ 137 0016 08DA     		bge	.L15
+ 138              	.L10:
+ 139              		.loc 1 24 0 discriminator 3
+ 140 0018 C418     		adds	r4, r0, r3
+ 141 001a C3EB0321 		rsb	r1, r3, r3, lsl #8
+ 142 001e 0A46     		mov	r2, r1
+ 143 0020 0029     		cmp	r1, #0
+ 144 0022 F3DA     		bge	.L9
+ 145 0024 01F6FF72 		addw	r2, r1, #4095
+ 146 0028 F0E7     		b	.L9
+ARM GAS  /tmp/ccF1Z8R1.s 			page 4
 
 
  147              	.L15:
@@ -186,13 +186,13 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
   25:Src/waves.c   ****   }
   26:Src/waves.c   **** }
  149              		.loc 1 26 0
- 150 002c 5DF8044B 		ldr	r4, [sp], #4
+ 150 002a 5DF8044B 		ldr	r4, [sp], #4
  151              	.LCFI2:
  152              		.cfi_restore 4
  153              		.cfi_def_cfa_offset 0
- 154 0030 7047     		bx	lr
+ 154 002e 7047     		bx	lr
  155              	.L14:
- 156 0032 7047     		bx	lr
+ 156 0030 7047     		bx	lr
  157              		.cfi_endproc
  158              	.LFE2:
  160              		.section	.text.generate_base_neg_saw,"ax",%progbits
@@ -218,7 +218,7 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
  178 0000 0023     		movs	r3, #0
  179              	.LVL15:
  180 0002 B3F5805F 		cmp	r3, #4096
- 181 0006 16DA     		bge	.L23
+ 181 0006 15DA     		bge	.L23
  182              	.LBE6:
   28:Src/waves.c   ****   for(int i = 0; i < N; i++){
  183              		.loc 1 28 0
@@ -232,399 +232,398 @@ ARM GAS  /tmp/ccWuJaHE.s 			page 1
   30:Src/waves.c   ****     buffer[(int)N-i-1] = (AMPLITUDE * i)/N;
  191              		.loc 1 30 0 discriminator 3
  192 000c 1213     		asrs	r2, r2, #12
- 193 000e 0255     		strb	r2, [r0, r4]
+ 193 000e 4254     		strb	r2, [r0, r1]
   29:Src/waves.c   ****   for(int i = 0; i < N; i++){
  194              		.loc 1 29 0 discriminator 3
  195 0010 0133     		adds	r3, r3, #1
  196              	.LVL16:
  197 0012 B3F5805F 		cmp	r3, #4096
-ARM GAS  /tmp/ccWuJaHE.s 			page 5
+ARM GAS  /tmp/ccF1Z8R1.s 			page 5
 
 
- 198 0016 0BDA     		bge	.L24
+ 198 0016 0ADA     		bge	.L24
  199              	.L19:
  200              		.loc 1 30 0 discriminator 3
- 201 0018 C3F57F64 		rsb	r4, r3, #4080
- 202 001c 0F34     		adds	r4, r4, #15
- 203 001e C3EB8312 		rsb	r2, r3, r3, lsl #6
- 204 0022 5100     		lsls	r1, r2, #1
- 205 0024 0A46     		mov	r2, r1
- 206 0026 0029     		cmp	r1, #0
- 207 0028 F0DA     		bge	.L18
- 208 002a 01F6FF72 		addw	r2, r1, #4095
- 209 002e EDE7     		b	.L18
- 210              	.L24:
- 211              	.LBE7:
+ 201 0018 C3F57F61 		rsb	r1, r3, #4080
+ 202 001c 0F31     		adds	r1, r1, #15
+ 203 001e C3EB0324 		rsb	r4, r3, r3, lsl #8
+ 204 0022 2246     		mov	r2, r4
+ 205 0024 002C     		cmp	r4, #0
+ 206 0026 F1DA     		bge	.L18
+ 207 0028 04F6FF72 		addw	r2, r4, #4095
+ 208 002c EEE7     		b	.L18
+ 209              	.L24:
+ 210              	.LBE7:
   31:Src/waves.c   ****   }
   32:Src/waves.c   **** }
- 212              		.loc 1 32 0
- 213 0030 5DF8044B 		ldr	r4, [sp], #4
- 214              	.LCFI4:
- 215              		.cfi_restore 4
- 216              		.cfi_def_cfa_offset 0
- 217 0034 7047     		bx	lr
- 218              	.L23:
- 219 0036 7047     		bx	lr
- 220              		.cfi_endproc
- 221              	.LFE3:
- 223              		.section	.text.generate_base_tri,"ax",%progbits
- 224              		.align	1
- 225              		.global	generate_base_tri
- 226              		.syntax unified
- 227              		.thumb
- 228              		.thumb_func
- 229              		.fpu fpv4-sp-d16
- 231              	generate_base_tri:
- 232              	.LFB4:
+ 211              		.loc 1 32 0
+ 212 002e 5DF8044B 		ldr	r4, [sp], #4
+ 213              	.LCFI4:
+ 214              		.cfi_restore 4
+ 215              		.cfi_def_cfa_offset 0
+ 216 0032 7047     		bx	lr
+ 217              	.L23:
+ 218 0034 7047     		bx	lr
+ 219              		.cfi_endproc
+ 220              	.LFE3:
+ 222              		.section	.text.generate_base_tri,"ax",%progbits
+ 223              		.align	1
+ 224              		.global	generate_base_tri
+ 225              		.syntax unified
+ 226              		.thumb
+ 227              		.thumb_func
+ 228              		.fpu fpv4-sp-d16
+ 230              	generate_base_tri:
+ 231              	.LFB4:
   33:Src/waves.c   **** 
   34:Src/waves.c   **** void generate_base_tri(uint8_t* buffer){
- 233              		.loc 1 34 0
- 234              		.cfi_startproc
- 235              		@ args = 0, pretend = 0, frame = 0
- 236              		@ frame_needed = 0, uses_anonymous_args = 0
- 237              		@ link register save eliminated.
- 238              	.LVL17:
- 239 0000 10B4     		push	{r4}
- 240              	.LCFI5:
- 241              		.cfi_def_cfa_offset 4
- 242              		.cfi_offset 4, -4
- 243              	.LVL18:
- 244              	.LBB8:
+ 232              		.loc 1 34 0
+ 233              		.cfi_startproc
+ 234              		@ args = 0, pretend = 0, frame = 0
+ 235              		@ frame_needed = 0, uses_anonymous_args = 0
+ 236              		@ link register save eliminated.
+ 237              	.LVL17:
+ 238 0000 10B4     		push	{r4}
+ 239              	.LCFI5:
+ 240              		.cfi_def_cfa_offset 4
+ 241              		.cfi_offset 4, -4
+ 242              	.LVL18:
+ 243              	.LBB8:
   35:Src/waves.c   ****   for(int i = 0; i < N/2; i++){
- 245              		.loc 1 35 0
- 246 0002 0023     		movs	r3, #0
- 247 0004 02E0     		b	.L26
- 248              	.LVL19:
- 249              	.L27:
+ 244              		.loc 1 35 0
+ 245 0002 0023     		movs	r3, #0
+ 246 0004 02E0     		b	.L26
+ 247              	.LVL19:
+ 248              	.L27:
   36:Src/waves.c   ****     buffer[i] = (AMPLITUDE * 2*i)/N;
- 250              		.loc 1 36 0 discriminator 3
-ARM GAS  /tmp/ccWuJaHE.s 			page 6
+ 249              		.loc 1 36 0 discriminator 3
+ 250 0006 1213     		asrs	r2, r2, #12
+ARM GAS  /tmp/ccF1Z8R1.s 			page 6
 
 
- 251 0006 1213     		asrs	r2, r2, #12
- 252 0008 2270     		strb	r2, [r4]
+ 251 0008 2270     		strb	r2, [r4]
   35:Src/waves.c   ****   for(int i = 0; i < N/2; i++){
- 253              		.loc 1 35 0 discriminator 3
- 254 000a 0133     		adds	r3, r3, #1
- 255              	.LVL20:
- 256              	.L26:
+ 252              		.loc 1 35 0 discriminator 3
+ 253 000a 0133     		adds	r3, r3, #1
+ 254              	.LVL20:
+ 255              	.L26:
   35:Src/waves.c   ****   for(int i = 0; i < N/2; i++){
- 257              		.loc 1 35 0 is_stmt 0 discriminator 1
- 258 000c B3F5006F 		cmp	r3, #2048
- 259 0010 09DA     		bge	.L33
- 260              		.loc 1 36 0 is_stmt 1 discriminator 3
- 261 0012 C418     		adds	r4, r0, r3
- 262 0014 C3EB8312 		rsb	r2, r3, r3, lsl #6
- 263 0018 9100     		lsls	r1, r2, #2
- 264 001a 0A46     		mov	r2, r1
- 265 001c 0029     		cmp	r1, #0
- 266 001e F2DA     		bge	.L27
- 267 0020 01F6FF72 		addw	r2, r1, #4095
- 268 0024 EFE7     		b	.L27
- 269              	.L33:
- 270 0026 4FF40062 		mov	r2, #2048
- 271 002a 02E0     		b	.L29
- 272              	.LVL21:
- 273              	.L30:
- 274              	.LBE8:
- 275              	.LBB9:
+ 256              		.loc 1 35 0 is_stmt 0 discriminator 1
+ 257 000c B3F5006F 		cmp	r3, #2048
+ 258 0010 09DA     		bge	.L33
+ 259              		.loc 1 36 0 is_stmt 1 discriminator 3
+ 260 0012 C418     		adds	r4, r0, r3
+ 261 0014 C3EB0322 		rsb	r2, r3, r3, lsl #8
+ 262 0018 5100     		lsls	r1, r2, #1
+ 263 001a 0A46     		mov	r2, r1
+ 264 001c 0029     		cmp	r1, #0
+ 265 001e F2DA     		bge	.L27
+ 266 0020 01F6FF72 		addw	r2, r1, #4095
+ 267 0024 EFE7     		b	.L27
+ 268              	.L33:
+ 269 0026 4FF40062 		mov	r2, #2048
+ 270 002a 02E0     		b	.L29
+ 271              	.LVL21:
+ 272              	.L30:
+ 273              	.LBE8:
+ 274              	.LBB9:
   37:Src/waves.c   ****   }
   38:Src/waves.c   ****   for(int i = N/2; i < N; i++){
   39:Src/waves.c   ****     buffer[i] = (AMPLITUDE * 2*(N-i))/N;
- 276              		.loc 1 39 0 discriminator 3
- 277 002c 1B13     		asrs	r3, r3, #12
- 278 002e 2370     		strb	r3, [r4]
+ 275              		.loc 1 39 0 discriminator 3
+ 276 002c 1B13     		asrs	r3, r3, #12
+ 277 002e 2370     		strb	r3, [r4]
   38:Src/waves.c   ****     buffer[i] = (AMPLITUDE * 2*(N-i))/N;
- 279              		.loc 1 38 0 discriminator 3
- 280 0030 0132     		adds	r2, r2, #1
- 281              	.LVL22:
- 282              	.L29:
+ 278              		.loc 1 38 0 discriminator 3
+ 279 0030 0132     		adds	r2, r2, #1
+ 280              	.LVL22:
+ 281              	.L29:
   38:Src/waves.c   ****     buffer[i] = (AMPLITUDE * 2*(N-i))/N;
- 283              		.loc 1 38 0 is_stmt 0 discriminator 1
- 284 0032 B2F5805F 		cmp	r2, #4096
- 285 0036 0BDA     		bge	.L34
- 286              		.loc 1 39 0 is_stmt 1 discriminator 3
- 287 0038 8418     		adds	r4, r0, r2
- 288 003a C2F58053 		rsb	r3, r2, #4096
- 289 003e C3EB8313 		rsb	r3, r3, r3, lsl #6
- 290 0042 9900     		lsls	r1, r3, #2
- 291 0044 0B46     		mov	r3, r1
- 292 0046 0029     		cmp	r1, #0
- 293 0048 F0DA     		bge	.L30
- 294 004a 01F6FF73 		addw	r3, r1, #4095
- 295 004e EDE7     		b	.L30
- 296              	.L34:
- 297              	.LBE9:
+ 282              		.loc 1 38 0 is_stmt 0 discriminator 1
+ 283 0032 B2F5805F 		cmp	r2, #4096
+ 284 0036 0BDA     		bge	.L34
+ 285              		.loc 1 39 0 is_stmt 1 discriminator 3
+ 286 0038 8418     		adds	r4, r0, r2
+ 287 003a C2F58053 		rsb	r3, r2, #4096
+ 288 003e C3EB0323 		rsb	r3, r3, r3, lsl #8
+ 289 0042 5900     		lsls	r1, r3, #1
+ 290 0044 0B46     		mov	r3, r1
+ 291 0046 0029     		cmp	r1, #0
+ 292 0048 F0DA     		bge	.L30
+ 293 004a 01F6FF73 		addw	r3, r1, #4095
+ 294 004e EDE7     		b	.L30
+ 295              	.L34:
+ 296              	.LBE9:
   40:Src/waves.c   ****   }
   41:Src/waves.c   **** }
- 298              		.loc 1 41 0
-ARM GAS  /tmp/ccWuJaHE.s 			page 7
+ 297              		.loc 1 41 0
+ 298 0050 5DF8044B 		ldr	r4, [sp], #4
+ARM GAS  /tmp/ccF1Z8R1.s 			page 7
 
 
- 299 0050 5DF8044B 		ldr	r4, [sp], #4
- 300              	.LCFI6:
- 301              		.cfi_restore 4
- 302              		.cfi_def_cfa_offset 0
- 303 0054 7047     		bx	lr
- 304              		.cfi_endproc
- 305              	.LFE4:
- 307              		.section	.text.generate_base_sq,"ax",%progbits
- 308              		.align	1
- 309              		.global	generate_base_sq
- 310              		.syntax unified
- 311              		.thumb
- 312              		.thumb_func
- 313              		.fpu fpv4-sp-d16
- 315              	generate_base_sq:
- 316              	.LFB5:
+ 299              	.LCFI6:
+ 300              		.cfi_restore 4
+ 301              		.cfi_def_cfa_offset 0
+ 302 0054 7047     		bx	lr
+ 303              		.cfi_endproc
+ 304              	.LFE4:
+ 306              		.section	.text.generate_base_sq,"ax",%progbits
+ 307              		.align	1
+ 308              		.global	generate_base_sq
+ 309              		.syntax unified
+ 310              		.thumb
+ 311              		.thumb_func
+ 312              		.fpu fpv4-sp-d16
+ 314              	generate_base_sq:
+ 315              	.LFB5:
   42:Src/waves.c   **** 
   43:Src/waves.c   **** void generate_base_sq(uint8_t* buffer){
- 317              		.loc 1 43 0
- 318              		.cfi_startproc
- 319              		@ args = 0, pretend = 0, frame = 0
- 320              		@ frame_needed = 0, uses_anonymous_args = 0
- 321              		@ link register save eliminated.
- 322              	.LVL23:
- 323              	.LBB10:
+ 316              		.loc 1 43 0
+ 317              		.cfi_startproc
+ 318              		@ args = 0, pretend = 0, frame = 0
+ 319              		@ frame_needed = 0, uses_anonymous_args = 0
+ 320              		@ link register save eliminated.
+ 321              	.LVL23:
+ 322              	.LBB10:
   44:Src/waves.c   ****   for(int i = 0; i < N; i++){
- 324              		.loc 1 44 0
- 325 0000 0023     		movs	r3, #0
- 326 0002 02E0     		b	.L36
- 327              	.LVL24:
- 328              	.L37:
+ 323              		.loc 1 44 0
+ 324 0000 0023     		movs	r3, #0
+ 325 0002 02E0     		b	.L36
+ 326              	.LVL24:
+ 327              	.L37:
   45:Src/waves.c   ****     if(i < N/2){
   46:Src/waves.c   ****       buffer[i] = AMPLITUDE;
   47:Src/waves.c   ****     }
   48:Src/waves.c   ****     else{
   49:Src/waves.c   ****       buffer[i] = 0;
- 329              		.loc 1 49 0
- 330 0004 0022     		movs	r2, #0
- 331 0006 C254     		strb	r2, [r0, r3]
- 332              	.L38:
+ 328              		.loc 1 49 0
+ 329 0004 0022     		movs	r2, #0
+ 330 0006 C254     		strb	r2, [r0, r3]
+ 331              	.L38:
   44:Src/waves.c   ****   for(int i = 0; i < N; i++){
- 333              		.loc 1 44 0 discriminator 2
- 334 0008 0133     		adds	r3, r3, #1
- 335              	.LVL25:
- 336              	.L36:
+ 332              		.loc 1 44 0 discriminator 2
+ 333 0008 0133     		adds	r3, r3, #1
+ 334              	.LVL25:
+ 335              	.L36:
   44:Src/waves.c   ****   for(int i = 0; i < N; i++){
- 337              		.loc 1 44 0 is_stmt 0 discriminator 1
- 338 000a B3F5805F 		cmp	r3, #4096
- 339 000e 05DA     		bge	.L40
+ 336              		.loc 1 44 0 is_stmt 0 discriminator 1
+ 337 000a B3F5805F 		cmp	r3, #4096
+ 338 000e 05DA     		bge	.L40
   45:Src/waves.c   ****     if(i < N/2){
- 340              		.loc 1 45 0 is_stmt 1
- 341 0010 B3F5006F 		cmp	r3, #2048
- 342 0014 F6DA     		bge	.L37
+ 339              		.loc 1 45 0 is_stmt 1
+ 340 0010 B3F5006F 		cmp	r3, #2048
+ 341 0014 F6DA     		bge	.L37
   46:Src/waves.c   ****     }
- 343              		.loc 1 46 0
- 344 0016 7E22     		movs	r2, #126
- 345 0018 C254     		strb	r2, [r0, r3]
-ARM GAS  /tmp/ccWuJaHE.s 			page 8
+ 342              		.loc 1 46 0
+ 343 0016 FF22     		movs	r2, #255
+ 344 0018 C254     		strb	r2, [r0, r3]
+ 345 001a F5E7     		b	.L38
+ARM GAS  /tmp/ccF1Z8R1.s 			page 8
 
 
- 346 001a F5E7     		b	.L38
- 347              	.L40:
- 348              	.LBE10:
+ 346              	.L40:
+ 347              	.LBE10:
   50:Src/waves.c   ****     }
   51:Src/waves.c   ****   }
   52:Src/waves.c   **** }
- 349              		.loc 1 52 0
- 350 001c 7047     		bx	lr
- 351              		.cfi_endproc
- 352              	.LFE5:
- 354              		.section	.text.generate_lfo_sine,"ax",%progbits
- 355              		.align	1
- 356              		.global	generate_lfo_sine
- 357              		.syntax unified
- 358              		.thumb
- 359              		.thumb_func
- 360              		.fpu fpv4-sp-d16
- 362              	generate_lfo_sine:
- 363              	.LFB6:
+ 348              		.loc 1 52 0
+ 349 001c 7047     		bx	lr
+ 350              		.cfi_endproc
+ 351              	.LFE5:
+ 353              		.section	.text.generate_lfo_sine,"ax",%progbits
+ 354              		.align	1
+ 355              		.global	generate_lfo_sine
+ 356              		.syntax unified
+ 357              		.thumb
+ 358              		.thumb_func
+ 359              		.fpu fpv4-sp-d16
+ 361              	generate_lfo_sine:
+ 362              	.LFB6:
   53:Src/waves.c   **** 
   54:Src/waves.c   **** void generate_lfo_sine(uint8_t* buffer){
- 364              		.loc 1 54 0
- 365              		.cfi_startproc
- 366              		@ args = 0, pretend = 0, frame = 0
- 367              		@ frame_needed = 0, uses_anonymous_args = 0
- 368              	.LVL26:
- 369 0000 38B5     		push	{r3, r4, r5, lr}
- 370              	.LCFI7:
- 371              		.cfi_def_cfa_offset 16
- 372              		.cfi_offset 3, -16
- 373              		.cfi_offset 4, -12
- 374              		.cfi_offset 5, -8
- 375              		.cfi_offset 14, -4
- 376 0002 0546     		mov	r5, r0
- 377              	.LVL27:
- 378              	.LBB11:
+ 363              		.loc 1 54 0
+ 364              		.cfi_startproc
+ 365              		@ args = 0, pretend = 0, frame = 0
+ 366              		@ frame_needed = 0, uses_anonymous_args = 0
+ 367              	.LVL26:
+ 368 0000 38B5     		push	{r3, r4, r5, lr}
+ 369              	.LCFI7:
+ 370              		.cfi_def_cfa_offset 16
+ 371              		.cfi_offset 3, -16
+ 372              		.cfi_offset 4, -12
+ 373              		.cfi_offset 5, -8
+ 374              		.cfi_offset 14, -4
+ 375 0002 0546     		mov	r5, r0
+ 376              	.LVL27:
+ 377              	.LBB11:
   55:Src/waves.c   ****     for(int i = 0; i < 256; i++){
- 379              		.loc 1 55 0
- 380 0004 0024     		movs	r4, #0
- 381 0006 19E0     		b	.L42
- 382              	.LVL28:
- 383              	.L43:
- 384              	.LBB12:
+ 378              		.loc 1 55 0
+ 379 0004 0024     		movs	r4, #0
+ 380 0006 19E0     		b	.L42
+ 381              	.LVL28:
+ 382              	.L43:
+ 383              	.LBB12:
   56:Src/waves.c   ****         double delta = 2*M_PI/256;
   57:Src/waves.c   ****         double x = delta * i;
- 385              		.loc 1 57 0 discriminator 3
- 386 0008 2046     		mov	r0, r4
- 387 000a FFF7FEFF 		bl	__aeabi_i2d
- 388              	.LVL29:
- 389 000e 0FA3     		adr	r3, .L45+4
- 390 0010 D3E90023 		ldrd	r2, [r3]
- 391 0014 FFF7FEFF 		bl	__aeabi_dmul
- 392              	.LVL30:
+ 384              		.loc 1 57 0 discriminator 3
+ 385 0008 2046     		mov	r0, r4
+ 386 000a FFF7FEFF 		bl	__aeabi_i2d
+ 387              	.LVL29:
+ 388 000e 0FA3     		adr	r3, .L45+4
+ 389 0010 D3E90023 		ldrd	r2, [r3]
+ 390 0014 FFF7FEFF 		bl	__aeabi_dmul
+ 391              	.LVL30:
   58:Src/waves.c   ****         buffer[i] = sin(x) * 126 + 126;
- 393              		.loc 1 58 0 discriminator 3
- 394 0018 41EC100B 		vmov	d0, r0, r1
- 395 001c FFF7FEFF 		bl	sin
-ARM GAS  /tmp/ccWuJaHE.s 			page 9
+ 392              		.loc 1 58 0 discriminator 3
+ 393 0018 41EC100B 		vmov	d0, r0, r1
+ 394 001c FFF7FEFF 		bl	sin
+ 395              	.LVL31:
+ARM GAS  /tmp/ccF1Z8R1.s 			page 9
 
 
- 396              	.LVL31:
- 397 0020 0022     		movs	r2, #0
- 398 0022 094B     		ldr	r3, .L45
- 399 0024 51EC100B 		vmov	r0, r1, d0
- 400 0028 FFF7FEFF 		bl	__aeabi_dmul
- 401              	.LVL32:
- 402 002c 0022     		movs	r2, #0
- 403 002e 064B     		ldr	r3, .L45
- 404 0030 FFF7FEFF 		bl	__aeabi_dadd
- 405              	.LVL33:
- 406 0034 FFF7FEFF 		bl	__aeabi_d2uiz
- 407              	.LVL34:
- 408 0038 2855     		strb	r0, [r5, r4]
- 409              	.LBE12:
+ 396 0020 0022     		movs	r2, #0
+ 397 0022 094B     		ldr	r3, .L45
+ 398 0024 51EC100B 		vmov	r0, r1, d0
+ 399 0028 FFF7FEFF 		bl	__aeabi_dmul
+ 400              	.LVL32:
+ 401 002c 0022     		movs	r2, #0
+ 402 002e 064B     		ldr	r3, .L45
+ 403 0030 FFF7FEFF 		bl	__aeabi_dadd
+ 404              	.LVL33:
+ 405 0034 FFF7FEFF 		bl	__aeabi_d2uiz
+ 406              	.LVL34:
+ 407 0038 2855     		strb	r0, [r5, r4]
+ 408              	.LBE12:
   55:Src/waves.c   ****     for(int i = 0; i < 256; i++){
- 410              		.loc 1 55 0 discriminator 3
- 411 003a 0134     		adds	r4, r4, #1
- 412              	.LVL35:
- 413              	.L42:
+ 409              		.loc 1 55 0 discriminator 3
+ 410 003a 0134     		adds	r4, r4, #1
+ 411              	.LVL35:
+ 412              	.L42:
   55:Src/waves.c   ****     for(int i = 0; i < 256; i++){
- 414              		.loc 1 55 0 is_stmt 0 discriminator 1
- 415 003c FF2C     		cmp	r4, #255
- 416 003e E3DD     		ble	.L43
- 417              	.LBE11:
+ 413              		.loc 1 55 0 is_stmt 0 discriminator 1
+ 414 003c FF2C     		cmp	r4, #255
+ 415 003e E3DD     		ble	.L43
+ 416              	.LBE11:
   59:Src/waves.c   ****     }
   60:Src/waves.c   **** }
- 418              		.loc 1 60 0 is_stmt 1
- 419 0040 38BD     		pop	{r3, r4, r5, pc}
- 420              	.LVL36:
- 421              	.L46:
- 422 0042 00BFAFF3 		.align	3
- 422      0080
- 423              	.L45:
- 424 0048 00805F40 		.word	1080000512
- 425 004c 182D4454 		.word	1413754136
- 426 0050 FB21993F 		.word	1067000315
- 427              		.cfi_endproc
- 428              	.LFE6:
- 430              		.section	.text.init_wavetable,"ax",%progbits
- 431              		.align	1
- 432              		.global	init_wavetable
- 433              		.syntax unified
- 434              		.thumb
- 435              		.thumb_func
- 436              		.fpu fpv4-sp-d16
- 438              	init_wavetable:
- 439              	.LFB0:
+ 417              		.loc 1 60 0 is_stmt 1
+ 418 0040 38BD     		pop	{r3, r4, r5, pc}
+ 419              	.LVL36:
+ 420              	.L46:
+ 421 0042 00BFAFF3 		.align	3
+ 421      0080
+ 422              	.L45:
+ 423 0048 00805F40 		.word	1080000512
+ 424 004c 182D4454 		.word	1413754136
+ 425 0050 FB21993F 		.word	1067000315
+ 426              		.cfi_endproc
+ 427              	.LFE6:
+ 429              		.section	.text.init_wavetable,"ax",%progbits
+ 430              		.align	1
+ 431              		.global	init_wavetable
+ 432              		.syntax unified
+ 433              		.thumb
+ 434              		.thumb_func
+ 435              		.fpu fpv4-sp-d16
+ 437              	init_wavetable:
+ 438              	.LFB0:
    5:Src/waves.c   ****     generate_base_sine(base_sine);
- 440              		.loc 1 5 0
- 441              		.cfi_startproc
- 442              		@ args = 0, pretend = 0, frame = 0
- 443              		@ frame_needed = 0, uses_anonymous_args = 0
- 444 0000 08B5     		push	{r3, lr}
- 445              	.LCFI8:
- 446              		.cfi_def_cfa_offset 8
- 447              		.cfi_offset 3, -8
- 448              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccWuJaHE.s 			page 10
-
-
+ 439              		.loc 1 5 0
+ 440              		.cfi_startproc
+ 441              		@ args = 0, pretend = 0, frame = 0
+ 442              		@ frame_needed = 0, uses_anonymous_args = 0
+ 443 0000 08B5     		push	{r3, lr}
+ 444              	.LCFI8:
+ 445              		.cfi_def_cfa_offset 8
+ 446              		.cfi_offset 3, -8
+ 447              		.cfi_offset 14, -4
    6:Src/waves.c   ****     generate_base_pos_saw(base_pos_saw);
- 449              		.loc 1 6 0
- 450 0002 0948     		ldr	r0, .L49
- 451 0004 FFF7FEFF 		bl	generate_base_sine
- 452              	.LVL37:
+ARM GAS  /tmp/ccF1Z8R1.s 			page 10
+
+
+ 448              		.loc 1 6 0
+ 449 0002 0948     		ldr	r0, .L49
+ 450 0004 FFF7FEFF 		bl	generate_base_sine
+ 451              	.LVL37:
    7:Src/waves.c   ****     generate_base_neg_saw(base_neg_saw);
- 453              		.loc 1 7 0
- 454 0008 0848     		ldr	r0, .L49+4
- 455 000a FFF7FEFF 		bl	generate_base_pos_saw
- 456              	.LVL38:
+ 452              		.loc 1 7 0
+ 453 0008 0848     		ldr	r0, .L49+4
+ 454 000a FFF7FEFF 		bl	generate_base_pos_saw
+ 455              	.LVL38:
    8:Src/waves.c   ****     generate_base_tri(base_tri);
- 457              		.loc 1 8 0
- 458 000e 0848     		ldr	r0, .L49+8
- 459 0010 FFF7FEFF 		bl	generate_base_neg_saw
- 460              	.LVL39:
+ 456              		.loc 1 8 0
+ 457 000e 0848     		ldr	r0, .L49+8
+ 458 0010 FFF7FEFF 		bl	generate_base_neg_saw
+ 459              	.LVL39:
    9:Src/waves.c   ****     generate_base_sq(base_sq);
- 461              		.loc 1 9 0
- 462 0014 0748     		ldr	r0, .L49+12
- 463 0016 FFF7FEFF 		bl	generate_base_tri
- 464              	.LVL40:
+ 460              		.loc 1 9 0
+ 461 0014 0748     		ldr	r0, .L49+12
+ 462 0016 FFF7FEFF 		bl	generate_base_tri
+ 463              	.LVL40:
   10:Src/waves.c   ****     generate_lfo_sine(lfo_sine);
- 465              		.loc 1 10 0
- 466 001a 0748     		ldr	r0, .L49+16
- 467 001c FFF7FEFF 		bl	generate_base_sq
- 468              	.LVL41:
+ 464              		.loc 1 10 0
+ 465 001a 0748     		ldr	r0, .L49+16
+ 466 001c FFF7FEFF 		bl	generate_base_sq
+ 467              	.LVL41:
   11:Src/waves.c   **** }
- 469              		.loc 1 11 0
- 470 0020 0648     		ldr	r0, .L49+20
- 471 0022 FFF7FEFF 		bl	generate_lfo_sine
- 472              	.LVL42:
- 473 0026 08BD     		pop	{r3, pc}
- 474              	.L50:
- 475              		.align	2
- 476              	.L49:
- 477 0028 00000000 		.word	base_sine
- 478 002c 00000000 		.word	base_pos_saw
- 479 0030 00000000 		.word	base_neg_saw
- 480 0034 00000000 		.word	base_tri
- 481 0038 00000000 		.word	base_sq
- 482 003c 00000000 		.word	lfo_sine
- 483              		.cfi_endproc
- 484              	.LFE0:
- 486              		.comm	lfo_sine,256,4
- 487              		.comm	base_sq,4096,4
- 488              		.comm	base_tri,4096,4
- 489              		.comm	base_neg_saw,4096,4
- 490              		.comm	base_pos_saw,4096,4
- 491              		.comm	base_sine,4096,4
- 492              		.text
- 493              	.Letext0:
- 494              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 495              		.file 3 "/usr/include/newlib/sys/lock.h"
- 496              		.file 4 "/usr/include/newlib/sys/_types.h"
- 497              		.file 5 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 498              		.file 6 "/usr/include/newlib/sys/reent.h"
- 499              		.file 7 "/usr/include/newlib/stdlib.h"
- 500              		.file 8 "/usr/include/newlib/sys/_stdint.h"
-ARM GAS  /tmp/ccWuJaHE.s 			page 11
+ 468              		.loc 1 11 0
+ 469 0020 0648     		ldr	r0, .L49+20
+ 470 0022 FFF7FEFF 		bl	generate_lfo_sine
+ 471              	.LVL42:
+ 472 0026 08BD     		pop	{r3, pc}
+ 473              	.L50:
+ 474              		.align	2
+ 475              	.L49:
+ 476 0028 00000000 		.word	base_sine
+ 477 002c 00000000 		.word	base_pos_saw
+ 478 0030 00000000 		.word	base_neg_saw
+ 479 0034 00000000 		.word	base_tri
+ 480 0038 00000000 		.word	base_sq
+ 481 003c 00000000 		.word	lfo_sine
+ 482              		.cfi_endproc
+ 483              	.LFE0:
+ 485              		.comm	lfo_sine,256,4
+ 486              		.comm	base_sq,4096,4
+ 487              		.comm	base_tri,4096,4
+ 488              		.comm	base_neg_saw,4096,4
+ 489              		.comm	base_pos_saw,4096,4
+ 490              		.comm	base_sine,4096,4
+ 491              		.text
+ 492              	.Letext0:
+ 493              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 494              		.file 3 "/usr/include/newlib/sys/lock.h"
+ 495              		.file 4 "/usr/include/newlib/sys/_types.h"
+ 496              		.file 5 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 497              		.file 6 "/usr/include/newlib/sys/reent.h"
+ 498              		.file 7 "/usr/include/newlib/stdlib.h"
+ 499              		.file 8 "/usr/include/newlib/sys/_stdint.h"
+ 500              		.file 9 "Inc/waves.h"
+ARM GAS  /tmp/ccF1Z8R1.s 			page 11
 
 
- 501              		.file 9 "Inc/waves.h"
- 502              		.file 10 "/usr/include/newlib/math.h"
-ARM GAS  /tmp/ccWuJaHE.s 			page 12
+ 501              		.file 10 "/usr/include/newlib/math.h"
+ARM GAS  /tmp/ccF1Z8R1.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 waves.c
-     /tmp/ccWuJaHE.s:22     .text.generate_base_sine:0000000000000000 $t
-     /tmp/ccWuJaHE.s:29     .text.generate_base_sine:0000000000000000 generate_base_sine
-     /tmp/ccWuJaHE.s:92     .text.generate_base_sine:0000000000000048 $d
-     /tmp/ccWuJaHE.s:99     .text.generate_base_pos_saw:0000000000000000 $t
-     /tmp/ccWuJaHE.s:106    .text.generate_base_pos_saw:0000000000000000 generate_base_pos_saw
-     /tmp/ccWuJaHE.s:161    .text.generate_base_neg_saw:0000000000000000 $t
-     /tmp/ccWuJaHE.s:168    .text.generate_base_neg_saw:0000000000000000 generate_base_neg_saw
-     /tmp/ccWuJaHE.s:224    .text.generate_base_tri:0000000000000000 $t
-     /tmp/ccWuJaHE.s:231    .text.generate_base_tri:0000000000000000 generate_base_tri
-     /tmp/ccWuJaHE.s:308    .text.generate_base_sq:0000000000000000 $t
-     /tmp/ccWuJaHE.s:315    .text.generate_base_sq:0000000000000000 generate_base_sq
-     /tmp/ccWuJaHE.s:355    .text.generate_lfo_sine:0000000000000000 $t
-     /tmp/ccWuJaHE.s:362    .text.generate_lfo_sine:0000000000000000 generate_lfo_sine
-     /tmp/ccWuJaHE.s:424    .text.generate_lfo_sine:0000000000000048 $d
-     /tmp/ccWuJaHE.s:431    .text.init_wavetable:0000000000000000 $t
-     /tmp/ccWuJaHE.s:438    .text.init_wavetable:0000000000000000 init_wavetable
-     /tmp/ccWuJaHE.s:477    .text.init_wavetable:0000000000000028 $d
+     /tmp/ccF1Z8R1.s:22     .text.generate_base_sine:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:29     .text.generate_base_sine:0000000000000000 generate_base_sine
+     /tmp/ccF1Z8R1.s:92     .text.generate_base_sine:0000000000000048 $d
+     /tmp/ccF1Z8R1.s:100    .text.generate_base_pos_saw:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:107    .text.generate_base_pos_saw:0000000000000000 generate_base_pos_saw
+     /tmp/ccF1Z8R1.s:161    .text.generate_base_neg_saw:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:168    .text.generate_base_neg_saw:0000000000000000 generate_base_neg_saw
+     /tmp/ccF1Z8R1.s:223    .text.generate_base_tri:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:230    .text.generate_base_tri:0000000000000000 generate_base_tri
+     /tmp/ccF1Z8R1.s:307    .text.generate_base_sq:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:314    .text.generate_base_sq:0000000000000000 generate_base_sq
+     /tmp/ccF1Z8R1.s:354    .text.generate_lfo_sine:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:361    .text.generate_lfo_sine:0000000000000000 generate_lfo_sine
+     /tmp/ccF1Z8R1.s:423    .text.generate_lfo_sine:0000000000000048 $d
+     /tmp/ccF1Z8R1.s:430    .text.init_wavetable:0000000000000000 $t
+     /tmp/ccF1Z8R1.s:437    .text.init_wavetable:0000000000000000 init_wavetable
+     /tmp/ccF1Z8R1.s:476    .text.init_wavetable:0000000000000028 $d
                             *COM*:0000000000001000 base_sine
                             *COM*:0000000000001000 base_pos_saw
                             *COM*:0000000000001000 base_neg_saw
