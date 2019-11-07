@@ -35,7 +35,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define DDS_SCALE_FACTOR 894.745833
-#define VOICES 48
+#define VOICES 16
 #define NOT_TRIGGERED 0
 #define ATTACK_MODE 1
 #define DECAY_MODE 2
@@ -133,14 +133,28 @@ int main(void)
   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
 
   for(int i = 0; i < VOICES; i++) {
-    env_state[i] = NOT_TRIGGERED;
+    env_state[i] = ATTACK_MODE;
     note_on[i] = MIDI_NOTE_OFF;
-    note_freq[i] = 0;
+    note_freq[i] = 30;
   }
 
+  /*
   note_on[0] = MIDI_NOTE_ON;
-  note_freq[0] = 48;
+  note_freq[0] = 30;
   env_state[0] = ATTACK_MODE;
+
+  note_on[1] = MIDI_NOTE_ON;
+  note_freq[1] = 30;
+  env_state[1] = ATTACK_MODE;
+
+  note_on[2] = MIDI_NOTE_ON;
+  note_freq[2] = 30;
+  env_state[2] = ATTACK_MODE;
+
+  note_on[3] = MIDI_NOTE_ON;
+  note_freq[3] = 30;
+  env_state[3] = ATTACK_MODE;
+  */
 
   /* USER CODE END 2 */
 
@@ -148,13 +162,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    Receive_MIDI(&hspi5, spi_rx_buffer);
+    // Receive_MIDI(&hspi5, spi_rx_buffer);
 
     /*
     if(MIDI_flag) {
       MIDI_flag = 0;
       for(int i = 0; i < VOICES; i++) {
-        if(note_on[i] == MIDI_NOTE_OFF) {
+         if(note_on[i] == MIDI_NOTE_OFF) {
           note_on[i] = current_midi_note_msg.command;
           note_freq[i] = current_midi_note_msg.note;
           env_state[i] = ATTACK_MODE;
@@ -168,13 +182,13 @@ int main(void)
       //      __disable_irq();
       UpdateEnvelope();
       UpdateOutputValue();
+      HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
       update_value_flag = 0;
       //      __enable_irq();
     }
 
     //Update_R2R_DAC();
-    uint8_t output_val_byte =(uint8_t)(output_val);
-    HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val_byte);
+
 
     /* USER CODE END WHILE */
 
@@ -204,7 +218,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 80;
+  RCC_OscInitStruct.PLL.PLLN = 100;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -217,10 +231,10 @@ void SystemClock_Config(void)
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV4;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_2) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
   {
     Error_Handler();
   }
@@ -321,7 +335,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1290;
+  htim6.Init.Period = 1041;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -528,7 +542,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_OTG_HS_FS;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : VBUS_HS_Pin */
+  /*Configure GPIO pin : VBUS_HS_Pin */
   GPIO_InitStruct.Pin = VBUS_HS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -665,16 +679,18 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
+  //  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
+  //  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
   update_value_flag = 1;
 }
 
 void UpdateOutputValue() {
+  //  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_7);
   float val = 0;
   output_val = 0;
   for(int i = 0; i < VOICES; i++) {
     phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
-    val += (base_sine[(phase_accumulator[i]>>10)%4096]);// * envelope[i] / AMPLITUDE);
+    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_pos_saw[(phase_accumulator[i]>>10)%4096]) * envelope[i]) / (2*AMPLITUDE);
   }
 
   output_val = (uint8_t) (val / VOICES);
