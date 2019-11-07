@@ -34,7 +34,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DDS_SCALE_FACTOR 894.745833
+#define DDS_SCALE_FACTOR 89.4745833
 #define VOICES 16
 #define NOT_TRIGGERED 0
 #define ATTACK_MODE 1
@@ -50,11 +50,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac;
-
 SPI_HandleTypeDef hspi5;
-
 TIM_HandleTypeDef htim6;
-
+TIM_HandleTypeDef htim7;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -72,6 +70,11 @@ volatile uint8_t note_freq[VOICES] = {0};
 
 volatile uint8_t update_value_flag = 0;
 volatile uint8_t MIDI_flag = 0;
+
+uint8_t attack = 30;
+uint8_t decay = 30;
+uint8_t sustain = 200;
+uint8_t release = 2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -81,6 +84,7 @@ static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_DAC_Init(void);
 static void MX_TIM6_Init(void);
+static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
@@ -103,7 +107,6 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -127,34 +130,35 @@ int main(void)
   MX_USART1_UART_Init();
   MX_DAC_Init();
   MX_TIM6_Init();
+  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   init_wavetable();
   HAL_TIM_Base_Start_IT(&htim6);
+  HAL_TIM_Base_Start_IT(&htim7);
   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
 
   for(int i = 0; i < VOICES; i++) {
-    env_state[i] = ATTACK_MODE;
+    env_state[i] = NOT_TRIGGERED;
     note_on[i] = MIDI_NOTE_OFF;
     note_freq[i] = 30;
   }
 
-  /*
   note_on[0] = MIDI_NOTE_ON;
-  note_freq[0] = 30;
+  note_freq[0] = 50;
   env_state[0] = ATTACK_MODE;
 
   note_on[1] = MIDI_NOTE_ON;
-  note_freq[1] = 30;
+  note_freq[1] = 54;
   env_state[1] = ATTACK_MODE;
 
   note_on[2] = MIDI_NOTE_ON;
-  note_freq[2] = 30;
+  note_freq[2] = 57;
   env_state[2] = ATTACK_MODE;
 
   note_on[3] = MIDI_NOTE_ON;
-  note_freq[3] = 30;
+  note_freq[3] = 62;
   env_state[3] = ATTACK_MODE;
-  */
+
 
   /* USER CODE END 2 */
 
@@ -335,7 +339,7 @@ static void MX_TIM6_Init(void)
   htim6.Instance = TIM6;
   htim6.Init.Prescaler = 0;
   htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1041;
+  htim6.Init.Period = 1290;
   htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
   {
@@ -350,6 +354,44 @@ static void MX_TIM6_Init(void)
   /* USER CODE BEGIN TIM6_Init 2 */
 
   /* USER CODE END TIM6_Init 2 */
+
+}
+
+/**
+  * @brief TIM7 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM7_Init(void)
+{
+
+  /* USER CODE BEGIN TIM7_Init 0 */
+
+  /* USER CODE END TIM7_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM7_Init 1 */
+
+  /* USER CODE END TIM7_Init 1 */
+  htim7.Instance = TIM7;
+  htim7.Init.Prescaler = 1024;
+  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim7.Init.Period = 35000;
+  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM7_Init 2 */
+
+  /* USER CODE END TIM7_Init 2 */
 
 }
 
@@ -542,7 +584,7 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_OTG_HS_FS;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : VBUS_HS_Pin */
+  /*Configure GPIO pin : VBUS_HS_Pin */
   GPIO_InitStruct.Pin = VBUS_HS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -679,9 +721,23 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  //  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
-  //  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
-  update_value_flag = 1;
+  if(htim->Instance == TIM6){
+    //  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
+    update_value_flag = 1;
+  }
+  else if(htim->Instance == TIM7){
+    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
+    for(int i = 0; i < VOICES; i++){
+      if(note_on[i] == MIDI_NOTE_ON){
+        if(env_state[i] == NOT_TRIGGERED){
+          env_state[i] = ATTACK_MODE;
+        }
+        else{
+          env_state[i] = RELEASE_MODE;
+        }
+      }
+    }
+  }
 }
 
 void UpdateOutputValue() {
@@ -690,7 +746,7 @@ void UpdateOutputValue() {
   output_val = 0;
   for(int i = 0; i < VOICES; i++) {
     phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
-    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_pos_saw[(phase_accumulator[i]>>10)%4096]) * envelope[i]) / (2*AMPLITUDE);
+    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_sine[(phase_accumulator[i]>>10)%4096]) * envelope[i]) / (2*AMPLITUDE);
   }
 
   output_val = (uint8_t) (val / VOICES);
@@ -710,7 +766,7 @@ void UpdateEnvelope() {
     case ATTACK_MODE:
       //    if((UINT32_MAX - envelope_index) < DDS_SCALE_FACTOR){
       if(envelope_index[i] <= 4200000) {
-        envelope_index[i] += (uint32_t)(DDS_SCALE_FACTOR);
+        envelope_index[i] += (uint32_t)(attack * DDS_SCALE_FACTOR);
         envelope[i] = base_pos_saw[(envelope_index[i]>>10)%4096];
       }
       else {
@@ -720,29 +776,28 @@ void UpdateEnvelope() {
       }
       break;
     case DECAY_MODE:
-      //    if(envelope <= base_neg_saw[sustain_level]){
-      if(envelope_index[i] <= 4200000) {
-        envelope_index[i] += (uint32_t)(DDS_SCALE_FACTOR);
+      if(base_neg_saw[(envelope_index[i]>>10)%4096] >= sustain){
+        envelope_index[i] += (uint32_t)(decay * DDS_SCALE_FACTOR);
         envelope[i] = base_neg_saw[(envelope_index[i]>>10)%4096];
       }
       else {
-        envelope_index[i] = 0;
-        //env_state++;
-        env_state[i] = ATTACK_MODE;
+        //envelope_index[i] = 0;
+        env_state[i]++;
+        //env_state[i] = RELEASE_MODE;
       }
       break;
     case SUSTAIN_MODE:
-      env_state[i]++;
+      //env_state[i]++;
       break;
     case RELEASE_MODE:
       //      if((UINT32_MAX - envelope_index) < DDS_SCALE_FACTOR){
       if(envelope_index[i] <= 4200000){
-        envelope_index[i] += (uint32_t)(DDS_SCALE_FACTOR);
+        envelope_index[i] += (uint32_t)(release * DDS_SCALE_FACTOR);
         envelope[i] = base_neg_saw[(envelope_index[i]>>10)%4096];
       }
       else {
         env_state[i] = NOT_TRIGGERED;
-        note_on[i] = MIDI_NOTE_OFF;
+        //note_on[i] = MIDI_NOTE_OFF;
         envelope[i] = 0;
       }
       break;
