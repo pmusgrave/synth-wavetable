@@ -146,11 +146,11 @@ int main(void)
   for(int i = 0; i < VOICES; i++) {
     env_state[i] = NOT_TRIGGERED;
     note_on[i] = MIDI_NOTE_OFF;
-    note_freq[i] = 30;
-
-    lfo_freq[i] = 100;
+    note_freq[i] = 0;
+    lfo_freq[i] = 200;
   }
 
+  /*
   note_on[0] = MIDI_NOTE_ON;
   note_freq[0] = 50;
   env_state[0] = ATTACK_MODE;
@@ -166,7 +166,7 @@ int main(void)
   note_on[3] = MIDI_NOTE_ON;
   note_freq[3] = 62;
   env_state[3] = ATTACK_MODE;
-
+  */
 
   /* USER CODE END 2 */
 
@@ -174,21 +174,30 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    // Receive_MIDI(&hspi5, spi_rx_buffer);
+    Receive_MIDI(&hspi5, spi_rx_buffer);
 
-    /*
     if(MIDI_flag) {
       MIDI_flag = 0;
-      for(int i = 0; i < VOICES; i++) {
-         if(note_on[i] == MIDI_NOTE_OFF) {
-          note_on[i] = current_midi_note_msg.command;
-          note_freq[i] = current_midi_note_msg.note;
-          env_state[i] = ATTACK_MODE;
-          break;
+      switch(current_midi_note_msg.command) {
+      case MIDI_NOTE_ON:
+        for (int i = 0; i < VOICES; i++) {
+          if(note_on[i] == MIDI_NOTE_OFF){
+            note_on[i] = MIDI_NOTE_ON;
+            note_freq[i] = current_midi_note_msg.note;
+            env_state[i] = ATTACK_MODE;
+          }
         }
+        break;
+      case MIDI_NOTE_OFF:
+        for (int i = 0; i < VOICES; i++) {
+          if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_note_msg.note){
+            note_on[i] = MIDI_NOTE_OFF;
+            env_state[i] = RELEASE_MODE;
+          }
+        }
+        break;
       }
     }
-    */
 
     if(update_value_flag) {
       //      __disable_irq();
@@ -311,7 +320,7 @@ static void MX_SPI5_Init(void)
   hspi5.Init.Mode = SPI_MODE_SLAVE;
   hspi5.Init.Direction = SPI_DIRECTION_2LINES;
   hspi5.Init.DataSize = SPI_DATASIZE_8BIT;
-  hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
+  hspi5.Init.CLKPolarity = SPI_POLARITY_HIGH;
   hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi5.Init.NSS = SPI_NSS_HARD_INPUT;
   hspi5.Init.FirstBit = SPI_FIRSTBIT_MSB;
@@ -698,7 +707,7 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
-  //  uint8_t uart_tx_buffer;
+  uint8_t uart_tx_buffer;
 
   current_midi_note_msg.command = spi_rx_buffer[0];
   current_midi_note_msg.note = spi_rx_buffer[1];
@@ -724,6 +733,10 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
     uart_tx_buffer = 'f';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
+  else {
+    uart_tx_buffer = 'z';
+    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  }
   uart_tx_buffer = '\n';
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   */
@@ -734,6 +747,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     //  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
     update_value_flag = 1;
   }
+  /*
   else if(htim->Instance == TIM7){
     HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
     for(int i = 0; i < VOICES; i++){
@@ -747,6 +761,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
       }
     }
   }
+  */
 }
 
 void UpdateOutputValue() {
@@ -755,7 +770,7 @@ void UpdateOutputValue() {
   output_val = 0;
   for(int i = 0; i < VOICES; i++) {
     phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
-    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_sine[(phase_accumulator[i]>>10)%4096]) * envelope[i] * lfo[i]) / (2*65025);
+    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_sine[(phase_accumulator[i]>>10)%4096]) * envelope[i] * lfo[i]) / (2*AMPLITUDE_SQUARED);
   }
 
   output_val = (uint8_t) (val / VOICES);
@@ -813,7 +828,8 @@ void UpdateEnvelope() {
       }
       else {
         env_state[i] = NOT_TRIGGERED;
-        //note_on[i] = MIDI_NOTE_OFF;
+        note_on[i] = MIDI_NOTE_OFF;
+        envelope_index[i] = 0;
         envelope[i] = 0;
         lfo_phase_accumulator[i] = 0;
         lfo[i] = 0;

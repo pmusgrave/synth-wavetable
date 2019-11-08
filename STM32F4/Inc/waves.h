@@ -6,6 +6,7 @@
 
 #define N 4096
 #define AMPLITUDE (255) // divide by number of voices here?
+#define AMPLITUDE_SQUARED (65025)
 
 uint8_t base_sine[N];
 uint8_t base_pos_saw[N];
