@@ -815,6 +815,8 @@ void UpdateEnvelope() {
         env_state[i] = NOT_TRIGGERED;
         //note_on[i] = MIDI_NOTE_OFF;
         envelope[i] = 0;
+        lfo_phase_accumulator[i] = 0;
+        lfo[i] = 0;
       }
       break;
     }
