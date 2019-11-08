@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "midi.h"
 #include "waves.h"
+#include <math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,6 +69,10 @@ volatile uint8_t env_state[VOICES];
 volatile uint8_t note_on[88] = {0};
 volatile uint8_t note_freq[VOICES] = {0};
 
+volatile uint32_t lfo_phase_accumulator[VOICES] = {0};
+volatile uint16_t lfo_freq[VOICES] = {0};
+volatile uint8_t lfo[VOICES] = {0};
+
 volatile uint8_t update_value_flag = 0;
 volatile uint8_t MIDI_flag = 0;
 
@@ -89,6 +94,7 @@ static void MX_TIM7_Init(void);
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void UpdateOutputValue(void);
+void UpdateLFOs(void);
 void UpdateEnvelope(void);
 void Update_R2R_DAC(void);
 /* USER CODE END PFP */
@@ -141,6 +147,8 @@ int main(void)
     env_state[i] = NOT_TRIGGERED;
     note_on[i] = MIDI_NOTE_OFF;
     note_freq[i] = 30;
+
+    lfo_freq[i] = 100;
   }
 
   note_on[0] = MIDI_NOTE_ON;
@@ -185,6 +193,7 @@ int main(void)
     if(update_value_flag) {
       //      __disable_irq();
       UpdateEnvelope();
+      UpdateLFOs();
       UpdateOutputValue();
       HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
       update_value_flag = 0;
@@ -746,10 +755,17 @@ void UpdateOutputValue() {
   output_val = 0;
   for(int i = 0; i < VOICES; i++) {
     phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
-    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_sine[(phase_accumulator[i]>>10)%4096]) * envelope[i]) / (2*AMPLITUDE);
+    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + base_sine[(phase_accumulator[i]>>10)%4096]) * envelope[i] * lfo[i]) / (2*65025);
   }
 
   output_val = (uint8_t) (val / VOICES);
+}
+
+void UpdateLFOs() {
+  for(int i = 0; i < VOICES; i++) {
+    lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
+    lfo[i] = base_tri[(lfo_phase_accumulator[i]>>10)%4096];
+  }
 }
 
 void UpdateEnvelope() {
