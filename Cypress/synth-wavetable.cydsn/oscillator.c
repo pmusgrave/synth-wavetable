@@ -108,6 +108,7 @@ double music_notes[99] = {
 
 
 void ProcessVoice(struct voice* v) {
+    /*
     switch((*v).current_env_mode){
     case ATTACK_MODE:
         (*v).env_index += attack_freq;
@@ -138,9 +139,11 @@ void ProcessVoice(struct voice* v) {
         }
         break;
     }
+    */
 }
 
 void DispatchNote(uint8 note) {
+    /*
     freq = music_notes[note-21] * 20;
     
     if(v1.current_env_mode == NOT_TRIGGERED){
@@ -191,9 +194,11 @@ void DispatchNote(uint8 note) {
         v8.current_env_mode = SUSTAIN_MODE;
         return;
     }
+    */
 }
 
 void NoteOff(uint8 note){
+    /*
     if(v1.note_index == note){
         v1.current_env_mode = NOT_TRIGGERED;
         v1.env_multiplier = 0;
@@ -226,6 +231,7 @@ void NoteOff(uint8 note){
         v8.current_env_mode = NOT_TRIGGERED;
         v8.env_multiplier = 0;
     }
+    */
 }
 
 /* [] END OF FILE */

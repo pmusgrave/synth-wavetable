@@ -84,6 +84,7 @@ extern CYBIT audioClkConfigured;
 *******************************************************************************/
 void InitializeAudioOutPath(void)
 {
+    /*
     SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
     SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
     SPI_RxDMA_SetInterruptCallback(SPI_RxDMA_Done_Interrupt);
@@ -97,35 +98,26 @@ void InitializeAudioOutPath(void)
 	I2STxDMA_SetNumDataElements(0, OUT_BUFSIZE);
     I2STxDMA_SetNumDataElements(1, OUT_BUFSIZE);
     I2STxDMA_SetSrcAddress(0, (void *) SPI_RX_FIFO_RD_PTR);
-    I2STxDMA_SetSrcAddress(0, (void *) output_buffer);
+    //I2STxDMA_SetSrcAddress(0, (void *) output_buffer);
 	I2STxDMA_SetDstAddress(0, (void *) I2S_TX_FIFO_0_PTR);
     //I2STxDMA_SetSrcAddress(1, (void *) output_buffer2);
 	//I2STxDMA_SetDstAddress(1, (void *) I2S_TX_FIFO_0_PTR);
     I2STxDMA_SetInterruptCallback(I2STxDone);
     I2STxDMA_ChEnable();
-    
+    */
     
     /* Start other DMA channels to begin data transfer. */
     
     
 	/* Validate descriptor */
-    I2STxDMA_ValidateDescriptor(0);
-    I2STxDMA_ValidateDescriptor(1);
+    //I2STxDMA_ValidateDescriptor(0);
+    //I2STxDMA_ValidateDescriptor(1);
     //SPI_RxDMA_ValidateDescriptor(0);
     
     /* Start interrupts */
-    isr_I2STxDone_StartEx(I2STxDone);
-    isr_I2STxDone_Enable();
-    CyIntEnable(CYDMA_INTR_NUMBER);
-    
-    freq = 1000;
-    freq2 = 200;
-    freq3 = 300;
-    freq4 = 400;
-    freq5 = 500;
-    freq6 = 600;
-    freq7 = 700;
-    freq8 = 800;
+    //isr_I2STxDone_StartEx(I2STxDone);
+    //isr_I2STxDone_Enable();
+    //CyIntEnable(CYDMA_INTR_NUMBER);
 }
 
 /*******************************************************************************
@@ -147,66 +139,7 @@ void InitializeAudioOutPath(void)
 
 void ProcessAudioOut(int8_t* buffer) 
 {
-    static uint32_t index;
-    static uint32_t index2;
-    static uint32_t index3;
-    static uint32_t index4;
-    static uint32_t index5;
-    static uint32_t index6;
-    static uint32_t index7;
-    static uint32_t index8;
     
-    static uint32_t lfo_index;
-    lfo_index += lfo_freq;
-    lfo_multiplier = lfo_sine[(lfo_index>>8) % 256];
-    
-    //*index = *index + freq;
-    //buffer[0] = base_sine[((*index)>>10)%N];
-    for(int i = 0; i < OUT_BUFSIZE; i++){
-        index += v1.freq; //* lfo_multiplier)>>8;
-        index2 += v2.freq;
-        index3 += v3.freq;
-        index4 += v4.freq;
-        index5 += v5.freq;
-        index6 += v6.freq;
-        index7 += v7.freq;
-        index8 += v8.freq;
-        
-        /*int32_t value = base_sq[((index)>>8) & 0xFFF];
-        + ((base_sine[(index2>>8) & 0xFFF]))
-        + (base_sine[(index3>>8) & 0xFFF])
-        + (base_sine[(index4>>8) & 0xFFF])
-        + (base_sine[(index5>>8) & 0xFFF])
-        + (base_sine[(index6>>8) & 0xFFF])
-        + (base_sine[(index7>>8) & 0xFFF])
-        + (base_sine[(index8>>8) & 0xFFF])
-        */
-        
-        uint32_t sq_portion = ((base_sq[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * ((65535-waveshape)>>8)
-        + ((base_sq[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * ((65535-waveshape)>>8);
-        
-        uint32_t sine_portion = ((base_sine[(index>>8) & 0xFFF] * v1.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index2>>8) & 0xFFF] * v2.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index3>>8) & 0xFFF] * v3.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index4>>8) & 0xFFF] * v4.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index5>>8) & 0xFFF] * v5.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index6>>8) & 0xFFF] * v6.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index7>>8) & 0xFFF] * v7.env_multiplier)>>8) * (waveshape>>8)
-        + ((base_sine[(index8>>8) & 0xFFF] * v8.env_multiplier)>>8) * (waveshape>>8);
-        //buffer[i] = value;
-        
-        //int8_t sine_portion = (base_sine[(index>>8) & 0xFFF] * waveshape>>6)>>8;
-        //uint8_t sq_portion = (base_sq[((index)>>8) & 0xFFF] * (65535-waveshape)>>6)>>8;
-        buffer[i] = sine_portion + sq_portion;//((value + 8*AMPLITUDE) * 2*AMPLITUDE) / (32*AMPLITUDE);
-        
-        ///2 + buffer[i-1]/2;// + buffer[i-2]/3;
-    }
 }
 
 /*******************************************************************************

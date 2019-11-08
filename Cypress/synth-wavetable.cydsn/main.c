@@ -9,25 +9,14 @@
 #include "oscillator.h"
 
 uint32_t sample;
-int8_t masterTxBuffer[BUFFER_SIZE] = {"Data to transmit by SPI Master !"};
+int8_t masterTxBuffer[BUFFER_SIZE] = {0};
 int8_t masterRxBuffer[BUFFER_SIZE] = {0};
-//void FillBufferFromFPGA(int8_t* buffer);
-
-uint8_t current_env_mode = 0;
+  
 uint16_t attack_freq = 0;
 uint16_t decay_freq = 0;
 uint16_t sustain_freq = 0;
 uint16_t release_freq = 0;
 uint16_t waveshape = 0;
-    
-struct voice v1 = {0,0,0,0,0};
-struct voice v2 = {0,0,0,0,0};
-struct voice v3 = {0,0,0,0,0};
-struct voice v4 = {0,0,0,0,0};
-struct voice v5 = {0,0,0,0,0};
-struct voice v6 = {0,0,0,0,0};
-struct voice v7 = {0,0,0,0,0};
-struct voice v8 = {0,0,0,0,0};
 
 /*******************************************************************************
 * USB and MIDI stuff
@@ -67,6 +56,7 @@ char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
 void ProcessUSBMIDI();
+void ProcessSpiTx();
 void UART_PrintNumber(int32_t);
 
 /*******************************************************************************
@@ -75,8 +65,8 @@ void UART_PrintNumber(int32_t);
 int main() {
     LED_Write(1);
     //UART_Start();
-    TxByteCounter_Start();
-    SPIByteCounter_Start();
+    //TxByteCounter_Start();
+    //SPIByteCounter_Start();
     //isr_trigger_StartEx(envelope_trigger_interrupt);
     
     //UART_UartPutString("\r\n\r\n\r\n********************\r\n");
@@ -94,12 +84,11 @@ int main() {
     
     SPI_Start();
     SPI_SpiUartWriteTxData(0u);
-
     while(0u == SPI_SpiUartGetRxBufferSize())
     {
         /* Wait for the first byte exchange. */
     }
-    //SPI_SpiUartClearRxBuffer();
+    SPI_SpiUartClearRxBuffer();
     //UART_UartPutString("SPI initialized... \r\n");
     
     CodecI2CM_Start();	
@@ -111,103 +100,77 @@ int main() {
 		//UART_UartPutString("Codec comm DOESN'T work!... \r\n");
 	}
     
-    I2S_Start();
-    I2S_EnableTx(); /* Unmute the TX output */ 
-    isr_I2S_underflow_StartEx(I2SUnderflow);
+    //I2S_Start();
+    //I2S_EnableTx(); /* Unmute the TX output */ 
+    //isr_I2S_underflow_StartEx(I2SUnderflow);
     
     // Init USB and MIDI
     // references Cypress USB MIDI code example
-    //USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
-    //MIDI1_UART_Start();
+    USB_Start(DEVICE, USB_DWR_VDDD_OPERATION); 
+    MIDI1_UART_Start();
     //MIDI_RX_StartEx(MIDI_RX_VECT);
     //UART_UartPutString("USB MIDI initialized...\r\n");
     
     for(uint32_t i = 0; i < 10000; i++){
         CyGlobalIntDisable;
-        //ProcessUSBMIDI();
+        ProcessUSBMIDI();
         CyGlobalIntEnable;
         CyDelayUs(100);
     }
     
-    //FillBufferFromFPGA(output_buffer);
     CyGlobalIntEnable;
+    
+    SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
+    SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
 
     for(;;) {
-        LED_Write(1);
-        if(DMA_done_flag){
-            DMA_done_flag = 0;
-            
-            if(DMA_counter % 2 == 0){
-                current_buffer = output_buffer2;
-                CyGlobalIntEnable;
-                //FillBufferFromFPGA(output_buffer2);
-            }
-            else {
-                CyGlobalIntEnable;
-                current_buffer = output_buffer;
-                //FillBufferFromFPGA(output_buffer);
-            }
+        ProcessUSBMIDI();
+        if(update_ADC_flag){
+            attack_freq = ADC_GetResult16(0);
+            decay_freq = ADC_GetResult16(1);
+            sustain_freq = ADC_GetResult16(2);
+            release_freq = ADC_GetResult16(3);
+            //attack_freq = 52275;
+            //attack_freq = 60;
+            update_ADC_flag = 0;
         }
     }
 }
 
-//void FillBufferFromFPGA(int8_t* buffer){
-    /*
-    uint8_t val;
-    uint32_t counter = 0;
-    uint8_t wren;
-    uint8_t new_sample;
-    wren = wr_en_Read();
-    new_sample = new_sample_Read();
-    uint8_t temp_gpio_read;
-    
-    uint16_t byte_counter = 0;
-    
-    CyGlobalIntDisable;
-    
-    for(int i = 0; i < OUT_BUFSIZE; i++){
-        cts_Write(1);
-        temp_gpio_read = wr_en_Read();
-        if(wren != temp_gpio_read){
-            counter++;
-            wren = temp_gpio_read;
-            val = spi_miso_testing_Read();
-            sample = sample<<1 | (val&0b1);
-            cts_Write(0);
-            if(val == 1){
-                //UART_UartPutString("1");
-            }
-            else {
-                //UART_UartPutString("0");
-            }
-            
-            //if(counter == 8){
-            temp_gpio_read = new_sample_Read();
-            if(new_sample != temp_gpio_read){
-                
-                counter = 0;
-                
-                new_sample = temp_gpio_read;
-                //UART_UartPutString("\n");
-                
-                
-                
-                //char string[30];
-                //sprintf(string, "%d\n",(sample>>19));
-                //UART_UartPutString(string);
-                byte_counter++;
-                buffer[i] = (sample>>19) & 0xFF;
-                
-                sample = 0;
-                
-            }
-            
-        }
-    }   
-    cts_Write(0);
-    CyGlobalIntEnable;
+void ProcessSpiTx(int8_t * spi_tx_buffer){
+    /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
+    * configured to set an interrupt when they finish transferring all data
+    * elements.
     */
-//}
+    uint8_t complete = 0;
+    // blocking here is probably not a good permanent solution, but it helps
+    // prevent missed MIDI messages for now.
+    // the better solution is most likely a queue of MIDI messages 
+    while(!complete){ 
+        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
+        {
+            /* Once asserted, interrupt bits remain high until cleared. */
+            CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);
+
+            /* Reset receive buffers. */
+            memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
+            //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
+            
+            masterTxBuffer[0] = spi_tx_buffer[0];
+            masterTxBuffer[1] = spi_tx_buffer[1];
+            masterTxBuffer[2] = spi_tx_buffer[2];
+            
+            /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
+            * to the slave and correspondingly the number of bytes returned by the
+            * slave. Therefore it is configured to be invalidated when it
+            * finishes a transfer.
+            */
+            SPI_TxDMA_ValidateDescriptor(0);
+            SPI_TxDMA_ChEnable();
+            complete = 1;
+        }
+    }
+}
 
 //void UART_PrintNumber(int32_t number){
     //char string[30];
@@ -216,7 +179,42 @@ int main() {
 //}
 
 
+void ProcessUSBMIDI(){
+    /*******************************************************************************
+    * USB AND MIDI STUFF
+    * references Cypress USB MIDI code examples
+    *******************************************************************************/
+    
+    if(0u != USB_IsConfigurationChanged()){
+        if(0u != USB_GetConfiguration())   // Initialize IN endpoints when device configured
+        {
+            USB_MIDI_Init(); // Enable output endpoint
+        }
+    }            
+    
+    /* Service USB MIDI when device is configured */
+    if(0u != USB_GetConfiguration())    
+    {
+        /* Call this API from UART RX ISR for Auto DMA mode */
+        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
+            USB_MIDI_IN_Service();
+        #endif
+        /* In Manual EP Memory Management mode OUT_EP_Service() 
+        *  may have to be called from main foreground or from OUT EP ISR
+        */
+        #if(!USB_EP_MANAGEMENT_DMA_AUTO) 
+            USB_MIDI_OUT_Service();
+        #endif
 
+        /* Sending Identity Reply Universal System Exclusive message 
+         * back to computer */
+        if(0u != (USB_MIDI1_InqFlags & USB_INQ_IDENTITY_REQ_FLAG))
+        {
+            USB_PutUsbMidiIn(sizeof(MIDI_IDENTITY_REPLY), (uint8 *)MIDI_IDENTITY_REPLY, USB_MIDI_CABLE_00);
+            USB_MIDI1_InqFlags &= ~USB_INQ_IDENTITY_REQ_FLAG;
+        }
+    }
+}
 
 /*******************************************************************************
 * Function Name: USB_callbackLocalMidiEvent
@@ -249,24 +247,24 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     */
     inqFlagsOld = USB_MIDI1_InqFlags;
     cable = cable;
+
+    ProcessSpiTx(midiMsg);
     
-    /*
     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
     {
-        note = midiMsg[USB_EVENT_BYTE1];
-        DispatchNote(note);
+        // note = midiMsg[USB_EVENT_BYTE1];
+        // DispatchNote(note);
         LED_Write(0);
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
-        note = midiMsg[USB_EVENT_BYTE1];
-        NoteOff(note);
+        // note = midiMsg[USB_EVENT_BYTE1];
+        // NoteOff(note);
         
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;
         LED_Write(1);
     }
-    */
 }    
 
 

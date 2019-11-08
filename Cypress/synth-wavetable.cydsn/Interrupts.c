@@ -78,8 +78,8 @@ CY_ISR(SPIDone){
     */
     SPI_TxDMA_ValidateDescriptor(0);
     SPI_TxDMA_ChEnable();
-    I2STxDMA_ValidateDescriptor(0);
-    I2STxDMA_ChEnable();
+    //I2STxDMA_ValidateDescriptor(0);
+    //I2STxDMA_ChEnable();
 }
 
 CY_ISR(SPI_RxDMA_Done_Interrupt){
