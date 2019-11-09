@@ -191,19 +191,8 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_BOOT.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_TxDMA.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_TxDMA.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset_aliases.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_reset_PM.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_RxDMA.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPI_RxDMA.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPIByteCounter.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPIByteCounter.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\SPIByteCounter_PM.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_SPIDone.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\isr_SPIDone.h</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_3.c</File>
-          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\Clock_3.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CodecI2CM_SCBCLK.c</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CodecI2CM_SCBCLK.h</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CodecI2CM_sda.c</File>
