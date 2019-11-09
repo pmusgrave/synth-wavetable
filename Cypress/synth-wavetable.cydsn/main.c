@@ -51,7 +51,21 @@ volatile uint8 usbActivityCounter = 0u;
 
 uint8 inqFlagsOld = 0u;
 
-uint8 midiMsg[MIDI_MSG_SIZE];   
+uint8 midiMsg[MIDI_MSG_SIZE];
+struct midi_note_msg {
+    uint8_t note_on;
+    uint8_t note_freq;
+    uint8_t velocity;
+};
+#define MAX_QUEUE_SIZE 255
+struct msg_queue {
+    uint8 head;
+    uint8 tail;
+    struct midi_note_msg queue[MAX_QUEUE_SIZE];
+} midi_msg_queue;
+void enqueue(struct midi_note_msg midi_msg);
+struct midi_note_msg dequeue(void);
+
 char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
@@ -111,6 +125,8 @@ int main() {
     //MIDI_RX_StartEx(MIDI_RX_VECT);
     //UART_UartPutString("USB MIDI initialized...\r\n");
     
+    
+    
     for(uint32_t i = 0; i < 10000; i++){
         CyGlobalIntDisable;
         ProcessUSBMIDI();
@@ -125,6 +141,11 @@ int main() {
 
     for(;;) {
         ProcessUSBMIDI();
+        
+        if(midi_msg_queue.head != midi_msg_queue.tail){
+            ProcessSpiTx(dequeue());
+        }
+        
         if(update_ADC_flag){
             attack_freq = ADC_GetResult16(0);
             decay_freq = ADC_GetResult16(1);
@@ -137,7 +158,7 @@ int main() {
     }
 }
 
-void ProcessSpiTx(int8_t * spi_tx_buffer){
+void ProcessSpiTx(struct midi_note_msg midi_note){
     /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
     * configured to set an interrupt when they finish transferring all data
     * elements.
@@ -156,9 +177,9 @@ void ProcessSpiTx(int8_t * spi_tx_buffer){
             memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
             //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
             
-            masterTxBuffer[0] = spi_tx_buffer[0];
-            masterTxBuffer[1] = spi_tx_buffer[1];
-            masterTxBuffer[2] = spi_tx_buffer[2];
+            masterTxBuffer[0] = midi_note.note_on;
+            masterTxBuffer[1] = midi_note.note_freq;
+            masterTxBuffer[2] = midi_note.velocity;
             
             /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
             * to the slave and correspondingly the number of bytes returned by the
@@ -179,12 +200,11 @@ void ProcessSpiTx(int8_t * spi_tx_buffer){
 //}
 
 
+/*******************************************************************************
+* USB AND MIDI STUFF
+* references Cypress USB MIDI code examples
+*******************************************************************************/
 void ProcessUSBMIDI(){
-    /*******************************************************************************
-    * USB AND MIDI STUFF
-    * references Cypress USB MIDI code examples
-    *******************************************************************************/
-    
     if(0u != USB_IsConfigurationChanged()){
         if(0u != USB_GetConfiguration())   // Initialize IN endpoints when device configured
         {
@@ -248,13 +268,20 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
     inqFlagsOld = USB_MIDI1_InqFlags;
     cable = cable;
 
-    ProcessSpiTx(midiMsg);
+    
+    //ProcessSpiTx(midiMsg);
     
     if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_ON)
     {
         // note = midiMsg[USB_EVENT_BYTE1];
         // DispatchNote(note);
         LED_Write(0);
+        struct midi_note_msg current_msg = {
+            midiMsg[USB_EVENT_BYTE0],
+            midiMsg[USB_EVENT_BYTE1],
+            midiMsg[USB_EVENT_BYTE2],
+        };
+        enqueue(current_msg);
     }
     else if (midiMsg[USB_EVENT_BYTE0] == USB_MIDI_NOTE_OFF)
     {
@@ -264,9 +291,28 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;
         LED_Write(1);
+        struct midi_note_msg current_msg = {
+            midiMsg[USB_EVENT_BYTE0],
+            midiMsg[USB_EVENT_BYTE1],
+            midiMsg[USB_EVENT_BYTE2],
+        };
+        enqueue(current_msg);
     }
 }    
 
+
+void enqueue (struct midi_note_msg midi_msg) {
+    midi_msg_queue.queue[midi_msg_queue.head++] = midi_msg;
+    /*
+    if(midi_msg_queue.head >= MAX_QUEUE_SIZE){
+        midi_msg_queue.head = 0;
+    }
+    */
+}
+
+struct midi_note_msg dequeue(void) {
+    return midi_msg_queue.queue[midi_msg_queue.tail++];   
+}
 
 /*******************************************************************************
 * Function Name: USB_MIDI1_ProcessUsbOut_EntryCallback
