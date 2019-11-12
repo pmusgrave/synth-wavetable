@@ -44,12 +44,14 @@
       <Data key="43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/23b8206d-1c77-4e61-be4a-b4037d5de5fc" value="UART_tx" />
       <Data key="81bdb20a-a1d8-4c6f-a19b-7ca5c1145873" value="spi_ss" />
       <Data key="92b3b3ef-4dfe-4e74-81f8-0a8f40d7dd48" value="pot4" />
+      <Data key="3099ed5f-d847-401f-900d-ed98361b0bad" value="CTS" />
       <Data key="5711f6e8-cb8a-4621-9e37-afae2646afe9" value="pot3" />
       <Data key="1425177d-0d0e-4468-8bcc-e638e5509a9b" value="MIDI_IN1" />
       <Data key="8843558f-8028-4242-b419-20e93446a62f" value="Codec_MCLK" />
       <Data key="70748048-42c3-4141-a1d8-dbd9c85a61dc" value="wr_en" />
       <Data key="77715107-f8d5-47e5-a629-0fb83101ac6b" value="pot1" />
       <Data key="aa76144b-bc0b-4c4b-9d8e-31ea7d3defff" value="spi_miso" />
+      <Data key="c054cd9a-6eda-4d4d-a221-bbb2b6397dc2" value="CTS" />
       <Data key="cf25cc6f-d208-4020-b61a-99a306f71ed4" value="pot4" />
       <Data key="de616092-3627-4d1c-9049-719cec881e0a" value="Codec_ADCDAT" />
       <Data key="e522a7e0-f158-49d3-97a2-db5d8ba4d077" value="spi_mosi" />
@@ -3960,6 +3962,11 @@
         <Data key="Port Format" value="2,3" />
       </Group>
     </Group>
+    <Group key="3099ed5f-d847-401f-900d-ed98361b0bad">
+      <Group key="0">
+        <Data key="Port Format" value="6,0" />
+      </Group>
+    </Group>
     <Group key="5711f6e8-cb8a-4621-9e37-afae2646afe9">
       <Group key="0">
         <Data key="Port Format" value="2,2" />
@@ -3973,6 +3980,11 @@
     <Group key="aa76144b-bc0b-4c4b-9d8e-31ea7d3defff">
       <Group key="0">
         <Data key="Port Format" value="2,1" />
+      </Group>
+    </Group>
+    <Group key="c054cd9a-6eda-4d4d-a221-bbb2b6397dc2">
+      <Group key="0">
+        <Data key="Port Format" value="9,3" />
       </Group>
     </Group>
     <Group key="cf25cc6f-d208-4020-b61a-99a306f71ed4">

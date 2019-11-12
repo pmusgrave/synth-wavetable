@@ -70,7 +70,7 @@ char buff[32];//output UART buffer
 
 // volatile uint8_t MIDI_RX_flag = 0;
 void ProcessUSBMIDI();
-void ProcessSpiTx();
+void ProcessSpiTx(uint8_t);
 void UART_PrintNumber(int32_t);
 
 /*******************************************************************************
@@ -125,8 +125,6 @@ int main() {
     //MIDI_RX_StartEx(MIDI_RX_VECT);
     //UART_UartPutString("USB MIDI initialized...\r\n");
     
-    
-    
     for(uint32_t i = 0; i < 10000; i++){
         CyGlobalIntDisable;
         ProcessUSBMIDI();
@@ -138,12 +136,41 @@ int main() {
     
     SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
     SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
+    
+    struct midi_note_msg test0 = {USB_MIDI_NOTE_ON, 42, 127};
+    struct midi_note_msg test1 = {USB_MIDI_NOTE_OFF, 42, 127};
+    struct midi_note_msg test2 = {USB_MIDI_NOTE_ON, 43, 127};
+    struct midi_note_msg test3 = {USB_MIDI_NOTE_OFF, 43, 127};
+    struct midi_note_msg test4 = {USB_MIDI_NOTE_ON, 44, 127};
+    struct midi_note_msg test5 = {USB_MIDI_NOTE_OFF, 44, 127};
 
+    uint8_t init_msg[14] = {"\nHello world!\n"};
+    
     for(;;) {
         ProcessUSBMIDI();
         
-        if(midi_msg_queue.head != midi_msg_queue.tail){
-            ProcessSpiTx(dequeue());
+        for(int i = 0; i < 15; i++){
+            ProcessSpiTx(init_msg[i]);
+            CyDelay(2);
+        }
+        
+        if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
+            struct midi_note_msg current_msg = dequeue();
+            ProcessSpiTx(current_msg.note_on);
+            CyDelay(2);
+            ProcessSpiTx(current_msg.note_freq);
+            CyDelay(2);
+            ProcessSpiTx(current_msg.velocity);
+            CyDelay(2);
+        }
+        else {
+            ProcessSpiTx('\n');
+            enqueue(test0);
+            enqueue(test1);
+            enqueue(test2);
+            enqueue(test3);
+            enqueue(test4);
+            enqueue(test5);
         }
         
         if(update_ADC_flag){
@@ -158,7 +185,7 @@ int main() {
     }
 }
 
-void ProcessSpiTx(struct midi_note_msg midi_note){
+void ProcessSpiTx(uint8_t byte){
     /* Check whether data exchange has been finished. RxDmaM and RxDmaS are 
     * configured to set an interrupt when they finish transferring all data
     * elements.
@@ -177,9 +204,12 @@ void ProcessSpiTx(struct midi_note_msg midi_note){
             memset((void *) masterRxBuffer, 0, BUFFER_SIZE);
             //memset((void *) slaveRxBuffer,  0, BUFFER_SIZE);
             
+            masterTxBuffer[0] = byte;
+            /*
             masterTxBuffer[0] = midi_note.note_on;
             masterTxBuffer[1] = midi_note.note_freq;
             masterTxBuffer[2] = midi_note.velocity;
+            */
             
             /* Re-enable transfer. TxDmaM controls the number of bytes to be sent
             * to the slave and correspondingly the number of bytes returned by the
