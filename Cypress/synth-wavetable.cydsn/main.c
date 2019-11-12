@@ -52,19 +52,20 @@ volatile uint8 usbActivityCounter = 0u;
 uint8 inqFlagsOld = 0u;
 
 uint8 midiMsg[MIDI_MSG_SIZE];
-struct midi_note_msg {
-    uint8_t note_on;
-    uint8_t note_freq;
-    uint8_t velocity;
+struct midi_msg {
+    uint8_t byte0;
+    uint8_t byte1;
+    uint8_t byte2;
+    uint8_t byte3;
 };
 #define MAX_QUEUE_SIZE 255
 struct msg_queue {
-    uint8 head;
-    uint8 tail;
-    struct midi_note_msg queue[MAX_QUEUE_SIZE];
+    uint8_t head;
+    uint8_t tail;
+    struct midi_msg queue[MAX_QUEUE_SIZE];
 } midi_msg_queue;
-void enqueue(struct midi_note_msg midi_msg);
-struct midi_note_msg dequeue(void);
+void enqueue(struct midi_msg midi_msg);
+struct midi_msg dequeue(void);
 
 char buff[32];//output UART buffer
 
@@ -137,12 +138,12 @@ int main() {
     SPI_RxDMA_Start((void *)SPI_RX_FIFO_RD_PTR, (void *)masterRxBuffer);
     SPI_TxDMA_Start((void *)masterTxBuffer, (void *)SPI_TX_FIFO_WR_PTR);
     
-    struct midi_note_msg test0 = {USB_MIDI_NOTE_ON, 42, 127};
-    struct midi_note_msg test1 = {USB_MIDI_NOTE_OFF, 42, 127};
-    struct midi_note_msg test2 = {USB_MIDI_NOTE_ON, 43, 127};
-    struct midi_note_msg test3 = {USB_MIDI_NOTE_OFF, 43, 127};
-    struct midi_note_msg test4 = {USB_MIDI_NOTE_ON, 44, 127};
-    struct midi_note_msg test5 = {USB_MIDI_NOTE_OFF, 44, 127};
+    struct midi_msg test0 = {USB_MIDI_NOTE_ON, 42, 127, 0};
+    struct midi_msg test1 = {USB_MIDI_NOTE_OFF, 42, 127, 0};
+    struct midi_msg test2 = {USB_MIDI_NOTE_ON, 43, 127, 0};
+    struct midi_msg test3 = {USB_MIDI_NOTE_OFF, 43, 127, 0};
+    struct midi_msg test4 = {USB_MIDI_NOTE_ON, 44, 127, 0};
+    struct midi_msg test5 = {USB_MIDI_NOTE_OFF, 44, 127, 0};
 
     uint8_t init_msg[14] = {"\nHello world!\n"};
     
@@ -151,13 +152,15 @@ int main() {
         
         if(trigger_flag) {
             if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
-                struct midi_note_msg current_msg = dequeue();
-                ProcessSpiTx(current_msg.note_on);
+                struct midi_msg current_msg = dequeue();
+                ProcessSpiTx(current_msg.byte0);
                 CyDelay(2);
-                ProcessSpiTx(current_msg.note_freq);
+                ProcessSpiTx(current_msg.byte1);
                 CyDelay(2);
-                //ProcessSpiTx(current_msg.velocity);
-                //CyDelay(2);
+                ProcessSpiTx(current_msg.byte2);
+                CyDelay(2);
+                ProcessSpiTx(current_msg.byte3);
+                CyDelay(2);
             }
         }
         else{
@@ -167,10 +170,10 @@ int main() {
             }
             
             if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
-                struct midi_note_msg current_msg = dequeue();
-                ProcessSpiTx(current_msg.note_on);
+                struct midi_msg current_msg = dequeue();
+                ProcessSpiTx(current_msg.byte0);
                 CyDelay(2);
-                ProcessSpiTx(current_msg.note_freq);
+                ProcessSpiTx(current_msg.byte1);
                 CyDelay(2);
                 //ProcessSpiTx(current_msg.velocity);
                 //CyDelay(2);
@@ -188,9 +191,42 @@ int main() {
         
         if(update_ADC_flag){
             attack_freq = ADC_GetResult16(0);
+            struct midi_msg attack_cc = {
+                0x14,
+                attack_freq>>4,
+                0,
+                0
+            };
+            
             decay_freq = ADC_GetResult16(1);
+            struct midi_msg decay_cc = {
+                0x15,
+                decay_freq>>4,
+                0,
+                0
+            };
+            
             sustain_freq = ADC_GetResult16(2);
+            struct midi_msg sustain_cc = {
+                0x16,
+                sustain_freq>>4,
+                0,
+                0
+            };
+            
             release_freq = ADC_GetResult16(3);
+            struct midi_msg release_cc = {
+                0x17,
+                release_freq>>4,
+                0,
+                0
+            };
+            
+            enqueue(attack_cc);
+            enqueue(decay_cc);
+            enqueue(sustain_cc);
+            enqueue(release_cc);
+            
             //attack_freq = 52275;
             //attack_freq = 60;
             update_ADC_flag = 0;
@@ -319,10 +355,11 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         // note = midiMsg[USB_EVENT_BYTE1];
         // DispatchNote(note);
         LED_Write(0);
-        struct midi_note_msg current_msg = {
+        struct midi_msg current_msg = {
             midiMsg[USB_EVENT_BYTE0],
             midiMsg[USB_EVENT_BYTE1],
             midiMsg[USB_EVENT_BYTE2],
+            midiMsg[USB_EVENT_BYTE3]
         };
         enqueue(current_msg);
     }
@@ -334,26 +371,22 @@ void USB_callbackLocalMidiEvent(uint8 cable, uint8 *midiMsg) CYREENTRANT
         //trigger_flag = 0;
         //current_env_mode = RELEASE_MODE;
         LED_Write(1);
-        struct midi_note_msg current_msg = {
+        struct midi_msg current_msg = {
             midiMsg[USB_EVENT_BYTE0],
             midiMsg[USB_EVENT_BYTE1],
             midiMsg[USB_EVENT_BYTE2],
+            midiMsg[USB_EVENT_BYTE3]
         };
         enqueue(current_msg);
     }
 }    
 
 
-void enqueue (struct midi_note_msg midi_msg) {
+void enqueue (struct midi_msg midi_msg) {
     midi_msg_queue.queue[midi_msg_queue.head++] = midi_msg;
-    /*
-    if(midi_msg_queue.head >= MAX_QUEUE_SIZE){
-        midi_msg_queue.head = 0;
-    }
-    */
 }
 
-struct midi_note_msg dequeue(void) {
+struct midi_msg dequeue(void) {
     return midi_msg_queue.queue[midi_msg_queue.tail++];   
 }
 
