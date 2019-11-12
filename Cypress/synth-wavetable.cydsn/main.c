@@ -81,7 +81,7 @@ int main() {
     //UART_Start();
     //TxByteCounter_Start();
     //SPIByteCounter_Start();
-    //isr_trigger_StartEx(envelope_trigger_interrupt);
+    isr_trigger_StartEx(envelope_trigger_interrupt);
     
     //UART_UartPutString("\r\n\r\n\r\n********************\r\n");
     //UART_UartPutString("PMA Wavetable Synth\r\n");
@@ -149,28 +149,41 @@ int main() {
     for(;;) {
         ProcessUSBMIDI();
         
-        for(int i = 0; i < 15; i++){
-            ProcessSpiTx(init_msg[i]);
-            CyDelay(2);
+        if(trigger_flag) {
+            if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
+                struct midi_note_msg current_msg = dequeue();
+                ProcessSpiTx(current_msg.note_on);
+                CyDelay(2);
+                ProcessSpiTx(current_msg.note_freq);
+                CyDelay(2);
+                //ProcessSpiTx(current_msg.velocity);
+                //CyDelay(2);
+            }
         }
-        
-        if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
-            struct midi_note_msg current_msg = dequeue();
-            ProcessSpiTx(current_msg.note_on);
-            CyDelay(2);
-            ProcessSpiTx(current_msg.note_freq);
-            CyDelay(2);
-            ProcessSpiTx(current_msg.velocity);
-            CyDelay(2);
-        }
-        else {
-            ProcessSpiTx('\n');
-            enqueue(test0);
-            enqueue(test1);
-            enqueue(test2);
-            enqueue(test3);
-            enqueue(test4);
-            enqueue(test5);
+        else{
+            for(int i = 0; i < 15; i++){
+                ProcessSpiTx(init_msg[i]);
+                CyDelay(2);
+            }
+            
+            if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
+                struct midi_note_msg current_msg = dequeue();
+                ProcessSpiTx(current_msg.note_on);
+                CyDelay(2);
+                ProcessSpiTx(current_msg.note_freq);
+                CyDelay(2);
+                //ProcessSpiTx(current_msg.velocity);
+                //CyDelay(2);
+            }
+            else {
+                ProcessSpiTx('\n');
+                enqueue(test0);
+                enqueue(test1);
+                enqueue(test2);
+                enqueue(test3);
+                enqueue(test4);
+                enqueue(test5);
+            }
         }
         
         if(update_ADC_flag){

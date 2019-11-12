@@ -19,7 +19,7 @@
         <register>
           <name>RX_MIDI1_UART_RX_ADDRESS1</name>
           <description>RX Address1 Register</description>
-          <addressOffset>0x400F0020</addressOffset>
+          <addressOffset>0x400F0021</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -28,7 +28,7 @@
         <register>
           <name>RX_MIDI1_UART_RX_ADDRESS2</name>
           <description>RX Address2 Register</description>
-          <addressOffset>0x400F0030</addressOffset>
+          <addressOffset>0x400F0031</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -37,7 +37,7 @@
         <register>
           <name>RX_MIDI1_UART_RX_DATA</name>
           <description>RX Data Register</description>
-          <addressOffset>0x400F0040</addressOffset>
+          <addressOffset>0x400F0041</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -46,7 +46,7 @@
         <register>
           <name>TX_MIDI1_UART_TX_DATA</name>
           <description>TX Data Register</description>
-          <addressOffset>0x400F0044</addressOffset>
+          <addressOffset>0x400F0046</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -55,7 +55,7 @@
         <register>
           <name>RX_MIDI1_UART_RX_STATUS</name>
           <description>RX status register</description>
-          <addressOffset>0x400F0063</addressOffset>
+          <addressOffset>0x400F0060</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -115,7 +115,7 @@
         <register>
           <name>TX_MIDI1_UART_TX_STATUS</name>
           <description>TX status register</description>
-          <addressOffset>0x400F0067</addressOffset>
+          <addressOffset>0x400F0065</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -29204,7 +29204,7 @@
         <register>
           <name>TX_STATUS_0_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0066</addressOffset>
+          <addressOffset>0x400F0067</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -29336,7 +29336,7 @@
         <register>
           <name>CONTROL_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0076</addressOffset>
+          <addressOffset>0x400F0077</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -31328,7 +31328,7 @@
         <register>
           <name>AudioClkSel_CONTROL_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0073</addressOffset>
+          <addressOffset>0x400F0075</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
