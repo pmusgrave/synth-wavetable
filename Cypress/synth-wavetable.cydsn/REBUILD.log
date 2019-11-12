@@ -1,4 +1,4 @@
---------------- Rebuild Started: 11/08/2019 14:52:49 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
+--------------- Rebuild Started: 11/12/2019 13:22:13 Project: synth-wavetable, Configuration: ARM GCC 5.4-2016-q2-update Debug ---------------
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\main.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\Codec.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\Interrupts.o"
@@ -77,13 +77,7 @@ Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_SPI.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_BOOT.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_SPI_BOOT.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_TxDMA.o"
-Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_reset.o"
-Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_reset_PM.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPI_RxDMA.o"
-Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPIByteCounter.o"
-Deleting file ".\CortexM0\ARM_GCC_541\Debug\SPIByteCounter_PM.o"
-Deleting file ".\CortexM0\ARM_GCC_541\Debug\isr_SPIDone.o"
-Deleting file ".\CortexM0\ARM_GCC_541\Debug\Clock_3.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCBCLK.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda_PM.o"
@@ -116,6 +110,8 @@ Deleting file ".\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\cy_em_eeprom.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\CyDMA.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\CyLFClk.o"
+Deleting file ".\CortexM0\ARM_GCC_541\Debug\CTS.o"
+Deleting file ".\CortexM0\ARM_GCC_541\Debug\CTS_PM.o"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\synth-wavetable.hex"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf"
 Deleting file ".\CortexM0\ARM_GCC_541\Debug\synth-wavetable.map"
@@ -143,46 +139,11 @@ API Generation...
 Dependency Generation...
 Cleanup...
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/main.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c main.c -o .\CortexM0\ARM_GCC_541\Debug\main.o
-main.c: In function 'USB_callbackLocalMidiEvent':
-main.c:251:18: warning: pointer targets in passing argument 1 of 'ProcessSpiTx' differ in signedness [-Wpointer-sign]
-     ProcessSpiTx(midiMsg);
-                  ^
-main.c:140:6: note: expected 'int8_t * {aka signed char *}' but argument is of type 'uint8 * {aka unsigned char *}'
- void ProcessSpiTx(int8_t * spi_tx_buffer){
-      ^
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/Codec.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Codec.c -o .\CortexM0\ARM_GCC_541\Debug\Codec.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/Interrupts.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Interrupts.c -o .\CortexM0\ARM_GCC_541\Debug\Interrupts.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/waves.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c waves.c -o .\CortexM0\ARM_GCC_541\Debug\waves.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/AudioControl.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c AudioControl.c -o .\CortexM0\ARM_GCC_541\Debug\AudioControl.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/AudioOut.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c AudioOut.c -o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o
-AudioOut.c: In function 'ProcessAudioOut':
-AudioOut.c:159:28: warning: "/*" within comment [-Wcomment]
-         index += v1.freq; //* lfo_multiplier)>>8;
-                            ^
-AudioOut.c:149:21: warning: unused variable 'index8' [-Wunused-variable]
-     static uint32_t index8;
-                     ^
-AudioOut.c:148:21: warning: unused variable 'index7' [-Wunused-variable]
-     static uint32_t index7;
-                     ^
-AudioOut.c:147:21: warning: unused variable 'index6' [-Wunused-variable]
-     static uint32_t index6;
-                     ^
-AudioOut.c:146:21: warning: unused variable 'index5' [-Wunused-variable]
-     static uint32_t index5;
-                     ^
-AudioOut.c:145:21: warning: unused variable 'index4' [-Wunused-variable]
-     static uint32_t index4;
-                     ^
-AudioOut.c:144:21: warning: unused variable 'index3' [-Wunused-variable]
-     static uint32_t index3;
-                     ^
-AudioOut.c:143:21: warning: unused variable 'index2' [-Wunused-variable]
-     static uint32_t index2;
-                     ^
-AudioOut.c:142:21: warning: unused variable 'index' [-Wunused-variable]
-     static uint32_t index;
-                     ^
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/oscillator.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c oscillator.c -o .\CortexM0\ARM_GCC_541\Debug\oscillator.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/cyfitter_cfg.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\cyfitter_cfg.c -o .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/cymetadata.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\cymetadata.c -o .\CortexM0\ARM_GCC_541\Debug\cymetadata.o
@@ -255,13 +216,7 @@ arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPI_BOOT.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPI_BOOT.c -o .\CortexM0\ARM_GCC_541\Debug\SPI_BOOT.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPI_SPI_BOOT.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPI_SPI_BOOT.c -o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_BOOT.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPI_TxDMA.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPI_TxDMA.c -o .\CortexM0\ARM_GCC_541\Debug\SPI_TxDMA.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPI_reset.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPI_reset.c -o .\CortexM0\ARM_GCC_541\Debug\SPI_reset.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPI_reset_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPI_reset_PM.c -o .\CortexM0\ARM_GCC_541\Debug\SPI_reset_PM.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPI_RxDMA.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPI_RxDMA.c -o .\CortexM0\ARM_GCC_541\Debug\SPI_RxDMA.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPIByteCounter.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPIByteCounter.c -o .\CortexM0\ARM_GCC_541\Debug\SPIByteCounter.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/SPIByteCounter_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\SPIByteCounter_PM.c -o .\CortexM0\ARM_GCC_541\Debug\SPIByteCounter_PM.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/isr_SPIDone.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\isr_SPIDone.c -o .\CortexM0\ARM_GCC_541\Debug\isr_SPIDone.o
-arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/Clock_3.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\Clock_3.c -o .\CortexM0\ARM_GCC_541\Debug\Clock_3.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CodecI2CM_SCBCLK.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CodecI2CM_SCBCLK.c -o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCBCLK.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CodecI2CM_sda.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CodecI2CM_sda.c -o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CodecI2CM_sda_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CodecI2CM_sda_PM.c -o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda_PM.o
@@ -293,8 +248,10 @@ arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/cy_em_eeprom.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\cy_em_eeprom.c -o .\CortexM0\ARM_GCC_541\Debug\cy_em_eeprom.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CyDMA.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CyDMA.c -o .\CortexM0\ARM_GCC_541\Debug\CyDMA.o
 arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CyLFClk.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CyLFClk.c -o .\CortexM0\ARM_GCC_541\Debug\CyLFClk.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CTS.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CTS.c -o .\CortexM0\ARM_GCC_541\Debug\CTS.o
+arm-none-eabi-gcc.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -Wa,-alh=.\CortexM0\ARM_GCC_541\Debug/CTS_PM.lst -g -D DEBUG -D CY_CORE_ID=0 -Wall -ffunction-sections -ffat-lto-objects -Og -c Generated_Source\PSoC4\CTS_PM.c -o .\CortexM0\ARM_GCC_541\Debug\CTS_PM.o
 arm-none-eabi-as.exe -mcpu=cortex-m0 -mthumb -I. -IGenerated_Source\PSoC4 -alh=.\CortexM0\ARM_GCC_541\Debug/CyBootAsmGnu.lst -g -W -o .\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o Generated_Source\PSoC4\CyBootAsmGnu.s
-arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a .\CortexM0\ARM_GCC_541\Debug\CodecI2CM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_INT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_BOOT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_MASTER.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_BOOT.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\I2STxDMA.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC_PM.o .\CortexM0\ARM_GCC_541\Debug\I2S.o .\CortexM0\ARM_GCC_541\Debug\I2S_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel_PM.o .\CortexM0\ARM_GCC_541\Debug\LED.o .\CortexM0\ARM_GCC_541\Debug\LED_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_I2STxDone.o .\CortexM0\ARM_GCC_541\Debug\isr_I2S_underflow.o .\CortexM0\ARM_GCC_541\Debug\ADC.o .\CortexM0\ARM_GCC_541\Debug\ADC_PM.o .\CortexM0\ARM_GCC_541\Debug\ADC_INT.o .\CortexM0\ARM_GCC_541\Debug\isr_ADC_EOC.o .\CortexM0\ARM_GCC_541\Debug\pot1.o .\CortexM0\ARM_GCC_541\Debug\pot1_PM.o .\CortexM0\ARM_GCC_541\Debug\TxByteCounter.o .\CortexM0\ARM_GCC_541\Debug\TxByteCounter_PM.o .\CortexM0\ARM_GCC_541\Debug\Clock_1.o .\CortexM0\ARM_GCC_541\Debug\pot2.o .\CortexM0\ARM_GCC_541\Debug\pot2_PM.o .\CortexM0\ARM_GCC_541\Debug\pot3.o .\CortexM0\ARM_GCC_541\Debug\pot3_PM.o .\CortexM0\ARM_GCC_541\Debug\pot4.o .\CortexM0\ARM_GCC_541\Debug\pot4_PM.o .\CortexM0\ARM_GCC_541\Debug\trigger.o .\CortexM0\ARM_GCC_541\Debug\trigger_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_trigger.o .\CortexM0\ARM_GCC_541\Debug\Clock_2.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_PM.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\USB.o .\CortexM0\ARM_GCC_541\Debug\USB_audio.o .\CortexM0\ARM_GCC_541\Debug\USB_boot.o .\CortexM0\ARM_GCC_541\Debug\USB_cdc.o .\CortexM0\ARM_GCC_541\Debug\USB_cls.o .\CortexM0\ARM_GCC_541\Debug\USB_descr.o .\CortexM0\ARM_GCC_541\Debug\USB_drv.o .\CortexM0\ARM_GCC_541\Debug\USB_episr.o .\CortexM0\ARM_GCC_541\Debug\USB_hid.o .\CortexM0\ARM_GCC_541\Debug\USB_pm.o .\CortexM0\ARM_GCC_541\Debug\USB_std.o .\CortexM0\ARM_GCC_541\Debug\USB_vnd.o .\CortexM0\ARM_GCC_541\Debug\USB_midi.o .\CortexM0\ARM_GCC_541\Debug\USB_msc.o .\CortexM0\ARM_GCC_541\Debug\SPI.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_UART.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\SPI_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI.o .\CortexM0\ARM_GCC_541\Debug\SPI_BOOT.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_BOOT.o .\CortexM0\ARM_GCC_541\Debug\SPI_TxDMA.o .\CortexM0\ARM_GCC_541\Debug\SPI_reset.o .\CortexM0\ARM_GCC_541\Debug\SPI_reset_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_RxDMA.o .\CortexM0\ARM_GCC_541\Debug\SPIByteCounter.o .\CortexM0\ARM_GCC_541\Debug\SPIByteCounter_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_SPIDone.o .\CortexM0\ARM_GCC_541\Debug\Clock_3.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\ADC_IRQ.o .\CortexM0\ARM_GCC_541\Debug\ADC_intClock.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_IntClock.o .\CortexM0\ARM_GCC_541\Debug\USB_Dp.o .\CortexM0\ARM_GCC_541\Debug\USB_Dp_PM.o .\CortexM0\ARM_GCC_541\Debug\USB_Dm.o .\CortexM0\ARM_GCC_541\Debug\USB_Dm_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\SPI_sclk_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_sclk_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_miso_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_miso_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_mosi_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_mosi_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_ss0_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_ss0_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\CyFlash.o .\CortexM0\ARM_GCC_541\Debug\CyLib.o .\CortexM0\ARM_GCC_541\Debug\cyPm.o .\CortexM0\ARM_GCC_541\Debug\cyutils.o .\CortexM0\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM0\ARM_GCC_541\Debug\CyDMA.o .\CortexM0\ARM_GCC_541\Debug\CyLFClk.o .\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o
+arm-none-eabi-ar.exe -rs .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a .\CortexM0\ARM_GCC_541\Debug\CodecI2CM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_INT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_BOOT.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_I2C_MASTER.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_BOOT.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_BCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\I2STxDMA.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC.o .\CortexM0\ARM_GCC_541\Debug\Codec_LRC_PM.o .\CortexM0\ARM_GCC_541\Debug\I2S.o .\CortexM0\ARM_GCC_541\Debug\I2S_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT.o .\CortexM0\ARM_GCC_541\Debug\Codec_DACDAT_PM.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK.o .\CortexM0\ARM_GCC_541\Debug\Codec_MCLK_PM.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel.o .\CortexM0\ARM_GCC_541\Debug\AudioClkSel_PM.o .\CortexM0\ARM_GCC_541\Debug\LED.o .\CortexM0\ARM_GCC_541\Debug\LED_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_I2STxDone.o .\CortexM0\ARM_GCC_541\Debug\isr_I2S_underflow.o .\CortexM0\ARM_GCC_541\Debug\ADC.o .\CortexM0\ARM_GCC_541\Debug\ADC_PM.o .\CortexM0\ARM_GCC_541\Debug\ADC_INT.o .\CortexM0\ARM_GCC_541\Debug\isr_ADC_EOC.o .\CortexM0\ARM_GCC_541\Debug\pot1.o .\CortexM0\ARM_GCC_541\Debug\pot1_PM.o .\CortexM0\ARM_GCC_541\Debug\TxByteCounter.o .\CortexM0\ARM_GCC_541\Debug\TxByteCounter_PM.o .\CortexM0\ARM_GCC_541\Debug\Clock_1.o .\CortexM0\ARM_GCC_541\Debug\pot2.o .\CortexM0\ARM_GCC_541\Debug\pot2_PM.o .\CortexM0\ARM_GCC_541\Debug\pot3.o .\CortexM0\ARM_GCC_541\Debug\pot3_PM.o .\CortexM0\ARM_GCC_541\Debug\pot4.o .\CortexM0\ARM_GCC_541\Debug\pot4_PM.o .\CortexM0\ARM_GCC_541\Debug\trigger.o .\CortexM0\ARM_GCC_541\Debug\trigger_PM.o .\CortexM0\ARM_GCC_541\Debug\isr_trigger.o .\CortexM0\ARM_GCC_541\Debug\Clock_2.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_PM.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_BOOT.o .\CortexM0\ARM_GCC_541\Debug\USB.o .\CortexM0\ARM_GCC_541\Debug\USB_audio.o .\CortexM0\ARM_GCC_541\Debug\USB_boot.o .\CortexM0\ARM_GCC_541\Debug\USB_cdc.o .\CortexM0\ARM_GCC_541\Debug\USB_cls.o .\CortexM0\ARM_GCC_541\Debug\USB_descr.o .\CortexM0\ARM_GCC_541\Debug\USB_drv.o .\CortexM0\ARM_GCC_541\Debug\USB_episr.o .\CortexM0\ARM_GCC_541\Debug\USB_hid.o .\CortexM0\ARM_GCC_541\Debug\USB_pm.o .\CortexM0\ARM_GCC_541\Debug\USB_std.o .\CortexM0\ARM_GCC_541\Debug\USB_vnd.o .\CortexM0\ARM_GCC_541\Debug\USB_midi.o .\CortexM0\ARM_GCC_541\Debug\USB_msc.o .\CortexM0\ARM_GCC_541\Debug\SPI.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_UART.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_UART_INT.o .\CortexM0\ARM_GCC_541\Debug\SPI_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI.o .\CortexM0\ARM_GCC_541\Debug\SPI_BOOT.o .\CortexM0\ARM_GCC_541\Debug\SPI_SPI_BOOT.o .\CortexM0\ARM_GCC_541\Debug\SPI_TxDMA.o .\CortexM0\ARM_GCC_541\Debug\SPI_RxDMA.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_sda_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_scl_PM.o .\CortexM0\ARM_GCC_541\Debug\CodecI2CM_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\ADC_IRQ.o .\CortexM0\ARM_GCC_541\Debug\ADC_intClock.o .\CortexM0\ARM_GCC_541\Debug\MIDI1_UART_IntClock.o .\CortexM0\ARM_GCC_541\Debug\USB_Dp.o .\CortexM0\ARM_GCC_541\Debug\USB_Dp_PM.o .\CortexM0\ARM_GCC_541\Debug\USB_Dm.o .\CortexM0\ARM_GCC_541\Debug\USB_Dm_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_SCBCLK.o .\CortexM0\ARM_GCC_541\Debug\SPI_sclk_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_sclk_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_miso_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_miso_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_mosi_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_mosi_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_ss0_m.o .\CortexM0\ARM_GCC_541\Debug\SPI_ss0_m_PM.o .\CortexM0\ARM_GCC_541\Debug\SPI_SCB_IRQ.o .\CortexM0\ARM_GCC_541\Debug\CyFlash.o .\CortexM0\ARM_GCC_541\Debug\CyLib.o .\CortexM0\ARM_GCC_541\Debug\cyPm.o .\CortexM0\ARM_GCC_541\Debug\cyutils.o .\CortexM0\ARM_GCC_541\Debug\cy_em_eeprom.o .\CortexM0\ARM_GCC_541\Debug\CyDMA.o .\CortexM0\ARM_GCC_541\Debug\CyLFClk.o .\CortexM0\ARM_GCC_541\Debug\CTS.o .\CortexM0\ARM_GCC_541\Debug\CTS_PM.o .\CortexM0\ARM_GCC_541\Debug\CyBootAsmGnu.o
 arm-none-eabi-ar.exe: creating .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a
 arm-none-eabi-gcc.exe -Wl,--start-group -o E:\Documents\Engineering\Code\synth-wavetable\Cypress\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf .\CortexM0\ARM_GCC_541\Debug\main.o .\CortexM0\ARM_GCC_541\Debug\Codec.o .\CortexM0\ARM_GCC_541\Debug\Interrupts.o .\CortexM0\ARM_GCC_541\Debug\waves.o .\CortexM0\ARM_GCC_541\Debug\AudioControl.o .\CortexM0\ARM_GCC_541\Debug\AudioOut.o .\CortexM0\ARM_GCC_541\Debug\oscillator.o .\CortexM0\ARM_GCC_541\Debug\cyfitter_cfg.o .\CortexM0\ARM_GCC_541\Debug\cymetadata.o .\CortexM0\ARM_GCC_541\Debug\Cm0Start.o .\CortexM0\ARM_GCC_541\Debug\synth-wavetable.a -mcpu=cortex-m0 -mthumb -l m -L Generated_Source\PSoC4 -Wl,-Map,.\CortexM0\ARM_GCC_541\Debug/synth-wavetable.map -T Generated_Source\PSoC4\cm0gcc.ld -specs=nano.specs -Wl,--gc-sections -g -ffunction-sections -Og -ffat-lto-objects -Wl,--end-group
 cyelftool.exe -C E:\Documents\Engineering\Code\synth-wavetable\Cypress\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf --flash_row_size 256 --flash_size 262144 --flash_offset 0x00000000
@@ -302,6 +259,6 @@ No ELF section .cychecksum found, creating one
 Application checksum calculated and stored in ELF section .cychecksum
 Checksum calculated and stored in ELF section .cymeta
 cyelftool.exe -S E:\Documents\Engineering\Code\synth-wavetable\Cypress\synth-wavetable.cydsn\CortexM0\ARM_GCC_541\Debug\synth-wavetable.elf
-Flash used: 28368 of 262144 bytes (10.8%).
-SRAM used: 21856 of 32768 bytes (66.7%). Stack: 2048 bytes. Heap: 2048 bytes.
---------------- Rebuild Succeeded: 11/08/2019 14:53:15 ---------------
+Flash used: 28778 of 262144 bytes (11.0%).
+SRAM used: 22616 of 32768 bytes (69.0%). Stack: 2048 bytes. Heap: 2048 bytes.
+--------------- Rebuild Succeeded: 11/12/2019 13:22:43 ---------------

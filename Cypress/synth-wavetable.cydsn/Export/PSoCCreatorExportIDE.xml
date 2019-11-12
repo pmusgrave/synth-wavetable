@@ -272,6 +272,10 @@
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareimport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareexport.ld</File>
           <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\cycodeshareimport.scat</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CTS.c</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CTS.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CTS_aliases.h</File>
+          <File BuildType="BUILD" Toolchain="">Generated_Source\PSoC4\CTS_PM.c</File>
         </Files>
       </Folder>
       <Folder BuildType="EXCLUDE" Path=".\codegentemp">

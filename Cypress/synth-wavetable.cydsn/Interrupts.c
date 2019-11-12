@@ -98,6 +98,12 @@ CY_ISR(I2SUnderflow) {
 
 CY_ISR(envelope_trigger_interrupt){
     //UART_UartPutString("env trig\r\n");
+    if(trigger_flag){
+        trigger_flag = 0;
+    }
+    else {
+        trigger_flag = 1;
+    }
 }
 
 /* [] END OF FILE */
