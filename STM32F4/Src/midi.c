@@ -93,8 +93,8 @@ const float midi_notes[88] = {
 
 void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer) {
   //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
-  if( HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
-    uint8_t data[3] = {0xAB, 0xAB, 0xAB};
-    HAL_SPI_TransmitReceive_IT(hspi, data, spi_rx_buffer, 3);
+  if(HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY) {
+    uint8_t data = 0xAA;
+    HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 1);
   }
 }

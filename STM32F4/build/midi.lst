@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccZJNJNF.s 			page 1
+ARM GAS  /tmp/cc954hCo.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccZJNJNF.s 			page 1
   29:Src/midi.c    ****                                110,
   30:Src/midi.c    ****                                116.5409,
   31:Src/midi.c    ****                                123.4708,
-ARM GAS  /tmp/ccZJNJNF.s 			page 2
+ARM GAS  /tmp/cc954hCo.s 			page 2
 
 
   32:Src/midi.c    ****                                130.8128,
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccZJNJNF.s 			page 1
   86:Src/midi.c    ****                                2959.955,
   87:Src/midi.c    ****                                3135.963,
   88:Src/midi.c    ****                                3322.438,
-ARM GAS  /tmp/ccZJNJNF.s 			page 3
+ARM GAS  /tmp/cc954hCo.s 			page 3
 
 
   89:Src/midi.c    ****                                3520    ,
@@ -144,15 +144,15 @@ ARM GAS  /tmp/ccZJNJNF.s 			page 1
   42 0004 0446     		mov	r4, r0
   43 0006 0D46     		mov	r5, r1
   95:Src/midi.c    ****   //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
-  96:Src/midi.c    ****   if( HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY){
+  96:Src/midi.c    ****   if(HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY) {
   44              		.loc 1 96 0
   45 0008 FFF7FEFF 		bl	HAL_SPI_GetState
   46              	.LVL1:
   47 000c 0128     		cmp	r0, #1
   48 000e 01D0     		beq	.L4
   49              	.L1:
-  97:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
-  98:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, data, spi_rx_buffer, 3);
+  97:Src/midi.c    ****     uint8_t data = 0xAA;
+  98:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 1);
   99:Src/midi.c    ****   }
  100:Src/midi.c    **** }
   50              		.loc 1 100 0
@@ -167,160 +167,141 @@ ARM GAS  /tmp/ccZJNJNF.s 			page 1
   59              	.LCFI3:
   60              		.cfi_restore_state
   61              	.LBB2:
-  97:Src/midi.c    ****     uint8_t data[3] = {0xAB, 0xAB, 0xAB};
+  97:Src/midi.c    ****     uint8_t data = 0xAA;
   62              		.loc 1 97 0
-  63 0014 064B     		ldr	r3, .L5
-  64 0016 1B68     		ldr	r3, [r3]
-  65 0018 ADF80430 		strh	r3, [sp, #4]	@ movhi
-  66 001c 1B0C     		lsrs	r3, r3, #16
-  67 001e 8DF80630 		strb	r3, [sp, #6]
+  63 0014 02A9     		add	r1, sp, #8
+  64 0016 AA23     		movs	r3, #170
+  65 0018 01F8013D 		strb	r3, [r1, #-1]!
   98:Src/midi.c    ****   }
-  68              		.loc 1 98 0
-  69 0022 0323     		movs	r3, #3
-  70 0024 2A46     		mov	r2, r5
-ARM GAS  /tmp/ccZJNJNF.s 			page 4
+  66              		.loc 1 98 0
+  67 001c 0123     		movs	r3, #1
+  68 001e 2A46     		mov	r2, r5
+  69 0020 2046     		mov	r0, r4
+  70 0022 FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
+ARM GAS  /tmp/cc954hCo.s 			page 4
 
 
-  71 0026 01A9     		add	r1, sp, #4
-  72 0028 2046     		mov	r0, r4
-  73 002a FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
-  74              	.LVL3:
-  75              	.LBE2:
-  76              		.loc 1 100 0
-  77 002e EFE7     		b	.L1
-  78              	.L6:
-  79              		.align	2
-  80              	.L5:
-  81 0030 00000000 		.word	.LANCHOR0
-  82              		.cfi_endproc
-  83              	.LFE130:
-  85              		.global	midi_notes
-  86              		.section	.rodata
-  87              		.align	2
-  88              		.set	.LANCHOR0,. + 0
-  89              	.LC0:
-  90 0000 AB       		.byte	-85
-  91 0001 AB       		.byte	-85
-  92 0002 AB       		.byte	-85
-  93              		.section	.rodata.midi_notes,"a",%progbits
-  94              		.align	2
-  97              	midi_notes:
-  98 0000 0000DC41 		.word	1104936960
-  99 0004 F914E941 		.word	1105794297
- 100 0008 12F1F641 		.word	1106702610
- 101 000c 14D00242 		.word	1107480596
- 102 0010 61970A42 		.word	1107990369
- 103 0014 18D51242 		.word	1108530456
- 104 0018 40901B42 		.word	1109102656
- 105 001c 53D02442 		.word	1109708883
- 106 0020 379D2E42 		.word	1110351159
- 107 0024 48FF3842 		.word	1111031624
- 108 0028 6BFF4342 		.word	1111752555
- 109 002c 01A74F42 		.word	1112516353
- 110 0030 00005C42 		.word	1113325568
- 111 0034 F6146942 		.word	1114182902
- 112 0038 0FF17642 		.word	1115091215
- 113 003c 12D08242 		.word	1115869202
- 114 0040 61978A42 		.word	1116378977
- 115 0044 17D59242 		.word	1116919063
- 116 0048 42909B42 		.word	1117491266
- 117 004c 54D0A442 		.word	1118097492
- 118 0050 379DAE42 		.word	1118739767
- 119 0054 4AFFB842 		.word	1119420234
- 120 0058 6BFFC342 		.word	1120141163
- 121 005c 04A7CF42 		.word	1120904964
- 122 0060 0000DC42 		.word	1121714176
- 123 0064 F114E942 		.word	1122571505
- 124 0068 0DF1F642 		.word	1123479821
- 125 006c 14D00243 		.word	1124257812
- 126 0070 5F970A43 		.word	1124767583
- 127 0074 18D51243 		.word	1125307672
- 128 0078 42901B43 		.word	1125879874
- 129 007c 55D02443 		.word	1126486101
- 130 0080 369D2E43 		.word	1127128374
-ARM GAS  /tmp/ccZJNJNF.s 			page 5
+  71              	.LVL3:
+  72              	.LBE2:
+  73              		.loc 1 100 0
+  74 0026 F3E7     		b	.L1
+  75              		.cfi_endproc
+  76              	.LFE130:
+  78              		.global	midi_notes
+  79              		.section	.rodata.midi_notes,"a",%progbits
+  80              		.align	2
+  83              	midi_notes:
+  84 0000 0000DC41 		.word	1104936960
+  85 0004 F914E941 		.word	1105794297
+  86 0008 12F1F641 		.word	1106702610
+  87 000c 14D00242 		.word	1107480596
+  88 0010 61970A42 		.word	1107990369
+  89 0014 18D51242 		.word	1108530456
+  90 0018 40901B42 		.word	1109102656
+  91 001c 53D02442 		.word	1109708883
+  92 0020 379D2E42 		.word	1110351159
+  93 0024 48FF3842 		.word	1111031624
+  94 0028 6BFF4342 		.word	1111752555
+  95 002c 01A74F42 		.word	1112516353
+  96 0030 00005C42 		.word	1113325568
+  97 0034 F6146942 		.word	1114182902
+  98 0038 0FF17642 		.word	1115091215
+  99 003c 12D08242 		.word	1115869202
+ 100 0040 61978A42 		.word	1116378977
+ 101 0044 17D59242 		.word	1116919063
+ 102 0048 42909B42 		.word	1117491266
+ 103 004c 54D0A442 		.word	1118097492
+ 104 0050 379DAE42 		.word	1118739767
+ 105 0054 4AFFB842 		.word	1119420234
+ 106 0058 6BFFC342 		.word	1120141163
+ 107 005c 04A7CF42 		.word	1120904964
+ 108 0060 0000DC42 		.word	1121714176
+ 109 0064 F114E942 		.word	1122571505
+ 110 0068 0DF1F642 		.word	1123479821
+ 111 006c 14D00243 		.word	1124257812
+ 112 0070 5F970A43 		.word	1124767583
+ 113 0074 18D51243 		.word	1125307672
+ 114 0078 42901B43 		.word	1125879874
+ 115 007c 55D02443 		.word	1126486101
+ 116 0080 369D2E43 		.word	1127128374
+ 117 0084 48FF3843 		.word	1127808840
+ 118 0088 69FF4343 		.word	1128529769
+ 119 008c FDA64F43 		.word	1129293565
+ 120 0090 00005C43 		.word	1130102784
+ 121 0094 F7146943 		.word	1130960119
+ 122 0098 13F17643 		.word	1131868435
+ 123 009c 14D08243 		.word	1132646420
+ 124 00a0 5F978A43 		.word	1133156191
+ 125 00a4 18D59243 		.word	1133696280
+ 126 00a8 42909B43 		.word	1134268482
+ 127 00ac 55D0A443 		.word	1134874709
+ 128 00b0 369DAE43 		.word	1135516982
+ 129 00b4 48FFB843 		.word	1136197448
+ 130 00b8 69FFC343 		.word	1136918377
+ARM GAS  /tmp/cc954hCo.s 			page 5
 
 
- 131 0084 48FF3843 		.word	1127808840
- 132 0088 69FF4343 		.word	1128529769
- 133 008c FDA64F43 		.word	1129293565
- 134 0090 00005C43 		.word	1130102784
- 135 0094 F7146943 		.word	1130960119
- 136 0098 13F17643 		.word	1131868435
- 137 009c 14D08243 		.word	1132646420
- 138 00a0 5F978A43 		.word	1133156191
- 139 00a4 18D59243 		.word	1133696280
- 140 00a8 42909B43 		.word	1134268482
- 141 00ac 55D0A443 		.word	1134874709
- 142 00b0 369DAE43 		.word	1135516982
- 143 00b4 48FFB843 		.word	1136197448
- 144 00b8 69FFC343 		.word	1136918377
- 145 00bc 00A7CF43 		.word	1137682176
- 146 00c0 0000DC43 		.word	1138491392
- 147 00c4 F714E943 		.word	1139348727
- 148 00c8 10F1F643 		.word	1140257040
- 149 00cc 12D00244 		.word	1141035026
- 150 00d0 61970A44 		.word	1141544801
- 151 00d4 17D51244 		.word	1142084887
- 152 00d8 42901B44 		.word	1142657090
- 153 00dc 54D02444 		.word	1143263316
- 154 00e0 379D2E44 		.word	1143905591
- 155 00e4 48FF3844 		.word	1144586056
- 156 00e8 6BFF4344 		.word	1145306987
- 157 00ec 00A74F44 		.word	1146070784
- 158 00f0 00005C44 		.word	1146880000
- 159 00f4 F6146944 		.word	1147737334
- 160 00f8 10F17644 		.word	1148645648
- 161 00fc 10D08244 		.word	1149423632
- 162 0100 64978A44 		.word	1149933412
- 163 0104 17D59244 		.word	1150473495
- 164 0108 42909B44 		.word	1151045698
- 165 010c 52D0A444 		.word	1151651922
- 166 0110 379DAE44 		.word	1152294199
- 167 0114 4CFFB844 		.word	1152974668
- 168 0118 6DFFC344 		.word	1153695597
- 169 011c 02A7CF44 		.word	1154459394
- 170 0120 0000DC44 		.word	1155268608
- 171 0124 F614E944 		.word	1156125942
- 172 0128 0EF1F644 		.word	1157034254
- 173 012c 14D00245 		.word	1157812244
- 174 0130 60970A45 		.word	1158322016
- 175 0134 17D51245 		.word	1158862103
- 176 0138 42901B45 		.word	1159434306
- 177 013c 52D02445 		.word	1160040530
- 178 0140 379D2E45 		.word	1160682807
- 179 0144 48FF3845 		.word	1161363272
- 180 0148 68FF4345 		.word	1162084200
- 181 014c 02A74F45 		.word	1162848002
- 182 0150 00005C45 		.word	1163657216
- 183 0154 F6146945 		.word	1164514550
- 184 0158 0EF17645 		.word	1165422862
- 185 015c 00000000 		.space	4
- 186              		.text
- 187              	.Letext0:
-ARM GAS  /tmp/ccZJNJNF.s 			page 6
-
-
- 188              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 189              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 190              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 191              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 192              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 193              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 194              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 195              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 196              		.file 10 "Inc/midi.h"
-ARM GAS  /tmp/ccZJNJNF.s 			page 7
+ 131 00bc 00A7CF43 		.word	1137682176
+ 132 00c0 0000DC43 		.word	1138491392
+ 133 00c4 F714E943 		.word	1139348727
+ 134 00c8 10F1F643 		.word	1140257040
+ 135 00cc 12D00244 		.word	1141035026
+ 136 00d0 61970A44 		.word	1141544801
+ 137 00d4 17D51244 		.word	1142084887
+ 138 00d8 42901B44 		.word	1142657090
+ 139 00dc 54D02444 		.word	1143263316
+ 140 00e0 379D2E44 		.word	1143905591
+ 141 00e4 48FF3844 		.word	1144586056
+ 142 00e8 6BFF4344 		.word	1145306987
+ 143 00ec 00A74F44 		.word	1146070784
+ 144 00f0 00005C44 		.word	1146880000
+ 145 00f4 F6146944 		.word	1147737334
+ 146 00f8 10F17644 		.word	1148645648
+ 147 00fc 10D08244 		.word	1149423632
+ 148 0100 64978A44 		.word	1149933412
+ 149 0104 17D59244 		.word	1150473495
+ 150 0108 42909B44 		.word	1151045698
+ 151 010c 52D0A444 		.word	1151651922
+ 152 0110 379DAE44 		.word	1152294199
+ 153 0114 4CFFB844 		.word	1152974668
+ 154 0118 6DFFC344 		.word	1153695597
+ 155 011c 02A7CF44 		.word	1154459394
+ 156 0120 0000DC44 		.word	1155268608
+ 157 0124 F614E944 		.word	1156125942
+ 158 0128 0EF1F644 		.word	1157034254
+ 159 012c 14D00245 		.word	1157812244
+ 160 0130 60970A45 		.word	1158322016
+ 161 0134 17D51245 		.word	1158862103
+ 162 0138 42901B45 		.word	1159434306
+ 163 013c 52D02445 		.word	1160040530
+ 164 0140 379D2E45 		.word	1160682807
+ 165 0144 48FF3845 		.word	1161363272
+ 166 0148 68FF4345 		.word	1162084200
+ 167 014c 02A74F45 		.word	1162848002
+ 168 0150 00005C45 		.word	1163657216
+ 169 0154 F6146945 		.word	1164514550
+ 170 0158 0EF17645 		.word	1165422862
+ 171 015c 00000000 		.space	4
+ 172              		.text
+ 173              	.Letext0:
+ 174              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 175              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 176              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 177              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 178              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 179              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 180              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 181              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 182              		.file 10 "Inc/midi.h"
+ARM GAS  /tmp/cc954hCo.s 			page 6
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 midi.c
-     /tmp/ccZJNJNF.s:18     .text.Receive_MIDI:0000000000000000 $t
-     /tmp/ccZJNJNF.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
-     /tmp/ccZJNJNF.s:81     .text.Receive_MIDI:0000000000000030 $d
-     /tmp/ccZJNJNF.s:97     .rodata.midi_notes:0000000000000000 midi_notes
-     /tmp/ccZJNJNF.s:87     .rodata:0000000000000000 $d
-     /tmp/ccZJNJNF.s:94     .rodata.midi_notes:0000000000000000 $d
+     /tmp/cc954hCo.s:18     .text.Receive_MIDI:0000000000000000 $t
+     /tmp/cc954hCo.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
+     /tmp/cc954hCo.s:83     .rodata.midi_notes:0000000000000000 midi_notes
+     /tmp/cc954hCo.s:80     .rodata.midi_notes:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
