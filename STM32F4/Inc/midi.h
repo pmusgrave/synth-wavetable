@@ -6,11 +6,16 @@
 
 #define MIDI_NOTE_ON 0x90
 #define MIDI_NOTE_OFF 0x80
+#define ATTACK_CC 0x14
+#define DECAY_CC 0x15
+#define SUSTAIN_CC 0x16
+#define RELEASE_CC 0x17
 
-struct midi_note_msg {
-  uint8_t command;
-  uint8_t note;
-  uint8_t velocity;
+struct midi_msg {
+  uint8_t byte0;
+  uint8_t byte1;
+  uint8_t byte2;
+  uint8_t byte3;
 };
 
 extern const float midi_notes[88];
