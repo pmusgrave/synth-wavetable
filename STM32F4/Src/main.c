@@ -126,6 +126,7 @@ void UpdateOutputValue(void);
 void UpdateLFOs(void);
 void UpdateEnvelope(void);
 void Update_R2R_DAC(void);
+void UART_PrintADSR(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -270,6 +271,7 @@ int main(void)
         };
         enqueue(new_cc);
         attack_cc_flag = 0;
+        UART_PrintADSR();
       }
       else if(decay_cc_flag){
         struct midi_msg new_cc = {
@@ -280,6 +282,7 @@ int main(void)
         };
         enqueue(new_cc);
         decay_cc_flag = 0;
+        UART_PrintADSR();
       }
       else if(sustain_cc_flag){
         struct midi_msg new_cc = {
@@ -290,6 +293,7 @@ int main(void)
         };
         enqueue(new_cc);
         sustain_cc_flag = 0;
+        UART_PrintADSR();
       }
       else if(release_cc_flag){
         struct midi_msg new_cc = {
@@ -300,6 +304,7 @@ int main(void)
         };
         enqueue(new_cc);
         release_cc_flag = 0;
+        UART_PrintADSR();
       }
       else {
 
@@ -861,7 +866,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   //  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_13, GPIO_PIN_SET);
-  //uint8_t uart_tx_buffer;
+  uint8_t uart_tx_buffer;
   /*
   struct midi_note_msg new_midi_note_msg = {
     spi_rx_buffer[0],
@@ -872,26 +877,20 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   enqueue(new_midi_note_msg);
   */
 
-  /*
-  uart_tx_buffer = current_midi_msg.byte0;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = current_midi_msg.byte1;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = current_midi_msg.byte2;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = '\n';
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  */
 
-  /*
   if(spi_rx_buffer[0] == MIDI_NOTE_ON){
     uart_tx_buffer = 'n';
+    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+    uart_tx_buffer = '\n';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
   else if (spi_rx_buffer[0] == MIDI_NOTE_OFF){
     uart_tx_buffer = 'f';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+    uart_tx_buffer = '\n';
+    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
+  /*
   else if (spi_rx_buffer[0] == ATTACK_CC){
     uart_tx_buffer = 'a';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
@@ -912,10 +911,9 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
     uart_tx_buffer = 'z';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
-
-  uart_tx_buffer = '\n';
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   */
+
+
 
   MIDI_flag = 1;
   enqueue_byte(spi_rx_buffer[0]);
@@ -1091,6 +1089,27 @@ void Update_R2R_DAC() {
   ((output_val>>5)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
   ((output_val>>6)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
   ((output_val>>7)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
+}
+
+void UART_PrintADSR(){
+  uint8_t uart_tx_buffer;
+  uart_tx_buffer = attack;
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = ' ';
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = decay;
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = ' ';
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = sustain;
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = ' ';
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = release;
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  uart_tx_buffer = '\n';
+  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+
 }
 
 void enqueue (struct midi_msg midi_msg) {
