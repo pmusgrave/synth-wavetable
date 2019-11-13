@@ -96,6 +96,14 @@ struct msg_queue {
 void enqueue(struct midi_msg midi_msg);
 struct midi_msg dequeue(void);
 
+struct byte_queue {
+  uint8_t head;
+  uint8_t tail;
+  uint8_t queue[MAX_QUEUE_SIZE];
+} byte_queue;
+void enqueue_byte(uint8_t);
+uint8_t dequeue_byte(void);
+
 uint8_t attack = 255;
 uint8_t decay = 255;
 uint8_t sustain = 200;
@@ -210,32 +218,102 @@ int main(void)
     if(MIDI_flag) {
       MIDI_flag = 0;
 
-      switch(spi_rx_buffer[0]) {
-      case MIDI_NOTE_ON:
-        note_on_flag = 1;
-        break;
-      case MIDI_NOTE_OFF:
-        note_off_flag = 1;
-        break;
-      case ATTACK_CC:
-        attack_cc_flag = 1;
-        break;
-      case DECAY_CC:
-        decay_cc_flag = 1;
-        break;
-      case SUSTAIN_CC:
-        sustain_cc_flag = 1;
-        break;
-      case RELEASE_CC:
-        release_cc_flag = 1;
-        break;
-      default:
-        break;
+      if(byte_queue.head != byte_queue.tail) {
+        uint8_t value = dequeue_byte();
+
+        switch(value) {
+        case MIDI_NOTE_ON:
+          note_on_flag = 1;
+          break;
+        case MIDI_NOTE_OFF:
+          note_off_flag = 1;
+          break;
+        case ATTACK_CC:
+          attack_cc_flag = 1;
+          break;
+        case DECAY_CC:
+          decay_cc_flag = 1;
+          break;
+        case SUSTAIN_CC:
+          sustain_cc_flag = 1;
+          break;
+        case RELEASE_CC:
+          release_cc_flag = 1;
+          break;
+        default:
+          if(note_on_flag){
+        struct midi_msg new_midi_note_msg = {
+          MIDI_NOTE_ON,
+          spi_rx_buffer[0],
+          127,
+          0
+        };
+        enqueue(new_midi_note_msg);
+        note_on_flag = 0;
       }
+      else if(note_off_flag){
+        struct midi_msg new_midi_note_msg = {
+          MIDI_NOTE_OFF,
+          spi_rx_buffer[0],
+          0,
+          0
+        };
+        enqueue(new_midi_note_msg);
+        note_off_flag = 0;
+      }
+      else if(attack_cc_flag){
+        struct midi_msg new_cc = {
+          ATTACK_CC,
+          spi_rx_buffer[0],
+          0,
+          0
+        };
+        enqueue(new_cc);
+        attack_cc_flag = 0;
+      }
+      else if(decay_cc_flag){
+        struct midi_msg new_cc = {
+          DECAY_CC,
+          spi_rx_buffer[0],
+          0,
+          0
+        };
+        enqueue(new_cc);
+        decay_cc_flag = 0;
+      }
+      else if(sustain_cc_flag){
+        struct midi_msg new_cc = {
+          SUSTAIN_CC,
+          spi_rx_buffer[0],
+          0,
+          0
+        };
+        enqueue(new_cc);
+        sustain_cc_flag = 0;
+      }
+      else if(release_cc_flag){
+        struct midi_msg new_cc = {
+          RELEASE_CC,
+          spi_rx_buffer[0],
+          0,
+          0
+        };
+        enqueue(new_cc);
+        release_cc_flag = 0;
+      }
+      else {
+
+      }
+          break;
+        }
+      }
+
+
+
     }
 
     if(process_msg_flag) {
-      process_msg_flag = 1;
+      process_msg_flag = 0;
       switch(current_midi_msg.byte0) {
       case MIDI_NOTE_ON:
         for (int i = 0; i < VOICES; i++) {
@@ -783,7 +861,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
 
 void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   //  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_13, GPIO_PIN_SET);
-  uint8_t uart_tx_buffer;
+  //uint8_t uart_tx_buffer;
   /*
   struct midi_note_msg new_midi_note_msg = {
     spi_rx_buffer[0],
@@ -840,7 +918,9 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   */
 
   MIDI_flag = 1;
+  enqueue_byte(spi_rx_buffer[0]);
 
+  /*
   if(note_on_flag){
     struct midi_msg new_midi_note_msg = {
       MIDI_NOTE_ON,
@@ -901,6 +981,7 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
     enqueue(new_cc);
     release_cc_flag = 0;
   }
+  */
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
@@ -1018,6 +1099,14 @@ void enqueue (struct midi_msg midi_msg) {
 
 struct midi_msg dequeue(void) {
   return midi_msg_queue.queue[midi_msg_queue.tail++];
+}
+
+void enqueue_byte (uint8_t byte) {
+  byte_queue.queue[byte_queue.head++] = byte;
+}
+
+uint8_t dequeue_byte(void) {
+  return byte_queue.queue[byte_queue.tail++];
 }
 
 /* USER CODE END 4 */
