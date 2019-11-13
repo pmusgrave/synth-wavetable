@@ -71,7 +71,7 @@ volatile uint8_t decay_cc_flag = 0;
 volatile uint8_t sustain_cc_flag = 0;
 volatile uint8_t release_cc_flag = 0;
 
-volatile struct midi_msg current_midi_note_msg = {0,0,0,0};
+volatile struct midi_msg current_midi_msg = {0,0,0,0};
 volatile uint32_t phase_accumulator[VOICES] = {0};
 volatile uint8_t output_val = 0;
 volatile uint32_t envelope_index[VOICES] = {0};
@@ -197,12 +197,14 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint8_t process_msg_flag  = 0;
   while (1)
   {
     Receive_MIDI(&hspi5, spi_rx_buffer);
 
     if(midi_msg_queue.head != midi_msg_queue.tail) {
-      current_midi_note_msg = dequeue();
+      current_midi_msg = dequeue();
+      process_msg_flag = 1;
     }
 
     if(MIDI_flag) {
@@ -230,13 +232,16 @@ int main(void)
       default:
         break;
       }
+    }
 
-      switch(current_midi_note_msg.byte0) {
+    if(process_msg_flag) {
+      process_msg_flag = 1;
+      switch(current_midi_msg.byte0) {
       case MIDI_NOTE_ON:
         for (int i = 0; i < VOICES; i++) {
           if(note_on[i] == MIDI_NOTE_OFF){
             note_on[i] = MIDI_NOTE_ON;
-            note_freq[i] = current_midi_note_msg.byte1;
+            note_freq[i] = current_midi_msg.byte1;
             env_state[i] = ATTACK_MODE;
             break;
           }
@@ -244,23 +249,23 @@ int main(void)
         break;
       case MIDI_NOTE_OFF:
         for (int i = 0; i < VOICES; i++) {
-          if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_note_msg.byte1){
+          if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
             //note_on[i] = MIDI_NOTE_OFF;
             env_state[i] = RELEASE_MODE;
           }
         }
         break;
       case ATTACK_CC:
-        attack = current_midi_note_msg.byte1;
+        attack = current_midi_msg.byte1;
         break;
       case DECAY_CC:
-        decay = current_midi_note_msg.byte1;
+        decay = current_midi_msg.byte1;
         break;
       case SUSTAIN_CC:
-        sustain = current_midi_note_msg.byte1;
+        sustain = current_midi_msg.byte1;
         break;
       case RELEASE_CC:
-        release = current_midi_note_msg.byte1;
+        release = current_midi_msg.byte1;
         break;
 
       }
@@ -790,11 +795,11 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   */
 
   /*
-  uart_tx_buffer = current_midi_note_msg.byte0;
+  uart_tx_buffer = current_midi_msg.byte0;
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = current_midi_note_msg.byte1;
+  uart_tx_buffer = current_midi_msg.byte1;
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = current_midi_note_msg.byte2;
+  uart_tx_buffer = current_midi_msg.byte2;
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   uart_tx_buffer = '\n';
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
