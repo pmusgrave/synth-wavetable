@@ -250,11 +250,21 @@ int main(void)
           }
         }
         break;
+      case ATTACK_CC:
+        attack = current_midi_note_msg.byte1;
+        break;
+      case DECAY_CC:
+        decay = current_midi_note_msg.byte1;
+        break;
+      case SUSTAIN_CC:
+        sustain = current_midi_note_msg.byte1;
+        break;
+      case RELEASE_CC:
+        release = current_midi_note_msg.byte1;
+        break;
+
       }
     }
-
-
-
 
     if(update_value_flag) {
       //      __disable_irq();
@@ -788,28 +798,30 @@ void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   uart_tx_buffer = '\n';
   HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
+  */
 
-  if(current_midi_note_msg.byte0 == MIDI_NOTE_ON){
+  /*
+  if(spi_rx_buffer[0] == MIDI_NOTE_ON){
     uart_tx_buffer = 'n';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
-  else if (current_midi_note_msg.byte0 == MIDI_NOTE_OFF){
+  else if (spi_rx_buffer[0] == MIDI_NOTE_OFF){
     uart_tx_buffer = 'f';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
-  else if (current_midi_note_msg.byte0 == ATTACK_CC){
+  else if (spi_rx_buffer[0] == ATTACK_CC){
     uart_tx_buffer = 'a';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
-  else if (current_midi_note_msg.byte0 == DECAY_CC){
+  else if (spi_rx_buffer[0] == DECAY_CC){
     uart_tx_buffer = 'd';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
-  else if (current_midi_note_msg.byte0 == SUSTAIN_CC){
+  else if (spi_rx_buffer[0] == SUSTAIN_CC){
     uart_tx_buffer = 's';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
-  else if (current_midi_note_msg.byte0 == RELEASE_CC){
+  else if (spi_rx_buffer[0] == RELEASE_CC){
     uart_tx_buffer = 'r';
     HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
   }
