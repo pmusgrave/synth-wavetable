@@ -1,8 +1,0 @@
-E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/CortexM0/ARM_GCC_541/Debug/CyBootAsmGnu.o : E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/Generated_Source/PSoC4/CyBootAsmGnu.s E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/Generated_Source/PSoC4/cydevicegnu_trm.inc E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/Generated_Source/PSoC4/cyfittergnu.inc 
-
-E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/Generated_Source/PSoC4/CyBootAsmGnu.s : 
-
-E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/Generated_Source/PSoC4/cydevicegnu_trm.inc : 
-
-E:/Documents/Engineering/Code/synth-wavetable/Cypress/synth-wavetable.cydsn/Generated_Source/PSoC4/cyfittergnu.inc : 
-
