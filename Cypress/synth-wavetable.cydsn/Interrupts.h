@@ -53,6 +53,7 @@
     CY_ISR_PROTO(SPI_TxDMA_Done_Interrupt);
     CY_ISR_PROTO(TxDMA_1_Done_Interrupt);
     CY_ISR_PROTO(envelope_trigger_interrupt);
+    CY_ISR_PROTO(MIDI_CC_TimerDone);
 
 #endif
 

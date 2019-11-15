@@ -51,6 +51,7 @@ volatile int8_t* current_buffer;
 volatile uint8_t FIFO_DMA_REQ_FLAG = 0;
 volatile uint8_t update_ADC_flag = 0;
 volatile uint8_t trigger_flag = 0;
+volatile uint8_t MIDI_CC_update_flag = 0;
 
 CY_ISR(ADC_EOC) {
     //UART_UartPutString("ADC EOC\r\n");
@@ -104,6 +105,10 @@ CY_ISR(envelope_trigger_interrupt){
     else {
         trigger_flag = 1;
     }
+}
+
+CY_ISR(MIDI_CC_TimerDone) {
+    MIDI_CC_update_flag = 1;
 }
 
 /* [] END OF FILE */
