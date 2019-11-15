@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccVpWAOl.s 			page 1
+ARM GAS  /tmp/cc5yuM8D.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
   29:Src/stm32f4xx_it.c **** /* USER CODE BEGIN TD */
   30:Src/stm32f4xx_it.c **** 
   31:Src/stm32f4xx_it.c **** /* USER CODE END TD */
-ARM GAS  /tmp/ccVpWAOl.s 			page 2
+ARM GAS  /tmp/cc5yuM8D.s 			page 2
 
 
   32:Src/stm32f4xx_it.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
   40              		.syntax unified
   41              		.thumb
   42              		.thumb_func
-ARM GAS  /tmp/ccVpWAOl.s 			page 3
+ARM GAS  /tmp/cc5yuM8D.s 			page 3
 
 
   43              		.fpu fpv4-sp-d16
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
   72              		@ frame_needed = 0, uses_anonymous_args = 0
   73              		@ link register save eliminated.
   74              	.L5:
-ARM GAS  /tmp/ccVpWAOl.s 			page 4
+ARM GAS  /tmp/cc5yuM8D.s 			page 4
 
 
   75 0000 FEE7     		b	.L5
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
  126:Src/stm32f4xx_it.c **** }
  127:Src/stm32f4xx_it.c **** 
  128:Src/stm32f4xx_it.c **** /**
-ARM GAS  /tmp/ccVpWAOl.s 			page 5
+ARM GAS  /tmp/cc5yuM8D.s 			page 5
 
 
  129:Src/stm32f4xx_it.c ****   * @brief This function handles Undefined instruction or illegal state.
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
  149              	.LFB136:
  148:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN SVCall_IRQn 0 */
  149:Src/stm32f4xx_it.c **** 
-ARM GAS  /tmp/ccVpWAOl.s 			page 6
+ARM GAS  /tmp/cc5yuM8D.s 			page 6
 
 
  150:Src/stm32f4xx_it.c ****   /* USER CODE END SVCall_IRQn 0 */
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
  183              		.thumb_func
  184              		.fpu fpv4-sp-d16
  186              	SysTick_Handler:
-ARM GAS  /tmp/ccVpWAOl.s 			page 7
+ARM GAS  /tmp/cc5yuM8D.s 			page 7
 
 
  187              	.LFB138:
@@ -395,14 +395,14 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
  201 0006 08BD     		pop	{r3, pc}
  202              		.cfi_endproc
  203              	.LFE138:
- 205              		.section	.text.TIM6_DAC_IRQHandler,"ax",%progbits
+ 205              		.section	.text.EXTI15_10_IRQHandler,"ax",%progbits
  206              		.align	1
- 207              		.global	TIM6_DAC_IRQHandler
+ 207              		.global	EXTI15_10_IRQHandler
  208              		.syntax unified
  209              		.thumb
  210              		.thumb_func
  211              		.fpu fpv4-sp-d16
- 213              	TIM6_DAC_IRQHandler:
+ 213              	EXTI15_10_IRQHandler:
  214              	.LFB139:
  191:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN SysTick_IRQn 1 */
  192:Src/stm32f4xx_it.c **** 
@@ -417,12 +417,12 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
  201:Src/stm32f4xx_it.c **** /******************************************************************************/
  202:Src/stm32f4xx_it.c **** 
  203:Src/stm32f4xx_it.c **** /**
- 204:Src/stm32f4xx_it.c ****   * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
-ARM GAS  /tmp/ccVpWAOl.s 			page 8
+ 204:Src/stm32f4xx_it.c ****   * @brief This function handles EXTI line[15:10] interrupts.
+ARM GAS  /tmp/cc5yuM8D.s 			page 8
 
 
  205:Src/stm32f4xx_it.c ****   */
- 206:Src/stm32f4xx_it.c **** void TIM6_DAC_IRQHandler(void)
+ 206:Src/stm32f4xx_it.c **** void EXTI15_10_IRQHandler(void)
  207:Src/stm32f4xx_it.c **** {
  215              		.loc 1 207 0
  216              		.cfi_startproc
@@ -433,168 +433,214 @@ ARM GAS  /tmp/ccVpWAOl.s 			page 1
  221              		.cfi_def_cfa_offset 8
  222              		.cfi_offset 3, -8
  223              		.cfi_offset 14, -4
- 208:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+ 208:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN EXTI15_10_IRQn 0 */
  209:Src/stm32f4xx_it.c **** 
- 210:Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 0 */
- 211:Src/stm32f4xx_it.c ****   HAL_DAC_IRQHandler(&hdac);
+ 210:Src/stm32f4xx_it.c ****   /* USER CODE END EXTI15_10_IRQn 0 */
+ 211:Src/stm32f4xx_it.c ****   HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_10);
  224              		.loc 1 211 0
- 225 0002 0348     		ldr	r0, .L17
- 226 0004 FFF7FEFF 		bl	HAL_DAC_IRQHandler
+ 225 0002 4FF48060 		mov	r0, #1024
+ 226 0006 FFF7FEFF 		bl	HAL_GPIO_EXTI_IRQHandler
  227              	.LVL1:
- 212:Src/stm32f4xx_it.c ****   HAL_TIM_IRQHandler(&htim6);
- 228              		.loc 1 212 0
- 229 0008 0248     		ldr	r0, .L17+4
- 230 000a FFF7FEFF 		bl	HAL_TIM_IRQHandler
- 231              	.LVL2:
- 232 000e 08BD     		pop	{r3, pc}
- 233              	.L18:
- 234              		.align	2
- 235              	.L17:
- 236 0010 00000000 		.word	hdac
- 237 0014 00000000 		.word	htim6
- 238              		.cfi_endproc
- 239              	.LFE139:
- 241              		.section	.text.TIM7_IRQHandler,"ax",%progbits
- 242              		.align	1
- 243              		.global	TIM7_IRQHandler
- 244              		.syntax unified
- 245              		.thumb
- 246              		.thumb_func
- 247              		.fpu fpv4-sp-d16
- 249              	TIM7_IRQHandler:
- 250              	.LFB140:
- 213:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
- 214:Src/stm32f4xx_it.c **** 
- 215:Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 1 */
- 216:Src/stm32f4xx_it.c **** }
- 217:Src/stm32f4xx_it.c **** 
- 218:Src/stm32f4xx_it.c **** /**
- 219:Src/stm32f4xx_it.c ****   * @brief This function handles TIM7 global interrupt.
- 220:Src/stm32f4xx_it.c ****   */
- 221:Src/stm32f4xx_it.c **** void TIM7_IRQHandler(void)
- 222:Src/stm32f4xx_it.c **** {
- 251              		.loc 1 222 0
- 252              		.cfi_startproc
- 253              		@ args = 0, pretend = 0, frame = 0
- 254              		@ frame_needed = 0, uses_anonymous_args = 0
- 255 0000 08B5     		push	{r3, lr}
-ARM GAS  /tmp/ccVpWAOl.s 			page 9
+ 228 000a 08BD     		pop	{r3, pc}
+ 229              		.cfi_endproc
+ 230              	.LFE139:
+ 232              		.section	.text.TIM6_DAC_IRQHandler,"ax",%progbits
+ 233              		.align	1
+ 234              		.global	TIM6_DAC_IRQHandler
+ 235              		.syntax unified
+ 236              		.thumb
+ 237              		.thumb_func
+ 238              		.fpu fpv4-sp-d16
+ 240              	TIM6_DAC_IRQHandler:
+ 241              	.LFB140:
+ 212:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+ 213:Src/stm32f4xx_it.c **** 
+ 214:Src/stm32f4xx_it.c ****   /* USER CODE END EXTI15_10_IRQn 1 */
+ 215:Src/stm32f4xx_it.c **** }
+ 216:Src/stm32f4xx_it.c **** 
+ 217:Src/stm32f4xx_it.c **** /**
+ 218:Src/stm32f4xx_it.c ****   * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
+ 219:Src/stm32f4xx_it.c ****   */
+ 220:Src/stm32f4xx_it.c **** void TIM6_DAC_IRQHandler(void)
+ 221:Src/stm32f4xx_it.c **** {
+ 242              		.loc 1 221 0
+ 243              		.cfi_startproc
+ 244              		@ args = 0, pretend = 0, frame = 0
+ 245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 246 0000 08B5     		push	{r3, lr}
+ 247              	.LCFI2:
+ 248              		.cfi_def_cfa_offset 8
+ 249              		.cfi_offset 3, -8
+ 250              		.cfi_offset 14, -4
+ 222:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
+ 223:Src/stm32f4xx_it.c **** 
+ 224:Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 0 */
+ 225:Src/stm32f4xx_it.c ****   HAL_DAC_IRQHandler(&hdac);
+ 251              		.loc 1 225 0
+ 252 0002 0348     		ldr	r0, .L19
+ARM GAS  /tmp/cc5yuM8D.s 			page 9
 
 
- 256              	.LCFI2:
- 257              		.cfi_def_cfa_offset 8
- 258              		.cfi_offset 3, -8
- 259              		.cfi_offset 14, -4
- 223:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM7_IRQn 0 */
- 224:Src/stm32f4xx_it.c **** 
- 225:Src/stm32f4xx_it.c ****   /* USER CODE END TIM7_IRQn 0 */
- 226:Src/stm32f4xx_it.c ****   HAL_TIM_IRQHandler(&htim7);
- 260              		.loc 1 226 0
- 261 0002 0248     		ldr	r0, .L21
- 262 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
- 263              	.LVL3:
- 264 0008 08BD     		pop	{r3, pc}
- 265              	.L22:
- 266 000a 00BF     		.align	2
- 267              	.L21:
- 268 000c 00000000 		.word	htim7
- 269              		.cfi_endproc
- 270              	.LFE140:
- 272              		.section	.text.SPI5_IRQHandler,"ax",%progbits
- 273              		.align	1
- 274              		.global	SPI5_IRQHandler
- 275              		.syntax unified
- 276              		.thumb
- 277              		.thumb_func
- 278              		.fpu fpv4-sp-d16
- 280              	SPI5_IRQHandler:
- 281              	.LFB141:
- 227:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM7_IRQn 1 */
+ 253 0004 FFF7FEFF 		bl	HAL_DAC_IRQHandler
+ 254              	.LVL2:
+ 226:Src/stm32f4xx_it.c ****   HAL_TIM_IRQHandler(&htim6);
+ 255              		.loc 1 226 0
+ 256 0008 0248     		ldr	r0, .L19+4
+ 257 000a FFF7FEFF 		bl	HAL_TIM_IRQHandler
+ 258              	.LVL3:
+ 259 000e 08BD     		pop	{r3, pc}
+ 260              	.L20:
+ 261              		.align	2
+ 262              	.L19:
+ 263 0010 00000000 		.word	hdac
+ 264 0014 00000000 		.word	htim6
+ 265              		.cfi_endproc
+ 266              	.LFE140:
+ 268              		.section	.text.TIM7_IRQHandler,"ax",%progbits
+ 269              		.align	1
+ 270              		.global	TIM7_IRQHandler
+ 271              		.syntax unified
+ 272              		.thumb
+ 273              		.thumb_func
+ 274              		.fpu fpv4-sp-d16
+ 276              	TIM7_IRQHandler:
+ 277              	.LFB141:
+ 227:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
  228:Src/stm32f4xx_it.c **** 
- 229:Src/stm32f4xx_it.c ****   /* USER CODE END TIM7_IRQn 1 */
+ 229:Src/stm32f4xx_it.c ****   /* USER CODE END TIM6_DAC_IRQn 1 */
  230:Src/stm32f4xx_it.c **** }
  231:Src/stm32f4xx_it.c **** 
  232:Src/stm32f4xx_it.c **** /**
- 233:Src/stm32f4xx_it.c ****   * @brief This function handles SPI5 global interrupt.
+ 233:Src/stm32f4xx_it.c ****   * @brief This function handles TIM7 global interrupt.
  234:Src/stm32f4xx_it.c ****   */
- 235:Src/stm32f4xx_it.c **** void SPI5_IRQHandler(void)
+ 235:Src/stm32f4xx_it.c **** void TIM7_IRQHandler(void)
  236:Src/stm32f4xx_it.c **** {
- 282              		.loc 1 236 0
- 283              		.cfi_startproc
- 284              		@ args = 0, pretend = 0, frame = 0
- 285              		@ frame_needed = 0, uses_anonymous_args = 0
- 286 0000 08B5     		push	{r3, lr}
- 287              	.LCFI3:
- 288              		.cfi_def_cfa_offset 8
- 289              		.cfi_offset 3, -8
- 290              		.cfi_offset 14, -4
- 237:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN SPI5_IRQn 0 */
+ 278              		.loc 1 236 0
+ 279              		.cfi_startproc
+ 280              		@ args = 0, pretend = 0, frame = 0
+ 281              		@ frame_needed = 0, uses_anonymous_args = 0
+ 282 0000 08B5     		push	{r3, lr}
+ 283              	.LCFI3:
+ 284              		.cfi_def_cfa_offset 8
+ 285              		.cfi_offset 3, -8
+ 286              		.cfi_offset 14, -4
+ 237:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM7_IRQn 0 */
  238:Src/stm32f4xx_it.c **** 
- 239:Src/stm32f4xx_it.c ****   /* USER CODE END SPI5_IRQn 0 */
- 240:Src/stm32f4xx_it.c ****   HAL_SPI_IRQHandler(&hspi5);
- 291              		.loc 1 240 0
- 292 0002 0248     		ldr	r0, .L25
- 293 0004 FFF7FEFF 		bl	HAL_SPI_IRQHandler
- 294              	.LVL4:
- 295 0008 08BD     		pop	{r3, pc}
- 296              	.L26:
-ARM GAS  /tmp/ccVpWAOl.s 			page 10
+ 239:Src/stm32f4xx_it.c ****   /* USER CODE END TIM7_IRQn 0 */
+ 240:Src/stm32f4xx_it.c ****   HAL_TIM_IRQHandler(&htim7);
+ 287              		.loc 1 240 0
+ 288 0002 0248     		ldr	r0, .L23
+ 289 0004 FFF7FEFF 		bl	HAL_TIM_IRQHandler
+ 290              	.LVL4:
+ 291 0008 08BD     		pop	{r3, pc}
+ 292              	.L24:
+ 293 000a 00BF     		.align	2
+ 294              	.L23:
+ 295 000c 00000000 		.word	htim7
+ 296              		.cfi_endproc
+ARM GAS  /tmp/cc5yuM8D.s 			page 10
 
 
- 297 000a 00BF     		.align	2
- 298              	.L25:
- 299 000c 00000000 		.word	hspi5
- 300              		.cfi_endproc
- 301              	.LFE141:
- 303              		.text
- 304              	.Letext0:
- 305              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 306              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 307              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 308              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 309              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 310              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 311              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 312              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
- 313              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 314              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
- 315              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  /tmp/ccVpWAOl.s 			page 11
+ 297              	.LFE141:
+ 299              		.section	.text.SPI5_IRQHandler,"ax",%progbits
+ 300              		.align	1
+ 301              		.global	SPI5_IRQHandler
+ 302              		.syntax unified
+ 303              		.thumb
+ 304              		.thumb_func
+ 305              		.fpu fpv4-sp-d16
+ 307              	SPI5_IRQHandler:
+ 308              	.LFB142:
+ 241:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN TIM7_IRQn 1 */
+ 242:Src/stm32f4xx_it.c **** 
+ 243:Src/stm32f4xx_it.c ****   /* USER CODE END TIM7_IRQn 1 */
+ 244:Src/stm32f4xx_it.c **** }
+ 245:Src/stm32f4xx_it.c **** 
+ 246:Src/stm32f4xx_it.c **** /**
+ 247:Src/stm32f4xx_it.c ****   * @brief This function handles SPI5 global interrupt.
+ 248:Src/stm32f4xx_it.c ****   */
+ 249:Src/stm32f4xx_it.c **** void SPI5_IRQHandler(void)
+ 250:Src/stm32f4xx_it.c **** {
+ 309              		.loc 1 250 0
+ 310              		.cfi_startproc
+ 311              		@ args = 0, pretend = 0, frame = 0
+ 312              		@ frame_needed = 0, uses_anonymous_args = 0
+ 313 0000 08B5     		push	{r3, lr}
+ 314              	.LCFI4:
+ 315              		.cfi_def_cfa_offset 8
+ 316              		.cfi_offset 3, -8
+ 317              		.cfi_offset 14, -4
+ 251:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN SPI5_IRQn 0 */
+ 252:Src/stm32f4xx_it.c **** 
+ 253:Src/stm32f4xx_it.c ****   /* USER CODE END SPI5_IRQn 0 */
+ 254:Src/stm32f4xx_it.c ****   HAL_SPI_IRQHandler(&hspi5);
+ 318              		.loc 1 254 0
+ 319 0002 0248     		ldr	r0, .L27
+ 320 0004 FFF7FEFF 		bl	HAL_SPI_IRQHandler
+ 321              	.LVL5:
+ 322 0008 08BD     		pop	{r3, pc}
+ 323              	.L28:
+ 324 000a 00BF     		.align	2
+ 325              	.L27:
+ 326 000c 00000000 		.word	hspi5
+ 327              		.cfi_endproc
+ 328              	.LFE142:
+ 330              		.text
+ 331              	.Letext0:
+ 332              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 333              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 334              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 335              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 336              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 337              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 338              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 339              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
+ 340              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 341              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 342              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ARM GAS  /tmp/cc5yuM8D.s 			page 11
+
+
+ 343              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  /tmp/cc5yuM8D.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_it.c
-     /tmp/ccVpWAOl.s:18     .text.NMI_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:25     .text.NMI_Handler:0000000000000000 NMI_Handler
-     /tmp/ccVpWAOl.s:38     .text.HardFault_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:45     .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/ccVpWAOl.s:59     .text.MemManage_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:66     .text.MemManage_Handler:0000000000000000 MemManage_Handler
-     /tmp/ccVpWAOl.s:80     .text.BusFault_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:87     .text.BusFault_Handler:0000000000000000 BusFault_Handler
-     /tmp/ccVpWAOl.s:101    .text.UsageFault_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:108    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
-     /tmp/ccVpWAOl.s:122    .text.SVC_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:129    .text.SVC_Handler:0000000000000000 SVC_Handler
-     /tmp/ccVpWAOl.s:141    .text.DebugMon_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:148    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
-     /tmp/ccVpWAOl.s:160    .text.PendSV_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:167    .text.PendSV_Handler:0000000000000000 PendSV_Handler
-     /tmp/ccVpWAOl.s:179    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:186    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/ccVpWAOl.s:206    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:213    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
-     /tmp/ccVpWAOl.s:236    .text.TIM6_DAC_IRQHandler:0000000000000010 $d
-     /tmp/ccVpWAOl.s:242    .text.TIM7_IRQHandler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:249    .text.TIM7_IRQHandler:0000000000000000 TIM7_IRQHandler
-     /tmp/ccVpWAOl.s:268    .text.TIM7_IRQHandler:000000000000000c $d
-     /tmp/ccVpWAOl.s:273    .text.SPI5_IRQHandler:0000000000000000 $t
-     /tmp/ccVpWAOl.s:280    .text.SPI5_IRQHandler:0000000000000000 SPI5_IRQHandler
-     /tmp/ccVpWAOl.s:299    .text.SPI5_IRQHandler:000000000000000c $d
+     /tmp/cc5yuM8D.s:18     .text.NMI_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:25     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/cc5yuM8D.s:38     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:45     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/cc5yuM8D.s:59     .text.MemManage_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:66     .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/cc5yuM8D.s:80     .text.BusFault_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:87     .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/cc5yuM8D.s:101    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:108    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/cc5yuM8D.s:122    .text.SVC_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:129    .text.SVC_Handler:0000000000000000 SVC_Handler
+     /tmp/cc5yuM8D.s:141    .text.DebugMon_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:148    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/cc5yuM8D.s:160    .text.PendSV_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:167    .text.PendSV_Handler:0000000000000000 PendSV_Handler
+     /tmp/cc5yuM8D.s:179    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:186    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/cc5yuM8D.s:206    .text.EXTI15_10_IRQHandler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:213    .text.EXTI15_10_IRQHandler:0000000000000000 EXTI15_10_IRQHandler
+     /tmp/cc5yuM8D.s:233    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:240    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
+     /tmp/cc5yuM8D.s:263    .text.TIM6_DAC_IRQHandler:0000000000000010 $d
+     /tmp/cc5yuM8D.s:269    .text.TIM7_IRQHandler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:276    .text.TIM7_IRQHandler:0000000000000000 TIM7_IRQHandler
+     /tmp/cc5yuM8D.s:295    .text.TIM7_IRQHandler:000000000000000c $d
+     /tmp/cc5yuM8D.s:300    .text.SPI5_IRQHandler:0000000000000000 $t
+     /tmp/cc5yuM8D.s:307    .text.SPI5_IRQHandler:0000000000000000 SPI5_IRQHandler
+     /tmp/cc5yuM8D.s:326    .text.SPI5_IRQHandler:000000000000000c $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick
+HAL_GPIO_EXTI_IRQHandler
 HAL_DAC_IRQHandler
 HAL_TIM_IRQHandler
 hdac

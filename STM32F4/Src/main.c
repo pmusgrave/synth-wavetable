@@ -23,9 +23,12 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <math.h>
+#include "globals.h"
+#include "spi_handler.h"
+#include "envelopes.h"
 #include "midi.h"
 #include "waves.h"
-#include <math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,13 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DDS_SCALE_FACTOR 89.4745833
-#define VOICES 16
-#define NOT_TRIGGERED 0
-#define ATTACK_MODE 1
-#define DECAY_MODE 2
-#define SUSTAIN_MODE 3
-#define RELEASE_MODE 4
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -60,8 +57,6 @@ TIM_HandleTypeDef htim7;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-uint8_t spi_tx_buffer[3];
-uint8_t spi_rx_buffer[3];
 const float inv_voices = 1.0/VOICES;
 // probably need to refactor these SPI flags
 volatile uint8_t note_on_flag = 0;
@@ -74,11 +69,6 @@ volatile uint8_t release_cc_flag = 0;
 volatile struct midi_msg current_midi_msg = {0,0,0,0};
 volatile uint32_t phase_accumulator[VOICES] = {0};
 volatile uint8_t output_val = 0;
-volatile uint32_t envelope_index[VOICES] = {0};
-volatile float envelope[VOICES] = {0};
-volatile uint8_t env_state[VOICES];
-volatile uint8_t note_on[88] = {0};
-volatile uint8_t note_freq[VOICES] = {0};
 
 volatile uint32_t lfo_phase_accumulator[VOICES] = {0};
 volatile uint16_t lfo_freq[VOICES] = {0};
@@ -87,7 +77,6 @@ volatile uint8_t lfo[VOICES] = {0};
 volatile uint8_t update_value_flag = 0;
 volatile uint8_t MIDI_flag = 0;
 
-#define MAX_QUEUE_SIZE 255
 struct msg_queue {
   uint8_t head;
   uint8_t tail;
@@ -95,14 +84,6 @@ struct msg_queue {
 } midi_msg_queue;
 void enqueue(struct midi_msg midi_msg);
 struct midi_msg dequeue(void);
-
-struct byte_queue {
-  uint8_t head;
-  uint8_t tail;
-  uint8_t queue[MAX_QUEUE_SIZE];
-} byte_queue;
-void enqueue_byte(uint8_t);
-uint8_t dequeue_byte(void);
 
 uint8_t attack = 255;
 uint8_t decay = 255;
@@ -119,8 +100,7 @@ static void MX_DAC_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
-void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
+//void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void UpdateOutputValue(void);
 void UpdateLFOs(void);
@@ -143,6 +123,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
+  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -180,28 +161,8 @@ int main(void)
     lfo_freq[i] = 20;
   }
 
-  /*
-  note_on[0] = MIDI_NOTE_ON;
-  note_freq[0] = 50;
-  env_state[0] = ATTACK_MODE;
-
-  note_on[1] = MIDI_NOTE_ON;
-  note_freq[1] = 54;
-  env_state[1] = ATTACK_MODE;
-
-  note_on[2] = MIDI_NOTE_ON;
-  note_freq[2] = 57;
-  env_state[2] = ATTACK_MODE;
-
-  note_on[3] = MIDI_NOTE_ON;
-  note_freq[3] = 62;
-  env_state[3] = ATTACK_MODE;
-  */
-
-
   uint8_t init_msg[20] = {"\nSTM32F429!\n"};
   HAL_UART_Transmit(&huart1, init_msg, 20, 50);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -209,7 +170,7 @@ int main(void)
   uint8_t process_msg_flag  = 0;
   while (1)
   {
-    Receive_MIDI(&hspi5, spi_rx_buffer);
+    // Receive_MIDI(&hspi5, spi_rx_buffer);
 
     if(midi_msg_queue.head != midi_msg_queue.tail) {
       current_midi_msg = dequeue();
@@ -219,7 +180,7 @@ int main(void)
     if(MIDI_flag) {
       MIDI_flag = 0;
 
-      if(byte_queue.head != byte_queue.tail) {
+      if(spi_byte_queue.head != spi_byte_queue.tail) {
         uint8_t value = dequeue_byte();
 
         switch(value) {
@@ -245,7 +206,7 @@ int main(void)
           if(note_on_flag){
         struct midi_msg new_midi_note_msg = {
           MIDI_NOTE_ON,
-          spi_rx_buffer[0],
+          value,
           127,
           0
         };
@@ -255,7 +216,7 @@ int main(void)
       else if(note_off_flag){
         struct midi_msg new_midi_note_msg = {
           MIDI_NOTE_OFF,
-          spi_rx_buffer[0],
+          value,
           0,
           0
         };
@@ -265,7 +226,7 @@ int main(void)
       else if(attack_cc_flag){
         struct midi_msg new_cc = {
           ATTACK_CC,
-          spi_rx_buffer[0],
+          value,
           0,
           0
         };
@@ -276,7 +237,7 @@ int main(void)
       else if(decay_cc_flag){
         struct midi_msg new_cc = {
           DECAY_CC,
-          spi_rx_buffer[0],
+          value,
           0,
           0
         };
@@ -287,7 +248,7 @@ int main(void)
       else if(sustain_cc_flag){
         struct midi_msg new_cc = {
           SUSTAIN_CC,
-          spi_rx_buffer[0],
+          value,
           0,
           0
         };
@@ -298,7 +259,7 @@ int main(void)
       else if(release_cc_flag){
         struct midi_msg new_cc = {
           RELEASE_CC,
-          spi_rx_buffer[0],
+          value,
           0,
           0
         };
@@ -649,13 +610,11 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : ENABLE_Pin */
-  GPIO_InitStruct.Pin = ENABLE_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  /*Configure GPIO pin : PF10 */
+  GPIO_InitStruct.Pin = GPIO_PIN_10;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
-  HAL_GPIO_Init(ENABLE_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SDNWE_Pin */
   GPIO_InitStruct.Pin = SDNWE_Pin;
@@ -857,131 +816,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-  //Receive_MIDI(&hspi5, spi_rx_buffer);
-}
-
-void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi) {
-  //  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_13, GPIO_PIN_SET);
-  uint8_t uart_tx_buffer;
-  /*
-  struct midi_note_msg new_midi_note_msg = {
-    spi_rx_buffer[0],
-    spi_rx_buffer[1],
-    spi_rx_buffer[2]
-  };
-
-  enqueue(new_midi_note_msg);
-  */
-
-
-  if(spi_rx_buffer[0] == MIDI_NOTE_ON){
-    uart_tx_buffer = 'n';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-    uart_tx_buffer = '\n';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  else if (spi_rx_buffer[0] == MIDI_NOTE_OFF){
-    uart_tx_buffer = 'f';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-    uart_tx_buffer = '\n';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  /*
-  else if (spi_rx_buffer[0] == ATTACK_CC){
-    uart_tx_buffer = 'a';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  else if (spi_rx_buffer[0] == DECAY_CC){
-    uart_tx_buffer = 'd';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  else if (spi_rx_buffer[0] == SUSTAIN_CC){
-    uart_tx_buffer = 's';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  else if (spi_rx_buffer[0] == RELEASE_CC){
-    uart_tx_buffer = 'r';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  else {
-    uart_tx_buffer = 'z';
-    HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  }
-  */
-
-
-
-  MIDI_flag = 1;
-  enqueue_byte(spi_rx_buffer[0]);
-
-  /*
-  if(note_on_flag){
-    struct midi_msg new_midi_note_msg = {
-      MIDI_NOTE_ON,
-      spi_rx_buffer[0],
-      127,
-      0
-    };
-    enqueue(new_midi_note_msg);
-    note_on_flag = 0;
-  }
-  else if(note_off_flag){
-    struct midi_msg new_midi_note_msg = {
-      MIDI_NOTE_OFF,
-      spi_rx_buffer[0],
-      0,
-      0
-    };
-    enqueue(new_midi_note_msg);
-    note_off_flag = 0;
-  }
-  else if(attack_cc_flag){
-    struct midi_msg new_cc = {
-      ATTACK_CC,
-      spi_rx_buffer[0],
-      0,
-      0
-    };
-    enqueue(new_cc);
-    attack_cc_flag = 0;
-  }
-  else if(decay_cc_flag){
-    struct midi_msg new_cc = {
-      DECAY_CC,
-      spi_rx_buffer[0],
-      0,
-      0
-    };
-    enqueue(new_cc);
-    decay_cc_flag = 0;
-  }
-  else if(sustain_cc_flag){
-    struct midi_msg new_cc = {
-      SUSTAIN_CC,
-      spi_rx_buffer[0],
-      0,
-      0
-    };
-    enqueue(new_cc);
-    sustain_cc_flag = 0;
-  }
-  else if(release_cc_flag){
-    struct midi_msg new_cc = {
-      RELEASE_CC,
-      spi_rx_buffer[0],
-      0,
-      0
-    };
-    enqueue(new_cc);
-    release_cc_flag = 0;
-  }
-  */
-}
-
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if(htim->Instance == TIM6){
     //  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
@@ -1005,7 +846,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 }
 
 void UpdateOutputValue() {
-  //  HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_7);
   float val = 0;
   output_val = 0;
   for(int i = 0; i < VOICES; i++) {
@@ -1024,61 +864,6 @@ void UpdateLFOs() {
   }
 }
 
-void UpdateEnvelope() {
-  for(int i = 0; i < VOICES; i++){
-    //if(note_on[i] == MIDI_NOTE_OFF){
-    //  env_state[i] = RELEASE_MODE;
-    //}
-
-    switch(env_state[i]){
-    case NOT_TRIGGERED:
-      envelope_index[i] = 0;
-      envelope[i] = 0;
-      break;
-    case ATTACK_MODE:
-      //    if((UINT32_MAX - envelope_index) < DDS_SCALE_FACTOR){
-      if(envelope_index[i] <= 4200000) {
-        envelope_index[i] += (uint32_t)(attack * DDS_SCALE_FACTOR);
-        envelope[i] = base_pos_saw[(envelope_index[i]>>10)%4096];
-      }
-      else {
-        // env_state++;
-        envelope_index[i] = 0;
-        env_state[i] = DECAY_MODE;
-      }
-      break;
-    case DECAY_MODE:
-      if(base_neg_saw[(envelope_index[i]>>10)%4096] >= sustain){
-        envelope_index[i] += (uint32_t)(decay * DDS_SCALE_FACTOR);
-        envelope[i] = base_neg_saw[(envelope_index[i]>>10)%4096];
-      }
-      else {
-        //envelope_index[i] = 0;
-        env_state[i]++;
-        //env_state[i] = RELEASE_MODE;
-      }
-      break;
-    case SUSTAIN_MODE:
-      //env_state[i]++;
-      break;
-    case RELEASE_MODE:
-      //      if((UINT32_MAX - envelope_index) < DDS_SCALE_FACTOR){
-      if(envelope_index[i] <= 4200000){
-        envelope_index[i] += (uint32_t)(release * DDS_SCALE_FACTOR);
-        envelope[i] = base_neg_saw[(envelope_index[i]>>10)%4096];
-      }
-      else {
-        env_state[i] = NOT_TRIGGERED;
-        note_on[i] = MIDI_NOTE_OFF;
-        envelope_index[i] = 0;
-        envelope[i] = 0;
-        lfo_phase_accumulator[i] = 0;
-        lfo[i] = 0;
-      }
-      break;
-    }
-  }
-}
 
 void Update_R2R_DAC() {
   ((output_val>>0)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
@@ -1091,27 +876,6 @@ void Update_R2R_DAC() {
   ((output_val>>7)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
 }
 
-void UART_PrintADSR(){
-  uint8_t uart_tx_buffer;
-  uart_tx_buffer = attack;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = ' ';
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = decay;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = ' ';
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = sustain;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = ' ';
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = release;
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-  uart_tx_buffer = '\n';
-  HAL_UART_Transmit(&huart1, &uart_tx_buffer, 1, 50);
-
-}
-
 void enqueue (struct midi_msg midi_msg) {
   midi_msg_queue.queue[midi_msg_queue.head++] = midi_msg;
 }
@@ -1119,15 +883,6 @@ void enqueue (struct midi_msg midi_msg) {
 struct midi_msg dequeue(void) {
   return midi_msg_queue.queue[midi_msg_queue.tail++];
 }
-
-void enqueue_byte (uint8_t byte) {
-  byte_queue.queue[byte_queue.head++] = byte;
-}
-
-uint8_t dequeue_byte(void) {
-  return byte_queue.queue[byte_queue.tail++];
-}
-
 /* USER CODE END 4 */
 
 /**

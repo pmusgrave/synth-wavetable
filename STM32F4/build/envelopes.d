@@ -1,4 +1,4 @@
-build/main.o: Src/main.c Inc/main.h \
+build/envelopes.o: Src/envelopes.c Inc/globals.h Inc/main.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  Inc/stm32f4xx_hal_conf.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -27,8 +27,10 @@ build/main.o: Src/main.c Inc/main.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h Inc/globals.h \
- Inc/main.h Inc/spi_handler.h Inc/envelopes.h Inc/midi.h Inc/waves.h
+ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h Inc/envelopes.h \
+ Inc/waves.h Inc/midi.h
+
+Inc/globals.h:
 
 Inc/main.h:
 
@@ -94,14 +96,8 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 
-Inc/globals.h:
-
-Inc/main.h:
-
-Inc/spi_handler.h:
-
 Inc/envelopes.h:
 
-Inc/midi.h:
-
 Inc/waves.h:
+
+Inc/midi.h:
