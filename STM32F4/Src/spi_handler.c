@@ -5,10 +5,18 @@
 struct byte_queue spi_byte_queue;
 uint8_t rx_buffer;
 
+// probably need to refactor these SPI flags
+volatile uint8_t note_on_flag = 0;
+volatile uint8_t note_off_flag = 0;
+volatile uint8_t attack_cc_flag = 0;
+volatile uint8_t decay_cc_flag = 0;
+volatile uint8_t sustain_cc_flag = 0;
+volatile uint8_t release_cc_flag = 0;
+
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
   if(HAL_SPI_GetState(&hspi5) == HAL_SPI_STATE_READY){
     HAL_SPI_Receive(&hspi5, &rx_buffer, 1, 500);
-    HAL_UART_Transmit(&huart1, &rx_buffer, 1, 100);
+    HAL_UART_Transmit(&huart1, &rx_buffer, 1, 10);
   }
   rx_buffer = 0;
 

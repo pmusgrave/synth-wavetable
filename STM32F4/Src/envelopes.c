@@ -8,6 +8,10 @@ volatile float envelope[VOICES] = {0};
 volatile uint8_t env_state[VOICES];
 volatile uint8_t note_on[88] = {0};
 volatile uint8_t note_freq[VOICES] = {0};
+uint8_t attack = 255;
+uint8_t decay = 255;
+uint8_t sustain = 200;
+uint8_t release = 255;
 
 void UpdateEnvelope() {
   for(int i = 0; i < VOICES; i++){

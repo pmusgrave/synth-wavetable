@@ -1,5 +1,11 @@
 #include "midi.h"
+#include "globals.h"
 #include <stdint.h>
+
+volatile struct midi_msg current_midi_msg = {0,0,0,0};
+struct msg_queue  midi_msg_queue;
+
+volatile uint8_t MIDI_flag = 0;
 
 const float midi_notes[88] = {
                                27.5,
@@ -97,4 +103,12 @@ void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer) {
     uint8_t data = 0xAA;
     HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 1);
   }
+}
+
+void enqueue (struct midi_msg midi_msg) {
+  midi_msg_queue.queue[midi_msg_queue.head++] = midi_msg;
+}
+
+struct midi_msg dequeue(void) {
+  return midi_msg_queue.queue[midi_msg_queue.tail++];
 }

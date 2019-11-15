@@ -1,8 +1,6 @@
 #ifndef SPI_HANDLER_H
 #define SPI_HANDLER_H
 
-#define MAX_QUEUE_SIZE 255
-
 struct byte_queue {
   uint8_t head;
   uint8_t tail;

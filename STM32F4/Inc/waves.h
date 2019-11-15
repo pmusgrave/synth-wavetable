@@ -4,15 +4,15 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#define N 4096
+#define SAMPLE_SIZE (4096)
 #define AMPLITUDE (255) // divide by number of voices here?
 #define AMPLITUDE_SQUARED (65025)
 
-uint8_t base_sine[N];
-uint8_t base_pos_saw[N];
-uint8_t base_neg_saw[N];
-uint8_t base_tri[N];
-uint8_t base_sq[N];
+uint8_t base_sine[SAMPLE_SIZE];
+uint8_t base_pos_saw[SAMPLE_SIZE];
+uint8_t base_neg_saw[SAMPLE_SIZE];
+uint8_t base_tri[SAMPLE_SIZE];
+uint8_t base_sq[SAMPLE_SIZE];
 
 uint8_t lfo_sine[256];
 

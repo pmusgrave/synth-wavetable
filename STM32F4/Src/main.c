@@ -29,6 +29,9 @@
 #include "envelopes.h"
 #include "midi.h"
 #include "waves.h"
+#include "oscillator.h"
+#include "lfo.h"
+#include "r2rdac.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,47 +51,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac;
-
 SPI_HandleTypeDef hspi5;
-
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim7;
-
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-const float inv_voices = 1.0/VOICES;
-// probably need to refactor these SPI flags
-volatile uint8_t note_on_flag = 0;
-volatile uint8_t note_off_flag = 0;
-volatile uint8_t attack_cc_flag = 0;
-volatile uint8_t decay_cc_flag = 0;
-volatile uint8_t sustain_cc_flag = 0;
-volatile uint8_t release_cc_flag = 0;
 
-volatile struct midi_msg current_midi_msg = {0,0,0,0};
-volatile uint32_t phase_accumulator[VOICES] = {0};
-volatile uint8_t output_val = 0;
-
-volatile uint32_t lfo_phase_accumulator[VOICES] = {0};
-volatile uint16_t lfo_freq[VOICES] = {0};
-volatile uint8_t lfo[VOICES] = {0};
-
-volatile uint8_t update_value_flag = 0;
-volatile uint8_t MIDI_flag = 0;
-
-struct msg_queue {
-  uint8_t head;
-  uint8_t tail;
-  struct midi_msg queue[MAX_QUEUE_SIZE];
-} midi_msg_queue;
-void enqueue(struct midi_msg midi_msg);
-struct midi_msg dequeue(void);
-
-uint8_t attack = 255;
-uint8_t decay = 255;
-uint8_t sustain = 200;
-uint8_t release = 255;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,11 +71,6 @@ static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
 //void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
-void UpdateOutputValue(void);
-void UpdateLFOs(void);
-void UpdateEnvelope(void);
-void Update_R2R_DAC(void);
-void UART_PrintADSR(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -154,6 +118,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim7);
   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
 
+  // init envelopes, lfo, and midi notes
   for(int i = 0; i < VOICES; i++) {
     env_state[i] = NOT_TRIGGERED;
     note_on[i] = MIDI_NOTE_OFF;
@@ -167,11 +132,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  uint8_t process_msg_flag  = 0;
+  //uint8_t process_msg_flag  = 0;
   while (1)
   {
     // Receive_MIDI(&hspi5, spi_rx_buffer);
 
+    /*
     if(midi_msg_queue.head != midi_msg_queue.tail) {
       current_midi_msg = dequeue();
       process_msg_flag = 1;
@@ -314,6 +280,7 @@ int main(void)
 
       }
     }
+    */
 
     if(update_value_flag) {
       //      __disable_irq();
@@ -612,8 +579,8 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin : PF10 */
   GPIO_InitStruct.Pin = GPIO_PIN_10;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pin : SDNWE_Pin */
@@ -843,45 +810,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     }
   }
   */
-}
-
-void UpdateOutputValue() {
-  float val = 0;
-  output_val = 0;
-  for(int i = 0; i < VOICES; i++) {
-    phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
-    val += ((base_sine[(phase_accumulator[i]>>10)%4096] + 0*base_pos_saw[(phase_accumulator[i]>>10)%4096]) * envelope[i] * lfo[i]) / (2*AMPLITUDE_SQUARED);
-  }
-
-  output_val = (uint8_t) (val / VOICES);
-}
-
-void UpdateLFOs() {
-  for(int i = 0; i < VOICES; i++) {
-    lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
-    //lfo[i] = base_tri[(lfo_phase_accumulator[i]>>10)%4096];
-    lfo[i] = 255;
-  }
-}
-
-
-void Update_R2R_DAC() {
-  ((output_val>>0)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
-  ((output_val>>1)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_8, GPIO_PIN_RESET);
-  ((output_val>>2)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
-  ((output_val>>3)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_10, GPIO_PIN_RESET);
-  ((output_val>>4)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
-  ((output_val>>5)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
-  ((output_val>>6)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
-  ((output_val>>7)&0x0001)==1 ? HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_SET) : HAL_GPIO_WritePin(GPIOE, GPIO_PIN_14, GPIO_PIN_RESET);
-}
-
-void enqueue (struct midi_msg midi_msg) {
-  midi_msg_queue.queue[midi_msg_queue.head++] = midi_msg;
-}
-
-struct midi_msg dequeue(void) {
-  return midi_msg_queue.queue[midi_msg_queue.tail++];
 }
 /* USER CODE END 4 */
 

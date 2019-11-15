@@ -7,4 +7,6 @@
 #define SUSTAIN_MODE 3
 #define RELEASE_MODE 4
 
+void UpdateEnvelope(void);
+
 #endif

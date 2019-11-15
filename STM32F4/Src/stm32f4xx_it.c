@@ -56,10 +56,7 @@
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
-extern DAC_HandleTypeDef hdac;
-extern SPI_HandleTypeDef hspi5;
-extern TIM_HandleTypeDef htim6;
-extern TIM_HandleTypeDef htim7;
+
 /* USER CODE BEGIN EV */
 
 /* USER CODE END EV */
@@ -212,49 +209,6 @@ void EXTI15_10_IRQHandler(void)
   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 
   /* USER CODE END EXTI15_10_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
-  */
-void TIM6_DAC_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
-
-  /* USER CODE END TIM6_DAC_IRQn 0 */
-  HAL_DAC_IRQHandler(&hdac);
-  HAL_TIM_IRQHandler(&htim6);
-  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
-
-  /* USER CODE END TIM6_DAC_IRQn 1 */
-}
-
-/**
-  * @brief This function handles TIM7 global interrupt.
-  */
-void TIM7_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM7_IRQn 0 */
-
-  /* USER CODE END TIM7_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim7);
-  /* USER CODE BEGIN TIM7_IRQn 1 */
-
-  /* USER CODE END TIM7_IRQn 1 */
-}
-
-/**
-  * @brief This function handles SPI5 global interrupt.
-  */
-void SPI5_IRQHandler(void)
-{
-  /* USER CODE BEGIN SPI5_IRQn 0 */
-
-  /* USER CODE END SPI5_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi5);
-  /* USER CODE BEGIN SPI5_IRQn 1 */
-
-  /* USER CODE END SPI5_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

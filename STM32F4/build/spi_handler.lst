@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cchMdlSA.s 			page 1
+ARM GAS  /tmp/ccjFWxMg.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -34,8 +34,16 @@ ARM GAS  /tmp/cchMdlSA.s 			page 1
    5:Src/spi_handler.c **** struct byte_queue spi_byte_queue;
    6:Src/spi_handler.c **** uint8_t rx_buffer;
    7:Src/spi_handler.c **** 
-   8:Src/spi_handler.c **** void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
-  28              		.loc 1 8 0
+   8:Src/spi_handler.c **** // probably need to refactor these SPI flags
+   9:Src/spi_handler.c **** volatile uint8_t note_on_flag = 0;
+  10:Src/spi_handler.c **** volatile uint8_t note_off_flag = 0;
+  11:Src/spi_handler.c **** volatile uint8_t attack_cc_flag = 0;
+  12:Src/spi_handler.c **** volatile uint8_t decay_cc_flag = 0;
+  13:Src/spi_handler.c **** volatile uint8_t sustain_cc_flag = 0;
+  14:Src/spi_handler.c **** volatile uint8_t release_cc_flag = 0;
+  15:Src/spi_handler.c **** 
+  16:Src/spi_handler.c **** void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+  28              		.loc 1 16 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -48,8 +56,11 @@ ARM GAS  /tmp/cchMdlSA.s 			page 1
   38              		.cfi_offset 5, -8
   39              		.cfi_offset 14, -4
   40 0002 0446     		mov	r4, r0
-   9:Src/spi_handler.c ****   if(HAL_SPI_GetState(&hspi5) == HAL_SPI_STATE_READY){
-  41              		.loc 1 9 0
+  17:Src/spi_handler.c ****   if(HAL_SPI_GetState(&hspi5) == HAL_SPI_STATE_READY){
+  41              		.loc 1 17 0
+ARM GAS  /tmp/ccjFWxMg.s 			page 2
+
+
   42 0004 0C48     		ldr	r0, .L5
   43              	.LVL1:
   44 0006 FFF7FEFF 		bl	HAL_SPI_GetState
@@ -57,26 +68,23 @@ ARM GAS  /tmp/cchMdlSA.s 			page 1
   46 000a 0128     		cmp	r0, #1
   47 000c 05D0     		beq	.L4
   48              	.L2:
-  10:Src/spi_handler.c ****     HAL_SPI_Receive(&hspi5, &rx_buffer, 1, 500);
-ARM GAS  /tmp/cchMdlSA.s 			page 2
-
-
-  11:Src/spi_handler.c ****     HAL_UART_Transmit(&huart1, &rx_buffer, 1, 100);
-  12:Src/spi_handler.c ****   }
-  13:Src/spi_handler.c ****   rx_buffer = 0;
-  49              		.loc 1 13 0
+  18:Src/spi_handler.c ****     HAL_SPI_Receive(&hspi5, &rx_buffer, 1, 500);
+  19:Src/spi_handler.c ****     HAL_UART_Transmit(&huart1, &rx_buffer, 1, 10);
+  20:Src/spi_handler.c ****   }
+  21:Src/spi_handler.c ****   rx_buffer = 0;
+  49              		.loc 1 21 0
   50 000e 0022     		movs	r2, #0
   51 0010 0A4B     		ldr	r3, .L5+4
   52 0012 1A70     		strb	r2, [r3]
-  14:Src/spi_handler.c **** 
-  15:Src/spi_handler.c ****   __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
-  53              		.loc 1 15 0
+  22:Src/spi_handler.c **** 
+  23:Src/spi_handler.c ****   __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);
+  53              		.loc 1 23 0
   54 0014 0A4B     		ldr	r3, .L5+8
   55 0016 5C61     		str	r4, [r3, #20]
   56 0018 38BD     		pop	{r3, r4, r5, pc}
   57              	.L4:
-  10:Src/spi_handler.c ****     HAL_SPI_Receive(&hspi5, &rx_buffer, 1, 500);
-  58              		.loc 1 10 0
+  18:Src/spi_handler.c ****     HAL_SPI_Receive(&hspi5, &rx_buffer, 1, 500);
+  58              		.loc 1 18 0
   59 001a 084D     		ldr	r5, .L5+4
   60 001c 4FF4FA73 		mov	r3, #500
   61 0020 0122     		movs	r2, #1
@@ -84,9 +92,9 @@ ARM GAS  /tmp/cchMdlSA.s 			page 1
   63 0024 0448     		ldr	r0, .L5
   64 0026 FFF7FEFF 		bl	HAL_SPI_Receive
   65              	.LVL3:
-  11:Src/spi_handler.c ****   }
-  66              		.loc 1 11 0
-  67 002a 6423     		movs	r3, #100
+  19:Src/spi_handler.c ****   }
+  66              		.loc 1 19 0
+  67 002a 0A23     		movs	r3, #10
   68 002c 0122     		movs	r2, #1
   69 002e 2946     		mov	r1, r5
   70 0030 0448     		ldr	r0, .L5+12
@@ -110,21 +118,21 @@ ARM GAS  /tmp/cchMdlSA.s 			page 1
   89              		.thumb_func
   90              		.fpu fpv4-sp-d16
   92              	enqueue_byte:
+ARM GAS  /tmp/ccjFWxMg.s 			page 3
+
+
   93              	.LFB131:
-  16:Src/spi_handler.c **** }
-  17:Src/spi_handler.c **** 
-  18:Src/spi_handler.c **** void enqueue_byte (uint8_t byte) {
-  94              		.loc 1 18 0
+  24:Src/spi_handler.c **** }
+  25:Src/spi_handler.c **** 
+  26:Src/spi_handler.c **** void enqueue_byte (uint8_t byte) {
+  94              		.loc 1 26 0
   95              		.cfi_startproc
   96              		@ args = 0, pretend = 0, frame = 0
   97              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/cchMdlSA.s 			page 3
-
-
   98              		@ link register save eliminated.
   99              	.LVL5:
-  19:Src/spi_handler.c ****   spi_byte_queue.queue[spi_byte_queue.head++] = byte;
- 100              		.loc 1 19 0
+  27:Src/spi_handler.c ****   spi_byte_queue.queue[spi_byte_queue.head++] = byte;
+ 100              		.loc 1 27 0
  101 0000 034B     		ldr	r3, .L8
  102 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
  103 0004 511C     		adds	r1, r2, #1
@@ -147,65 +155,101 @@ ARM GAS  /tmp/cchMdlSA.s 			page 1
  121              		.fpu fpv4-sp-d16
  123              	dequeue_byte:
  124              	.LFB132:
-  20:Src/spi_handler.c **** }
-  21:Src/spi_handler.c **** 
-  22:Src/spi_handler.c **** uint8_t dequeue_byte(void) {
- 125              		.loc 1 22 0
+  28:Src/spi_handler.c **** }
+  29:Src/spi_handler.c **** 
+  30:Src/spi_handler.c **** uint8_t dequeue_byte(void) {
+ 125              		.loc 1 30 0
  126              		.cfi_startproc
  127              		@ args = 0, pretend = 0, frame = 0
  128              		@ frame_needed = 0, uses_anonymous_args = 0
  129              		@ link register save eliminated.
-  23:Src/spi_handler.c ****   return spi_byte_queue.queue[spi_byte_queue.tail++];
- 130              		.loc 1 23 0
+  31:Src/spi_handler.c ****   return spi_byte_queue.queue[spi_byte_queue.tail++];
+ 130              		.loc 1 31 0
  131 0000 034B     		ldr	r3, .L11
  132 0002 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
  133 0004 511C     		adds	r1, r2, #1
  134 0006 5970     		strb	r1, [r3, #1]
  135 0008 1344     		add	r3, r3, r2
-  24:Src/spi_handler.c **** }
- 136              		.loc 1 24 0
+  32:Src/spi_handler.c **** }
+ 136              		.loc 1 32 0
  137 000a 9878     		ldrb	r0, [r3, #2]	@ zero_extendqisi2
  138 000c 7047     		bx	lr
  139              	.L12:
  140 000e 00BF     		.align	2
  141              	.L11:
  142 0010 00000000 		.word	spi_byte_queue
+ARM GAS  /tmp/ccjFWxMg.s 			page 4
+
+
  143              		.cfi_endproc
  144              	.LFE132:
- 146              		.comm	rx_buffer,1,1
- 147              		.comm	spi_byte_queue,257,4
- 148              		.text
- 149              	.Letext0:
- 150              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 151              		.file 3 "/usr/include/newlib/sys/_stdint.h"
-ARM GAS  /tmp/cchMdlSA.s 			page 4
-
-
- 152              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 153              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 154              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 155              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 156              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 157              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 158              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 159              		.file 11 "Inc/globals.h"
- 160              		.file 12 "Inc/spi_handler.h"
-ARM GAS  /tmp/cchMdlSA.s 			page 5
+ 146              		.global	release_cc_flag
+ 147              		.global	sustain_cc_flag
+ 148              		.global	decay_cc_flag
+ 149              		.global	attack_cc_flag
+ 150              		.global	note_off_flag
+ 151              		.global	note_on_flag
+ 152              		.comm	rx_buffer,1,1
+ 153              		.comm	spi_byte_queue,257,4
+ 154              		.section	.bss.attack_cc_flag,"aw",%nobits
+ 157              	attack_cc_flag:
+ 158 0000 00       		.space	1
+ 159              		.section	.bss.decay_cc_flag,"aw",%nobits
+ 162              	decay_cc_flag:
+ 163 0000 00       		.space	1
+ 164              		.section	.bss.note_off_flag,"aw",%nobits
+ 167              	note_off_flag:
+ 168 0000 00       		.space	1
+ 169              		.section	.bss.note_on_flag,"aw",%nobits
+ 172              	note_on_flag:
+ 173 0000 00       		.space	1
+ 174              		.section	.bss.release_cc_flag,"aw",%nobits
+ 177              	release_cc_flag:
+ 178 0000 00       		.space	1
+ 179              		.section	.bss.sustain_cc_flag,"aw",%nobits
+ 182              	sustain_cc_flag:
+ 183 0000 00       		.space	1
+ 184              		.text
+ 185              	.Letext0:
+ 186              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 187              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 188              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 189              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 190              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 191              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 192              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 193              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 194              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 195              		.file 11 "Inc/globals.h"
+ 196              		.file 12 "Inc/spi_handler.h"
+ARM GAS  /tmp/ccjFWxMg.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi_handler.c
-     /tmp/cchMdlSA.s:18     .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
-     /tmp/cchMdlSA.s:25     .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
-     /tmp/cchMdlSA.s:77     .text.HAL_GPIO_EXTI_Callback:0000000000000038 $d
+     /tmp/ccjFWxMg.s:18     .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
+     /tmp/ccjFWxMg.s:25     .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
+     /tmp/ccjFWxMg.s:77     .text.HAL_GPIO_EXTI_Callback:0000000000000038 $d
                             *COM*:0000000000000001 rx_buffer
-     /tmp/cchMdlSA.s:85     .text.enqueue_byte:0000000000000000 $t
-     /tmp/cchMdlSA.s:92     .text.enqueue_byte:0000000000000000 enqueue_byte
-     /tmp/cchMdlSA.s:111    .text.enqueue_byte:0000000000000010 $d
+     /tmp/ccjFWxMg.s:85     .text.enqueue_byte:0000000000000000 $t
+     /tmp/ccjFWxMg.s:92     .text.enqueue_byte:0000000000000000 enqueue_byte
+     /tmp/ccjFWxMg.s:111    .text.enqueue_byte:0000000000000010 $d
                             *COM*:0000000000000101 spi_byte_queue
-     /tmp/cchMdlSA.s:116    .text.dequeue_byte:0000000000000000 $t
-     /tmp/cchMdlSA.s:123    .text.dequeue_byte:0000000000000000 dequeue_byte
-     /tmp/cchMdlSA.s:142    .text.dequeue_byte:0000000000000010 $d
+     /tmp/ccjFWxMg.s:116    .text.dequeue_byte:0000000000000000 $t
+     /tmp/ccjFWxMg.s:123    .text.dequeue_byte:0000000000000000 dequeue_byte
+     /tmp/ccjFWxMg.s:142    .text.dequeue_byte:0000000000000010 $d
+     /tmp/ccjFWxMg.s:177    .bss.release_cc_flag:0000000000000000 release_cc_flag
+     /tmp/ccjFWxMg.s:182    .bss.sustain_cc_flag:0000000000000000 sustain_cc_flag
+     /tmp/ccjFWxMg.s:162    .bss.decay_cc_flag:0000000000000000 decay_cc_flag
+     /tmp/ccjFWxMg.s:157    .bss.attack_cc_flag:0000000000000000 attack_cc_flag
+     /tmp/ccjFWxMg.s:167    .bss.note_off_flag:0000000000000000 note_off_flag
+     /tmp/ccjFWxMg.s:172    .bss.note_on_flag:0000000000000000 note_on_flag
+     /tmp/ccjFWxMg.s:158    .bss.attack_cc_flag:0000000000000000 $d
+     /tmp/ccjFWxMg.s:163    .bss.decay_cc_flag:0000000000000000 $d
+     /tmp/ccjFWxMg.s:168    .bss.note_off_flag:0000000000000000 $d
+     /tmp/ccjFWxMg.s:173    .bss.note_on_flag:0000000000000000 $d
+     /tmp/ccjFWxMg.s:178    .bss.release_cc_flag:0000000000000000 $d
+     /tmp/ccjFWxMg.s:183    .bss.sustain_cc_flag:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -70,9 +70,21 @@ void HAL_MspInit(void)
   __HAL_RCC_SYSCFG_CLK_ENABLE();
   __HAL_RCC_PWR_CLK_ENABLE();
 
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_0);
+  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_2);
 
   /* System interrupt init*/
+  /* MemoryManagement_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(MemoryManagement_IRQn, 1, 1);
+  /* BusFault_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(BusFault_IRQn, 1, 1);
+  /* UsageFault_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(UsageFault_IRQn, 1, 1);
+  /* SVCall_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(SVCall_IRQn, 1, 1);
+  /* DebugMonitor_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DebugMonitor_IRQn, 1, 1);
+  /* PendSV_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(PendSV_IRQn, 1, 1);
 
   /* USER CODE BEGIN MspInit 1 */
 
@@ -105,9 +117,6 @@ void HAL_DAC_MspInit(DAC_HandleTypeDef* hdac)
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    /* DAC interrupt Init */
-    HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
   /* USER CODE BEGIN DAC_MspInit 1 */
 
   /* USER CODE END DAC_MspInit 1 */
@@ -135,15 +144,6 @@ void HAL_DAC_MspDeInit(DAC_HandleTypeDef* hdac)
     PA5     ------> DAC_OUT2 
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5);
-
-    /* DAC interrupt DeInit */
-  /* USER CODE BEGIN DAC:TIM6_DAC_IRQn disable */
-    /**
-    * Uncomment the line below to disable the "TIM6_DAC_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
-    /* HAL_NVIC_DisableIRQ(TIM6_DAC_IRQn); */
-  /* USER CODE END DAC:TIM6_DAC_IRQn disable */
 
   /* USER CODE BEGIN DAC_MspDeInit 1 */
 
@@ -183,9 +183,6 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI5;
     HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-    /* SPI5 interrupt Init */
-    HAL_NVIC_SetPriority(SPI5_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(SPI5_IRQn);
   /* USER CODE BEGIN SPI5_MspInit 1 */
 
   /* USER CODE END SPI5_MspInit 1 */
@@ -217,8 +214,6 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     */
     HAL_GPIO_DeInit(GPIOF, GPIO_PIN_6|SPI5_SCK_Pin|SPI5_MISO_Pin|SPI5_MOSI_Pin);
 
-    /* SPI5 interrupt DeInit */
-    HAL_NVIC_DisableIRQ(SPI5_IRQn);
   /* USER CODE BEGIN SPI5_MspDeInit 1 */
 
   /* USER CODE END SPI5_MspDeInit 1 */
@@ -241,9 +236,6 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE END TIM6_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_TIM6_CLK_ENABLE();
-    /* TIM6 interrupt Init */
-    HAL_NVIC_SetPriority(TIM6_DAC_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(TIM6_DAC_IRQn);
   /* USER CODE BEGIN TIM6_MspInit 1 */
 
   /* USER CODE END TIM6_MspInit 1 */
@@ -255,9 +247,6 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE END TIM7_MspInit 0 */
     /* Peripheral clock enable */
     __HAL_RCC_TIM7_CLK_ENABLE();
-    /* TIM7 interrupt Init */
-    HAL_NVIC_SetPriority(TIM7_IRQn, 0, 0);
-    HAL_NVIC_EnableIRQ(TIM7_IRQn);
   /* USER CODE BEGIN TIM7_MspInit 1 */
 
   /* USER CODE END TIM7_MspInit 1 */
@@ -280,16 +269,6 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE END TIM6_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM6_CLK_DISABLE();
-
-    /* TIM6 interrupt DeInit */
-  /* USER CODE BEGIN TIM6:TIM6_DAC_IRQn disable */
-    /**
-    * Uncomment the line below to disable the "TIM6_DAC_IRQn" interrupt
-    * Be aware, disabling shared interrupt may affect other IPs
-    */
-    /* HAL_NVIC_DisableIRQ(TIM6_DAC_IRQn); */
-  /* USER CODE END TIM6:TIM6_DAC_IRQn disable */
-
   /* USER CODE BEGIN TIM6_MspDeInit 1 */
 
   /* USER CODE END TIM6_MspDeInit 1 */
@@ -301,9 +280,6 @@ void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
   /* USER CODE END TIM7_MspDeInit 0 */
     /* Peripheral clock disable */
     __HAL_RCC_TIM7_CLK_DISABLE();
-
-    /* TIM7 interrupt DeInit */
-    HAL_NVIC_DisableIRQ(TIM7_IRQn);
   /* USER CODE BEGIN TIM7_MspDeInit 1 */
 
   /* USER CODE END TIM7_MspDeInit 1 */
