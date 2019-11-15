@@ -1,14 +1,12 @@
 #include <project.h>
 
-#define     BUFFER_SIZE        3
-
 /* LED control defines. LED is active low. */
 #define     LED_ON              0
 #define     LED_OFF             1
 
-extern uint32_t sample;
-extern int8_t masterTxBuffer[BUFFER_SIZE];
-extern int8_t masterRxBuffer[BUFFER_SIZE];
+#define     BUFFER_SIZE        3
+extern uint8_t masterTxBuffer[BUFFER_SIZE];
+extern uint8_t masterRxBuffer[BUFFER_SIZE];
 extern volatile int8_t* current_buffer;
 
 extern uint32_t lfo_freq;

@@ -44,6 +44,7 @@
           <File BuildType="BUILD" Toolchain="">AudioOut.c</File>
           <File BuildType="BUILD" Toolchain="">oscillator.c</File>
           <File BuildType="BUILD" Toolchain="">midi.c</File>
+          <File BuildType="BUILD" Toolchain="">spi_master.c</File>
           <File BuildType="BUILD" Toolchain="">cyapicallbacks.h</File>
           <File BuildType="BUILD" Toolchain="">Codec.h</File>
           <File BuildType="BUILD" Toolchain="">Config.h</File>
@@ -54,6 +55,7 @@
           <File BuildType="BUILD" Toolchain="">globals.h</File>
           <File BuildType="BUILD" Toolchain="">oscillator.h</File>
           <File BuildType="BUILD" Toolchain="">midi.h</File>
+          <File BuildType="BUILD" Toolchain="">spi_master.h</File>
         </Files>
       </Folder>
       <Folder BuildType="STRICT" Path="E:\Documents\Engineering\Code\synth-wavetable\Cypress\synth-wavetable.cydsn\Generated_Source\PSoC4">
