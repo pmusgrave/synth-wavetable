@@ -23,14 +23,13 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <math.h>
 #include "globals.h"
 #include "spi_handler.h"
-#include "envelopes.h"
 #include "midi.h"
 #include "waves.h"
 #include "oscillator.h"
 #include "lfo.h"
+#include "envelopes.h"
 #include "r2rdac.h"
 /* USER CODE END Includes */
 
@@ -50,10 +49,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
-DAC_HandleTypeDef hdac;
 SPI_HandleTypeDef hspi5;
-TIM_HandleTypeDef htim6;
-TIM_HandleTypeDef htim7;
+
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
@@ -65,12 +62,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
-static void MX_DAC_Init(void);
-static void MX_TIM6_Init(void);
-static void MX_TIM7_Init(void);
 /* USER CODE BEGIN PFP */
-//void HAL_SPI_TxRxCpltCallback(SPI_HandleTypeDef *hspi);
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+void handle_byte_queue();
+void handle_midi_queue();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -87,7 +81,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-  
+
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -109,194 +103,26 @@ int main(void)
   MX_GPIO_Init();
   MX_SPI5_Init();
   MX_USART1_UART_Init();
-  MX_DAC_Init();
-  MX_TIM6_Init();
-  MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-  init_wavetable();
-  HAL_TIM_Base_Start_IT(&htim6);
-  HAL_TIM_Base_Start_IT(&htim7);
-  HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
-
-  // init envelopes, lfo, and midi notes
-  for(int i = 0; i < VOICES; i++) {
-    env_state[i] = NOT_TRIGGERED;
-    note_on[i] = MIDI_NOTE_OFF;
-    note_freq[i] = 0;
-    lfo_freq[i] = 20;
-  }
-
   uint8_t init_msg[20] = {"\nSTM32F429!\n"};
   HAL_UART_Transmit(&huart1, init_msg, 20, 50);
+  HAL_Delay(1000);
+  //  uint8_t process_msg_flag  = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  //uint8_t process_msg_flag  = 0;
   while (1)
   {
-    // Receive_MIDI(&hspi5, spi_rx_buffer);
-
-    /*
-    if(midi_msg_queue.head != midi_msg_queue.tail) {
-      current_midi_msg = dequeue();
-      process_msg_flag = 1;
-    }
-
-    if(MIDI_flag) {
-      MIDI_flag = 0;
-
-      if(spi_byte_queue.head != spi_byte_queue.tail) {
-        uint8_t value = dequeue_byte();
-
-        switch(value) {
-        case MIDI_NOTE_ON:
-          note_on_flag = 1;
-          break;
-        case MIDI_NOTE_OFF:
-          note_off_flag = 1;
-          break;
-        case ATTACK_CC:
-          attack_cc_flag = 1;
-          break;
-        case DECAY_CC:
-          decay_cc_flag = 1;
-          break;
-        case SUSTAIN_CC:
-          sustain_cc_flag = 1;
-          break;
-        case RELEASE_CC:
-          release_cc_flag = 1;
-          break;
-        default:
-          if(note_on_flag){
-        struct midi_msg new_midi_note_msg = {
-          MIDI_NOTE_ON,
-          value,
-          127,
-          0
-        };
-        enqueue(new_midi_note_msg);
-        note_on_flag = 0;
-      }
-      else if(note_off_flag){
-        struct midi_msg new_midi_note_msg = {
-          MIDI_NOTE_OFF,
-          value,
-          0,
-          0
-        };
-        enqueue(new_midi_note_msg);
-        note_off_flag = 0;
-      }
-      else if(attack_cc_flag){
-        struct midi_msg new_cc = {
-          ATTACK_CC,
-          value,
-          0,
-          0
-        };
-        enqueue(new_cc);
-        attack_cc_flag = 0;
-        UART_PrintADSR();
-      }
-      else if(decay_cc_flag){
-        struct midi_msg new_cc = {
-          DECAY_CC,
-          value,
-          0,
-          0
-        };
-        enqueue(new_cc);
-        decay_cc_flag = 0;
-        UART_PrintADSR();
-      }
-      else if(sustain_cc_flag){
-        struct midi_msg new_cc = {
-          SUSTAIN_CC,
-          value,
-          0,
-          0
-        };
-        enqueue(new_cc);
-        sustain_cc_flag = 0;
-        UART_PrintADSR();
-      }
-      else if(release_cc_flag){
-        struct midi_msg new_cc = {
-          RELEASE_CC,
-          value,
-          0,
-          0
-        };
-        enqueue(new_cc);
-        release_cc_flag = 0;
-        UART_PrintADSR();
-      }
-      else {
-
-      }
-          break;
-        }
-      }
-
-
-
-    }
-
-    if(process_msg_flag) {
-      process_msg_flag = 0;
-      switch(current_midi_msg.byte0) {
-      case MIDI_NOTE_ON:
-        for (int i = 0; i < VOICES; i++) {
-          if(note_on[i] == MIDI_NOTE_OFF){
-            note_on[i] = MIDI_NOTE_ON;
-            note_freq[i] = current_midi_msg.byte1;
-            env_state[i] = ATTACK_MODE;
-            break;
-          }
-        }
-        break;
-      case MIDI_NOTE_OFF:
-        for (int i = 0; i < VOICES; i++) {
-          if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
-            //note_on[i] = MIDI_NOTE_OFF;
-            env_state[i] = RELEASE_MODE;
-          }
-        }
-        break;
-      case ATTACK_CC:
-        attack = current_midi_msg.byte1;
-        break;
-      case DECAY_CC:
-        decay = current_midi_msg.byte1;
-        break;
-      case SUSTAIN_CC:
-        sustain = current_midi_msg.byte1;
-        break;
-      case RELEASE_CC:
-        release = current_midi_msg.byte1;
-        break;
-
-      }
-    }
-    */
-
-    if(update_value_flag) {
-      //      __disable_irq();
-      UpdateEnvelope();
-      UpdateLFOs();
-      UpdateOutputValue();
-      HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
-      update_value_flag = 0;
-      //      __enable_irq();
-    }
-
-    //Update_R2R_DAC();
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    uint8_t byte = SPI_ReceiveByte();
+    if(byte != 0){
+      enqueue_byte(byte);
+    }
+    handle_byte_queue();
+    handle_midi_queue();
   }
   /* USER CODE END 3 */
 }
@@ -313,7 +139,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage 
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE2);
   /** Initializes the CPU, AHB and APB busses clocks 
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
@@ -322,7 +148,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
   RCC_OscInitStruct.PLL.PLLM = 8;
-  RCC_OscInitStruct.PLL.PLLN = 100;
+  RCC_OscInitStruct.PLL.PLLN = 125;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
   RCC_OscInitStruct.PLL.PLLQ = 7;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
@@ -338,48 +164,10 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
   {
     Error_Handler();
   }
-}
-
-/**
-  * @brief DAC Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_DAC_Init(void)
-{
-
-  /* USER CODE BEGIN DAC_Init 0 */
-
-  /* USER CODE END DAC_Init 0 */
-
-  DAC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN DAC_Init 1 */
-
-  /* USER CODE END DAC_Init 1 */
-  /** DAC Initialization 
-  */
-  hdac.Instance = DAC;
-  if (HAL_DAC_Init(&hdac) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /** DAC channel OUT2 config 
-  */
-  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
-  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
-  if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_2) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN DAC_Init 2 */
-
-  /* USER CODE END DAC_Init 2 */
-
 }
 
 /**
@@ -416,82 +204,6 @@ static void MX_SPI5_Init(void)
   /* USER CODE BEGIN SPI5_Init 2 */
 
   /* USER CODE END SPI5_Init 2 */
-
-}
-
-/**
-  * @brief TIM6 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM6_Init(void)
-{
-
-  /* USER CODE BEGIN TIM6_Init 0 */
-
-  /* USER CODE END TIM6_Init 0 */
-
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM6_Init 1 */
-
-  /* USER CODE END TIM6_Init 1 */
-  htim6.Instance = TIM6;
-  htim6.Init.Prescaler = 0;
-  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim6.Init.Period = 1290;
-  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM6_Init 2 */
-
-  /* USER CODE END TIM6_Init 2 */
-
-}
-
-/**
-  * @brief TIM7 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_TIM7_Init(void)
-{
-
-  /* USER CODE BEGIN TIM7_Init 0 */
-
-  /* USER CODE END TIM7_Init 0 */
-
-  TIM_MasterConfigTypeDef sMasterConfig = {0};
-
-  /* USER CODE BEGIN TIM7_Init 1 */
-
-  /* USER CODE END TIM7_Init 1 */
-  htim7.Instance = TIM7;
-  htim7.Init.Prescaler = 0;
-  htim7.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim7.Init.Period = 10000;
-  htim7.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if (HAL_TIM_Base_Init(&htim7) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
-  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
-  if (HAL_TIMEx_MasterConfigSynchronization(&htim7, &sMasterConfig) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN TIM7_Init 2 */
-
-  /* USER CODE END TIM7_Init 2 */
 
 }
 
@@ -548,29 +260,23 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, NCS_MEMS_SPI_Pin|CSX_Pin|OTG_FS_PSO_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, NCS_MEMS_SPI_Pin|GPIO_PIN_2|OTG_FS_PSO_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(ACP_RST_GPIO_Port, ACP_RST_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_0|GPIO_PIN_1|LD3_Pin|LD4_Pin, GPIO_PIN_RESET);
-
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10 
-                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
-                          |GPIO_PIN_15, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOF, GPIO_PIN_11, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, RDX_Pin|WRX_DCX_Pin, GPIO_PIN_RESET);
 
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(GPIOG, LD3_Pin|LD4_Pin, GPIO_PIN_RESET);
+
   /*Configure GPIO pins : A0_Pin A1_Pin A2_Pin A3_Pin 
-                           A4_Pin A5_Pin SDNRAS_Pin A6_Pin */
+                           A4_Pin A5_Pin A6_Pin A7_Pin 
+                           A8_Pin A9_Pin */
   GPIO_InitStruct.Pin = A0_Pin|A1_Pin|A2_Pin|A3_Pin 
-                          |A4_Pin|A5_Pin|SDNRAS_Pin|A6_Pin;
+                          |A4_Pin|A5_Pin|A6_Pin|A7_Pin 
+                          |A8_Pin|A9_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
@@ -591,8 +297,8 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(SDNWE_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : NCS_MEMS_SPI_Pin CSX_Pin OTG_FS_PSO_Pin */
-  GPIO_InitStruct.Pin = NCS_MEMS_SPI_Pin|CSX_Pin|OTG_FS_PSO_Pin;
+  /*Configure GPIO pins : NCS_MEMS_SPI_Pin PC2 OTG_FS_PSO_Pin */
+  GPIO_InitStruct.Pin = NCS_MEMS_SPI_Pin|GPIO_PIN_2|OTG_FS_PSO_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -604,22 +310,21 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : B5_Pin VSYNC_Pin G2_Pin R4_Pin 
-                           R5_Pin */
-  GPIO_InitStruct.Pin = B5_Pin|VSYNC_Pin|G2_Pin|R4_Pin 
-                          |R5_Pin;
+  /*Configure GPIO pins : B5_Pin R4_Pin R5_Pin */
+  GPIO_InitStruct.Pin = B5_Pin|R4_Pin|R5_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   GPIO_InitStruct.Alternate = GPIO_AF14_LTDC;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : ACP_RST_Pin */
-  GPIO_InitStruct.Pin = ACP_RST_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pins : PA4 PA6 PA7 */
+  GPIO_InitStruct.Pin = GPIO_PIN_4|GPIO_PIN_6|GPIO_PIN_7;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(ACP_RST_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : OTG_FS_OC_Pin */
   GPIO_InitStruct.Pin = OTG_FS_OC_Pin;
@@ -641,29 +346,33 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(BOOT1_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PF13 PF14 PF15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_13|GPIO_PIN_14|GPIO_PIN_15;
+  /*Configure GPIO pin : PF11 */
+  GPIO_InitStruct.Pin = GPIO_PIN_11;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PG0 PG1 LD3_Pin LD4_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|LD3_Pin|LD4_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pins : A10_Pin A11_Pin BA0_Pin BA1_Pin 
+                           SDCLK_Pin SDNCAS_Pin */
+  GPIO_InitStruct.Pin = A10_Pin|A11_Pin|BA0_Pin|BA1_Pin 
+                          |SDCLK_Pin|SDNCAS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : PE7 PE8 PE9 PE10 
-                           PE11 PE12 PE13 PE14 
-                           PE15 */
-  GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10 
-                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14 
-                          |GPIO_PIN_15;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  /*Configure GPIO pins : D4_Pin D5_Pin D6_Pin D7_Pin 
+                           D8_Pin D9_Pin D10_Pin D11_Pin 
+                           D12_Pin NBL0_Pin NBL1_Pin */
+  GPIO_InitStruct.Pin = D4_Pin|D5_Pin|D6_Pin|D7_Pin 
+                          |D8_Pin|D9_Pin|D10_Pin|D11_Pin 
+                          |D12_Pin|NBL0_Pin|NBL1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : G4_Pin G5_Pin B6_Pin B7_Pin */
@@ -710,14 +419,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /*Configure GPIO pins : BA0_Pin BA1_Pin SDCLK_Pin SDNCAS_Pin */
-  GPIO_InitStruct.Pin = BA0_Pin|BA1_Pin|SDCLK_Pin|SDNCAS_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
   /*Configure GPIO pins : R7_Pin DOTCLK_Pin B3_Pin */
   GPIO_InitStruct.Pin = R7_Pin|DOTCLK_Pin|B3_Pin;
@@ -767,6 +468,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF9_LTDC;
   HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
 
+  /*Configure GPIO pins : LD3_Pin LD4_Pin */
+  GPIO_InitStruct.Pin = LD3_Pin|LD4_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOG, &GPIO_InitStruct);
+
   /*Configure GPIO pins : SDCKE1_Pin SDNE1_Pin */
   GPIO_InitStruct.Pin = SDCKE1_Pin|SDNE1_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
@@ -775,14 +483,6 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : NBL0_Pin NBL1_Pin */
-  GPIO_InitStruct.Pin = NBL0_Pin|NBL1_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-  GPIO_InitStruct.Alternate = GPIO_AF12_FMC;
-  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
@@ -790,26 +490,114 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
-  if(htim->Instance == TIM6){
-    //  HAL_GPIO_TogglePin(GPIOG, GPIO_PIN_1);
-    update_value_flag = 1;
-  }
-  /*
-  else if(htim->Instance == TIM7){
-    HAL_GPIO_TogglePin(GPIOE, GPIO_PIN_8);
-    for(int i = 0; i < VOICES; i++){
-      if(note_on[i] == MIDI_NOTE_ON){
-        if(env_state[i] == NOT_TRIGGERED){
-          env_state[i] = ATTACK_MODE;
-        }
-        else{
-          env_state[i] = RELEASE_MODE;
-        }
+void handle_byte_queue() {
+  // probably need to refactor these SPI flags
+  //static uint8_t note_on_flag;
+  //static uint8_t note_off_flag;
+  static uint8_t attack_cc_flag;
+  static uint8_t decay_cc_flag;
+  static uint8_t sustain_cc_flag;
+  static uint8_t release_cc_flag;
+
+  if(spi_byte_queue.head != spi_byte_queue.tail){
+    uint8_t value = dequeue_byte();
+    uint8_t skip_command = 0;
+    
+    //    uint8_t test = 0x60;
+    if(attack_cc_flag) {
+      attack_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         ATTACK_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(decay_cc_flag) {
+      decay_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         DECAY_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(sustain_cc_flag) {
+      sustain_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         SUSTAIN_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(release_cc_flag) {
+      release_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         RELEASE_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+
+    if(!skip_command){
+      switch(value){
+      case ATTACK_CC:
+        attack_cc_flag = 1;
+        break;
+      case DECAY_CC:
+        decay_cc_flag = 1;
+        break;
+      case SUSTAIN_CC:
+        sustain_cc_flag = 1;
+        break;
+      case RELEASE_CC:
+        release_cc_flag = 1;
+        break;
       }
     }
   }
-  */
+}
+
+void handle_midi_queue() {
+  uint8_t value;
+
+  if(midi_msg_queue.head != midi_msg_queue.tail) {
+    struct midi_msg current_midi_msg = dequeue();
+    value = current_midi_msg.byte1;
+
+    switch(current_midi_msg.byte0) {
+    case ATTACK_CC:
+      attack = current_midi_msg.byte1;
+      UART_PrintADSR(&huart1);
+      break;
+    case DECAY_CC:
+      decay = current_midi_msg.byte1;
+      UART_PrintADSR(&huart1);
+      break;
+    case SUSTAIN_CC:
+      sustain = current_midi_msg.byte1;
+      UART_PrintADSR(&huart1);
+      break;
+    case RELEASE_CC:
+      release = current_midi_msg.byte1;
+      UART_PrintADSR(&huart1);
+      break;
+    }
+  }
 }
 /* USER CODE END 4 */
 

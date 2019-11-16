@@ -25,11 +25,21 @@ extern uint8_t decay;
 extern uint8_t sustain;
 extern uint8_t release;
 
-extern volatile uint8_t update_value_flag;
+// probably need to refactor these SPI flags
+/* extern volatile uint8_t note_on_flag; */
+/* extern volatile uint8_t note_off_flag; */
+/* extern volatile uint8_t attack_cc_flag; */
+/* extern volatile uint8_t decay_cc_flag; */
+/* extern volatile uint8_t sustain_cc_flag; */
+/* extern volatile uint8_t release_cc_flag; */
 
+extern volatile uint8_t update_value_flag;
+extern uint8_t spi_flag;
 extern struct byte_queue spi_byte_queue;
 extern uint8_t rx_buffer;
 
 extern volatile struct midi_msg current_midi_msg;
+extern struct msg_queue  midi_msg_queue;
+extern volatile uint8_t MIDI_flag;
 
 #endif

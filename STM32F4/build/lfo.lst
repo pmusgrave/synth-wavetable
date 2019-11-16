@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccjQan1n.s 			page 1
+ARM GAS  /tmp/cc7wP2z3.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccjQan1n.s 			page 1
   10:Src/lfo.c     ****     lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
   47              		.loc 1 10 0 discriminator 3
   48 0006 104B     		ldr	r3, .L5+8
-ARM GAS  /tmp/ccjQan1n.s 			page 2
+ARM GAS  /tmp/cc7wP2z3.s 			page 2
 
 
   49 0008 33F81400 		ldrh	r0, [r3, r4, lsl #1]
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccjQan1n.s 			page 1
   98      00000000 
   98      00000000 
   98      00000000 
-ARM GAS  /tmp/ccjQan1n.s 			page 3
+ARM GAS  /tmp/cc7wP2z3.s 			page 3
 
 
   99              		.section	.bss.lfo_freq,"aw",%nobits
@@ -151,20 +151,20 @@ ARM GAS  /tmp/ccjQan1n.s 			page 1
  122              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
  123              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
  124              		.file 11 "Inc/globals.h"
-ARM GAS  /tmp/ccjQan1n.s 			page 4
+ARM GAS  /tmp/cc7wP2z3.s 			page 4
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lfo.c
-     /tmp/ccjQan1n.s:21     .text.UpdateLFOs:0000000000000000 $t
-     /tmp/ccjQan1n.s:28     .text.UpdateLFOs:0000000000000000 UpdateLFOs
-     /tmp/ccjQan1n.s:81     .text.UpdateLFOs:0000000000000040 $d
-     /tmp/ccjQan1n.s:97     .bss.lfo:0000000000000000 lfo
-     /tmp/ccjQan1n.s:104    .bss.lfo_freq:0000000000000000 lfo_freq
-     /tmp/ccjQan1n.s:111    .bss.lfo_phase_accumulator:0000000000000000 lfo_phase_accumulator
-     /tmp/ccjQan1n.s:93     .bss.lfo:0000000000000000 $d
-     /tmp/ccjQan1n.s:100    .bss.lfo_freq:0000000000000000 $d
-     /tmp/ccjQan1n.s:107    .bss.lfo_phase_accumulator:0000000000000000 $d
+     /tmp/cc7wP2z3.s:21     .text.UpdateLFOs:0000000000000000 $t
+     /tmp/cc7wP2z3.s:28     .text.UpdateLFOs:0000000000000000 UpdateLFOs
+     /tmp/cc7wP2z3.s:81     .text.UpdateLFOs:0000000000000040 $d
+     /tmp/cc7wP2z3.s:97     .bss.lfo:0000000000000000 lfo
+     /tmp/cc7wP2z3.s:104    .bss.lfo_freq:0000000000000000 lfo_freq
+     /tmp/cc7wP2z3.s:111    .bss.lfo_phase_accumulator:0000000000000000 lfo_phase_accumulator
+     /tmp/cc7wP2z3.s:93     .bss.lfo:0000000000000000 $d
+     /tmp/cc7wP2z3.s:100    .bss.lfo_freq:0000000000000000 $d
+     /tmp/cc7wP2z3.s:107    .bss.lfo_phase_accumulator:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

@@ -88,5 +88,4 @@ void UART_PrintADSR(UART_HandleTypeDef* huart){
   HAL_UART_Transmit(huart, &uart_tx_buffer, 1, 50);
   uart_tx_buffer = '\n';
   HAL_UART_Transmit(huart, &uart_tx_buffer, 1, 50);
-
 }

@@ -8,5 +8,6 @@
 #define RELEASE_MODE 4
 
 void UpdateEnvelope(void);
+void UART_PrintADSR();
 
 #endif
