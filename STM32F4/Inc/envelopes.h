@@ -7,7 +7,7 @@
 #define SUSTAIN_MODE 3
 #define RELEASE_MODE 4
 
-void UpdateEnvelope(void);
+void update_envelope(void);
 void UART_PrintADSR();
 
 #endif

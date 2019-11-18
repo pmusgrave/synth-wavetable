@@ -49,7 +49,11 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+DAC_HandleTypeDef hdac;
+
 SPI_HandleTypeDef hspi5;
+
+TIM_HandleTypeDef htim6;
 
 UART_HandleTypeDef huart5;
 UART_HandleTypeDef huart1;
@@ -63,9 +67,12 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_DAC_Init(void);
 static void MX_UART5_Init(void);
+static void MX_TIM6_Init(void);
 /* USER CODE BEGIN PFP */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
 void handle_byte_queue();
 void handle_midi_queue();
 /* USER CODE END PFP */
@@ -104,13 +111,25 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  //MX_SPI5_Init();
+  MX_SPI5_Init();
   MX_USART1_UART_Init();
+  MX_DAC_Init();
   MX_UART5_Init();
+  MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
   uint8_t init_msg[20] = {"\nSTM32F429!\n"};
   HAL_UART_Transmit(&huart1, init_msg, 20, 50);
   HAL_Delay(1000);
+  init_wavetable();
+  HAL_TIM_Base_Start_IT(&htim6);
+  HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
+
+  for(int i = 0; i < VOICES; i++) {
+    env_state[i] = NOT_TRIGGERED;
+    note_on[i] = MIDI_NOTE_OFF;
+    note_freq[i] = 0;
+    lfo_freq[i] = 20;
+  }
   //  uint8_t process_msg_flag  = 0;
   /* USER CODE END 2 */
 
@@ -123,10 +142,15 @@ int main(void)
     /* USER CODE BEGIN 3 */
     // uint8_t byte = SPI_ReceiveByte();
     HAL_UART_Receive_IT(&huart5, &uart_tx_data, 1);
-
-    
     handle_byte_queue();
     handle_midi_queue();
+    if(update_value_flag){
+      update_value_flag = 0;
+      update_lfos();
+      update_envelope();
+      update_output_value();
+      HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
+    }
   }
   /* USER CODE END 3 */
 }
@@ -175,6 +199,44 @@ void SystemClock_Config(void)
 }
 
 /**
+  * @brief DAC Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_DAC_Init(void)
+{
+
+  /* USER CODE BEGIN DAC_Init 0 */
+
+  /* USER CODE END DAC_Init 0 */
+
+  DAC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN DAC_Init 1 */
+
+  /* USER CODE END DAC_Init 1 */
+  /** DAC Initialization 
+  */
+  hdac.Instance = DAC;
+  if (HAL_DAC_Init(&hdac) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /** DAC channel OUT2 config 
+  */
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
+  if (HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN DAC_Init 2 */
+
+  /* USER CODE END DAC_Init 2 */
+
+}
+
+/**
   * @brief SPI5 Initialization Function
   * @param None
   * @retval None
@@ -208,6 +270,44 @@ static void MX_SPI5_Init(void)
   /* USER CODE BEGIN SPI5_Init 2 */
 
   /* USER CODE END SPI5_Init 2 */
+
+}
+
+/**
+  * @brief TIM6 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM6_Init(void)
+{
+
+  /* USER CODE BEGIN TIM6_Init 0 */
+
+  /* USER CODE END TIM6_Init 0 */
+
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM6_Init 1 */
+
+  /* USER CODE END TIM6_Init 1 */
+  htim6.Instance = TIM6;
+  htim6.Init.Prescaler = 0;
+  htim6.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim6.Init.Period = 1290;
+  htim6.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim6) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim6, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM6_Init 2 */
+
+  /* USER CODE END TIM6_Init 2 */
 
 }
 
@@ -528,9 +628,15 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
-  // HAL_UART_Transmit(&huart1, &uart_tx_data, 1, 50);
   if(uart_tx_data != 0 && uart_tx_data != '\n'){
+    // HAL_UART_Transmit(&huart1, &uart_tx_data, 1, 50);
     enqueue_byte(uart_tx_data);
+  }
+}
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  if(htim->Instance == TIM6){
+    update_value_flag = 1;
   }
 }
 
@@ -599,9 +705,27 @@ void handle_byte_queue() {
     }
     else if(note_on_flag) {
       note_on_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         MIDI_NOTE_ON,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
     }
     else if (note_off_flag) {
       note_off_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         MIDI_NOTE_OFF,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
     }
 
     if(!skip_command){
@@ -638,20 +762,38 @@ void handle_midi_queue() {
 
     switch(current_midi_msg.byte0) {
     case ATTACK_CC:
-      attack = current_midi_msg.byte1;
-      UART_PrintADSR(&huart1);
+      attack = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
       break;
     case DECAY_CC:
-      decay = current_midi_msg.byte1;
-      UART_PrintADSR(&huart1);
+      decay = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
       break;
     case SUSTAIN_CC:
-      sustain = current_midi_msg.byte1;
-      UART_PrintADSR(&huart1);
+      sustain = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
       break;
     case RELEASE_CC:
-      release = current_midi_msg.byte1;
-      UART_PrintADSR(&huart1);
+      release = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
+      break;
+    case MIDI_NOTE_ON:
+      for (int i = 0; i < VOICES; i++) {
+        if(note_on[i] == MIDI_NOTE_OFF){
+          note_on[i] = MIDI_NOTE_ON;
+          note_freq[i] = current_midi_msg.byte1;
+          env_state[i] = ATTACK_MODE;
+          break;
+        }
+      }
+      break;
+    case MIDI_NOTE_OFF:
+      for (int i = 0; i < VOICES; i++) {
+        if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
+          //note_on[i] = MIDI_NOTE_OFF;
+          env_state[i] = RELEASE_MODE;
+        }
+      }
       break;
     }
   }

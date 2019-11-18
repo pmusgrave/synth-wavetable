@@ -13,7 +13,7 @@ uint8_t decay = 255;
 uint8_t sustain = 200;
 uint8_t release = 255;
 
-void UpdateEnvelope() {
+void update_envelope() {
   for(int i = 0; i < VOICES; i++){
     //if(note_on[i] == MIDI_NOTE_OFF){
     //  env_state[i] = RELEASE_MODE;

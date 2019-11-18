@@ -1,6 +1,6 @@
 #ifndef LFO_H
 #define LFO_H
 
-void UpdateLFOs(void);
+void update_lfos(void);
 
 #endif

@@ -8,7 +8,7 @@ volatile uint8_t update_value_flag = 0;
 volatile uint32_t phase_accumulator[VOICES] = {0};
 volatile uint8_t output_val = 0;
 
-void UpdateOutputValue() {
+void update_output_value() {
   float val = 0;
   output_val = 0;
   for(int i = 0; i < VOICES; i++) {
