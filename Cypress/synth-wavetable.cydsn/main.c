@@ -79,7 +79,7 @@ int main() {
                 UART_UartPutChar('\n');
                 //ProcessSpiTx('\n');
                 for(int i = 0; i < 14; i++){
-                    UART_UartPutChar(init_msg[i]);
+                    //UART_UartPutChar(init_msg[i]);
                     //ProcessSpiTx(init_msg[i]);   
                 }
             }
