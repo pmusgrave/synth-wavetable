@@ -648,6 +648,8 @@ void handle_byte_queue() {
   static uint8_t decay_cc_flag;
   static uint8_t sustain_cc_flag;
   static uint8_t release_cc_flag;
+  static uint8_t waveshape_cc_flag;
+  static uint8_t lfo_cc_flag;
 
   if(spi_byte_queue.head != spi_byte_queue.tail){
     uint8_t value = dequeue_byte();
@@ -727,6 +729,30 @@ void handle_byte_queue() {
       enqueue(new_midi_msg);
       skip_command = 1;
     }
+    else if(waveshape_cc_flag) {
+      waveshape_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         WAVESHAPE_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(lfo_cc_flag){
+      lfo_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         LFO_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
 
     if(!skip_command){
       switch(value){
@@ -748,17 +774,22 @@ void handle_byte_queue() {
       case MIDI_NOTE_OFF:
         note_off_flag = 1;
         break;
+      case WAVESHAPE_CC:
+        waveshape_cc_flag = 1;
+        break;
+      case LFO_CC:
+        lfo_cc_flag = 1;
       }
     }
   }
 }
 
 void handle_midi_queue() {
-  uint8_t value;
+  // uint8_t value;
 
   if(midi_msg_queue.head != midi_msg_queue.tail) {
     struct midi_msg current_midi_msg = dequeue();
-    value = current_midi_msg.byte1;
+    // value = current_midi_msg.byte1;
 
     switch(current_midi_msg.byte0) {
     case ATTACK_CC:
@@ -795,6 +826,33 @@ void handle_midi_queue() {
         }
       }
       break;
+      /*
+    case WAVESHAPE_CC:
+      if(current_midi_msg.byte1 < 50) {
+        waveshape1 = base_sine;
+        waveshape2 = base_tri;
+      }
+      else if(current_midi_msg.byte1 < 100) {
+        waveshape1 = base_tri;
+        waveshape2 = base_pos_saw;
+      }
+      else if(current_midi_msg.byte1 < 150) {
+        waveshape1 = base_pos_saw;
+        waveshape2 = base_neg_saw;
+      }
+      else if(current_midi_msg.byte1 < 200) {
+        waveshape1 = base_neg_saw;
+        waveshape2 = base_sq;
+      }
+      else {
+        waveshape1 = base_sq;
+        waveshape2 = base_sine;
+      }
+      break;
+    case LFO_CC:
+      global_lfo_freq = current_midi_msg.byte1 * 2;
+      break;
+      */
     }
   }
 }

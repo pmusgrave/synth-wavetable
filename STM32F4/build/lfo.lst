@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccI6ZaND.s 			page 1
+ARM GAS  /tmp/ccj3XgwL.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -32,13 +32,17 @@ ARM GAS  /tmp/ccI6ZaND.s 			page 1
   30              		.file 1 "Src/lfo.c"
    1:Src/lfo.c     **** #include "lfo.h"
    2:Src/lfo.c     **** #include "globals.h"
-   3:Src/lfo.c     **** 
-   4:Src/lfo.c     **** volatile uint32_t lfo_phase_accumulator[VOICES] = {0};
-   5:Src/lfo.c     **** volatile uint16_t lfo_freq[VOICES] = {0};
-   6:Src/lfo.c     **** volatile uint8_t lfo[VOICES] = {0};
-   7:Src/lfo.c     **** 
-   8:Src/lfo.c     **** void update_lfos() {
-  31              		.loc 1 8 0
+   3:Src/lfo.c     **** #include "waves.h"
+   4:Src/lfo.c     **** 
+   5:Src/lfo.c     **** volatile uint32_t lfo_phase_accumulator[VOICES] = {0};
+   6:Src/lfo.c     **** volatile uint16_t lfo_freq[VOICES] = {0};
+   7:Src/lfo.c     **** volatile uint8_t lfo[VOICES] = {0};
+   8:Src/lfo.c     **** volatile uint8_t global_lfo = 0;
+   9:Src/lfo.c     **** volatile uint8_t global_lfo_freq = 1;
+  10:Src/lfo.c     **** volatile uint32_t global_lfo_phase_accumulator = 0;
+  11:Src/lfo.c     **** 
+  12:Src/lfo.c     **** void update_lfos() {
+  31              		.loc 1 12 0
   32              		.cfi_startproc
   33              		@ args = 0, pretend = 0, frame = 0
   34              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -49,122 +53,193 @@ ARM GAS  /tmp/ccI6ZaND.s 			page 1
   39              		.cfi_offset 14, -4
   40              	.LVL0:
   41              	.LBB2:
-   9:Src/lfo.c     ****   for(int i = 0; i < VOICES; i++) {
-  42              		.loc 1 9 0
+  13:Src/lfo.c     ****   for(int i = 0; i < VOICES; i++) {
+  42              		.loc 1 13 0
   43 0002 0024     		movs	r4, #0
-  44 0004 16E0     		b	.L2
+  44 0004 1BE0     		b	.L2
   45              	.LVL1:
+ARM GAS  /tmp/ccj3XgwL.s 			page 2
+
+
   46              	.L3:
-  10:Src/lfo.c     ****     lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
-  47              		.loc 1 10 0 discriminator 3
-  48 0006 104B     		ldr	r3, .L5+8
-ARM GAS  /tmp/ccI6ZaND.s 			page 2
-
-
+  14:Src/lfo.c     ****     lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
+  47              		.loc 1 14 0 discriminator 3
+  48 0006 1C4B     		ldr	r3, .L5+8
   49 0008 33F81400 		ldrh	r0, [r3, r4, lsl #1]
   50 000c 80B2     		uxth	r0, r0
   51 000e FFF7FEFF 		bl	__aeabi_i2d
   52              	.LVL2:
-  53 0012 0BA3     		adr	r3, .L5
+  53 0012 17A3     		adr	r3, .L5
   54 0014 D3E90023 		ldrd	r2, [r3]
   55 0018 FFF7FEFF 		bl	__aeabi_dmul
   56              	.LVL3:
   57 001c FFF7FEFF 		bl	__aeabi_d2uiz
   58              	.LVL4:
-  59 0020 0A4A     		ldr	r2, .L5+12
-  60 0022 52F82430 		ldr	r3, [r2, r4, lsl #2]
-  61 0026 1844     		add	r0, r0, r3
-  62 0028 42F82400 		str	r0, [r2, r4, lsl #2]
-  11:Src/lfo.c     ****     //lfo[i] = base_tri[(lfo_phase_accumulator[i]>>10)%4096];
-  12:Src/lfo.c     ****     lfo[i] = 255;
-  63              		.loc 1 12 0 discriminator 3
-  64 002c FF22     		movs	r2, #255
-  65 002e 084B     		ldr	r3, .L5+16
-  66 0030 1A55     		strb	r2, [r3, r4]
-   9:Src/lfo.c     ****     lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
-  67              		.loc 1 9 0 discriminator 3
-  68 0032 0134     		adds	r4, r4, #1
-  69              	.LVL5:
-  70              	.L2:
-   9:Src/lfo.c     ****     lfo_phase_accumulator[i] += (uint32_t)(lfo_freq[i] * (DDS_SCALE_FACTOR/10));
-  71              		.loc 1 9 0 is_stmt 0 discriminator 1
-  72 0034 0F2C     		cmp	r4, #15
-  73 0036 E6DD     		ble	.L3
-  74              	.LBE2:
-  13:Src/lfo.c     ****   }
-  14:Src/lfo.c     **** }
-  75              		.loc 1 14 0 is_stmt 1
-  76 0038 10BD     		pop	{r4, pc}
-  77              	.LVL6:
-  78              	.L6:
-  79 003a 00BFAFF3 		.align	3
-  79      0080
-  80              	.L5:
-  81 0040 76581B42 		.word	1109088374
-  82 0044 19E52140 		.word	1075963161
-  83 0048 00000000 		.word	.LANCHOR0
-  84 004c 00000000 		.word	.LANCHOR1
-  85 0050 00000000 		.word	.LANCHOR2
-  86              		.cfi_endproc
-  87              	.LFE130:
-  89              		.global	lfo
-  90              		.global	lfo_freq
-  91              		.global	lfo_phase_accumulator
-  92              		.section	.bss.lfo,"aw",%nobits
-  93              		.align	2
-  94              		.set	.LANCHOR2,. + 0
-  97              	lfo:
-  98 0000 00000000 		.space	16
-  98      00000000 
-  98      00000000 
-  98      00000000 
-ARM GAS  /tmp/ccI6ZaND.s 			page 3
+  59 0020 164B     		ldr	r3, .L5+12
+  60 0022 53F82420 		ldr	r2, [r3, r4, lsl #2]
+  61 0026 1044     		add	r0, r0, r2
+  62 0028 43F82400 		str	r0, [r3, r4, lsl #2]
+  15:Src/lfo.c     ****     lfo[i] = base_tri[(lfo_phase_accumulator[i]>>10)%4096];
+  63              		.loc 1 15 0 discriminator 3
+  64 002c 53F82430 		ldr	r3, [r3, r4, lsl #2]
+  65 0030 C3F38B23 		ubfx	r3, r3, #10, #12
+  66 0034 124A     		ldr	r2, .L5+16
+  67 0036 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+  68 0038 124B     		ldr	r3, .L5+20
+  69 003a 1A55     		strb	r2, [r3, r4]
+  13:Src/lfo.c     ****   for(int i = 0; i < VOICES; i++) {
+  70              		.loc 1 13 0 discriminator 3
+  71 003c 0134     		adds	r4, r4, #1
+  72              	.LVL5:
+  73              	.L2:
+  13:Src/lfo.c     ****   for(int i = 0; i < VOICES; i++) {
+  74              		.loc 1 13 0 is_stmt 0 discriminator 1
+  75 003e 0F2C     		cmp	r4, #15
+  76 0040 E1DD     		ble	.L3
+  77              	.LBE2:
+  16:Src/lfo.c     ****     // lfo[i] = 255;
+  17:Src/lfo.c     ****   }
+  18:Src/lfo.c     **** 
+  19:Src/lfo.c     ****   global_lfo_phase_accumulator += (uint32_t)(global_lfo_freq * (DDS_SCALE_FACTOR/10));
+  78              		.loc 1 19 0 is_stmt 1
+  79 0042 114B     		ldr	r3, .L5+24
+  80 0044 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+  81 0046 FFF7FEFF 		bl	__aeabi_i2d
+  82              	.LVL6:
+  83 004a 09A3     		adr	r3, .L5
+  84 004c D3E90023 		ldrd	r2, [r3]
+  85 0050 FFF7FEFF 		bl	__aeabi_dmul
+  86              	.LVL7:
+  87 0054 FFF7FEFF 		bl	__aeabi_d2uiz
+  88              	.LVL8:
+  89 0058 0C4B     		ldr	r3, .L5+28
+  90 005a 1A68     		ldr	r2, [r3]
+  91 005c 1044     		add	r0, r0, r2
+  92 005e 1860     		str	r0, [r3]
+  20:Src/lfo.c     ****   global_lfo = base_tri[(global_lfo_phase_accumulator>>10)%4096];
+  93              		.loc 1 20 0
+ARM GAS  /tmp/ccj3XgwL.s 			page 3
 
 
-  99              		.section	.bss.lfo_freq,"aw",%nobits
- 100              		.align	2
- 101              		.set	.LANCHOR0,. + 0
- 104              	lfo_freq:
- 105 0000 00000000 		.space	32
- 105      00000000 
- 105      00000000 
- 105      00000000 
- 105      00000000 
- 106              		.section	.bss.lfo_phase_accumulator,"aw",%nobits
- 107              		.align	2
- 108              		.set	.LANCHOR1,. + 0
- 111              	lfo_phase_accumulator:
- 112 0000 00000000 		.space	64
- 112      00000000 
- 112      00000000 
- 112      00000000 
- 112      00000000 
- 113              		.text
- 114              	.Letext0:
- 115              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 116              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 117              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 118              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 119              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 120              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 121              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 122              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 123              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 124              		.file 11 "Inc/globals.h"
-ARM GAS  /tmp/ccI6ZaND.s 			page 4
+  94 0060 1B68     		ldr	r3, [r3]
+  95 0062 C3F38B23 		ubfx	r3, r3, #10, #12
+  96 0066 064A     		ldr	r2, .L5+16
+  97 0068 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+  98 006a 094B     		ldr	r3, .L5+32
+  99 006c 1A70     		strb	r2, [r3]
+ 100 006e 10BD     		pop	{r4, pc}
+ 101              	.LVL9:
+ 102              	.L6:
+ 103              		.align	3
+ 104              	.L5:
+ 105 0070 76581B42 		.word	1109088374
+ 106 0074 19E52140 		.word	1075963161
+ 107 0078 00000000 		.word	.LANCHOR0
+ 108 007c 00000000 		.word	.LANCHOR1
+ 109 0080 00000000 		.word	base_tri
+ 110 0084 00000000 		.word	.LANCHOR2
+ 111 0088 00000000 		.word	.LANCHOR3
+ 112 008c 00000000 		.word	.LANCHOR4
+ 113 0090 00000000 		.word	.LANCHOR5
+ 114              		.cfi_endproc
+ 115              	.LFE130:
+ 117              		.global	global_lfo_phase_accumulator
+ 118              		.global	global_lfo_freq
+ 119              		.global	global_lfo
+ 120              		.global	lfo
+ 121              		.global	lfo_freq
+ 122              		.global	lfo_phase_accumulator
+ 123              		.comm	lfo_sine,256,4
+ 124              		.comm	base_sq,4096,4
+ 125              		.comm	base_tri,4096,4
+ 126              		.comm	base_neg_saw,4096,4
+ 127              		.comm	base_pos_saw,4096,4
+ 128              		.comm	base_sine,4096,4
+ 129              		.section	.bss.global_lfo,"aw",%nobits
+ 130              		.set	.LANCHOR5,. + 0
+ 133              	global_lfo:
+ 134 0000 00       		.space	1
+ 135              		.section	.bss.global_lfo_phase_accumulator,"aw",%nobits
+ 136              		.align	2
+ 137              		.set	.LANCHOR4,. + 0
+ 140              	global_lfo_phase_accumulator:
+ 141 0000 00000000 		.space	4
+ 142              		.section	.bss.lfo,"aw",%nobits
+ 143              		.align	2
+ 144              		.set	.LANCHOR2,. + 0
+ 147              	lfo:
+ 148 0000 00000000 		.space	16
+ 148      00000000 
+ 148      00000000 
+ 148      00000000 
+ 149              		.section	.bss.lfo_freq,"aw",%nobits
+ 150              		.align	2
+ 151              		.set	.LANCHOR0,. + 0
+ 154              	lfo_freq:
+ 155 0000 00000000 		.space	32
+ 155      00000000 
+ARM GAS  /tmp/ccj3XgwL.s 			page 4
+
+
+ 155      00000000 
+ 155      00000000 
+ 155      00000000 
+ 156              		.section	.bss.lfo_phase_accumulator,"aw",%nobits
+ 157              		.align	2
+ 158              		.set	.LANCHOR1,. + 0
+ 161              	lfo_phase_accumulator:
+ 162 0000 00000000 		.space	64
+ 162      00000000 
+ 162      00000000 
+ 162      00000000 
+ 162      00000000 
+ 163              		.section	.data.global_lfo_freq,"aw",%progbits
+ 164              		.set	.LANCHOR3,. + 0
+ 167              	global_lfo_freq:
+ 168 0000 01       		.byte	1
+ 169              		.text
+ 170              	.Letext0:
+ 171              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 172              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 173              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 174              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 175              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 176              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 177              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 178              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 179              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 180              		.file 11 "Inc/globals.h"
+ 181              		.file 12 "/usr/include/newlib/sys/lock.h"
+ 182              		.file 13 "/usr/include/newlib/sys/_types.h"
+ 183              		.file 14 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 184              		.file 15 "/usr/include/newlib/sys/reent.h"
+ 185              		.file 16 "/usr/include/newlib/stdlib.h"
+ 186              		.file 17 "Inc/waves.h"
+ARM GAS  /tmp/ccj3XgwL.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 lfo.c
-     /tmp/ccI6ZaND.s:21     .text.update_lfos:0000000000000000 $t
-     /tmp/ccI6ZaND.s:28     .text.update_lfos:0000000000000000 update_lfos
-     /tmp/ccI6ZaND.s:81     .text.update_lfos:0000000000000040 $d
-     /tmp/ccI6ZaND.s:97     .bss.lfo:0000000000000000 lfo
-     /tmp/ccI6ZaND.s:104    .bss.lfo_freq:0000000000000000 lfo_freq
-     /tmp/ccI6ZaND.s:111    .bss.lfo_phase_accumulator:0000000000000000 lfo_phase_accumulator
-     /tmp/ccI6ZaND.s:93     .bss.lfo:0000000000000000 $d
-     /tmp/ccI6ZaND.s:100    .bss.lfo_freq:0000000000000000 $d
-     /tmp/ccI6ZaND.s:107    .bss.lfo_phase_accumulator:0000000000000000 $d
+     /tmp/ccj3XgwL.s:21     .text.update_lfos:0000000000000000 $t
+     /tmp/ccj3XgwL.s:28     .text.update_lfos:0000000000000000 update_lfos
+     /tmp/ccj3XgwL.s:105    .text.update_lfos:0000000000000070 $d
+                            *COM*:0000000000001000 base_tri
+     /tmp/ccj3XgwL.s:140    .bss.global_lfo_phase_accumulator:0000000000000000 global_lfo_phase_accumulator
+     /tmp/ccj3XgwL.s:167    .data.global_lfo_freq:0000000000000000 global_lfo_freq
+     /tmp/ccj3XgwL.s:133    .bss.global_lfo:0000000000000000 global_lfo
+     /tmp/ccj3XgwL.s:147    .bss.lfo:0000000000000000 lfo
+     /tmp/ccj3XgwL.s:154    .bss.lfo_freq:0000000000000000 lfo_freq
+     /tmp/ccj3XgwL.s:161    .bss.lfo_phase_accumulator:0000000000000000 lfo_phase_accumulator
+                            *COM*:0000000000000100 lfo_sine
+                            *COM*:0000000000001000 base_sq
+                            *COM*:0000000000001000 base_neg_saw
+                            *COM*:0000000000001000 base_pos_saw
+                            *COM*:0000000000001000 base_sine
+     /tmp/ccj3XgwL.s:134    .bss.global_lfo:0000000000000000 $d
+     /tmp/ccj3XgwL.s:136    .bss.global_lfo_phase_accumulator:0000000000000000 $d
+     /tmp/ccj3XgwL.s:143    .bss.lfo:0000000000000000 $d
+     /tmp/ccj3XgwL.s:150    .bss.lfo_freq:0000000000000000 $d
+     /tmp/ccj3XgwL.s:157    .bss.lfo_phase_accumulator:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

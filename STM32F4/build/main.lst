@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccEeezog.s 			page 1
+ARM GAS  /tmp/ccLP6nEG.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
   30:Src/main.c    **** #include "oscillator.h"
   31:Src/main.c    **** #include "lfo.h"
   32:Src/main.c    **** #include "envelopes.h"
-ARM GAS  /tmp/ccEeezog.s 			page 2
+ARM GAS  /tmp/ccLP6nEG.s 			page 2
 
 
   33:Src/main.c    **** #include "r2rdac.h"
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
   87:Src/main.c    ****   * @retval int
   88:Src/main.c    ****   */
   89:Src/main.c    **** int main(void)
-ARM GAS  /tmp/ccEeezog.s 			page 3
+ARM GAS  /tmp/ccLP6nEG.s 			page 3
 
 
   90:Src/main.c    **** {
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  144:Src/main.c    ****     HAL_UART_Receive_IT(&huart5, &uart_tx_data, 1);
  145:Src/main.c    ****     handle_byte_queue();
  146:Src/main.c    ****     handle_midi_queue();
-ARM GAS  /tmp/ccEeezog.s 			page 4
+ARM GAS  /tmp/ccLP6nEG.s 			page 4
 
 
  147:Src/main.c    ****     if(update_value_flag){
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  201:Src/main.c    **** /**
  202:Src/main.c    ****   * @brief DAC Initialization Function
  203:Src/main.c    ****   * @param None
-ARM GAS  /tmp/ccEeezog.s 			page 5
+ARM GAS  /tmp/ccLP6nEG.s 			page 5
 
 
  204:Src/main.c    ****   * @retval None
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  258:Src/main.c    ****   hspi5.Init.DataSize = SPI_DATASIZE_8BIT;
  259:Src/main.c    ****   hspi5.Init.CLKPolarity = SPI_POLARITY_LOW;
  260:Src/main.c    ****   hspi5.Init.CLKPhase = SPI_PHASE_1EDGE;
-ARM GAS  /tmp/ccEeezog.s 			page 6
+ARM GAS  /tmp/ccLP6nEG.s 			page 6
 
 
  261:Src/main.c    ****   hspi5.Init.NSS = SPI_NSS_HARD_INPUT;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  315:Src/main.c    ****   * @brief UART5 Initialization Function
  316:Src/main.c    ****   * @param None
  317:Src/main.c    ****   * @retval None
-ARM GAS  /tmp/ccEeezog.s 			page 7
+ARM GAS  /tmp/ccLP6nEG.s 			page 7
 
 
  318:Src/main.c    ****   */
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  372:Src/main.c    ****     Error_Handler();
  373:Src/main.c    ****   }
  374:Src/main.c    ****   /* USER CODE BEGIN USART1_Init 2 */
-ARM GAS  /tmp/ccEeezog.s 			page 8
+ARM GAS  /tmp/ccLP6nEG.s 			page 8
 
 
  375:Src/main.c    **** 
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
   65              	.LBB3:
  391:Src/main.c    ****   __HAL_RCC_GPIOF_CLK_ENABLE();
   66              		.loc 1 391 0
-ARM GAS  /tmp/ccEeezog.s 			page 9
+ARM GAS  /tmp/ccLP6nEG.s 			page 9
 
 
   67 0028 0294     		str	r4, [sp, #8]
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  117 0088 0692     		str	r2, [sp, #24]
  118 008a 069A     		ldr	r2, [sp, #24]
  119              	.LBE7:
-ARM GAS  /tmp/ccEeezog.s 			page 10
+ARM GAS  /tmp/ccLP6nEG.s 			page 10
 
 
  120              	.LBB8:
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  160              		.loc 1 409 0
  161 00d6 2246     		mov	r2, r4
  162 00d8 4FF4C041 		mov	r1, #24576
-ARM GAS  /tmp/ccEeezog.s 			page 11
+ARM GAS  /tmp/ccLP6nEG.s 			page 11
 
 
  163 00dc 7A48     		ldr	r0, .L3+16
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  428:Src/main.c    **** 
  429:Src/main.c    ****   /*Configure GPIO pin : SDNWE_Pin */
  430:Src/main.c    ****   GPIO_InitStruct.Pin = SDNWE_Pin;
-ARM GAS  /tmp/ccEeezog.s 			page 12
+ARM GAS  /tmp/ccLP6nEG.s 			page 12
 
 
  199              		.loc 1 430 0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  448:Src/main.c    ****   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  236              		.loc 1 448 0
  237 014e 09A9     		add	r1, sp, #36
-ARM GAS  /tmp/ccEeezog.s 			page 13
+ARM GAS  /tmp/ccLP6nEG.s 			page 13
 
 
  238 0150 5F48     		ldr	r0, .L3+24
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  466:Src/main.c    ****   /*Configure GPIO pin : OTG_FS_OC_Pin */
  467:Src/main.c    ****   GPIO_InitStruct.Pin = OTG_FS_OC_Pin;
  275              		.loc 1 467 0
-ARM GAS  /tmp/ccEeezog.s 			page 14
+ARM GAS  /tmp/ccLP6nEG.s 			page 14
 
 
  276 0188 2023     		movs	r3, #32
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  313 01be FFF7FEFF 		bl	HAL_GPIO_Init
  314              	.LVL13:
  485:Src/main.c    **** 
-ARM GAS  /tmp/ccEeezog.s 			page 15
+ARM GAS  /tmp/ccLP6nEG.s 			page 15
 
 
  486:Src/main.c    ****   /*Configure GPIO pin : PF11 */
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  507:Src/main.c    ****                           |D8_Pin|D9_Pin|D10_Pin|D11_Pin 
  508:Src/main.c    ****                           |D12_Pin|NBL0_Pin|NBL1_Pin;
  509:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-ARM GAS  /tmp/ccEeezog.s 			page 16
+ARM GAS  /tmp/ccLP6nEG.s 			page 16
 
 
  348              		.loc 1 509 0
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  384              		.loc 1 527 0
  385 022a 0C94     		str	r4, [sp, #48]
  528:Src/main.c    ****   GPIO_InitStruct.Alternate = GPIO_AF12_OTG_HS_FS;
-ARM GAS  /tmp/ccEeezog.s 			page 17
+ARM GAS  /tmp/ccLP6nEG.s 			page 17
 
 
  386              		.loc 1 528 0
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  548:Src/main.c    ****   GPIO_InitStruct.Pin = TE_Pin;
  421              		.loc 1 548 0
  422 0262 CDF824A0 		str	r10, [sp, #36]
-ARM GAS  /tmp/ccEeezog.s 			page 18
+ARM GAS  /tmp/ccLP6nEG.s 			page 18
 
 
  549:Src/main.c    ****   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  459 0298 0B48     		ldr	r0, .L3+16
  460 029a FFF7FEFF 		bl	HAL_GPIO_Init
  461              	.LVL23:
-ARM GAS  /tmp/ccEeezog.s 			page 19
+ARM GAS  /tmp/ccLP6nEG.s 			page 19
 
 
  567:Src/main.c    **** 
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  502 02f0 0C94     		str	r4, [sp, #48]
  581:Src/main.c    ****   GPIO_InitStruct.Alternate = GPIO_AF4_I2C3;
  503              		.loc 1 581 0
-ARM GAS  /tmp/ccEeezog.s 			page 20
+ARM GAS  /tmp/ccLP6nEG.s 			page 20
 
 
  504 02f2 CDF834B0 		str	fp, [sp, #52]
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  541              	.LVL27:
  599:Src/main.c    **** 
  600:Src/main.c    ****   /*Configure GPIO pins : G3_Pin B4_Pin */
-ARM GAS  /tmp/ccEeezog.s 			page 21
+ARM GAS  /tmp/ccLP6nEG.s 			page 21
 
 
  601:Src/main.c    ****   GPIO_InitStruct.Pin = G3_Pin|B4_Pin;
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  578              		.loc 1 618 0
  579 0360 0B94     		str	r4, [sp, #44]
  619:Src/main.c    ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-ARM GAS  /tmp/ccEeezog.s 			page 22
+ARM GAS  /tmp/ccLP6nEG.s 			page 22
 
 
  580              		.loc 1 619 0
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  627              		@ args = 0, pretend = 0, frame = 0
  628              		@ frame_needed = 0, uses_anonymous_args = 0
  629 0000 08B5     		push	{r3, lr}
-ARM GAS  /tmp/ccEeezog.s 			page 23
+ARM GAS  /tmp/ccLP6nEG.s 			page 23
 
 
  630              	.LCFI3:
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  673              		.align	1
  674              		.syntax unified
  675              		.thumb
-ARM GAS  /tmp/ccEeezog.s 			page 24
+ARM GAS  /tmp/ccLP6nEG.s 			page 24
 
 
  676              		.thumb_func
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  721              	.LFE136:
  723              		.section	.text.MX_UART5_Init,"ax",%progbits
  724              		.align	1
-ARM GAS  /tmp/ccEeezog.s 			page 25
+ARM GAS  /tmp/ccLP6nEG.s 			page 25
 
 
  725              		.syntax unified
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  770 0028 00500040 		.word	1073762304
  771              		.cfi_endproc
  772              	.LFE135:
-ARM GAS  /tmp/ccEeezog.s 			page 26
+ARM GAS  /tmp/ccLP6nEG.s 			page 26
 
 
  774              		.section	.text.MX_DAC_Init,"ax",%progbits
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  821              		.cfi_def_cfa_offset 12
  822              		@ sp needed
  823 0026 30BD     		pop	{r4, r5, pc}
-ARM GAS  /tmp/ccEeezog.s 			page 27
+ARM GAS  /tmp/ccLP6nEG.s 			page 27
 
 
  824              	.L23:
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  872 001c 2046     		mov	r0, r4
  873 001e FFF7FEFF 		bl	HAL_TIM_Base_Init
  874              	.LVL38:
-ARM GAS  /tmp/ccEeezog.s 			page 28
+ARM GAS  /tmp/ccLP6nEG.s 			page 28
 
 
  302:Src/main.c    ****   sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  925 000a FFF7FEFF 		bl	memset
  926              	.LVL40:
  165:Src/main.c    **** 
-ARM GAS  /tmp/ccEeezog.s 			page 29
+ARM GAS  /tmp/ccLP6nEG.s 			page 29
 
 
  927              		.loc 1 165 0
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  973 005a 0823     		movs	r3, #8
  974 005c 1093     		str	r3, [sp, #64]
  179:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-ARM GAS  /tmp/ccEeezog.s 			page 30
+ARM GAS  /tmp/ccLP6nEG.s 			page 30
 
 
  975              		.loc 1 179 0
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  1020              		.align	1
  1021              		.global	HAL_UART_RxCpltCallback
  1022              		.syntax unified
-ARM GAS  /tmp/ccEeezog.s 			page 31
+ARM GAS  /tmp/ccLP6nEG.s 			page 31
 
 
  1023              		.thumb
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  1070              		.cfi_startproc
  1071              		@ args = 0, pretend = 0, frame = 0
  1072              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccEeezog.s 			page 32
+ARM GAS  /tmp/ccLP6nEG.s 			page 32
 
 
  1073              		@ link register save eliminated.
@@ -1910,17 +1910,19 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  648:Src/main.c    ****   static uint8_t decay_cc_flag;
  649:Src/main.c    ****   static uint8_t sustain_cc_flag;
  650:Src/main.c    ****   static uint8_t release_cc_flag;
- 651:Src/main.c    **** 
- 652:Src/main.c    ****   if(spi_byte_queue.head != spi_byte_queue.tail){
- 1111              		.loc 1 652 0
- 1112 0000 574B     		ldr	r3, .L67
+ 651:Src/main.c    ****   static uint8_t waveshape_cc_flag;
+ 652:Src/main.c    ****   static uint8_t lfo_cc_flag;
+ 653:Src/main.c    **** 
+ 654:Src/main.c    ****   if(spi_byte_queue.head != spi_byte_queue.tail){
+ 1111              		.loc 1 654 0
+ 1112 0000 744B     		ldr	r3, .L73
  1113 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
  1114 0004 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ARM GAS  /tmp/ccLP6nEG.s 			page 33
+
+
  1115 0006 9A42     		cmp	r2, r3
- 1116 0008 00F0A880 		beq	.L58
-ARM GAS  /tmp/ccEeezog.s 			page 33
-
-
+ 1116 0008 00F0E380 		beq	.L62
  643:Src/main.c    ****   // probably need to refactor these SPI flags
  1117              		.loc 1 643 0
  1118 000c 10B5     		push	{r4, lr}
@@ -1932,1078 +1934,1236 @@ ARM GAS  /tmp/ccEeezog.s 			page 1
  1124              	.LCFI17:
  1125              		.cfi_def_cfa_offset 16
  1126              	.LBB12:
- 653:Src/main.c    ****     uint8_t value = dequeue_byte();
- 1127              		.loc 1 653 0
+ 655:Src/main.c    ****     uint8_t value = dequeue_byte();
+ 1127              		.loc 1 655 0
  1128 0010 FFF7FEFF 		bl	dequeue_byte
  1129              	.LVL47:
  1130 0014 0446     		mov	r4, r0
  1131              	.LVL48:
- 654:Src/main.c    ****     uint8_t skip_command = 0;
- 655:Src/main.c    **** 
- 656:Src/main.c    ****     // HAL_UART_Transmit(&huart1, &value, 1, 50);
+ 656:Src/main.c    ****     uint8_t skip_command = 0;
  657:Src/main.c    **** 
- 658:Src/main.c    ****     if(attack_cc_flag) {
- 1132              		.loc 1 658 0
- 1133 0016 534B     		ldr	r3, .L67+4
+ 658:Src/main.c    ****     // HAL_UART_Transmit(&huart1, &value, 1, 50);
+ 659:Src/main.c    **** 
+ 660:Src/main.c    ****     if(attack_cc_flag) {
+ 1132              		.loc 1 660 0
+ 1133 0016 704B     		ldr	r3, .L73+4
  1134 0018 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1135 001a 1BBB     		cbnz	r3, .L61
- 659:Src/main.c    ****       attack_cc_flag = 0;
- 660:Src/main.c    ****       struct midi_msg new_midi_msg =
- 661:Src/main.c    ****         {
- 662:Src/main.c    ****          ATTACK_CC,
- 663:Src/main.c    ****          value,
- 664:Src/main.c    ****          0,
- 665:Src/main.c    ****          0
- 666:Src/main.c    ****         };
- 667:Src/main.c    ****       enqueue(new_midi_msg);
- 668:Src/main.c    ****       skip_command = 1;
- 669:Src/main.c    ****     }
- 670:Src/main.c    ****     else if(decay_cc_flag) {
- 1136              		.loc 1 670 0
- 1137 001c 524B     		ldr	r3, .L67+8
- 1138 001e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1139 0020 002B     		cmp	r3, #0
- 1140 0022 3ED1     		bne	.L62
- 671:Src/main.c    ****       decay_cc_flag = 0;
- 672:Src/main.c    ****       struct midi_msg new_midi_msg =
- 673:Src/main.c    ****         {
- 674:Src/main.c    ****          DECAY_CC,
- 675:Src/main.c    ****          value,
- 676:Src/main.c    ****          0,
- 677:Src/main.c    ****          0
- 678:Src/main.c    ****         };
- 679:Src/main.c    ****       enqueue(new_midi_msg);
- 680:Src/main.c    ****       skip_command = 1;
- 681:Src/main.c    ****     }
- 682:Src/main.c    ****     else if(sustain_cc_flag) {
- 1141              		.loc 1 682 0
- 1142 0024 514B     		ldr	r3, .L67+12
-ARM GAS  /tmp/ccEeezog.s 			page 34
+ 1135 001a 002B     		cmp	r3, #0
+ 1136 001c 2DD1     		bne	.L65
+ 661:Src/main.c    ****       attack_cc_flag = 0;
+ 662:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 663:Src/main.c    ****         {
+ 664:Src/main.c    ****          ATTACK_CC,
+ 665:Src/main.c    ****          value,
+ 666:Src/main.c    ****          0,
+ 667:Src/main.c    ****          0
+ 668:Src/main.c    ****         };
+ 669:Src/main.c    ****       enqueue(new_midi_msg);
+ 670:Src/main.c    ****       skip_command = 1;
+ 671:Src/main.c    ****     }
+ 672:Src/main.c    ****     else if(decay_cc_flag) {
+ 1137              		.loc 1 672 0
+ 1138 001e 6F4B     		ldr	r3, .L73+8
+ 1139 0020 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1140 0022 002B     		cmp	r3, #0
+ 1141 0024 4DD1     		bne	.L66
+ 673:Src/main.c    ****       decay_cc_flag = 0;
+ 674:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 675:Src/main.c    ****         {
+ 676:Src/main.c    ****          DECAY_CC,
+ 677:Src/main.c    ****          value,
+ 678:Src/main.c    ****          0,
+ 679:Src/main.c    ****          0
+ 680:Src/main.c    ****         };
+ 681:Src/main.c    ****       enqueue(new_midi_msg);
+ 682:Src/main.c    ****       skip_command = 1;
+ 683:Src/main.c    ****     }
+ARM GAS  /tmp/ccLP6nEG.s 			page 34
 
 
- 1143 0026 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1144 0028 002B     		cmp	r3, #0
- 1145 002a 4BD1     		bne	.L63
- 683:Src/main.c    ****       sustain_cc_flag = 0;
- 684:Src/main.c    ****       struct midi_msg new_midi_msg =
- 685:Src/main.c    ****         {
- 686:Src/main.c    ****          SUSTAIN_CC,
- 687:Src/main.c    ****          value,
- 688:Src/main.c    ****          0,
- 689:Src/main.c    ****          0
- 690:Src/main.c    ****         };
- 691:Src/main.c    ****       enqueue(new_midi_msg);
- 692:Src/main.c    ****       skip_command = 1;
- 693:Src/main.c    ****     }
- 694:Src/main.c    ****     else if(release_cc_flag) {
- 1146              		.loc 1 694 0
- 1147 002c 504B     		ldr	r3, .L67+16
- 1148 002e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1149 0030 002B     		cmp	r3, #0
- 1150 0032 58D1     		bne	.L64
- 695:Src/main.c    ****       release_cc_flag = 0;
- 696:Src/main.c    ****       struct midi_msg new_midi_msg =
- 697:Src/main.c    ****         {
- 698:Src/main.c    ****          RELEASE_CC,
- 699:Src/main.c    ****          value,
- 700:Src/main.c    ****          0,
- 701:Src/main.c    ****          0
- 702:Src/main.c    ****         };
- 703:Src/main.c    ****       enqueue(new_midi_msg);
- 704:Src/main.c    ****       skip_command = 1;
- 705:Src/main.c    ****     }
- 706:Src/main.c    ****     else if(note_on_flag) {
- 1151              		.loc 1 706 0
- 1152 0034 4F4B     		ldr	r3, .L67+20
- 1153 0036 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1154 0038 002B     		cmp	r3, #0
- 1155 003a 65D1     		bne	.L65
- 707:Src/main.c    ****       note_on_flag = 0;
- 708:Src/main.c    ****       struct midi_msg new_midi_msg =
- 709:Src/main.c    ****         {
- 710:Src/main.c    ****          MIDI_NOTE_ON,
- 711:Src/main.c    ****          value,
- 712:Src/main.c    ****          0,
- 713:Src/main.c    ****          0
- 714:Src/main.c    ****         };
- 715:Src/main.c    ****       enqueue(new_midi_msg);
- 716:Src/main.c    ****       skip_command = 1;
- 717:Src/main.c    ****     }
- 718:Src/main.c    ****     else if (note_off_flag) {
- 1156              		.loc 1 718 0
- 1157 003c 4E4B     		ldr	r3, .L67+24
- 1158 003e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1159 0040 03B3     		cbz	r3, .L45
- 1160              	.LBB13:
- 719:Src/main.c    ****       note_off_flag = 0;
- 1161              		.loc 1 719 0
- 1162 0042 0023     		movs	r3, #0
-ARM GAS  /tmp/ccEeezog.s 			page 35
+ 684:Src/main.c    ****     else if(sustain_cc_flag) {
+ 1142              		.loc 1 684 0
+ 1143 0026 6E4B     		ldr	r3, .L73+12
+ 1144 0028 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1145 002a 002B     		cmp	r3, #0
+ 1146 002c 5AD1     		bne	.L67
+ 685:Src/main.c    ****       sustain_cc_flag = 0;
+ 686:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 687:Src/main.c    ****         {
+ 688:Src/main.c    ****          SUSTAIN_CC,
+ 689:Src/main.c    ****          value,
+ 690:Src/main.c    ****          0,
+ 691:Src/main.c    ****          0
+ 692:Src/main.c    ****         };
+ 693:Src/main.c    ****       enqueue(new_midi_msg);
+ 694:Src/main.c    ****       skip_command = 1;
+ 695:Src/main.c    ****     }
+ 696:Src/main.c    ****     else if(release_cc_flag) {
+ 1147              		.loc 1 696 0
+ 1148 002e 6D4B     		ldr	r3, .L73+16
+ 1149 0030 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1150 0032 002B     		cmp	r3, #0
+ 1151 0034 67D1     		bne	.L68
+ 697:Src/main.c    ****       release_cc_flag = 0;
+ 698:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 699:Src/main.c    ****         {
+ 700:Src/main.c    ****          RELEASE_CC,
+ 701:Src/main.c    ****          value,
+ 702:Src/main.c    ****          0,
+ 703:Src/main.c    ****          0
+ 704:Src/main.c    ****         };
+ 705:Src/main.c    ****       enqueue(new_midi_msg);
+ 706:Src/main.c    ****       skip_command = 1;
+ 707:Src/main.c    ****     }
+ 708:Src/main.c    ****     else if(note_on_flag) {
+ 1152              		.loc 1 708 0
+ 1153 0036 6C4B     		ldr	r3, .L73+20
+ 1154 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1155 003a 002B     		cmp	r3, #0
+ 1156 003c 74D1     		bne	.L69
+ 709:Src/main.c    ****       note_on_flag = 0;
+ 710:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 711:Src/main.c    ****         {
+ 712:Src/main.c    ****          MIDI_NOTE_ON,
+ 713:Src/main.c    ****          value,
+ 714:Src/main.c    ****          0,
+ 715:Src/main.c    ****          0
+ 716:Src/main.c    ****         };
+ 717:Src/main.c    ****       enqueue(new_midi_msg);
+ 718:Src/main.c    ****       skip_command = 1;
+ 719:Src/main.c    ****     }
+ 720:Src/main.c    ****     else if (note_off_flag) {
+ 1157              		.loc 1 720 0
+ 1158 003e 6B4B     		ldr	r3, .L73+24
+ 1159 0040 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1160 0042 002B     		cmp	r3, #0
+ 1161 0044 40F08180 		bne	.L70
+ARM GAS  /tmp/ccLP6nEG.s 			page 35
 
 
- 1163 0044 4C4A     		ldr	r2, .L67+24
- 1164 0046 1370     		strb	r3, [r2]
- 720:Src/main.c    ****       struct midi_msg new_midi_msg =
- 1165              		.loc 1 720 0
- 1166 0048 8022     		movs	r2, #128
- 1167 004a 8DF80420 		strb	r2, [sp, #4]
- 1168 004e 8DF80500 		strb	r0, [sp, #5]
- 1169 0052 8DF80630 		strb	r3, [sp, #6]
- 1170 0056 8DF80730 		strb	r3, [sp, #7]
- 721:Src/main.c    ****         {
- 722:Src/main.c    ****          MIDI_NOTE_OFF,
- 723:Src/main.c    ****          value,
- 724:Src/main.c    ****          0,
- 725:Src/main.c    ****          0
- 726:Src/main.c    ****         };
- 727:Src/main.c    ****       enqueue(new_midi_msg);
- 1171              		.loc 1 727 0
- 1172 005a 0198     		ldr	r0, [sp, #4]
- 1173              	.LVL49:
- 1174 005c FFF7FEFF 		bl	enqueue
- 1175              	.LVL50:
- 728:Src/main.c    ****       skip_command = 1;
- 1176              		.loc 1 728 0
- 1177 0060 0123     		movs	r3, #1
- 1178 0062 0FE0     		b	.L45
- 1179              	.LVL51:
- 1180              	.L61:
- 1181              	.LBE13:
- 1182              	.LBB14:
- 659:Src/main.c    ****       struct midi_msg new_midi_msg =
- 1183              		.loc 1 659 0
- 1184 0064 0023     		movs	r3, #0
- 1185 0066 3F4A     		ldr	r2, .L67+4
- 1186 0068 1370     		strb	r3, [r2]
- 660:Src/main.c    ****         {
- 1187              		.loc 1 660 0
- 1188 006a 1422     		movs	r2, #20
- 1189 006c 8DF80420 		strb	r2, [sp, #4]
- 1190 0070 8DF80500 		strb	r0, [sp, #5]
- 1191 0074 8DF80630 		strb	r3, [sp, #6]
- 1192 0078 8DF80730 		strb	r3, [sp, #7]
- 667:Src/main.c    ****       skip_command = 1;
- 1193              		.loc 1 667 0
- 1194 007c 0198     		ldr	r0, [sp, #4]
- 1195              	.LVL52:
- 1196 007e FFF7FEFF 		bl	enqueue
- 1197              	.LVL53:
- 668:Src/main.c    ****     }
- 1198              		.loc 1 668 0
- 1199 0082 0123     		movs	r3, #1
- 1200              	.LVL54:
- 1201              	.L45:
- 1202              	.LBE14:
- 729:Src/main.c    ****     }
- 730:Src/main.c    **** 
- 731:Src/main.c    ****     if(!skip_command){
- 1203              		.loc 1 731 0
-ARM GAS  /tmp/ccEeezog.s 			page 36
+ 721:Src/main.c    ****       note_off_flag = 0;
+ 722:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 723:Src/main.c    ****         {
+ 724:Src/main.c    ****          MIDI_NOTE_OFF,
+ 725:Src/main.c    ****          value,
+ 726:Src/main.c    ****          0,
+ 727:Src/main.c    ****          0
+ 728:Src/main.c    ****         };
+ 729:Src/main.c    ****       enqueue(new_midi_msg);
+ 730:Src/main.c    ****       skip_command = 1;
+ 731:Src/main.c    ****     }
+ 732:Src/main.c    ****     else if(waveshape_cc_flag) {
+ 1162              		.loc 1 732 0
+ 1163 0048 694B     		ldr	r3, .L73+28
+ 1164 004a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1165 004c 002B     		cmp	r3, #0
+ 1166 004e 40F08D80 		bne	.L71
+ 733:Src/main.c    ****       waveshape_cc_flag = 0;
+ 734:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 735:Src/main.c    ****         {
+ 736:Src/main.c    ****          WAVESHAPE_CC,
+ 737:Src/main.c    ****          value,
+ 738:Src/main.c    ****          0,
+ 739:Src/main.c    ****          0
+ 740:Src/main.c    ****         };
+ 741:Src/main.c    ****       enqueue(new_midi_msg);
+ 742:Src/main.c    ****       skip_command = 1;
+ 743:Src/main.c    ****     }
+ 744:Src/main.c    ****     else if(lfo_cc_flag){
+ 1167              		.loc 1 744 0
+ 1168 0052 684B     		ldr	r3, .L73+32
+ 1169 0054 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1170 0056 03B3     		cbz	r3, .L45
+ 1171              	.LBB13:
+ 745:Src/main.c    ****       lfo_cc_flag = 0;
+ 1172              		.loc 1 745 0
+ 1173 0058 0023     		movs	r3, #0
+ 1174 005a 664A     		ldr	r2, .L73+32
+ 1175 005c 1370     		strb	r3, [r2]
+ 746:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1176              		.loc 1 746 0
+ 1177 005e 1922     		movs	r2, #25
+ 1178 0060 8DF80420 		strb	r2, [sp, #4]
+ 1179 0064 8DF80500 		strb	r0, [sp, #5]
+ 1180 0068 8DF80630 		strb	r3, [sp, #6]
+ 1181 006c 8DF80730 		strb	r3, [sp, #7]
+ 747:Src/main.c    ****         {
+ 748:Src/main.c    ****          LFO_CC,
+ 749:Src/main.c    ****          value,
+ 750:Src/main.c    ****          0,
+ 751:Src/main.c    ****          0
+ 752:Src/main.c    ****         };
+ 753:Src/main.c    ****       enqueue(new_midi_msg);
+ 1182              		.loc 1 753 0
+ 1183 0070 0198     		ldr	r0, [sp, #4]
+ 1184              	.LVL49:
+ 1185 0072 FFF7FEFF 		bl	enqueue
+ARM GAS  /tmp/ccLP6nEG.s 			page 36
 
 
- 1204 0084 002B     		cmp	r3, #0
- 1205 0086 5BD1     		bne	.L42
- 732:Src/main.c    ****       switch(value){
- 1206              		.loc 1 732 0
- 1207 0088 162C     		cmp	r4, #22
- 1208 008a 5BD0     		beq	.L50
- 1209 008c 4DD9     		bls	.L66
- 1210 008e 802C     		cmp	r4, #128
- 1211 0090 60D0     		beq	.L54
- 1212 0092 902C     		cmp	r4, #144
- 1213 0094 5AD0     		beq	.L55
- 1214 0096 172C     		cmp	r4, #23
- 1215 0098 52D1     		bne	.L42
- 733:Src/main.c    ****       case ATTACK_CC:
- 734:Src/main.c    ****         attack_cc_flag = 1;
- 735:Src/main.c    ****         break;
- 736:Src/main.c    ****       case DECAY_CC:
- 737:Src/main.c    ****         decay_cc_flag = 1;
- 738:Src/main.c    ****         break;
- 739:Src/main.c    ****       case SUSTAIN_CC:
- 740:Src/main.c    ****         sustain_cc_flag = 1;
- 741:Src/main.c    ****         break;
- 742:Src/main.c    ****       case RELEASE_CC:
- 743:Src/main.c    ****         release_cc_flag = 1;
- 1216              		.loc 1 743 0
- 1217 009a 0122     		movs	r2, #1
- 1218 009c 344B     		ldr	r3, .L67+16
- 1219              	.LVL55:
- 1220 009e 1A70     		strb	r2, [r3]
- 744:Src/main.c    ****         break;
- 1221              		.loc 1 744 0
- 1222 00a0 4EE0     		b	.L42
- 1223              	.LVL56:
- 1224              	.L62:
- 1225              	.LBB15:
- 671:Src/main.c    ****       struct midi_msg new_midi_msg =
- 1226              		.loc 1 671 0
- 1227 00a2 0023     		movs	r3, #0
- 1228 00a4 304A     		ldr	r2, .L67+8
- 1229 00a6 1370     		strb	r3, [r2]
- 672:Src/main.c    ****         {
- 1230              		.loc 1 672 0
- 1231 00a8 1522     		movs	r2, #21
- 1232 00aa 8DF80420 		strb	r2, [sp, #4]
- 1233 00ae 8DF80500 		strb	r0, [sp, #5]
- 1234 00b2 8DF80630 		strb	r3, [sp, #6]
- 1235 00b6 8DF80730 		strb	r3, [sp, #7]
- 679:Src/main.c    ****       skip_command = 1;
- 1236              		.loc 1 679 0
- 1237 00ba 0198     		ldr	r0, [sp, #4]
- 1238              	.LVL57:
- 1239 00bc FFF7FEFF 		bl	enqueue
- 1240              	.LVL58:
- 680:Src/main.c    ****     }
- 1241              		.loc 1 680 0
- 1242 00c0 0123     		movs	r3, #1
- 1243              	.LBE15:
-ARM GAS  /tmp/ccEeezog.s 			page 37
+ 1186              	.LVL50:
+ 754:Src/main.c    ****       skip_command = 1;
+ 1187              		.loc 1 754 0
+ 1188 0076 0123     		movs	r3, #1
+ 1189 0078 0FE0     		b	.L45
+ 1190              	.LVL51:
+ 1191              	.L65:
+ 1192              	.LBE13:
+ 1193              	.LBB14:
+ 661:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1194              		.loc 1 661 0
+ 1195 007a 0023     		movs	r3, #0
+ 1196 007c 564A     		ldr	r2, .L73+4
+ 1197 007e 1370     		strb	r3, [r2]
+ 662:Src/main.c    ****         {
+ 1198              		.loc 1 662 0
+ 1199 0080 1422     		movs	r2, #20
+ 1200 0082 8DF80420 		strb	r2, [sp, #4]
+ 1201 0086 8DF80500 		strb	r0, [sp, #5]
+ 1202 008a 8DF80630 		strb	r3, [sp, #6]
+ 1203 008e 8DF80730 		strb	r3, [sp, #7]
+ 669:Src/main.c    ****       skip_command = 1;
+ 1204              		.loc 1 669 0
+ 1205 0092 0198     		ldr	r0, [sp, #4]
+ 1206              	.LVL52:
+ 1207 0094 FFF7FEFF 		bl	enqueue
+ 1208              	.LVL53:
+ 670:Src/main.c    ****     }
+ 1209              		.loc 1 670 0
+ 1210 0098 0123     		movs	r3, #1
+ 1211              	.LVL54:
+ 1212              	.L45:
+ 1213              	.LBE14:
+ 755:Src/main.c    ****     }
+ 756:Src/main.c    **** 
+ 757:Src/main.c    ****     if(!skip_command){
+ 1214              		.loc 1 757 0
+ 1215 009a 002B     		cmp	r3, #0
+ 1216 009c 7FD1     		bne	.L42
+ 758:Src/main.c    ****       switch(value){
+ 1217              		.loc 1 758 0
+ 1218 009e 172C     		cmp	r4, #23
+ 1219 00a0 00F08780 		beq	.L52
+ 1220 00a4 73D9     		bls	.L72
+ 1221 00a6 192C     		cmp	r4, #25
+ 1222 00a8 00F08F80 		beq	.L57
+ 1223 00ac C0F08980 		bcc	.L58
+ 1224 00b0 802C     		cmp	r4, #128
+ 1225 00b2 00F08280 		beq	.L59
+ 1226 00b6 902C     		cmp	r4, #144
+ 1227 00b8 71D1     		bne	.L42
+ 759:Src/main.c    ****       case ATTACK_CC:
+ 760:Src/main.c    ****         attack_cc_flag = 1;
+ 761:Src/main.c    ****         break;
+ 762:Src/main.c    ****       case DECAY_CC:
+ 763:Src/main.c    ****         decay_cc_flag = 1;
+ 764:Src/main.c    ****         break;
+ARM GAS  /tmp/ccLP6nEG.s 			page 37
 
 
- 1244 00c2 DFE7     		b	.L45
- 1245              	.LVL59:
- 1246              	.L63:
- 1247              	.LBB16:
- 683:Src/main.c    ****       struct midi_msg new_midi_msg =
- 1248              		.loc 1 683 0
- 1249 00c4 0023     		movs	r3, #0
- 1250 00c6 294A     		ldr	r2, .L67+12
- 1251 00c8 1370     		strb	r3, [r2]
- 684:Src/main.c    ****         {
- 1252              		.loc 1 684 0
- 1253 00ca 1622     		movs	r2, #22
- 1254 00cc 8DF80420 		strb	r2, [sp, #4]
- 1255 00d0 8DF80500 		strb	r0, [sp, #5]
- 1256 00d4 8DF80630 		strb	r3, [sp, #6]
- 1257 00d8 8DF80730 		strb	r3, [sp, #7]
- 691:Src/main.c    ****       skip_command = 1;
- 1258              		.loc 1 691 0
- 1259 00dc 0198     		ldr	r0, [sp, #4]
- 1260              	.LVL60:
- 1261 00de FFF7FEFF 		bl	enqueue
- 1262              	.LVL61:
- 692:Src/main.c    ****     }
- 1263              		.loc 1 692 0
- 1264 00e2 0123     		movs	r3, #1
- 1265              	.LBE16:
- 1266 00e4 CEE7     		b	.L45
- 1267              	.LVL62:
- 1268              	.L64:
- 1269              	.LBB17:
- 695:Src/main.c    ****       struct midi_msg new_midi_msg =
- 1270              		.loc 1 695 0
- 1271 00e6 0023     		movs	r3, #0
- 1272 00e8 214A     		ldr	r2, .L67+16
- 1273 00ea 1370     		strb	r3, [r2]
- 696:Src/main.c    ****         {
- 1274              		.loc 1 696 0
- 1275 00ec 1722     		movs	r2, #23
- 1276 00ee 8DF80420 		strb	r2, [sp, #4]
- 1277 00f2 8DF80500 		strb	r0, [sp, #5]
- 1278 00f6 8DF80630 		strb	r3, [sp, #6]
- 1279 00fa 8DF80730 		strb	r3, [sp, #7]
- 703:Src/main.c    ****       skip_command = 1;
- 1280              		.loc 1 703 0
- 1281 00fe 0198     		ldr	r0, [sp, #4]
- 1282              	.LVL63:
- 1283 0100 FFF7FEFF 		bl	enqueue
- 1284              	.LVL64:
- 704:Src/main.c    ****     }
- 1285              		.loc 1 704 0
- 1286 0104 0123     		movs	r3, #1
- 1287              	.LBE17:
- 1288 0106 BDE7     		b	.L45
- 1289              	.LVL65:
- 1290              	.L65:
- 1291              	.LBB18:
- 707:Src/main.c    ****       struct midi_msg new_midi_msg =
-ARM GAS  /tmp/ccEeezog.s 			page 38
+ 765:Src/main.c    ****       case SUSTAIN_CC:
+ 766:Src/main.c    ****         sustain_cc_flag = 1;
+ 767:Src/main.c    ****         break;
+ 768:Src/main.c    ****       case RELEASE_CC:
+ 769:Src/main.c    ****         release_cc_flag = 1;
+ 770:Src/main.c    ****         break;
+ 771:Src/main.c    ****       case MIDI_NOTE_ON:
+ 772:Src/main.c    ****         note_on_flag = 1;
+ 1228              		.loc 1 772 0
+ 1229 00ba 0122     		movs	r2, #1
+ 1230 00bc 4A4B     		ldr	r3, .L73+20
+ 1231              	.LVL55:
+ 1232 00be 1A70     		strb	r2, [r3]
+ 773:Src/main.c    ****         break;
+ 1233              		.loc 1 773 0
+ 1234 00c0 6DE0     		b	.L42
+ 1235              	.LVL56:
+ 1236              	.L66:
+ 1237              	.LBB15:
+ 673:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1238              		.loc 1 673 0
+ 1239 00c2 0023     		movs	r3, #0
+ 1240 00c4 454A     		ldr	r2, .L73+8
+ 1241 00c6 1370     		strb	r3, [r2]
+ 674:Src/main.c    ****         {
+ 1242              		.loc 1 674 0
+ 1243 00c8 1522     		movs	r2, #21
+ 1244 00ca 8DF80420 		strb	r2, [sp, #4]
+ 1245 00ce 8DF80500 		strb	r0, [sp, #5]
+ 1246 00d2 8DF80630 		strb	r3, [sp, #6]
+ 1247 00d6 8DF80730 		strb	r3, [sp, #7]
+ 681:Src/main.c    ****       skip_command = 1;
+ 1248              		.loc 1 681 0
+ 1249 00da 0198     		ldr	r0, [sp, #4]
+ 1250              	.LVL57:
+ 1251 00dc FFF7FEFF 		bl	enqueue
+ 1252              	.LVL58:
+ 682:Src/main.c    ****     }
+ 1253              		.loc 1 682 0
+ 1254 00e0 0123     		movs	r3, #1
+ 1255              	.LBE15:
+ 1256 00e2 DAE7     		b	.L45
+ 1257              	.LVL59:
+ 1258              	.L67:
+ 1259              	.LBB16:
+ 685:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1260              		.loc 1 685 0
+ 1261 00e4 0023     		movs	r3, #0
+ 1262 00e6 3E4A     		ldr	r2, .L73+12
+ 1263 00e8 1370     		strb	r3, [r2]
+ 686:Src/main.c    ****         {
+ 1264              		.loc 1 686 0
+ 1265 00ea 1622     		movs	r2, #22
+ 1266 00ec 8DF80420 		strb	r2, [sp, #4]
+ 1267 00f0 8DF80500 		strb	r0, [sp, #5]
+ 1268 00f4 8DF80630 		strb	r3, [sp, #6]
+ 1269 00f8 8DF80730 		strb	r3, [sp, #7]
+ARM GAS  /tmp/ccLP6nEG.s 			page 38
 
 
- 1292              		.loc 1 707 0
- 1293 0108 0023     		movs	r3, #0
- 1294 010a 1A4A     		ldr	r2, .L67+20
- 1295 010c 1370     		strb	r3, [r2]
- 708:Src/main.c    ****         {
- 1296              		.loc 1 708 0
- 1297 010e 9022     		movs	r2, #144
- 1298 0110 8DF80420 		strb	r2, [sp, #4]
- 1299 0114 8DF80500 		strb	r0, [sp, #5]
- 1300 0118 8DF80630 		strb	r3, [sp, #6]
- 1301 011c 8DF80730 		strb	r3, [sp, #7]
- 715:Src/main.c    ****       skip_command = 1;
- 1302              		.loc 1 715 0
- 1303 0120 0198     		ldr	r0, [sp, #4]
- 1304              	.LVL66:
- 1305 0122 FFF7FEFF 		bl	enqueue
- 1306              	.LVL67:
- 716:Src/main.c    ****     }
- 1307              		.loc 1 716 0
- 1308 0126 0123     		movs	r3, #1
- 1309              	.LBE18:
- 1310 0128 ACE7     		b	.L45
- 1311              	.LVL68:
- 1312              	.L66:
- 732:Src/main.c    ****       case ATTACK_CC:
- 1313              		.loc 1 732 0
- 1314 012a 142C     		cmp	r4, #20
- 1315 012c 05D0     		beq	.L52
- 1316 012e 152C     		cmp	r4, #21
- 1317 0130 06D1     		bne	.L42
- 737:Src/main.c    ****         break;
- 1318              		.loc 1 737 0
- 1319 0132 0122     		movs	r2, #1
- 1320 0134 0C4B     		ldr	r3, .L67+8
- 1321              	.LVL69:
- 1322 0136 1A70     		strb	r2, [r3]
- 738:Src/main.c    ****       case SUSTAIN_CC:
- 1323              		.loc 1 738 0
- 1324 0138 02E0     		b	.L42
- 1325              	.LVL70:
- 1326              	.L52:
- 734:Src/main.c    ****         break;
- 1327              		.loc 1 734 0
- 1328 013a 0122     		movs	r2, #1
- 1329 013c 094B     		ldr	r3, .L67+4
- 1330              	.LVL71:
- 1331 013e 1A70     		strb	r2, [r3]
- 1332              	.L42:
- 1333              	.LBE12:
- 745:Src/main.c    ****       case MIDI_NOTE_ON:
- 746:Src/main.c    ****         note_on_flag = 1;
- 747:Src/main.c    ****         break;
- 748:Src/main.c    ****       case MIDI_NOTE_OFF:
- 749:Src/main.c    ****         note_off_flag = 1;
- 750:Src/main.c    ****         break;
- 751:Src/main.c    ****       }
- 752:Src/main.c    ****     }
-ARM GAS  /tmp/ccEeezog.s 			page 39
+ 693:Src/main.c    ****       skip_command = 1;
+ 1270              		.loc 1 693 0
+ 1271 00fc 0198     		ldr	r0, [sp, #4]
+ 1272              	.LVL60:
+ 1273 00fe FFF7FEFF 		bl	enqueue
+ 1274              	.LVL61:
+ 694:Src/main.c    ****     }
+ 1275              		.loc 1 694 0
+ 1276 0102 0123     		movs	r3, #1
+ 1277              	.LBE16:
+ 1278 0104 C9E7     		b	.L45
+ 1279              	.LVL62:
+ 1280              	.L68:
+ 1281              	.LBB17:
+ 697:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1282              		.loc 1 697 0
+ 1283 0106 0023     		movs	r3, #0
+ 1284 0108 364A     		ldr	r2, .L73+16
+ 1285 010a 1370     		strb	r3, [r2]
+ 698:Src/main.c    ****         {
+ 1286              		.loc 1 698 0
+ 1287 010c 1722     		movs	r2, #23
+ 1288 010e 8DF80420 		strb	r2, [sp, #4]
+ 1289 0112 8DF80500 		strb	r0, [sp, #5]
+ 1290 0116 8DF80630 		strb	r3, [sp, #6]
+ 1291 011a 8DF80730 		strb	r3, [sp, #7]
+ 705:Src/main.c    ****       skip_command = 1;
+ 1292              		.loc 1 705 0
+ 1293 011e 0198     		ldr	r0, [sp, #4]
+ 1294              	.LVL63:
+ 1295 0120 FFF7FEFF 		bl	enqueue
+ 1296              	.LVL64:
+ 706:Src/main.c    ****     }
+ 1297              		.loc 1 706 0
+ 1298 0124 0123     		movs	r3, #1
+ 1299              	.LBE17:
+ 1300 0126 B8E7     		b	.L45
+ 1301              	.LVL65:
+ 1302              	.L69:
+ 1303              	.LBB18:
+ 709:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1304              		.loc 1 709 0
+ 1305 0128 0023     		movs	r3, #0
+ 1306 012a 2F4A     		ldr	r2, .L73+20
+ 1307 012c 1370     		strb	r3, [r2]
+ 710:Src/main.c    ****         {
+ 1308              		.loc 1 710 0
+ 1309 012e 9022     		movs	r2, #144
+ 1310 0130 8DF80420 		strb	r2, [sp, #4]
+ 1311 0134 8DF80500 		strb	r0, [sp, #5]
+ 1312 0138 8DF80630 		strb	r3, [sp, #6]
+ 1313 013c 8DF80730 		strb	r3, [sp, #7]
+ 717:Src/main.c    ****       skip_command = 1;
+ 1314              		.loc 1 717 0
+ 1315 0140 0198     		ldr	r0, [sp, #4]
+ 1316              	.LVL66:
+ 1317 0142 FFF7FEFF 		bl	enqueue
+ARM GAS  /tmp/ccLP6nEG.s 			page 39
 
 
- 753:Src/main.c    ****   }
- 754:Src/main.c    **** }
- 1334              		.loc 1 754 0
- 1335 0140 02B0     		add	sp, sp, #8
- 1336              	.LCFI18:
- 1337              		.cfi_remember_state
- 1338              		.cfi_def_cfa_offset 8
- 1339              		@ sp needed
- 1340 0142 10BD     		pop	{r4, pc}
- 1341              	.LVL72:
- 1342              	.L50:
- 1343              	.LCFI19:
- 1344              		.cfi_restore_state
- 1345              	.LBB19:
- 740:Src/main.c    ****         break;
- 1346              		.loc 1 740 0
- 1347 0144 0122     		movs	r2, #1
- 1348 0146 094B     		ldr	r3, .L67+12
- 1349              	.LVL73:
- 1350 0148 1A70     		strb	r2, [r3]
- 741:Src/main.c    ****       case RELEASE_CC:
- 1351              		.loc 1 741 0
- 1352 014a F9E7     		b	.L42
- 1353              	.LVL74:
- 1354              	.L55:
- 746:Src/main.c    ****         break;
- 1355              		.loc 1 746 0
- 1356 014c 0122     		movs	r2, #1
- 1357 014e 094B     		ldr	r3, .L67+20
- 1358              	.LVL75:
- 1359 0150 1A70     		strb	r2, [r3]
- 747:Src/main.c    ****       case MIDI_NOTE_OFF:
- 1360              		.loc 1 747 0
- 1361 0152 F5E7     		b	.L42
- 1362              	.LVL76:
- 1363              	.L54:
- 749:Src/main.c    ****         break;
- 1364              		.loc 1 749 0
- 1365 0154 0122     		movs	r2, #1
- 1366 0156 084B     		ldr	r3, .L67+24
- 1367              	.LVL77:
- 1368 0158 1A70     		strb	r2, [r3]
- 1369              	.LBE19:
- 1370              		.loc 1 754 0
- 1371 015a F1E7     		b	.L42
- 1372              	.L58:
- 1373              	.LCFI20:
- 1374              		.cfi_def_cfa_offset 0
- 1375              		.cfi_restore 4
- 1376              		.cfi_restore 14
- 1377 015c 7047     		bx	lr
- 1378              	.L68:
- 1379 015e 00BF     		.align	2
- 1380              	.L67:
- 1381 0160 00000000 		.word	spi_byte_queue
- 1382 0164 00000000 		.word	.LANCHOR1
- 1383 0168 00000000 		.word	.LANCHOR2
-ARM GAS  /tmp/ccEeezog.s 			page 40
+ 1318              	.LVL67:
+ 718:Src/main.c    ****     }
+ 1319              		.loc 1 718 0
+ 1320 0146 0123     		movs	r3, #1
+ 1321              	.LBE18:
+ 1322 0148 A7E7     		b	.L45
+ 1323              	.LVL68:
+ 1324              	.L70:
+ 1325              	.LBB19:
+ 721:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1326              		.loc 1 721 0
+ 1327 014a 0023     		movs	r3, #0
+ 1328 014c 274A     		ldr	r2, .L73+24
+ 1329 014e 1370     		strb	r3, [r2]
+ 722:Src/main.c    ****         {
+ 1330              		.loc 1 722 0
+ 1331 0150 8022     		movs	r2, #128
+ 1332 0152 8DF80420 		strb	r2, [sp, #4]
+ 1333 0156 8DF80500 		strb	r0, [sp, #5]
+ 1334 015a 8DF80630 		strb	r3, [sp, #6]
+ 1335 015e 8DF80730 		strb	r3, [sp, #7]
+ 729:Src/main.c    ****       skip_command = 1;
+ 1336              		.loc 1 729 0
+ 1337 0162 0198     		ldr	r0, [sp, #4]
+ 1338              	.LVL69:
+ 1339 0164 FFF7FEFF 		bl	enqueue
+ 1340              	.LVL70:
+ 730:Src/main.c    ****     }
+ 1341              		.loc 1 730 0
+ 1342 0168 0123     		movs	r3, #1
+ 1343              	.LBE19:
+ 1344 016a 96E7     		b	.L45
+ 1345              	.LVL71:
+ 1346              	.L71:
+ 1347              	.LBB20:
+ 733:Src/main.c    ****       struct midi_msg new_midi_msg =
+ 1348              		.loc 1 733 0
+ 1349 016c 0023     		movs	r3, #0
+ 1350 016e 204A     		ldr	r2, .L73+28
+ 1351 0170 1370     		strb	r3, [r2]
+ 734:Src/main.c    ****         {
+ 1352              		.loc 1 734 0
+ 1353 0172 1822     		movs	r2, #24
+ 1354 0174 8DF80420 		strb	r2, [sp, #4]
+ 1355 0178 8DF80500 		strb	r0, [sp, #5]
+ 1356 017c 8DF80630 		strb	r3, [sp, #6]
+ 1357 0180 8DF80730 		strb	r3, [sp, #7]
+ 741:Src/main.c    ****       skip_command = 1;
+ 1358              		.loc 1 741 0
+ 1359 0184 0198     		ldr	r0, [sp, #4]
+ 1360              	.LVL72:
+ 1361 0186 FFF7FEFF 		bl	enqueue
+ 1362              	.LVL73:
+ 742:Src/main.c    ****     }
+ 1363              		.loc 1 742 0
+ 1364 018a 0123     		movs	r3, #1
+ 1365              	.LBE20:
+ARM GAS  /tmp/ccLP6nEG.s 			page 40
 
 
- 1384 016c 00000000 		.word	.LANCHOR3
- 1385 0170 00000000 		.word	.LANCHOR4
- 1386 0174 00000000 		.word	.LANCHOR5
- 1387 0178 00000000 		.word	.LANCHOR6
- 1388              		.cfi_endproc
- 1389              	.LFE140:
- 1391              		.section	.text.handle_midi_queue,"ax",%progbits
- 1392              		.align	1
- 1393              		.global	handle_midi_queue
- 1394              		.syntax unified
- 1395              		.thumb
- 1396              		.thumb_func
- 1397              		.fpu fpv4-sp-d16
- 1399              	handle_midi_queue:
- 1400              	.LFB141:
- 755:Src/main.c    **** 
- 756:Src/main.c    **** void handle_midi_queue() {
- 1401              		.loc 1 756 0
- 1402              		.cfi_startproc
- 1403              		@ args = 0, pretend = 0, frame = 8
- 1404              		@ frame_needed = 0, uses_anonymous_args = 0
- 757:Src/main.c    ****   uint8_t value;
- 758:Src/main.c    **** 
- 759:Src/main.c    ****   if(midi_msg_queue.head != midi_msg_queue.tail) {
- 1405              		.loc 1 759 0
- 1406 0000 294B     		ldr	r3, .L91
- 1407 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
- 1408 0004 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
- 1409 0006 9A42     		cmp	r2, r3
- 1410 0008 4CD0     		beq	.L86
- 756:Src/main.c    ****   uint8_t value;
- 1411              		.loc 1 756 0
- 1412 000a 00B5     		push	{lr}
- 1413              	.LCFI21:
- 1414              		.cfi_def_cfa_offset 4
- 1415              		.cfi_offset 14, -4
- 1416 000c 83B0     		sub	sp, sp, #12
- 1417              	.LCFI22:
- 1418              		.cfi_def_cfa_offset 16
- 1419              	.LBB20:
- 760:Src/main.c    ****     struct midi_msg current_midi_msg = dequeue();
- 1420              		.loc 1 760 0
- 1421 000e FFF7FEFF 		bl	dequeue
- 1422              	.LVL78:
- 1423 0012 0190     		str	r0, [sp, #4]
- 761:Src/main.c    ****     value = current_midi_msg.byte1;
- 1424              		.loc 1 761 0
- 1425 0014 C0F30721 		ubfx	r1, r0, #8, #8
- 1426              	.LVL79:
- 762:Src/main.c    **** 
- 763:Src/main.c    ****     switch(current_midi_msg.byte0) {
- 1427              		.loc 1 763 0
- 1428 0018 C0B2     		uxtb	r0, r0
- 1429 001a 1628     		cmp	r0, #22
- 1430 001c 18D0     		beq	.L72
- 1431 001e 09D9     		bls	.L89
- 1432 0020 8028     		cmp	r0, #128
-ARM GAS  /tmp/ccEeezog.s 			page 41
+ 1366 018c 85E7     		b	.L45
+ 1367              	.LVL74:
+ 1368              	.L72:
+ 758:Src/main.c    ****       case ATTACK_CC:
+ 1369              		.loc 1 758 0
+ 1370 018e 152C     		cmp	r4, #21
+ 1371 0190 07D0     		beq	.L54
+ 1372 0192 0AD8     		bhi	.L55
+ 1373 0194 142C     		cmp	r4, #20
+ 1374 0196 02D1     		bne	.L42
+ 760:Src/main.c    ****         break;
+ 1375              		.loc 1 760 0
+ 1376 0198 0122     		movs	r2, #1
+ 1377 019a 0F4B     		ldr	r3, .L73+4
+ 1378              	.LVL75:
+ 1379 019c 1A70     		strb	r2, [r3]
+ 1380              	.L42:
+ 1381              	.LBE12:
+ 774:Src/main.c    ****       case MIDI_NOTE_OFF:
+ 775:Src/main.c    ****         note_off_flag = 1;
+ 776:Src/main.c    ****         break;
+ 777:Src/main.c    ****       case WAVESHAPE_CC:
+ 778:Src/main.c    ****         waveshape_cc_flag = 1;
+ 779:Src/main.c    ****         break;
+ 780:Src/main.c    ****       case LFO_CC:
+ 781:Src/main.c    ****         lfo_cc_flag = 1;
+ 782:Src/main.c    ****       }
+ 783:Src/main.c    ****     }
+ 784:Src/main.c    ****   }
+ 785:Src/main.c    **** }
+ 1382              		.loc 1 785 0
+ 1383 019e 02B0     		add	sp, sp, #8
+ 1384              	.LCFI18:
+ 1385              		.cfi_remember_state
+ 1386              		.cfi_def_cfa_offset 8
+ 1387              		@ sp needed
+ 1388 01a0 10BD     		pop	{r4, pc}
+ 1389              	.LVL76:
+ 1390              	.L54:
+ 1391              	.LCFI19:
+ 1392              		.cfi_restore_state
+ 1393              	.LBB21:
+ 763:Src/main.c    ****         break;
+ 1394              		.loc 1 763 0
+ 1395 01a2 0122     		movs	r2, #1
+ 1396 01a4 0D4B     		ldr	r3, .L73+8
+ 1397              	.LVL77:
+ 1398 01a6 1A70     		strb	r2, [r3]
+ 764:Src/main.c    ****       case SUSTAIN_CC:
+ 1399              		.loc 1 764 0
+ 1400 01a8 F9E7     		b	.L42
+ 1401              	.LVL78:
+ 1402              	.L55:
+ 766:Src/main.c    ****         break;
+ 1403              		.loc 1 766 0
+ 1404 01aa 0122     		movs	r2, #1
+ 1405 01ac 0C4B     		ldr	r3, .L73+12
+ARM GAS  /tmp/ccLP6nEG.s 			page 41
 
 
- 1433 0022 3DD0     		beq	.L83
- 1434 0024 9028     		cmp	r0, #144
- 1435 0026 20D0     		beq	.L84
- 1436 0028 1728     		cmp	r0, #23
- 1437 002a 0ED1     		bne	.L69
- 764:Src/main.c    ****     case ATTACK_CC:
- 765:Src/main.c    ****       attack = current_midi_msg.byte1 * 2;
- 766:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 767:Src/main.c    ****       break;
- 768:Src/main.c    ****     case DECAY_CC:
- 769:Src/main.c    ****       decay = current_midi_msg.byte1 * 2;
- 770:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 771:Src/main.c    ****       break;
- 772:Src/main.c    ****     case SUSTAIN_CC:
- 773:Src/main.c    ****       sustain = current_midi_msg.byte1 * 2;
- 774:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 775:Src/main.c    ****       break;
- 776:Src/main.c    ****     case RELEASE_CC:
- 777:Src/main.c    ****       release = current_midi_msg.byte1 * 2;
- 1438              		.loc 1 777 0
- 1439 002c 4900     		lsls	r1, r1, #1
- 1440              	.LVL80:
- 1441 002e 1F4B     		ldr	r3, .L91+4
- 1442 0030 1970     		strb	r1, [r3]
- 778:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 779:Src/main.c    ****       break;
- 1443              		.loc 1 779 0
- 1444 0032 0AE0     		b	.L69
- 1445              	.LVL81:
- 1446              	.L89:
- 763:Src/main.c    ****     case ATTACK_CC:
- 1447              		.loc 1 763 0
- 1448 0034 1428     		cmp	r0, #20
- 1449 0036 05D0     		beq	.L74
- 1450 0038 1528     		cmp	r0, #21
- 1451 003a 06D1     		bne	.L69
- 769:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 1452              		.loc 1 769 0
- 1453 003c 4900     		lsls	r1, r1, #1
- 1454              	.LVL82:
- 1455 003e 1C4B     		ldr	r3, .L91+8
- 1456 0040 1970     		strb	r1, [r3]
- 771:Src/main.c    ****     case SUSTAIN_CC:
- 1457              		.loc 1 771 0
- 1458 0042 02E0     		b	.L69
- 1459              	.LVL83:
- 1460              	.L74:
- 765:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 1461              		.loc 1 765 0
- 1462 0044 4900     		lsls	r1, r1, #1
- 1463              	.LVL84:
- 1464 0046 1B4B     		ldr	r3, .L91+12
- 1465 0048 1970     		strb	r1, [r3]
- 1466              	.L69:
- 1467              	.LBE20:
- 780:Src/main.c    ****     case MIDI_NOTE_ON:
- 781:Src/main.c    ****       for (int i = 0; i < VOICES; i++) {
-ARM GAS  /tmp/ccEeezog.s 			page 42
+ 1406              	.LVL79:
+ 1407 01ae 1A70     		strb	r2, [r3]
+ 767:Src/main.c    ****       case RELEASE_CC:
+ 1408              		.loc 1 767 0
+ 1409 01b0 F5E7     		b	.L42
+ 1410              	.LVL80:
+ 1411              	.L52:
+ 769:Src/main.c    ****         break;
+ 1412              		.loc 1 769 0
+ 1413 01b2 0122     		movs	r2, #1
+ 1414 01b4 0B4B     		ldr	r3, .L73+16
+ 1415              	.LVL81:
+ 1416 01b6 1A70     		strb	r2, [r3]
+ 770:Src/main.c    ****       case MIDI_NOTE_ON:
+ 1417              		.loc 1 770 0
+ 1418 01b8 F1E7     		b	.L42
+ 1419              	.LVL82:
+ 1420              	.L59:
+ 775:Src/main.c    ****         break;
+ 1421              		.loc 1 775 0
+ 1422 01ba 0122     		movs	r2, #1
+ 1423 01bc 0B4B     		ldr	r3, .L73+24
+ 1424              	.LVL83:
+ 1425 01be 1A70     		strb	r2, [r3]
+ 776:Src/main.c    ****       case WAVESHAPE_CC:
+ 1426              		.loc 1 776 0
+ 1427 01c0 EDE7     		b	.L42
+ 1428              	.LVL84:
+ 1429              	.L58:
+ 778:Src/main.c    ****         break;
+ 1430              		.loc 1 778 0
+ 1431 01c2 0122     		movs	r2, #1
+ 1432 01c4 0A4B     		ldr	r3, .L73+28
+ 1433              	.LVL85:
+ 1434 01c6 1A70     		strb	r2, [r3]
+ 779:Src/main.c    ****       case LFO_CC:
+ 1435              		.loc 1 779 0
+ 1436 01c8 E9E7     		b	.L42
+ 1437              	.LVL86:
+ 1438              	.L57:
+ 781:Src/main.c    ****       }
+ 1439              		.loc 1 781 0
+ 1440 01ca 0122     		movs	r2, #1
+ 1441 01cc 094B     		ldr	r3, .L73+32
+ 1442              	.LVL87:
+ 1443 01ce 1A70     		strb	r2, [r3]
+ 1444              	.LBE21:
+ 1445              		.loc 1 785 0
+ 1446 01d0 E5E7     		b	.L42
+ 1447              	.L62:
+ 1448              	.LCFI20:
+ 1449              		.cfi_def_cfa_offset 0
+ 1450              		.cfi_restore 4
+ 1451              		.cfi_restore 14
+ 1452 01d2 7047     		bx	lr
+ 1453              	.L74:
+ 1454              		.align	2
+ARM GAS  /tmp/ccLP6nEG.s 			page 42
 
 
- 782:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
- 783:Src/main.c    ****           note_on[i] = MIDI_NOTE_ON;
- 784:Src/main.c    ****           note_freq[i] = current_midi_msg.byte1;
- 785:Src/main.c    ****           env_state[i] = ATTACK_MODE;
- 786:Src/main.c    ****           break;
- 787:Src/main.c    ****         }
- 788:Src/main.c    ****       }
- 789:Src/main.c    ****       break;
- 790:Src/main.c    ****     case MIDI_NOTE_OFF:
- 791:Src/main.c    ****       for (int i = 0; i < VOICES; i++) {
- 792:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
- 793:Src/main.c    ****           //note_on[i] = MIDI_NOTE_OFF;
- 794:Src/main.c    ****           env_state[i] = RELEASE_MODE;
- 795:Src/main.c    ****         }
- 796:Src/main.c    ****       }
- 797:Src/main.c    ****       break;
- 798:Src/main.c    ****     }
- 799:Src/main.c    ****   }
- 800:Src/main.c    **** }
- 1468              		.loc 1 800 0
- 1469 004a 03B0     		add	sp, sp, #12
- 1470              	.LCFI23:
- 1471              		.cfi_remember_state
- 1472              		.cfi_def_cfa_offset 4
- 1473              		@ sp needed
- 1474 004c 5DF804FB 		ldr	pc, [sp], #4
- 1475              	.LVL85:
- 1476              	.L72:
- 1477              	.LCFI24:
- 1478              		.cfi_restore_state
- 1479              	.LBB24:
- 773:Src/main.c    ****       //UART_PrintADSR(&huart1);
- 1480              		.loc 1 773 0
- 1481 0050 4900     		lsls	r1, r1, #1
- 1482              	.LVL86:
- 1483 0052 194B     		ldr	r3, .L91+16
- 1484 0054 1970     		strb	r1, [r3]
- 775:Src/main.c    ****     case RELEASE_CC:
- 1485              		.loc 1 775 0
- 1486 0056 F8E7     		b	.L69
- 1487              	.LVL87:
- 1488              	.L90:
- 1489              	.LBB21:
- 783:Src/main.c    ****           note_freq[i] = current_midi_msg.byte1;
- 1490              		.loc 1 783 0
- 1491 0058 9020     		movs	r0, #144
- 1492 005a 184A     		ldr	r2, .L91+20
- 1493 005c D054     		strb	r0, [r2, r3]
- 784:Src/main.c    ****           env_state[i] = ATTACK_MODE;
- 1494              		.loc 1 784 0
- 1495 005e 184A     		ldr	r2, .L91+24
- 1496 0060 D154     		strb	r1, [r2, r3]
- 785:Src/main.c    ****           break;
- 1497              		.loc 1 785 0
- 1498 0062 0121     		movs	r1, #1
+ 1455              	.L73:
+ 1456 01d4 00000000 		.word	spi_byte_queue
+ 1457 01d8 00000000 		.word	.LANCHOR1
+ 1458 01dc 00000000 		.word	.LANCHOR2
+ 1459 01e0 00000000 		.word	.LANCHOR3
+ 1460 01e4 00000000 		.word	.LANCHOR4
+ 1461 01e8 00000000 		.word	.LANCHOR5
+ 1462 01ec 00000000 		.word	.LANCHOR6
+ 1463 01f0 00000000 		.word	.LANCHOR7
+ 1464 01f4 00000000 		.word	.LANCHOR8
+ 1465              		.cfi_endproc
+ 1466              	.LFE140:
+ 1468              		.section	.text.handle_midi_queue,"ax",%progbits
+ 1469              		.align	1
+ 1470              		.global	handle_midi_queue
+ 1471              		.syntax unified
+ 1472              		.thumb
+ 1473              		.thumb_func
+ 1474              		.fpu fpv4-sp-d16
+ 1476              	handle_midi_queue:
+ 1477              	.LFB141:
+ 786:Src/main.c    **** 
+ 787:Src/main.c    **** void handle_midi_queue() {
+ 1478              		.loc 1 787 0
+ 1479              		.cfi_startproc
+ 1480              		@ args = 0, pretend = 0, frame = 8
+ 1481              		@ frame_needed = 0, uses_anonymous_args = 0
+ 788:Src/main.c    ****   // uint8_t value;
+ 789:Src/main.c    **** 
+ 790:Src/main.c    ****   if(midi_msg_queue.head != midi_msg_queue.tail) {
+ 1482              		.loc 1 790 0
+ 1483 0000 2E4B     		ldr	r3, .L97
+ 1484 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 1485 0004 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 1486 0006 9A42     		cmp	r2, r3
+ 1487 0008 56D0     		beq	.L92
+ 787:Src/main.c    ****   // uint8_t value;
+ 1488              		.loc 1 787 0
+ 1489 000a 00B5     		push	{lr}
+ 1490              	.LCFI21:
+ 1491              		.cfi_def_cfa_offset 4
+ 1492              		.cfi_offset 14, -4
+ 1493 000c 83B0     		sub	sp, sp, #12
+ 1494              	.LCFI22:
+ 1495              		.cfi_def_cfa_offset 16
+ 1496              	.LBB22:
+ 791:Src/main.c    ****     struct midi_msg current_midi_msg = dequeue();
+ 1497              		.loc 1 791 0
+ 1498 000e FFF7FEFF 		bl	dequeue
  1499              	.LVL88:
- 1500 0064 174A     		ldr	r2, .L91+28
-ARM GAS  /tmp/ccEeezog.s 			page 43
+ 1500 0012 0190     		str	r0, [sp, #4]
+ 792:Src/main.c    ****     // value = current_midi_msg.byte1;
+ 793:Src/main.c    **** 
+ 794:Src/main.c    ****     switch(current_midi_msg.byte0) {
+ 1501              		.loc 1 794 0
+ 1502 0014 C0B2     		uxtb	r0, r0
+ 1503 0016 1628     		cmp	r0, #22
+ARM GAS  /tmp/ccLP6nEG.s 			page 43
 
 
- 1501              	.LVL89:
- 1502 0066 D154     		strb	r1, [r2, r3]
- 1503              	.LVL90:
- 786:Src/main.c    ****         }
- 1504              		.loc 1 786 0
- 1505 0068 EFE7     		b	.L69
- 1506              	.LVL91:
- 1507              	.L84:
- 1508              	.LBE21:
- 763:Src/main.c    ****     case ATTACK_CC:
- 1509              		.loc 1 763 0
- 1510 006a 0023     		movs	r3, #0
- 1511              	.L77:
- 1512              	.LVL92:
- 1513              	.LBB22:
- 781:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
- 1514              		.loc 1 781 0 discriminator 1
- 1515 006c 0F2B     		cmp	r3, #15
- 1516 006e ECDC     		bgt	.L69
- 782:Src/main.c    ****           note_on[i] = MIDI_NOTE_ON;
- 1517              		.loc 1 782 0
- 1518 0070 124A     		ldr	r2, .L91+20
- 1519 0072 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 1520 0074 D2B2     		uxtb	r2, r2
- 1521 0076 802A     		cmp	r2, #128
- 1522 0078 EED0     		beq	.L90
- 781:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
- 1523              		.loc 1 781 0 discriminator 2
- 1524 007a 0133     		adds	r3, r3, #1
- 1525              	.LVL93:
- 1526 007c F6E7     		b	.L77
- 1527              	.LVL94:
- 1528              	.L81:
- 1529              	.LBE22:
- 1530              	.LBB23:
- 791:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
- 1531              		.loc 1 791 0 discriminator 2
- 1532 007e 0133     		adds	r3, r3, #1
- 1533              	.LVL95:
- 1534              	.L76:
- 791:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
- 1535              		.loc 1 791 0 is_stmt 0 discriminator 1
- 1536 0080 0F2B     		cmp	r3, #15
- 1537 0082 E2DC     		bgt	.L69
- 792:Src/main.c    ****           //note_on[i] = MIDI_NOTE_OFF;
- 1538              		.loc 1 792 0 is_stmt 1
- 1539 0084 0D4A     		ldr	r2, .L91+20
- 1540 0086 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 1541 0088 D2B2     		uxtb	r2, r2
- 1542 008a 902A     		cmp	r2, #144
- 1543 008c F7D1     		bne	.L81
- 792:Src/main.c    ****           //note_on[i] = MIDI_NOTE_OFF;
- 1544              		.loc 1 792 0 is_stmt 0 discriminator 1
- 1545 008e 0C4A     		ldr	r2, .L91+24
- 1546 0090 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
- 1547 0092 D2B2     		uxtb	r2, r2
- 1548 0094 9142     		cmp	r1, r2
-ARM GAS  /tmp/ccEeezog.s 			page 44
+ 1504 0018 1ED0     		beq	.L78
+ 1505 001a 0BD9     		bls	.L95
+ 1506 001c 8028     		cmp	r0, #128
+ 1507 001e 49D0     		beq	.L89
+ 1508 0020 9028     		cmp	r0, #144
+ 1509 0022 2AD0     		beq	.L90
+ 1510 0024 1728     		cmp	r0, #23
+ 1511 0026 14D1     		bne	.L75
+ 795:Src/main.c    ****     case ATTACK_CC:
+ 796:Src/main.c    ****       attack = current_midi_msg.byte1 * 2;
+ 797:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 798:Src/main.c    ****       break;
+ 799:Src/main.c    ****     case DECAY_CC:
+ 800:Src/main.c    ****       decay = current_midi_msg.byte1 * 2;
+ 801:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 802:Src/main.c    ****       break;
+ 803:Src/main.c    ****     case SUSTAIN_CC:
+ 804:Src/main.c    ****       sustain = current_midi_msg.byte1 * 2;
+ 805:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 806:Src/main.c    ****       break;
+ 807:Src/main.c    ****     case RELEASE_CC:
+ 808:Src/main.c    ****       release = current_midi_msg.byte1 * 2;
+ 1512              		.loc 1 808 0
+ 1513 0028 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 1514 002c 5B00     		lsls	r3, r3, #1
+ 1515 002e 244A     		ldr	r2, .L97+4
+ 1516 0030 1370     		strb	r3, [r2]
+ 809:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 810:Src/main.c    ****       break;
+ 1517              		.loc 1 810 0
+ 1518 0032 0EE0     		b	.L75
+ 1519              	.L95:
+ 794:Src/main.c    ****     case ATTACK_CC:
+ 1520              		.loc 1 794 0
+ 1521 0034 1428     		cmp	r0, #20
+ 1522 0036 07D0     		beq	.L80
+ 1523 0038 1528     		cmp	r0, #21
+ 1524 003a 0AD1     		bne	.L75
+ 800:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 1525              		.loc 1 800 0
+ 1526 003c 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 1527 0040 5B00     		lsls	r3, r3, #1
+ 1528 0042 204A     		ldr	r2, .L97+8
+ 1529 0044 1370     		strb	r3, [r2]
+ 802:Src/main.c    ****     case SUSTAIN_CC:
+ 1530              		.loc 1 802 0
+ 1531 0046 04E0     		b	.L75
+ 1532              	.L80:
+ 796:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 1533              		.loc 1 796 0
+ 1534 0048 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 1535 004c 5B00     		lsls	r3, r3, #1
+ 1536 004e 1E4A     		ldr	r2, .L97+12
+ 1537 0050 1370     		strb	r3, [r2]
+ 1538              	.L75:
+ 1539              	.LBE22:
+ 811:Src/main.c    ****     case MIDI_NOTE_ON:
+ARM GAS  /tmp/ccLP6nEG.s 			page 44
 
 
- 1549 0096 F2D1     		bne	.L81
- 794:Src/main.c    ****         }
- 1550              		.loc 1 794 0 is_stmt 1
- 1551 0098 0420     		movs	r0, #4
- 1552 009a 0A4A     		ldr	r2, .L91+28
- 1553 009c D054     		strb	r0, [r2, r3]
- 1554 009e EEE7     		b	.L81
- 1555              	.LVL96:
- 1556              	.L83:
- 1557              	.LBE23:
- 763:Src/main.c    ****     case ATTACK_CC:
- 1558              		.loc 1 763 0
- 1559 00a0 0023     		movs	r3, #0
- 1560 00a2 EDE7     		b	.L76
- 1561              	.LVL97:
- 1562              	.L86:
- 1563              	.LCFI25:
- 1564              		.cfi_def_cfa_offset 0
- 1565              		.cfi_restore 14
- 1566 00a4 7047     		bx	lr
- 1567              	.L92:
- 1568 00a6 00BF     		.align	2
- 1569              	.L91:
- 1570 00a8 00000000 		.word	midi_msg_queue
- 1571 00ac 00000000 		.word	release
- 1572 00b0 00000000 		.word	decay
- 1573 00b4 00000000 		.word	attack
- 1574 00b8 00000000 		.word	sustain
- 1575 00bc 00000000 		.word	note_on
- 1576 00c0 00000000 		.word	note_freq
- 1577 00c4 00000000 		.word	env_state
- 1578              	.LBE24:
- 1579              		.cfi_endproc
- 1580              	.LFE141:
- 1582              		.section	.text.main,"ax",%progbits
- 1583              		.align	1
- 1584              		.global	main
- 1585              		.syntax unified
- 1586              		.thumb
- 1587              		.thumb_func
- 1588              		.fpu fpv4-sp-d16
- 1590              	main:
- 1591              	.LFB130:
+ 812:Src/main.c    ****       for (int i = 0; i < VOICES; i++) {
+ 813:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
+ 814:Src/main.c    ****           note_on[i] = MIDI_NOTE_ON;
+ 815:Src/main.c    ****           note_freq[i] = current_midi_msg.byte1;
+ 816:Src/main.c    ****           env_state[i] = ATTACK_MODE;
+ 817:Src/main.c    ****           break;
+ 818:Src/main.c    ****         }
+ 819:Src/main.c    ****       }
+ 820:Src/main.c    ****       break;
+ 821:Src/main.c    ****     case MIDI_NOTE_OFF:
+ 822:Src/main.c    ****       for (int i = 0; i < VOICES; i++) {
+ 823:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
+ 824:Src/main.c    ****           //note_on[i] = MIDI_NOTE_OFF;
+ 825:Src/main.c    ****           env_state[i] = RELEASE_MODE;
+ 826:Src/main.c    ****         }
+ 827:Src/main.c    ****       }
+ 828:Src/main.c    ****       break;
+ 829:Src/main.c    ****       /*
+ 830:Src/main.c    ****     case WAVESHAPE_CC:
+ 831:Src/main.c    ****       if(current_midi_msg.byte1 < 50) {
+ 832:Src/main.c    ****         waveshape1 = base_sine;
+ 833:Src/main.c    ****         waveshape2 = base_tri;
+ 834:Src/main.c    ****       }
+ 835:Src/main.c    ****       else if(current_midi_msg.byte1 < 100) {
+ 836:Src/main.c    ****         waveshape1 = base_tri;
+ 837:Src/main.c    ****         waveshape2 = base_pos_saw;
+ 838:Src/main.c    ****       }
+ 839:Src/main.c    ****       else if(current_midi_msg.byte1 < 150) {
+ 840:Src/main.c    ****         waveshape1 = base_pos_saw;
+ 841:Src/main.c    ****         waveshape2 = base_neg_saw;
+ 842:Src/main.c    ****       }
+ 843:Src/main.c    ****       else if(current_midi_msg.byte1 < 200) {
+ 844:Src/main.c    ****         waveshape1 = base_neg_saw;
+ 845:Src/main.c    ****         waveshape2 = base_sq;
+ 846:Src/main.c    ****       }
+ 847:Src/main.c    ****       else {
+ 848:Src/main.c    ****         waveshape1 = base_sq;
+ 849:Src/main.c    ****         waveshape2 = base_sine;
+ 850:Src/main.c    ****       }
+ 851:Src/main.c    ****       break;
+ 852:Src/main.c    ****     case LFO_CC:
+ 853:Src/main.c    ****       global_lfo_freq = current_midi_msg.byte1 * 2;
+ 854:Src/main.c    ****       break;
+ 855:Src/main.c    ****       */
+ 856:Src/main.c    ****     }
+ 857:Src/main.c    ****   }
+ 858:Src/main.c    **** }
+ 1540              		.loc 1 858 0
+ 1541 0052 03B0     		add	sp, sp, #12
+ 1542              	.LCFI23:
+ 1543              		.cfi_remember_state
+ 1544              		.cfi_def_cfa_offset 4
+ 1545              		@ sp needed
+ 1546 0054 5DF804FB 		ldr	pc, [sp], #4
+ 1547              	.L78:
+ 1548              	.LCFI24:
+ 1549              		.cfi_restore_state
+ARM GAS  /tmp/ccLP6nEG.s 			page 45
+
+
+ 1550              	.LBB26:
+ 804:Src/main.c    ****       //UART_PrintADSR(&huart1);
+ 1551              		.loc 1 804 0
+ 1552 0058 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
+ 1553 005c 5B00     		lsls	r3, r3, #1
+ 1554 005e 1B4A     		ldr	r2, .L97+16
+ 1555 0060 1370     		strb	r3, [r2]
+ 806:Src/main.c    ****     case RELEASE_CC:
+ 1556              		.loc 1 806 0
+ 1557 0062 F6E7     		b	.L75
+ 1558              	.LVL89:
+ 1559              	.L96:
+ 1560              	.LBB23:
+ 814:Src/main.c    ****           note_freq[i] = current_midi_msg.byte1;
+ 1561              		.loc 1 814 0
+ 1562 0064 9021     		movs	r1, #144
+ 1563 0066 1A4A     		ldr	r2, .L97+20
+ 1564 0068 D154     		strb	r1, [r2, r3]
+ 815:Src/main.c    ****           env_state[i] = ATTACK_MODE;
+ 1565              		.loc 1 815 0
+ 1566 006a 9DF80510 		ldrb	r1, [sp, #5]	@ zero_extendqisi2
+ 1567 006e 194A     		ldr	r2, .L97+24
+ 1568 0070 D154     		strb	r1, [r2, r3]
+ 816:Src/main.c    ****           break;
+ 1569              		.loc 1 816 0
+ 1570 0072 0121     		movs	r1, #1
+ 1571 0074 184A     		ldr	r2, .L97+28
+ 1572 0076 D154     		strb	r1, [r2, r3]
+ 817:Src/main.c    ****         }
+ 1573              		.loc 1 817 0
+ 1574 0078 EBE7     		b	.L75
+ 1575              	.LVL90:
+ 1576              	.L90:
+ 1577              	.LBE23:
+ 794:Src/main.c    ****     case ATTACK_CC:
+ 1578              		.loc 1 794 0
+ 1579 007a 0023     		movs	r3, #0
+ 1580              	.L83:
+ 1581              	.LVL91:
+ 1582              	.LBB24:
+ 812:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
+ 1583              		.loc 1 812 0 discriminator 1
+ 1584 007c 0F2B     		cmp	r3, #15
+ 1585 007e E8DC     		bgt	.L75
+ 813:Src/main.c    ****           note_on[i] = MIDI_NOTE_ON;
+ 1586              		.loc 1 813 0
+ 1587 0080 134A     		ldr	r2, .L97+20
+ 1588 0082 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 1589 0084 D2B2     		uxtb	r2, r2
+ 1590 0086 802A     		cmp	r2, #128
+ 1591 0088 ECD0     		beq	.L96
+ 812:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
+ 1592              		.loc 1 812 0 discriminator 2
+ 1593 008a 0133     		adds	r3, r3, #1
+ 1594              	.LVL92:
+ 1595 008c F6E7     		b	.L83
+ 1596              	.LVL93:
+ARM GAS  /tmp/ccLP6nEG.s 			page 46
+
+
+ 1597              	.L87:
+ 1598              	.LBE24:
+ 1599              	.LBB25:
+ 822:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
+ 1600              		.loc 1 822 0 discriminator 2
+ 1601 008e 0133     		adds	r3, r3, #1
+ 1602              	.LVL94:
+ 1603              	.L82:
+ 822:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
+ 1604              		.loc 1 822 0 is_stmt 0 discriminator 1
+ 1605 0090 0F2B     		cmp	r3, #15
+ 1606 0092 DEDC     		bgt	.L75
+ 823:Src/main.c    ****           //note_on[i] = MIDI_NOTE_OFF;
+ 1607              		.loc 1 823 0 is_stmt 1
+ 1608 0094 0E4A     		ldr	r2, .L97+20
+ 1609 0096 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 1610 0098 D2B2     		uxtb	r2, r2
+ 1611 009a 902A     		cmp	r2, #144
+ 1612 009c F7D1     		bne	.L87
+ 823:Src/main.c    ****           //note_on[i] = MIDI_NOTE_OFF;
+ 1613              		.loc 1 823 0 is_stmt 0 discriminator 1
+ 1614 009e 0D4A     		ldr	r2, .L97+24
+ 1615 00a0 D25C     		ldrb	r2, [r2, r3]	@ zero_extendqisi2
+ 1616 00a2 D2B2     		uxtb	r2, r2
+ 1617 00a4 9DF80510 		ldrb	r1, [sp, #5]	@ zero_extendqisi2
+ 1618 00a8 8A42     		cmp	r2, r1
+ 1619 00aa F0D1     		bne	.L87
+ 825:Src/main.c    ****         }
+ 1620              		.loc 1 825 0 is_stmt 1
+ 1621 00ac 0421     		movs	r1, #4
+ 1622 00ae 0A4A     		ldr	r2, .L97+28
+ 1623 00b0 D154     		strb	r1, [r2, r3]
+ 1624 00b2 ECE7     		b	.L87
+ 1625              	.LVL95:
+ 1626              	.L89:
+ 1627              	.LBE25:
+ 794:Src/main.c    ****     case ATTACK_CC:
+ 1628              		.loc 1 794 0
+ 1629 00b4 0023     		movs	r3, #0
+ 1630 00b6 EBE7     		b	.L82
+ 1631              	.L92:
+ 1632              	.LCFI25:
+ 1633              		.cfi_def_cfa_offset 0
+ 1634              		.cfi_restore 14
+ 1635 00b8 7047     		bx	lr
+ 1636              	.L98:
+ 1637 00ba 00BF     		.align	2
+ 1638              	.L97:
+ 1639 00bc 00000000 		.word	midi_msg_queue
+ 1640 00c0 00000000 		.word	release
+ 1641 00c4 00000000 		.word	decay
+ 1642 00c8 00000000 		.word	attack
+ 1643 00cc 00000000 		.word	sustain
+ 1644 00d0 00000000 		.word	note_on
+ 1645 00d4 00000000 		.word	note_freq
+ 1646 00d8 00000000 		.word	env_state
+ 1647              	.LBE26:
+ARM GAS  /tmp/ccLP6nEG.s 			page 47
+
+
+ 1648              		.cfi_endproc
+ 1649              	.LFE141:
+ 1651              		.section	.text.main,"ax",%progbits
+ 1652              		.align	1
+ 1653              		.global	main
+ 1654              		.syntax unified
+ 1655              		.thumb
+ 1656              		.thumb_func
+ 1657              		.fpu fpv4-sp-d16
+ 1659              	main:
+ 1660              	.LFB130:
   90:Src/main.c    ****   /* USER CODE BEGIN 1 */
- 1592              		.loc 1 90 0
- 1593              		.cfi_startproc
- 1594              		@ args = 0, pretend = 0, frame = 24
- 1595              		@ frame_needed = 0, uses_anonymous_args = 0
- 1596 0000 10B5     		push	{r4, lr}
- 1597              	.LCFI26:
- 1598              		.cfi_def_cfa_offset 8
- 1599              		.cfi_offset 4, -8
- 1600              		.cfi_offset 14, -4
- 1601 0002 86B0     		sub	sp, sp, #24
- 1602              	.LCFI27:
- 1603              		.cfi_def_cfa_offset 32
+ 1661              		.loc 1 90 0
+ 1662              		.cfi_startproc
+ 1663              		@ args = 0, pretend = 0, frame = 24
+ 1664              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1665 0000 10B5     		push	{r4, lr}
+ 1666              	.LCFI26:
+ 1667              		.cfi_def_cfa_offset 8
+ 1668              		.cfi_offset 4, -8
+ 1669              		.cfi_offset 14, -4
+ 1670 0002 86B0     		sub	sp, sp, #24
+ 1671              	.LCFI27:
+ 1672              		.cfi_def_cfa_offset 32
   99:Src/main.c    **** 
-ARM GAS  /tmp/ccEeezog.s 			page 45
-
-
- 1604              		.loc 1 99 0
- 1605 0004 FFF7FEFF 		bl	HAL_Init
- 1606              	.LVL98:
+ 1673              		.loc 1 99 0
+ 1674 0004 FFF7FEFF 		bl	HAL_Init
+ 1675              	.LVL96:
  106:Src/main.c    **** 
- 1607              		.loc 1 106 0
- 1608 0008 FFF7FEFF 		bl	SystemClock_Config
- 1609              	.LVL99:
+ 1676              		.loc 1 106 0
+ 1677 0008 FFF7FEFF 		bl	SystemClock_Config
+ 1678              	.LVL97:
  113:Src/main.c    ****   MX_SPI5_Init();
- 1610              		.loc 1 113 0
- 1611 000c FFF7FEFF 		bl	MX_GPIO_Init
- 1612              	.LVL100:
+ 1679              		.loc 1 113 0
+ 1680 000c FFF7FEFF 		bl	MX_GPIO_Init
+ 1681              	.LVL98:
  114:Src/main.c    ****   MX_USART1_UART_Init();
- 1613              		.loc 1 114 0
- 1614 0010 FFF7FEFF 		bl	MX_SPI5_Init
- 1615              	.LVL101:
+ 1682              		.loc 1 114 0
+ 1683 0010 FFF7FEFF 		bl	MX_SPI5_Init
+ 1684              	.LVL99:
  115:Src/main.c    ****   MX_DAC_Init();
- 1616              		.loc 1 115 0
- 1617 0014 FFF7FEFF 		bl	MX_USART1_UART_Init
- 1618              	.LVL102:
+ 1685              		.loc 1 115 0
+ 1686 0014 FFF7FEFF 		bl	MX_USART1_UART_Init
+ 1687              	.LVL100:
  116:Src/main.c    ****   MX_UART5_Init();
- 1619              		.loc 1 116 0
- 1620 0018 FFF7FEFF 		bl	MX_DAC_Init
- 1621              	.LVL103:
+ 1688              		.loc 1 116 0
+ 1689 0018 FFF7FEFF 		bl	MX_DAC_Init
+ 1690              	.LVL101:
  117:Src/main.c    ****   MX_TIM6_Init();
- 1622              		.loc 1 117 0
- 1623 001c FFF7FEFF 		bl	MX_UART5_Init
- 1624              	.LVL104:
+ 1691              		.loc 1 117 0
+ 1692 001c FFF7FEFF 		bl	MX_UART5_Init
+ 1693              	.LVL102:
  118:Src/main.c    ****   /* USER CODE BEGIN 2 */
- 1625              		.loc 1 118 0
- 1626 0020 FFF7FEFF 		bl	MX_TIM6_Init
- 1627              	.LVL105:
+ 1694              		.loc 1 118 0
+ 1695 0020 FFF7FEFF 		bl	MX_TIM6_Init
+ 1696              	.LVL103:
  120:Src/main.c    ****   HAL_UART_Transmit(&huart1, init_msg, 20, 50);
- 1628              		.loc 1 120 0
- 1629 0024 254B     		ldr	r3, .L99
- 1630 0026 01AC     		add	r4, sp, #4
- 1631 0028 0FCB     		ldm	r3, {r0, r1, r2, r3}
- 1632 002a 07C4     		stmia	r4!, {r0, r1, r2}
- 1633 002c 2370     		strb	r3, [r4]
- 1634 002e 0024     		movs	r4, #0
- 1635 0030 CDF81140 		str	r4, [sp, #17]	@ unaligned
- 1636 0034 0594     		str	r4, [sp, #20]	@ unaligned
+ARM GAS  /tmp/ccLP6nEG.s 			page 48
+
+
+ 1697              		.loc 1 120 0
+ 1698 0024 254B     		ldr	r3, .L105
+ 1699 0026 01AC     		add	r4, sp, #4
+ 1700 0028 0FCB     		ldm	r3, {r0, r1, r2, r3}
+ 1701 002a 07C4     		stmia	r4!, {r0, r1, r2}
+ 1702 002c 2370     		strb	r3, [r4]
+ 1703 002e 0024     		movs	r4, #0
+ 1704 0030 CDF81140 		str	r4, [sp, #17]	@ unaligned
+ 1705 0034 0594     		str	r4, [sp, #20]	@ unaligned
  121:Src/main.c    ****   HAL_Delay(1000);
- 1637              		.loc 1 121 0
- 1638 0036 3223     		movs	r3, #50
- 1639 0038 1422     		movs	r2, #20
- 1640 003a 01A9     		add	r1, sp, #4
- 1641 003c 2048     		ldr	r0, .L99+4
- 1642 003e FFF7FEFF 		bl	HAL_UART_Transmit
- 1643              	.LVL106:
+ 1706              		.loc 1 121 0
+ 1707 0036 3223     		movs	r3, #50
+ 1708 0038 1422     		movs	r2, #20
+ 1709 003a 01A9     		add	r1, sp, #4
+ 1710 003c 2048     		ldr	r0, .L105+4
+ 1711 003e FFF7FEFF 		bl	HAL_UART_Transmit
+ 1712              	.LVL104:
  122:Src/main.c    ****   init_wavetable();
- 1644              		.loc 1 122 0
- 1645 0042 4FF47A70 		mov	r0, #1000
- 1646 0046 FFF7FEFF 		bl	HAL_Delay
- 1647              	.LVL107:
+ 1713              		.loc 1 122 0
+ 1714 0042 4FF47A70 		mov	r0, #1000
+ 1715 0046 FFF7FEFF 		bl	HAL_Delay
+ 1716              	.LVL105:
  123:Src/main.c    ****   HAL_TIM_Base_Start_IT(&htim6);
- 1648              		.loc 1 123 0
- 1649 004a FFF7FEFF 		bl	init_wavetable
-ARM GAS  /tmp/ccEeezog.s 			page 46
-
-
- 1650              	.LVL108:
+ 1717              		.loc 1 123 0
+ 1718 004a FFF7FEFF 		bl	init_wavetable
+ 1719              	.LVL106:
  124:Src/main.c    ****   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
- 1651              		.loc 1 124 0
- 1652 004e 1D48     		ldr	r0, .L99+8
- 1653 0050 FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
- 1654              	.LVL109:
+ 1720              		.loc 1 124 0
+ 1721 004e 1D48     		ldr	r0, .L105+8
+ 1722 0050 FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
+ 1723              	.LVL107:
  125:Src/main.c    **** 
- 1655              		.loc 1 125 0
- 1656 0054 1021     		movs	r1, #16
- 1657 0056 1C48     		ldr	r0, .L99+12
- 1658 0058 FFF7FEFF 		bl	HAL_DAC_Start
- 1659              	.LVL110:
- 1660              	.LBB25:
+ 1724              		.loc 1 125 0
+ 1725 0054 1021     		movs	r1, #16
+ 1726 0056 1C48     		ldr	r0, .L105+12
+ 1727 0058 FFF7FEFF 		bl	HAL_DAC_Start
+ 1728              	.LVL108:
+ 1729              	.LBB27:
  127:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
- 1661              		.loc 1 127 0
- 1662 005c 2346     		mov	r3, r4
- 1663              	.LVL111:
- 1664              	.L94:
+ 1730              		.loc 1 127 0
+ 1731 005c 2346     		mov	r3, r4
+ 1732              	.LVL109:
+ 1733              	.L100:
  127:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
- 1665              		.loc 1 127 0 is_stmt 0 discriminator 1
- 1666 005e 0F2B     		cmp	r3, #15
- 1667 0060 0DDC     		bgt	.L96
+ 1734              		.loc 1 127 0 is_stmt 0 discriminator 1
+ 1735 005e 0F2B     		cmp	r3, #15
+ 1736 0060 0DDC     		bgt	.L102
  128:Src/main.c    ****     note_on[i] = MIDI_NOTE_OFF;
- 1668              		.loc 1 128 0 is_stmt 1 discriminator 3
- 1669 0062 0022     		movs	r2, #0
- 1670 0064 1949     		ldr	r1, .L99+16
- 1671 0066 CA54     		strb	r2, [r1, r3]
+ 1737              		.loc 1 128 0 is_stmt 1 discriminator 3
+ 1738 0062 0022     		movs	r2, #0
+ 1739 0064 1949     		ldr	r1, .L105+16
+ 1740 0066 CA54     		strb	r2, [r1, r3]
  129:Src/main.c    ****     note_freq[i] = 0;
- 1672              		.loc 1 129 0 discriminator 3
- 1673 0068 8020     		movs	r0, #128
- 1674 006a 1949     		ldr	r1, .L99+20
- 1675 006c C854     		strb	r0, [r1, r3]
+ 1741              		.loc 1 129 0 discriminator 3
+ 1742 0068 8020     		movs	r0, #128
+ 1743 006a 1949     		ldr	r1, .L105+20
+ 1744 006c C854     		strb	r0, [r1, r3]
+ARM GAS  /tmp/ccLP6nEG.s 			page 49
+
+
  130:Src/main.c    ****     lfo_freq[i] = 20;
- 1676              		.loc 1 130 0 discriminator 3
- 1677 006e 1949     		ldr	r1, .L99+24
- 1678 0070 CA54     		strb	r2, [r1, r3]
+ 1745              		.loc 1 130 0 discriminator 3
+ 1746 006e 1949     		ldr	r1, .L105+24
+ 1747 0070 CA54     		strb	r2, [r1, r3]
  131:Src/main.c    ****   }
- 1679              		.loc 1 131 0 discriminator 3
- 1680 0072 1421     		movs	r1, #20
- 1681 0074 184A     		ldr	r2, .L99+28
- 1682 0076 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 1748              		.loc 1 131 0 discriminator 3
+ 1749 0072 1421     		movs	r1, #20
+ 1750 0074 184A     		ldr	r2, .L105+28
+ 1751 0076 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
  127:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
- 1683              		.loc 1 127 0 discriminator 3
- 1684 007a 0133     		adds	r3, r3, #1
- 1685              	.LVL112:
- 1686 007c EFE7     		b	.L94
- 1687              	.LVL113:
- 1688              	.L96:
- 1689              	.LBE25:
+ 1752              		.loc 1 127 0 discriminator 3
+ 1753 007a 0133     		adds	r3, r3, #1
+ 1754              	.LVL110:
+ 1755 007c EFE7     		b	.L100
+ 1756              	.LVL111:
+ 1757              	.L102:
+ 1758              	.LBE27:
  144:Src/main.c    ****     handle_byte_queue();
- 1690              		.loc 1 144 0
- 1691 007e 0122     		movs	r2, #1
- 1692 0080 1649     		ldr	r1, .L99+32
- 1693 0082 1748     		ldr	r0, .L99+36
- 1694 0084 FFF7FEFF 		bl	HAL_UART_Receive_IT
- 1695              	.LVL114:
+ 1759              		.loc 1 144 0
+ 1760 007e 0122     		movs	r2, #1
+ 1761 0080 1649     		ldr	r1, .L105+32
+ 1762 0082 1748     		ldr	r0, .L105+36
+ 1763 0084 FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 1764              	.LVL112:
  145:Src/main.c    ****     handle_midi_queue();
-ARM GAS  /tmp/ccEeezog.s 			page 47
-
-
- 1696              		.loc 1 145 0
- 1697 0088 FFF7FEFF 		bl	handle_byte_queue
- 1698              	.LVL115:
+ 1765              		.loc 1 145 0
+ 1766 0088 FFF7FEFF 		bl	handle_byte_queue
+ 1767              	.LVL113:
  146:Src/main.c    ****     if(update_value_flag){
- 1699              		.loc 1 146 0
- 1700 008c FFF7FEFF 		bl	handle_midi_queue
- 1701              	.LVL116:
+ 1768              		.loc 1 146 0
+ 1769 008c FFF7FEFF 		bl	handle_midi_queue
+ 1770              	.LVL114:
  147:Src/main.c    ****       update_value_flag = 0;
- 1702              		.loc 1 147 0
- 1703 0090 144B     		ldr	r3, .L99+40
- 1704 0092 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1705 0094 002B     		cmp	r3, #0
- 1706 0096 F2D0     		beq	.L96
+ 1771              		.loc 1 147 0
+ 1772 0090 144B     		ldr	r3, .L105+40
+ 1773 0092 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1774 0094 002B     		cmp	r3, #0
+ 1775 0096 F2D0     		beq	.L102
  148:Src/main.c    ****       update_lfos();
- 1707              		.loc 1 148 0
- 1708 0098 0022     		movs	r2, #0
- 1709 009a 124B     		ldr	r3, .L99+40
- 1710 009c 1A70     		strb	r2, [r3]
+ 1776              		.loc 1 148 0
+ 1777 0098 0022     		movs	r2, #0
+ 1778 009a 124B     		ldr	r3, .L105+40
+ 1779 009c 1A70     		strb	r2, [r3]
  149:Src/main.c    ****       update_envelope();
- 1711              		.loc 1 149 0
- 1712 009e FFF7FEFF 		bl	update_lfos
- 1713              	.LVL117:
+ 1780              		.loc 1 149 0
+ 1781 009e FFF7FEFF 		bl	update_lfos
+ 1782              	.LVL115:
  150:Src/main.c    ****       update_output_value();
- 1714              		.loc 1 150 0
- 1715 00a2 FFF7FEFF 		bl	update_envelope
- 1716              	.LVL118:
+ 1783              		.loc 1 150 0
+ 1784 00a2 FFF7FEFF 		bl	update_envelope
+ 1785              	.LVL116:
  151:Src/main.c    ****       HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
- 1717              		.loc 1 151 0
- 1718 00a6 FFF7FEFF 		bl	update_output_value
- 1719              	.LVL119:
+ 1786              		.loc 1 151 0
+ 1787 00a6 FFF7FEFF 		bl	update_output_value
+ 1788              	.LVL117:
  152:Src/main.c    ****     }
- 1720              		.loc 1 152 0
- 1721 00aa 0F4B     		ldr	r3, .L99+44
- 1722 00ac 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1723 00ae 0822     		movs	r2, #8
- 1724 00b0 1021     		movs	r1, #16
- 1725 00b2 0548     		ldr	r0, .L99+12
- 1726 00b4 FFF7FEFF 		bl	HAL_DAC_SetValue
- 1727              	.LVL120:
- 1728 00b8 E1E7     		b	.L96
- 1729              	.L100:
- 1730 00ba 00BF     		.align	2
- 1731              	.L99:
- 1732 00bc 00000000 		.word	.LANCHOR7
- 1733 00c0 00000000 		.word	huart1
- 1734 00c4 00000000 		.word	htim6
- 1735 00c8 00000000 		.word	hdac
- 1736 00cc 00000000 		.word	env_state
- 1737 00d0 00000000 		.word	note_on
- 1738 00d4 00000000 		.word	note_freq
- 1739 00d8 00000000 		.word	lfo_freq
- 1740 00dc 00000000 		.word	.LANCHOR0
- 1741 00e0 00000000 		.word	huart5
- 1742 00e4 00000000 		.word	update_value_flag
- 1743 00e8 00000000 		.word	output_val
- 1744              		.cfi_endproc
- 1745              	.LFE130:
-ARM GAS  /tmp/ccEeezog.s 			page 48
+ 1789              		.loc 1 152 0
+ARM GAS  /tmp/ccLP6nEG.s 			page 50
 
 
- 1747              		.section	.text.Error_Handler,"ax",%progbits
- 1748              		.align	1
- 1749              		.global	Error_Handler
- 1750              		.syntax unified
- 1751              		.thumb
- 1752              		.thumb_func
- 1753              		.fpu fpv4-sp-d16
- 1755              	Error_Handler:
- 1756              	.LFB142:
- 801:Src/main.c    **** /* USER CODE END 4 */
- 802:Src/main.c    **** 
- 803:Src/main.c    **** /**
- 804:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
- 805:Src/main.c    ****   * @retval None
- 806:Src/main.c    ****   */
- 807:Src/main.c    **** void Error_Handler(void)
- 808:Src/main.c    **** {
- 1757              		.loc 1 808 0
- 1758              		.cfi_startproc
- 1759              		@ args = 0, pretend = 0, frame = 0
- 1760              		@ frame_needed = 0, uses_anonymous_args = 0
- 1761              		@ link register save eliminated.
- 1762 0000 7047     		bx	lr
- 1763              		.cfi_endproc
- 1764              	.LFE142:
- 1766              		.global	uart_tx_data
- 1767              		.comm	huart1,64,4
- 1768              		.comm	huart5,64,4
- 1769              		.comm	htim6,64,4
- 1770              		.comm	hspi5,88,4
- 1771              		.comm	hdac,20,4
- 1772              		.comm	lfo_sine,256,4
- 1773              		.comm	base_sq,4096,4
- 1774              		.comm	base_tri,4096,4
- 1775              		.comm	base_neg_saw,4096,4
- 1776              		.comm	base_pos_saw,4096,4
- 1777              		.comm	base_sine,4096,4
- 1778              		.section	.rodata
- 1779              		.align	2
- 1780              		.set	.LANCHOR7,. + 0
- 1781              	.LC0:
- 1782 0000 0A53544D 		.ascii	"\012STM32F429!\012\000"
- 1782      33324634 
- 1782      3239210A 
- 1782      00
- 1783 000d 00000000 		.space	7
- 1783      000000
- 1784              		.section	.bss.attack_cc_flag.8968,"aw",%nobits
- 1785              		.set	.LANCHOR1,. + 0
- 1788              	attack_cc_flag.8968:
- 1789 0000 00       		.space	1
- 1790              		.section	.bss.decay_cc_flag.8969,"aw",%nobits
- 1791              		.set	.LANCHOR2,. + 0
- 1794              	decay_cc_flag.8969:
- 1795 0000 00       		.space	1
- 1796              		.section	.bss.note_off_flag.8967,"aw",%nobits
- 1797              		.set	.LANCHOR6,. + 0
-ARM GAS  /tmp/ccEeezog.s 			page 49
+ 1790 00aa 0F4B     		ldr	r3, .L105+44
+ 1791 00ac 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1792 00ae 0822     		movs	r2, #8
+ 1793 00b0 1021     		movs	r1, #16
+ 1794 00b2 0548     		ldr	r0, .L105+12
+ 1795 00b4 FFF7FEFF 		bl	HAL_DAC_SetValue
+ 1796              	.LVL118:
+ 1797 00b8 E1E7     		b	.L102
+ 1798              	.L106:
+ 1799 00ba 00BF     		.align	2
+ 1800              	.L105:
+ 1801 00bc 00000000 		.word	.LANCHOR9
+ 1802 00c0 00000000 		.word	huart1
+ 1803 00c4 00000000 		.word	htim6
+ 1804 00c8 00000000 		.word	hdac
+ 1805 00cc 00000000 		.word	env_state
+ 1806 00d0 00000000 		.word	note_on
+ 1807 00d4 00000000 		.word	note_freq
+ 1808 00d8 00000000 		.word	lfo_freq
+ 1809 00dc 00000000 		.word	.LANCHOR0
+ 1810 00e0 00000000 		.word	huart5
+ 1811 00e4 00000000 		.word	update_value_flag
+ 1812 00e8 00000000 		.word	output_val
+ 1813              		.cfi_endproc
+ 1814              	.LFE130:
+ 1816              		.section	.text.Error_Handler,"ax",%progbits
+ 1817              		.align	1
+ 1818              		.global	Error_Handler
+ 1819              		.syntax unified
+ 1820              		.thumb
+ 1821              		.thumb_func
+ 1822              		.fpu fpv4-sp-d16
+ 1824              	Error_Handler:
+ 1825              	.LFB142:
+ 859:Src/main.c    **** /* USER CODE END 4 */
+ 860:Src/main.c    **** 
+ 861:Src/main.c    **** /**
+ 862:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
+ 863:Src/main.c    ****   * @retval None
+ 864:Src/main.c    ****   */
+ 865:Src/main.c    **** void Error_Handler(void)
+ 866:Src/main.c    **** {
+ 1826              		.loc 1 866 0
+ 1827              		.cfi_startproc
+ 1828              		@ args = 0, pretend = 0, frame = 0
+ 1829              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1830              		@ link register save eliminated.
+ 1831 0000 7047     		bx	lr
+ 1832              		.cfi_endproc
+ 1833              	.LFE142:
+ 1835              		.global	uart_tx_data
+ 1836              		.comm	huart1,64,4
+ 1837              		.comm	huart5,64,4
+ 1838              		.comm	htim6,64,4
+ 1839              		.comm	hspi5,88,4
+ 1840              		.comm	hdac,20,4
+ 1841              		.comm	lfo_sine,256,4
+ARM GAS  /tmp/ccLP6nEG.s 			page 51
 
 
- 1800              	note_off_flag.8967:
- 1801 0000 00       		.space	1
- 1802              		.section	.bss.note_on_flag.8966,"aw",%nobits
- 1803              		.set	.LANCHOR5,. + 0
- 1806              	note_on_flag.8966:
- 1807 0000 00       		.space	1
- 1808              		.section	.bss.release_cc_flag.8971,"aw",%nobits
- 1809              		.set	.LANCHOR4,. + 0
- 1812              	release_cc_flag.8971:
- 1813 0000 00       		.space	1
- 1814              		.section	.bss.sustain_cc_flag.8970,"aw",%nobits
- 1815              		.set	.LANCHOR3,. + 0
- 1818              	sustain_cc_flag.8970:
- 1819 0000 00       		.space	1
- 1820              		.section	.bss.uart_tx_data,"aw",%nobits
- 1821              		.set	.LANCHOR0,. + 0
- 1824              	uart_tx_data:
- 1825 0000 00       		.space	1
- 1826              		.text
- 1827              	.Letext0:
- 1828              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 1829              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 1830              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 1831              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 1832              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 1833              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 1834              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
- 1835              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
- 1836              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
- 1837              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 1838              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
- 1839              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 1840              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
- 1841              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 1842              		.file 16 "Inc/globals.h"
- 1843              		.file 17 "Inc/spi_handler.h"
- 1844              		.file 18 "Inc/midi.h"
- 1845              		.file 19 "/usr/include/newlib/sys/lock.h"
- 1846              		.file 20 "/usr/include/newlib/sys/_types.h"
- 1847              		.file 21 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 1848              		.file 22 "/usr/include/newlib/sys/reent.h"
- 1849              		.file 23 "/usr/include/newlib/stdlib.h"
- 1850              		.file 24 "Inc/waves.h"
- 1851              		.file 25 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
- 1852              		.file 26 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h"
- 1853              		.file 27 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
- 1854              		.file 28 "Inc/lfo.h"
- 1855              		.file 29 "Inc/envelopes.h"
- 1856              		.file 30 "Inc/oscillator.h"
-ARM GAS  /tmp/ccEeezog.s 			page 50
+ 1842              		.comm	base_sq,4096,4
+ 1843              		.comm	base_tri,4096,4
+ 1844              		.comm	base_neg_saw,4096,4
+ 1845              		.comm	base_pos_saw,4096,4
+ 1846              		.comm	base_sine,4096,4
+ 1847              		.section	.rodata
+ 1848              		.align	2
+ 1849              		.set	.LANCHOR9,. + 0
+ 1850              	.LC0:
+ 1851 0000 0A53544D 		.ascii	"\012STM32F429!\012\000"
+ 1851      33324634 
+ 1851      3239210A 
+ 1851      00
+ 1852 000d 00000000 		.space	7
+ 1852      000000
+ 1853              		.section	.bss.attack_cc_flag.8973,"aw",%nobits
+ 1854              		.set	.LANCHOR1,. + 0
+ 1857              	attack_cc_flag.8973:
+ 1858 0000 00       		.space	1
+ 1859              		.section	.bss.decay_cc_flag.8974,"aw",%nobits
+ 1860              		.set	.LANCHOR2,. + 0
+ 1863              	decay_cc_flag.8974:
+ 1864 0000 00       		.space	1
+ 1865              		.section	.bss.lfo_cc_flag.8978,"aw",%nobits
+ 1866              		.set	.LANCHOR8,. + 0
+ 1869              	lfo_cc_flag.8978:
+ 1870 0000 00       		.space	1
+ 1871              		.section	.bss.note_off_flag.8972,"aw",%nobits
+ 1872              		.set	.LANCHOR6,. + 0
+ 1875              	note_off_flag.8972:
+ 1876 0000 00       		.space	1
+ 1877              		.section	.bss.note_on_flag.8971,"aw",%nobits
+ 1878              		.set	.LANCHOR5,. + 0
+ 1881              	note_on_flag.8971:
+ 1882 0000 00       		.space	1
+ 1883              		.section	.bss.release_cc_flag.8976,"aw",%nobits
+ 1884              		.set	.LANCHOR4,. + 0
+ 1887              	release_cc_flag.8976:
+ 1888 0000 00       		.space	1
+ 1889              		.section	.bss.sustain_cc_flag.8975,"aw",%nobits
+ 1890              		.set	.LANCHOR3,. + 0
+ 1893              	sustain_cc_flag.8975:
+ 1894 0000 00       		.space	1
+ 1895              		.section	.bss.uart_tx_data,"aw",%nobits
+ 1896              		.set	.LANCHOR0,. + 0
+ 1899              	uart_tx_data:
+ 1900 0000 00       		.space	1
+ 1901              		.section	.bss.waveshape_cc_flag.8977,"aw",%nobits
+ 1902              		.set	.LANCHOR7,. + 0
+ 1905              	waveshape_cc_flag.8977:
+ 1906 0000 00       		.space	1
+ 1907              		.text
+ 1908              	.Letext0:
+ 1909              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 1910              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 1911              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 1912              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ARM GAS  /tmp/ccLP6nEG.s 			page 52
+
+
+ 1913              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 1914              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1915              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
+ 1916              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
+ 1917              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 1918              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1919              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
+ 1920              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 1921              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 1922              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 1923              		.file 16 "Inc/globals.h"
+ 1924              		.file 17 "Inc/spi_handler.h"
+ 1925              		.file 18 "Inc/midi.h"
+ 1926              		.file 19 "/usr/include/newlib/sys/lock.h"
+ 1927              		.file 20 "/usr/include/newlib/sys/_types.h"
+ 1928              		.file 21 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 1929              		.file 22 "/usr/include/newlib/sys/reent.h"
+ 1930              		.file 23 "/usr/include/newlib/stdlib.h"
+ 1931              		.file 24 "Inc/waves.h"
+ 1932              		.file 25 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ 1933              		.file 26 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h"
+ 1934              		.file 27 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 1935              		.file 28 "Inc/lfo.h"
+ 1936              		.file 29 "Inc/envelopes.h"
+ 1937              		.file 30 "Inc/oscillator.h"
+ARM GAS  /tmp/ccLP6nEG.s 			page 53
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/ccEeezog.s:18     .text.MX_GPIO_Init:0000000000000000 $t
-     /tmp/ccEeezog.s:24     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
-     /tmp/ccEeezog.s:482    .text.MX_GPIO_Init:00000000000002b8 $d
-     /tmp/ccEeezog.s:494    .text.MX_GPIO_Init:00000000000002e0 $t
-     /tmp/ccEeezog.s:608    .text.MX_GPIO_Init:0000000000000388 $d
-     /tmp/ccEeezog.s:617    .text.MX_SPI5_Init:0000000000000000 $t
-     /tmp/ccEeezog.s:623    .text.MX_SPI5_Init:0000000000000000 MX_SPI5_Init
-     /tmp/ccEeezog.s:667    .text.MX_SPI5_Init:0000000000000028 $d
+     /tmp/ccLP6nEG.s:18     .text.MX_GPIO_Init:0000000000000000 $t
+     /tmp/ccLP6nEG.s:24     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
+     /tmp/ccLP6nEG.s:482    .text.MX_GPIO_Init:00000000000002b8 $d
+     /tmp/ccLP6nEG.s:494    .text.MX_GPIO_Init:00000000000002e0 $t
+     /tmp/ccLP6nEG.s:608    .text.MX_GPIO_Init:0000000000000388 $d
+     /tmp/ccLP6nEG.s:617    .text.MX_SPI5_Init:0000000000000000 $t
+     /tmp/ccLP6nEG.s:623    .text.MX_SPI5_Init:0000000000000000 MX_SPI5_Init
+     /tmp/ccLP6nEG.s:667    .text.MX_SPI5_Init:0000000000000028 $d
                             *COM*:0000000000000058 hspi5
-     /tmp/ccEeezog.s:673    .text.MX_USART1_UART_Init:0000000000000000 $t
-     /tmp/ccEeezog.s:679    .text.MX_USART1_UART_Init:0000000000000000 MX_USART1_UART_Init
-     /tmp/ccEeezog.s:718    .text.MX_USART1_UART_Init:0000000000000024 $d
+     /tmp/ccLP6nEG.s:673    .text.MX_USART1_UART_Init:0000000000000000 $t
+     /tmp/ccLP6nEG.s:679    .text.MX_USART1_UART_Init:0000000000000000 MX_USART1_UART_Init
+     /tmp/ccLP6nEG.s:718    .text.MX_USART1_UART_Init:0000000000000024 $d
                             *COM*:0000000000000040 huart1
-     /tmp/ccEeezog.s:724    .text.MX_UART5_Init:0000000000000000 $t
-     /tmp/ccEeezog.s:730    .text.MX_UART5_Init:0000000000000000 MX_UART5_Init
-     /tmp/ccEeezog.s:769    .text.MX_UART5_Init:0000000000000024 $d
+     /tmp/ccLP6nEG.s:724    .text.MX_UART5_Init:0000000000000000 $t
+     /tmp/ccLP6nEG.s:730    .text.MX_UART5_Init:0000000000000000 MX_UART5_Init
+     /tmp/ccLP6nEG.s:769    .text.MX_UART5_Init:0000000000000024 $d
                             *COM*:0000000000000040 huart5
-     /tmp/ccEeezog.s:775    .text.MX_DAC_Init:0000000000000000 $t
-     /tmp/ccEeezog.s:781    .text.MX_DAC_Init:0000000000000000 MX_DAC_Init
-     /tmp/ccEeezog.s:827    .text.MX_DAC_Init:0000000000000028 $d
+     /tmp/ccLP6nEG.s:775    .text.MX_DAC_Init:0000000000000000 $t
+     /tmp/ccLP6nEG.s:781    .text.MX_DAC_Init:0000000000000000 MX_DAC_Init
+     /tmp/ccLP6nEG.s:827    .text.MX_DAC_Init:0000000000000028 $d
                             *COM*:0000000000000014 hdac
-     /tmp/ccEeezog.s:833    .text.MX_TIM6_Init:0000000000000000 $t
-     /tmp/ccEeezog.s:839    .text.MX_TIM6_Init:0000000000000000 MX_TIM6_Init
-     /tmp/ccEeezog.s:893    .text.MX_TIM6_Init:0000000000000034 $d
+     /tmp/ccLP6nEG.s:833    .text.MX_TIM6_Init:0000000000000000 $t
+     /tmp/ccLP6nEG.s:839    .text.MX_TIM6_Init:0000000000000000 MX_TIM6_Init
+     /tmp/ccLP6nEG.s:893    .text.MX_TIM6_Init:0000000000000034 $d
                             *COM*:0000000000000040 htim6
-     /tmp/ccEeezog.s:899    .text.SystemClock_Config:0000000000000000 $t
-     /tmp/ccEeezog.s:906    .text.SystemClock_Config:0000000000000000 SystemClock_Config
-     /tmp/ccEeezog.s:1014   .text.SystemClock_Config:0000000000000090 $d
-     /tmp/ccEeezog.s:1020   .text.HAL_UART_RxCpltCallback:0000000000000000 $t
-     /tmp/ccEeezog.s:1027   .text.HAL_UART_RxCpltCallback:0000000000000000 HAL_UART_RxCpltCallback
-     /tmp/ccEeezog.s:1055   .text.HAL_UART_RxCpltCallback:0000000000000014 $d
-     /tmp/ccEeezog.s:1060   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
-     /tmp/ccEeezog.s:1067   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
-     /tmp/ccEeezog.s:1092   .text.HAL_TIM_PeriodElapsedCallback:0000000000000014 $d
-     /tmp/ccEeezog.s:1098   .text.handle_byte_queue:0000000000000000 $t
-     /tmp/ccEeezog.s:1105   .text.handle_byte_queue:0000000000000000 handle_byte_queue
-     /tmp/ccEeezog.s:1381   .text.handle_byte_queue:0000000000000160 $d
-     /tmp/ccEeezog.s:1392   .text.handle_midi_queue:0000000000000000 $t
-     /tmp/ccEeezog.s:1399   .text.handle_midi_queue:0000000000000000 handle_midi_queue
-     /tmp/ccEeezog.s:1570   .text.handle_midi_queue:00000000000000a8 $d
-     /tmp/ccEeezog.s:1583   .text.main:0000000000000000 $t
-     /tmp/ccEeezog.s:1590   .text.main:0000000000000000 main
-     /tmp/ccEeezog.s:1732   .text.main:00000000000000bc $d
-     /tmp/ccEeezog.s:1748   .text.Error_Handler:0000000000000000 $t
-     /tmp/ccEeezog.s:1755   .text.Error_Handler:0000000000000000 Error_Handler
-     /tmp/ccEeezog.s:1824   .bss.uart_tx_data:0000000000000000 uart_tx_data
+     /tmp/ccLP6nEG.s:899    .text.SystemClock_Config:0000000000000000 $t
+     /tmp/ccLP6nEG.s:906    .text.SystemClock_Config:0000000000000000 SystemClock_Config
+     /tmp/ccLP6nEG.s:1014   .text.SystemClock_Config:0000000000000090 $d
+     /tmp/ccLP6nEG.s:1020   .text.HAL_UART_RxCpltCallback:0000000000000000 $t
+     /tmp/ccLP6nEG.s:1027   .text.HAL_UART_RxCpltCallback:0000000000000000 HAL_UART_RxCpltCallback
+     /tmp/ccLP6nEG.s:1055   .text.HAL_UART_RxCpltCallback:0000000000000014 $d
+     /tmp/ccLP6nEG.s:1060   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/ccLP6nEG.s:1067   .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/ccLP6nEG.s:1092   .text.HAL_TIM_PeriodElapsedCallback:0000000000000014 $d
+     /tmp/ccLP6nEG.s:1098   .text.handle_byte_queue:0000000000000000 $t
+     /tmp/ccLP6nEG.s:1105   .text.handle_byte_queue:0000000000000000 handle_byte_queue
+     /tmp/ccLP6nEG.s:1456   .text.handle_byte_queue:00000000000001d4 $d
+     /tmp/ccLP6nEG.s:1469   .text.handle_midi_queue:0000000000000000 $t
+     /tmp/ccLP6nEG.s:1476   .text.handle_midi_queue:0000000000000000 handle_midi_queue
+     /tmp/ccLP6nEG.s:1639   .text.handle_midi_queue:00000000000000bc $d
+     /tmp/ccLP6nEG.s:1652   .text.main:0000000000000000 $t
+     /tmp/ccLP6nEG.s:1659   .text.main:0000000000000000 main
+     /tmp/ccLP6nEG.s:1801   .text.main:00000000000000bc $d
+     /tmp/ccLP6nEG.s:1817   .text.Error_Handler:0000000000000000 $t
+     /tmp/ccLP6nEG.s:1824   .text.Error_Handler:0000000000000000 Error_Handler
+     /tmp/ccLP6nEG.s:1899   .bss.uart_tx_data:0000000000000000 uart_tx_data
                             *COM*:0000000000000100 lfo_sine
                             *COM*:0000000000001000 base_sq
                             *COM*:0000000000001000 base_tri
                             *COM*:0000000000001000 base_neg_saw
                             *COM*:0000000000001000 base_pos_saw
                             *COM*:0000000000001000 base_sine
-     /tmp/ccEeezog.s:1779   .rodata:0000000000000000 $d
-     /tmp/ccEeezog.s:1788   .bss.attack_cc_flag.8968:0000000000000000 attack_cc_flag.8968
-     /tmp/ccEeezog.s:1789   .bss.attack_cc_flag.8968:0000000000000000 $d
-ARM GAS  /tmp/ccEeezog.s 			page 51
+     /tmp/ccLP6nEG.s:1848   .rodata:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1857   .bss.attack_cc_flag.8973:0000000000000000 attack_cc_flag.8973
+     /tmp/ccLP6nEG.s:1858   .bss.attack_cc_flag.8973:0000000000000000 $d
+ARM GAS  /tmp/ccLP6nEG.s 			page 54
 
 
-     /tmp/ccEeezog.s:1794   .bss.decay_cc_flag.8969:0000000000000000 decay_cc_flag.8969
-     /tmp/ccEeezog.s:1795   .bss.decay_cc_flag.8969:0000000000000000 $d
-     /tmp/ccEeezog.s:1800   .bss.note_off_flag.8967:0000000000000000 note_off_flag.8967
-     /tmp/ccEeezog.s:1801   .bss.note_off_flag.8967:0000000000000000 $d
-     /tmp/ccEeezog.s:1806   .bss.note_on_flag.8966:0000000000000000 note_on_flag.8966
-     /tmp/ccEeezog.s:1807   .bss.note_on_flag.8966:0000000000000000 $d
-     /tmp/ccEeezog.s:1812   .bss.release_cc_flag.8971:0000000000000000 release_cc_flag.8971
-     /tmp/ccEeezog.s:1813   .bss.release_cc_flag.8971:0000000000000000 $d
-     /tmp/ccEeezog.s:1818   .bss.sustain_cc_flag.8970:0000000000000000 sustain_cc_flag.8970
-     /tmp/ccEeezog.s:1819   .bss.sustain_cc_flag.8970:0000000000000000 $d
-     /tmp/ccEeezog.s:1825   .bss.uart_tx_data:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1863   .bss.decay_cc_flag.8974:0000000000000000 decay_cc_flag.8974
+     /tmp/ccLP6nEG.s:1864   .bss.decay_cc_flag.8974:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1869   .bss.lfo_cc_flag.8978:0000000000000000 lfo_cc_flag.8978
+     /tmp/ccLP6nEG.s:1870   .bss.lfo_cc_flag.8978:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1875   .bss.note_off_flag.8972:0000000000000000 note_off_flag.8972
+     /tmp/ccLP6nEG.s:1876   .bss.note_off_flag.8972:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1881   .bss.note_on_flag.8971:0000000000000000 note_on_flag.8971
+     /tmp/ccLP6nEG.s:1882   .bss.note_on_flag.8971:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1887   .bss.release_cc_flag.8976:0000000000000000 release_cc_flag.8976
+     /tmp/ccLP6nEG.s:1888   .bss.release_cc_flag.8976:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1893   .bss.sustain_cc_flag.8975:0000000000000000 sustain_cc_flag.8975
+     /tmp/ccLP6nEG.s:1894   .bss.sustain_cc_flag.8975:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1900   .bss.uart_tx_data:0000000000000000 $d
+     /tmp/ccLP6nEG.s:1905   .bss.waveshape_cc_flag.8977:0000000000000000 waveshape_cc_flag.8977
+     /tmp/ccLP6nEG.s:1906   .bss.waveshape_cc_flag.8977:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
@@ -3046,4 +3206,7 @@ update_envelope
 update_output_value
 HAL_DAC_SetValue
 lfo_freq
+ARM GAS  /tmp/ccLP6nEG.s 			page 55
+
+
 output_val

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccQkIjEI.s 			page 1
+ARM GAS  /tmp/ccnX4ra3.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -39,9 +39,11 @@ ARM GAS  /tmp/ccQkIjEI.s 			page 1
    7:Src/oscillator.c **** volatile uint8_t update_value_flag = 0;
    8:Src/oscillator.c **** volatile uint32_t phase_accumulator[VOICES] = {0};
    9:Src/oscillator.c **** volatile uint8_t output_val = 0;
-  10:Src/oscillator.c **** 
-  11:Src/oscillator.c **** void update_output_value() {
-  31              		.loc 1 11 0
+  10:Src/oscillator.c **** uint8_t* waveshape1 = base_pos_saw;
+  11:Src/oscillator.c **** uint8_t* waveshape2 = base_pos_saw;
+  12:Src/oscillator.c **** 
+  13:Src/oscillator.c **** void update_output_value() {
+  31              		.loc 1 13 0
   32              		.cfi_startproc
   33              		@ args = 0, pretend = 0, frame = 8
   34              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -56,30 +58,30 @@ ARM GAS  /tmp/ccQkIjEI.s 			page 1
   43              		.cfi_offset 80, -16
   44              		.cfi_offset 81, -12
   45 0006 82B0     		sub	sp, sp, #8
+ARM GAS  /tmp/ccnX4ra3.s 			page 2
+
+
   46              	.LCFI2:
   47              		.cfi_def_cfa_offset 24
-ARM GAS  /tmp/ccQkIjEI.s 			page 2
-
-
   48              	.LVL0:
-  12:Src/oscillator.c ****   float val = 0;
-  13:Src/oscillator.c ****   output_val = 0;
-  49              		.loc 1 13 0
+  14:Src/oscillator.c ****   float val = 0;
+  15:Src/oscillator.c ****   output_val = 0;
+  49              		.loc 1 15 0
   50 0008 0024     		movs	r4, #0
   51 000a 294B     		ldr	r3, .L5+8
   52 000c 1C70     		strb	r4, [r3]
   53              	.LVL1:
-  12:Src/oscillator.c ****   float val = 0;
-  54              		.loc 1 12 0
+  14:Src/oscillator.c ****   float val = 0;
+  54              		.loc 1 14 0
   55 000e 9FED298A 		vldr.32	s16, .L5+12
   56              	.LBB2:
-  14:Src/oscillator.c ****   for(int i = 0; i < VOICES; i++) {
-  57              		.loc 1 14 0
-  58 0012 37E0     		b	.L2
+  16:Src/oscillator.c ****   for(int i = 0; i < VOICES; i++) {
+  57              		.loc 1 16 0
+  58 0012 35E0     		b	.L2
   59              	.LVL2:
   60              	.L3:
-  15:Src/oscillator.c ****     phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
-  61              		.loc 1 15 0 discriminator 3
+  17:Src/oscillator.c ****     phase_accumulator[i] += (uint32_t)(midi_notes[note_freq[i]]*DDS_SCALE_FACTOR);
+  61              		.loc 1 17 0 discriminator 3
   62 0014 284B     		ldr	r3, .L5+16
   63 0016 1A5D     		ldrb	r2, [r3, r4]	@ zero_extendqisi2
   64 0018 284B     		ldr	r3, .L5+20
@@ -93,73 +95,73 @@ ARM GAS  /tmp/ccQkIjEI.s 			page 1
   72              	.LVL4:
   73 002e FFF7FEFF 		bl	__aeabi_d2uiz
   74              	.LVL5:
-  75 0032 234B     		ldr	r3, .L5+24
-  76 0034 53F82420 		ldr	r2, [r3, r4, lsl #2]
-  77 0038 1044     		add	r0, r0, r2
-  78 003a 43F82400 		str	r0, [r3, r4, lsl #2]
-  16:Src/oscillator.c ****     val += ((base_sine[(phase_accumulator[i]>>10)%4096] + 0*base_pos_saw[(phase_accumulator[i]>>10)
-  79              		.loc 1 16 0 discriminator 3
-  80 003e 53F82420 		ldr	r2, [r3, r4, lsl #2]
-  81 0042 53F82430 		ldr	r3, [r3, r4, lsl #2]
-  82 0046 C3F38B23 		ubfx	r3, r3, #10, #12
-  83 004a 1E4A     		ldr	r2, .L5+28
-  84 004c D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
-  85 004e 07EE903A 		vmov	s15, r3	@ int
-  86 0052 1D4B     		ldr	r3, .L5+32
-  87 0054 03EB8403 		add	r3, r3, r4, lsl #2
-  88 0058 93ED007A 		vldr.32	s14, [r3]
-  89 005c F8EEE77A 		vcvt.f32.s32	s15, s15
-  90 0060 27EE877A 		vmul.f32	s14, s15, s14
-  91 0064 194B     		ldr	r3, .L5+36
-  92 0066 1B5D     		ldrb	r3, [r3, r4]	@ zero_extendqisi2
-  93 0068 DBB2     		uxtb	r3, r3
-  94 006a 07EE903A 		vmov	s15, r3	@ int
-  95 006e F8EEE77A 		vcvt.f32.s32	s15, s15
-  96 0072 67EE877A 		vmul.f32	s15, s15, s14
-  97 0076 DFED166A 		vldr.32	s13, .L5+40
-  98 007a 87EEA67A 		vdiv.f32	s14, s15, s13
-ARM GAS  /tmp/ccQkIjEI.s 			page 3
+  75 0032 234A     		ldr	r2, .L5+24
+  76 0034 52F82430 		ldr	r3, [r2, r4, lsl #2]
+  77 0038 1844     		add	r0, r0, r3
+  78 003a 42F82400 		str	r0, [r2, r4, lsl #2]
+  18:Src/oscillator.c ****     val += ((waveshape1[(phase_accumulator[i]>>10)%4096] + waveshape2[(phase_accumulator[i]>>10)%40
+  79              		.loc 1 18 0 discriminator 3
+  80 003e 52F82430 		ldr	r3, [r2, r4, lsl #2]
+  81 0042 C3F38B23 		ubfx	r3, r3, #10, #12
+  82 0046 1F49     		ldr	r1, .L5+28
+  83 0048 0968     		ldr	r1, [r1]
+  84 004a CB5C     		ldrb	r3, [r1, r3]	@ zero_extendqisi2
+  85 004c 52F82420 		ldr	r2, [r2, r4, lsl #2]
+  86 0050 C2F38B22 		ubfx	r2, r2, #10, #12
+  87 0054 1C49     		ldr	r1, .L5+32
+  88 0056 0968     		ldr	r1, [r1]
+  89 0058 8A5C     		ldrb	r2, [r1, r2]	@ zero_extendqisi2
+  90 005a 1344     		add	r3, r3, r2
+  91 005c 07EE903A 		vmov	s15, r3	@ int
+  92 0060 1A4B     		ldr	r3, .L5+36
+  93 0062 03EB8403 		add	r3, r3, r4, lsl #2
+  94 0066 93ED007A 		vldr.32	s14, [r3]
+  95 006a F8EEE77A 		vcvt.f32.s32	s15, s15
+  96 006e 67EE877A 		vmul.f32	s15, s15, s14
+ARM GAS  /tmp/ccnX4ra3.s 			page 3
 
 
-  99 007e 38EE078A 		vadd.f32	s16, s16, s14
+  97 0072 DFED176A 		vldr.32	s13, .L5+40
+  98 0076 87EEA67A 		vdiv.f32	s14, s15, s13
+  99 007a 38EE078A 		vadd.f32	s16, s16, s14
  100              	.LVL6:
-  14:Src/oscillator.c ****   for(int i = 0; i < VOICES; i++) {
- 101              		.loc 1 14 0 discriminator 3
- 102 0082 0134     		adds	r4, r4, #1
+  16:Src/oscillator.c ****   for(int i = 0; i < VOICES; i++) {
+ 101              		.loc 1 16 0 discriminator 3
+ 102 007e 0134     		adds	r4, r4, #1
  103              	.LVL7:
  104              	.L2:
-  14:Src/oscillator.c ****   for(int i = 0; i < VOICES; i++) {
- 105              		.loc 1 14 0 is_stmt 0 discriminator 1
- 106 0084 0F2C     		cmp	r4, #15
- 107 0086 C5DD     		ble	.L3
+  16:Src/oscillator.c ****   for(int i = 0; i < VOICES; i++) {
+ 105              		.loc 1 16 0 is_stmt 0 discriminator 1
+ 106 0080 0F2C     		cmp	r4, #15
+ 107 0082 C7DD     		ble	.L3
  108              	.LBE2:
-  17:Src/oscillator.c ****   }
-  18:Src/oscillator.c **** 
-  19:Src/oscillator.c ****   output_val = (uint8_t) (val / VOICES);
- 109              		.loc 1 19 0 is_stmt 1
- 110 0088 DFED127A 		vldr.32	s15, .L5+44
- 111 008c 28EE278A 		vmul.f32	s16, s16, s15
+  19:Src/oscillator.c ****   }
+  20:Src/oscillator.c **** 
+  21:Src/oscillator.c ****   output_val = (uint8_t) (val / VOICES);
+ 109              		.loc 1 21 0 is_stmt 1
+ 110 0084 DFED137A 		vldr.32	s15, .L5+44
+ 111 0088 28EE278A 		vmul.f32	s16, s16, s15
  112              	.LVL8:
- 113 0090 FCEEC87A 		vcvt.u32.f32	s15, s16
- 114 0094 CDED017A 		vstr.32	s15, [sp, #4]	@ int
- 115 0098 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
- 116 009c 044A     		ldr	r2, .L5+8
- 117 009e 1370     		strb	r3, [r2]
-  20:Src/oscillator.c **** }
- 118              		.loc 1 20 0
- 119 00a0 02B0     		add	sp, sp, #8
+ 113 008c FCEEC87A 		vcvt.u32.f32	s15, s16
+ 114 0090 CDED017A 		vstr.32	s15, [sp, #4]	@ int
+ 115 0094 9DF80430 		ldrb	r3, [sp, #4]	@ zero_extendqisi2
+ 116 0098 054A     		ldr	r2, .L5+8
+ 117 009a 1370     		strb	r3, [r2]
+  22:Src/oscillator.c **** }
+ 118              		.loc 1 22 0
+ 119 009c 02B0     		add	sp, sp, #8
  120              	.LCFI3:
  121              		.cfi_def_cfa_offset 16
  122              		@ sp needed
- 123 00a2 BDEC028B 		vldm	sp!, {d8}
+ 123 009e BDEC028B 		vldm	sp!, {d8}
  124              	.LCFI4:
  125              		.cfi_restore 80
  126              		.cfi_restore 81
  127              		.cfi_def_cfa_offset 8
- 128 00a6 10BD     		pop	{r4, pc}
+ 128 00a2 10BD     		pop	{r4, pc}
  129              	.LVL9:
  130              	.L6:
- 131              		.align	3
+ 131 00a4 AFF30080 		.align	3
  132              	.L5:
  133 00a8 942EA292 		.word	2460102292
  134 00ac 5F5E5640 		.word	1079402079
@@ -168,80 +170,96 @@ ARM GAS  /tmp/ccQkIjEI.s 			page 1
  137 00b8 00000000 		.word	note_freq
  138 00bc 00000000 		.word	midi_notes
  139 00c0 00000000 		.word	.LANCHOR1
- 140 00c4 00000000 		.word	base_sine
- 141 00c8 00000000 		.word	envelope
- 142 00cc 00000000 		.word	lfo
- 143 00d0 0001FE47 		.word	1207828736
+ 140 00c4 00000000 		.word	.LANCHOR2
+ 141 00c8 00000000 		.word	.LANCHOR3
+ 142 00cc 00000000 		.word	envelope
+ 143 00d0 0000FF43 		.word	1140785152
  144 00d4 0000803D 		.word	1031798784
  145              		.cfi_endproc
  146              	.LFE130:
- 148              		.global	output_val
- 149              		.global	phase_accumulator
- 150              		.global	update_value_flag
-ARM GAS  /tmp/ccQkIjEI.s 			page 4
+ 148              		.global	waveshape2
+ARM GAS  /tmp/ccnX4ra3.s 			page 4
 
 
- 151              		.comm	lfo_sine,256,4
- 152              		.comm	base_sq,4096,4
- 153              		.comm	base_tri,4096,4
- 154              		.comm	base_neg_saw,4096,4
- 155              		.comm	base_pos_saw,4096,4
- 156              		.comm	base_sine,4096,4
- 157              		.section	.bss.output_val,"aw",%nobits
- 158              		.set	.LANCHOR0,. + 0
- 161              	output_val:
- 162 0000 00       		.space	1
- 163              		.section	.bss.phase_accumulator,"aw",%nobits
- 164              		.align	2
- 165              		.set	.LANCHOR1,. + 0
- 168              	phase_accumulator:
- 169 0000 00000000 		.space	64
- 169      00000000 
- 169      00000000 
- 169      00000000 
- 169      00000000 
- 170              		.section	.bss.update_value_flag,"aw",%nobits
- 173              	update_value_flag:
- 174 0000 00       		.space	1
- 175              		.text
- 176              	.Letext0:
- 177              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 178              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 179              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 180              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 181              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 182              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 183              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 184              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 185              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 186              		.file 11 "Inc/globals.h"
- 187              		.file 12 "Inc/midi.h"
- 188              		.file 13 "/usr/include/newlib/sys/lock.h"
- 189              		.file 14 "/usr/include/newlib/sys/_types.h"
- 190              		.file 15 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 191              		.file 16 "/usr/include/newlib/sys/reent.h"
- 192              		.file 17 "/usr/include/newlib/stdlib.h"
- 193              		.file 18 "Inc/waves.h"
-ARM GAS  /tmp/ccQkIjEI.s 			page 5
+ 149              		.global	waveshape1
+ 150              		.global	output_val
+ 151              		.global	phase_accumulator
+ 152              		.global	update_value_flag
+ 153              		.comm	lfo_sine,256,4
+ 154              		.comm	base_sq,4096,4
+ 155              		.comm	base_tri,4096,4
+ 156              		.comm	base_neg_saw,4096,4
+ 157              		.comm	base_pos_saw,4096,4
+ 158              		.comm	base_sine,4096,4
+ 159              		.section	.bss.output_val,"aw",%nobits
+ 160              		.set	.LANCHOR0,. + 0
+ 163              	output_val:
+ 164 0000 00       		.space	1
+ 165              		.section	.bss.phase_accumulator,"aw",%nobits
+ 166              		.align	2
+ 167              		.set	.LANCHOR1,. + 0
+ 170              	phase_accumulator:
+ 171 0000 00000000 		.space	64
+ 171      00000000 
+ 171      00000000 
+ 171      00000000 
+ 171      00000000 
+ 172              		.section	.bss.update_value_flag,"aw",%nobits
+ 175              	update_value_flag:
+ 176 0000 00       		.space	1
+ 177              		.section	.data.waveshape1,"aw",%progbits
+ 178              		.align	2
+ 179              		.set	.LANCHOR2,. + 0
+ 182              	waveshape1:
+ 183 0000 00000000 		.word	base_pos_saw
+ 184              		.section	.data.waveshape2,"aw",%progbits
+ 185              		.align	2
+ 186              		.set	.LANCHOR3,. + 0
+ 189              	waveshape2:
+ 190 0000 00000000 		.word	base_pos_saw
+ 191              		.text
+ 192              	.Letext0:
+ 193              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 194              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 195              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 196              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 197              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 198              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 199              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 200              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 201              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 202              		.file 11 "Inc/globals.h"
+ 203              		.file 12 "Inc/midi.h"
+ 204              		.file 13 "/usr/include/newlib/sys/lock.h"
+ 205              		.file 14 "/usr/include/newlib/sys/_types.h"
+ 206              		.file 15 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 207              		.file 16 "/usr/include/newlib/sys/reent.h"
+ 208              		.file 17 "/usr/include/newlib/stdlib.h"
+ 209              		.file 18 "Inc/waves.h"
+ARM GAS  /tmp/ccnX4ra3.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 oscillator.c
-     /tmp/ccQkIjEI.s:21     .text.update_output_value:0000000000000000 $t
-     /tmp/ccQkIjEI.s:28     .text.update_output_value:0000000000000000 update_output_value
-     /tmp/ccQkIjEI.s:133    .text.update_output_value:00000000000000a8 $d
-                            *COM*:0000000000001000 base_sine
-     /tmp/ccQkIjEI.s:161    .bss.output_val:0000000000000000 output_val
-     /tmp/ccQkIjEI.s:168    .bss.phase_accumulator:0000000000000000 phase_accumulator
-     /tmp/ccQkIjEI.s:173    .bss.update_value_flag:0000000000000000 update_value_flag
+     /tmp/ccnX4ra3.s:21     .text.update_output_value:0000000000000000 $t
+     /tmp/ccnX4ra3.s:28     .text.update_output_value:0000000000000000 update_output_value
+     /tmp/ccnX4ra3.s:133    .text.update_output_value:00000000000000a8 $d
+     /tmp/ccnX4ra3.s:189    .data.waveshape2:0000000000000000 waveshape2
+     /tmp/ccnX4ra3.s:182    .data.waveshape1:0000000000000000 waveshape1
+     /tmp/ccnX4ra3.s:163    .bss.output_val:0000000000000000 output_val
+     /tmp/ccnX4ra3.s:170    .bss.phase_accumulator:0000000000000000 phase_accumulator
+     /tmp/ccnX4ra3.s:175    .bss.update_value_flag:0000000000000000 update_value_flag
                             *COM*:0000000000000100 lfo_sine
                             *COM*:0000000000001000 base_sq
                             *COM*:0000000000001000 base_tri
                             *COM*:0000000000001000 base_neg_saw
                             *COM*:0000000000001000 base_pos_saw
-     /tmp/ccQkIjEI.s:162    .bss.output_val:0000000000000000 $d
-     /tmp/ccQkIjEI.s:164    .bss.phase_accumulator:0000000000000000 $d
-     /tmp/ccQkIjEI.s:174    .bss.update_value_flag:0000000000000000 $d
+                            *COM*:0000000000001000 base_sine
+     /tmp/ccnX4ra3.s:164    .bss.output_val:0000000000000000 $d
+     /tmp/ccnX4ra3.s:166    .bss.phase_accumulator:0000000000000000 $d
+     /tmp/ccnX4ra3.s:176    .bss.update_value_flag:0000000000000000 $d
+     /tmp/ccnX4ra3.s:178    .data.waveshape1:0000000000000000 $d
+     /tmp/ccnX4ra3.s:185    .data.waveshape2:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
@@ -251,4 +269,3 @@ __aeabi_d2uiz
 note_freq
 midi_notes
 envelope
-lfo

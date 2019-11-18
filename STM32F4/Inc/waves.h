@@ -7,6 +7,7 @@
 #define SAMPLE_SIZE (4096)
 #define AMPLITUDE (255) // divide by number of voices here?
 #define AMPLITUDE_SQUARED (65025)
+#define AMPLITUDE_CUBED (16581375)
 
 uint8_t base_sine[SAMPLE_SIZE];
 uint8_t base_pos_saw[SAMPLE_SIZE];

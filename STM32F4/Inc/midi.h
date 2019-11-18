@@ -11,6 +11,8 @@
 #define DECAY_CC 0x15
 #define SUSTAIN_CC 0x16
 #define RELEASE_CC 0x17
+#define WAVESHAPE_CC 0x18
+#define LFO_CC 0x19
 
 struct midi_msg {
   uint8_t byte0;
