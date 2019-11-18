@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc1DHUbh.s 			page 1
+ARM GAS  /tmp/ccNZVp6R.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
   29:Src/stm32f4xx_it.c **** /* USER CODE BEGIN TD */
   30:Src/stm32f4xx_it.c **** 
   31:Src/stm32f4xx_it.c **** /* USER CODE END TD */
-ARM GAS  /tmp/cc1DHUbh.s 			page 2
+ARM GAS  /tmp/ccNZVp6R.s 			page 2
 
 
   32:Src/stm32f4xx_it.c **** 
@@ -88,7 +88,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
   56:Src/stm32f4xx_it.c **** /* USER CODE END 0 */
   57:Src/stm32f4xx_it.c **** 
   58:Src/stm32f4xx_it.c **** /* External variables --------------------------------------------------------*/
-  59:Src/stm32f4xx_it.c **** 
+  59:Src/stm32f4xx_it.c **** extern UART_HandleTypeDef huart5;
   60:Src/stm32f4xx_it.c **** /* USER CODE BEGIN EV */
   61:Src/stm32f4xx_it.c **** 
   62:Src/stm32f4xx_it.c **** /* USER CODE END EV */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
   43              		.fpu fpv4-sp-d16
   45              	HardFault_Handler:
   46              	.LFB131:
-ARM GAS  /tmp/cc1DHUbh.s 			page 3
+ARM GAS  /tmp/ccNZVp6R.s 			page 3
 
 
   72:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
   75 0000 FEE7     		b	.L5
   76              		.cfi_endproc
   77              	.LFE132:
-ARM GAS  /tmp/cc1DHUbh.s 			page 4
+ARM GAS  /tmp/ccNZVp6R.s 			page 4
 
 
   79              		.section	.text.BusFault_Handler,"ax",%progbits
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
  126:Src/stm32f4xx_it.c ****   * @brief This function handles Undefined instruction or illegal state.
  127:Src/stm32f4xx_it.c ****   */
  128:Src/stm32f4xx_it.c **** void UsageFault_Handler(void)
-ARM GAS  /tmp/cc1DHUbh.s 			page 5
+ARM GAS  /tmp/ccNZVp6R.s 			page 5
 
 
  129:Src/stm32f4xx_it.c **** {
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
  147:Src/stm32f4xx_it.c ****   /* USER CODE END SVCall_IRQn 0 */
  148:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN SVCall_IRQn 1 */
  149:Src/stm32f4xx_it.c **** 
-ARM GAS  /tmp/cc1DHUbh.s 			page 6
+ARM GAS  /tmp/ccNZVp6R.s 			page 6
 
 
  150:Src/stm32f4xx_it.c ****   /* USER CODE END SVCall_IRQn 1 */
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
  187              	.LFB138:
  171:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN PendSV_IRQn 0 */
  172:Src/stm32f4xx_it.c **** 
-ARM GAS  /tmp/cc1DHUbh.s 			page 7
+ARM GAS  /tmp/ccNZVp6R.s 			page 7
 
 
  173:Src/stm32f4xx_it.c ****   /* USER CODE END PendSV_IRQn 0 */
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
  202:Src/stm32f4xx_it.c ****   */
  203:Src/stm32f4xx_it.c **** void EXTI15_10_IRQHandler(void)
  204:Src/stm32f4xx_it.c **** {
-ARM GAS  /tmp/cc1DHUbh.s 			page 8
+ARM GAS  /tmp/ccNZVp6R.s 			page 8
 
 
  215              		.loc 1 204 0
@@ -441,41 +441,96 @@ ARM GAS  /tmp/cc1DHUbh.s 			page 1
  228 000a 08BD     		pop	{r3, pc}
  229              		.cfi_endproc
  230              	.LFE139:
- 232              		.text
- 233              	.Letext0:
- 234              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 235              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 236              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 237              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 238              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
- 239              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  /tmp/cc1DHUbh.s 			page 9
+ 232              		.section	.text.UART5_IRQHandler,"ax",%progbits
+ 233              		.align	1
+ 234              		.global	UART5_IRQHandler
+ 235              		.syntax unified
+ 236              		.thumb
+ 237              		.thumb_func
+ 238              		.fpu fpv4-sp-d16
+ 240              	UART5_IRQHandler:
+ 241              	.LFB140:
+ 209:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+ 210:Src/stm32f4xx_it.c **** 
+ 211:Src/stm32f4xx_it.c ****   /* USER CODE END EXTI15_10_IRQn 1 */
+ 212:Src/stm32f4xx_it.c **** }
+ 213:Src/stm32f4xx_it.c **** 
+ 214:Src/stm32f4xx_it.c **** /**
+ 215:Src/stm32f4xx_it.c ****   * @brief This function handles UART5 global interrupt.
+ 216:Src/stm32f4xx_it.c ****   */
+ 217:Src/stm32f4xx_it.c **** void UART5_IRQHandler(void)
+ 218:Src/stm32f4xx_it.c **** {
+ 242              		.loc 1 218 0
+ 243              		.cfi_startproc
+ 244              		@ args = 0, pretend = 0, frame = 0
+ 245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 246 0000 08B5     		push	{r3, lr}
+ 247              	.LCFI2:
+ 248              		.cfi_def_cfa_offset 8
+ 249              		.cfi_offset 3, -8
+ 250              		.cfi_offset 14, -4
+ 219:Src/stm32f4xx_it.c ****   /* USER CODE BEGIN UART5_IRQn 0 */
+ 220:Src/stm32f4xx_it.c **** 
+ 221:Src/stm32f4xx_it.c ****   /* USER CODE END UART5_IRQn 0 */
+ 222:Src/stm32f4xx_it.c ****   HAL_UART_IRQHandler(&huart5);
+ 251              		.loc 1 222 0
+ 252 0002 0248     		ldr	r0, .L19
+ 253 0004 FFF7FEFF 		bl	HAL_UART_IRQHandler
+ 254              	.LVL2:
+ 255 0008 08BD     		pop	{r3, pc}
+ARM GAS  /tmp/ccNZVp6R.s 			page 9
+
+
+ 256              	.L20:
+ 257 000a 00BF     		.align	2
+ 258              	.L19:
+ 259 000c 00000000 		.word	huart5
+ 260              		.cfi_endproc
+ 261              	.LFE140:
+ 263              		.text
+ 264              	.Letext0:
+ 265              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 266              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 267              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 268              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 269              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 270              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 271              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 272              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 273              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 274              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  /tmp/ccNZVp6R.s 			page 10
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_it.c
-     /tmp/cc1DHUbh.s:18     .text.NMI_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:25     .text.NMI_Handler:0000000000000000 NMI_Handler
-     /tmp/cc1DHUbh.s:38     .text.HardFault_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:45     .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/cc1DHUbh.s:59     .text.MemManage_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:66     .text.MemManage_Handler:0000000000000000 MemManage_Handler
-     /tmp/cc1DHUbh.s:80     .text.BusFault_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:87     .text.BusFault_Handler:0000000000000000 BusFault_Handler
-     /tmp/cc1DHUbh.s:101    .text.UsageFault_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:108    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
-     /tmp/cc1DHUbh.s:122    .text.SVC_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:129    .text.SVC_Handler:0000000000000000 SVC_Handler
-     /tmp/cc1DHUbh.s:141    .text.DebugMon_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:148    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
-     /tmp/cc1DHUbh.s:160    .text.PendSV_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:167    .text.PendSV_Handler:0000000000000000 PendSV_Handler
-     /tmp/cc1DHUbh.s:179    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:186    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/cc1DHUbh.s:206    .text.EXTI15_10_IRQHandler:0000000000000000 $t
-     /tmp/cc1DHUbh.s:213    .text.EXTI15_10_IRQHandler:0000000000000000 EXTI15_10_IRQHandler
+     /tmp/ccNZVp6R.s:18     .text.NMI_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:25     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/ccNZVp6R.s:38     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:45     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/ccNZVp6R.s:59     .text.MemManage_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:66     .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/ccNZVp6R.s:80     .text.BusFault_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:87     .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/ccNZVp6R.s:101    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:108    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/ccNZVp6R.s:122    .text.SVC_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:129    .text.SVC_Handler:0000000000000000 SVC_Handler
+     /tmp/ccNZVp6R.s:141    .text.DebugMon_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:148    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/ccNZVp6R.s:160    .text.PendSV_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:167    .text.PendSV_Handler:0000000000000000 PendSV_Handler
+     /tmp/ccNZVp6R.s:179    .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:186    .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccNZVp6R.s:206    .text.EXTI15_10_IRQHandler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:213    .text.EXTI15_10_IRQHandler:0000000000000000 EXTI15_10_IRQHandler
+     /tmp/ccNZVp6R.s:233    .text.UART5_IRQHandler:0000000000000000 $t
+     /tmp/ccNZVp6R.s:240    .text.UART5_IRQHandler:0000000000000000 UART5_IRQHandler
+     /tmp/ccNZVp6R.s:259    .text.UART5_IRQHandler:000000000000000c $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
 HAL_IncTick
 HAL_GPIO_EXTI_IRQHandler
+HAL_UART_IRQHandler
+huart5

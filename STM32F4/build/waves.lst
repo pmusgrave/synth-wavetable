@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccbQX36c.s 			page 1
+ARM GAS  /tmp/ccisfGSv.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
   39              		.cfi_def_cfa_offset 16
   40              		.cfi_offset 3, -16
   41              		.cfi_offset 4, -12
-ARM GAS  /tmp/ccbQX36c.s 			page 2
+ARM GAS  /tmp/ccisfGSv.s 			page 2
 
 
   42              		.cfi_offset 5, -8
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
   88              	.LVL10:
   89              	.L6:
   90              		.align	3
-ARM GAS  /tmp/ccbQX36c.s 			page 3
+ARM GAS  /tmp/ccisfGSv.s 			page 3
 
 
   91              	.L5:
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  141 001a C3EB0321 		rsb	r1, r3, r3, lsl #8
  142 001e 0A46     		mov	r2, r1
  143 0020 0029     		cmp	r1, #0
-ARM GAS  /tmp/ccbQX36c.s 			page 4
+ARM GAS  /tmp/ccisfGSv.s 			page 4
 
 
  144 0022 F3DA     		bge	.L9
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  193 000e 4254     		strb	r2, [r0, r1]
   32:Src/waves.c   ****   for(int i = 0; i < SAMPLE_SIZE; i++){
  194              		.loc 1 32 0 discriminator 3
-ARM GAS  /tmp/ccbQX36c.s 			page 5
+ARM GAS  /tmp/ccisfGSv.s 			page 5
 
 
  195 0010 0133     		adds	r3, r3, #1
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  246 0004 02E0     		b	.L26
  247              	.LVL19:
  248              	.L27:
-ARM GAS  /tmp/ccbQX36c.s 			page 6
+ARM GAS  /tmp/ccisfGSv.s 			page 6
 
 
   39:Src/waves.c   ****     buffer[i] = (AMPLITUDE * 2*i)/SAMPLE_SIZE;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  295              	.L34:
  296              	.LBE9:
   43:Src/waves.c   ****   }
-ARM GAS  /tmp/ccbQX36c.s 			page 7
+ARM GAS  /tmp/ccisfGSv.s 			page 7
 
 
   44:Src/waves.c   **** }
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  341 0014 F6DA     		bge	.L37
   49:Src/waves.c   ****     }
  342              		.loc 1 49 0
-ARM GAS  /tmp/ccbQX36c.s 			page 8
+ARM GAS  /tmp/ccisfGSv.s 			page 8
 
 
  343 0016 FF22     		movs	r2, #255
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  391              	.LVL30:
   61:Src/waves.c   ****         buffer[i] = sin(x) * 126 + 126;
  392              		.loc 1 61 0 discriminator 3
-ARM GAS  /tmp/ccbQX36c.s 			page 9
+ARM GAS  /tmp/ccisfGSv.s 			page 9
 
 
  393 0018 41EC100B 		vmov	d0, r0, r1
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  443 0000 08B5     		push	{r3, lr}
  444              	.LCFI8:
  445              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/ccbQX36c.s 			page 10
+ARM GAS  /tmp/ccisfGSv.s 			page 10
 
 
  446              		.cfi_offset 3, -8
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  497 0000 0000803D 		.word	1031798784
  498              		.text
  499              	.Letext0:
-ARM GAS  /tmp/ccbQX36c.s 			page 11
+ARM GAS  /tmp/ccisfGSv.s 			page 11
 
 
  500              		.file 2 "/usr/include/newlib/machine/_default_types.h"
@@ -618,36 +618,36 @@ ARM GAS  /tmp/ccbQX36c.s 			page 1
  514              		.file 16 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
  515              		.file 17 "Inc/globals.h"
  516              		.file 18 "/usr/include/newlib/math.h"
-ARM GAS  /tmp/ccbQX36c.s 			page 12
+ARM GAS  /tmp/ccisfGSv.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 waves.c
-     /tmp/ccbQX36c.s:22     .text.generate_base_sine:0000000000000000 $t
-     /tmp/ccbQX36c.s:29     .text.generate_base_sine:0000000000000000 generate_base_sine
-     /tmp/ccbQX36c.s:92     .text.generate_base_sine:0000000000000048 $d
-     /tmp/ccbQX36c.s:100    .text.generate_base_pos_saw:0000000000000000 $t
-     /tmp/ccbQX36c.s:107    .text.generate_base_pos_saw:0000000000000000 generate_base_pos_saw
-     /tmp/ccbQX36c.s:161    .text.generate_base_neg_saw:0000000000000000 $t
-     /tmp/ccbQX36c.s:168    .text.generate_base_neg_saw:0000000000000000 generate_base_neg_saw
-     /tmp/ccbQX36c.s:223    .text.generate_base_tri:0000000000000000 $t
-     /tmp/ccbQX36c.s:230    .text.generate_base_tri:0000000000000000 generate_base_tri
-     /tmp/ccbQX36c.s:307    .text.generate_base_sq:0000000000000000 $t
-     /tmp/ccbQX36c.s:314    .text.generate_base_sq:0000000000000000 generate_base_sq
-     /tmp/ccbQX36c.s:354    .text.generate_lfo_sine:0000000000000000 $t
-     /tmp/ccbQX36c.s:361    .text.generate_lfo_sine:0000000000000000 generate_lfo_sine
-     /tmp/ccbQX36c.s:423    .text.generate_lfo_sine:0000000000000048 $d
-     /tmp/ccbQX36c.s:430    .text.init_wavetable:0000000000000000 $t
-     /tmp/ccbQX36c.s:437    .text.init_wavetable:0000000000000000 init_wavetable
-     /tmp/ccbQX36c.s:476    .text.init_wavetable:0000000000000028 $d
+     /tmp/ccisfGSv.s:22     .text.generate_base_sine:0000000000000000 $t
+     /tmp/ccisfGSv.s:29     .text.generate_base_sine:0000000000000000 generate_base_sine
+     /tmp/ccisfGSv.s:92     .text.generate_base_sine:0000000000000048 $d
+     /tmp/ccisfGSv.s:100    .text.generate_base_pos_saw:0000000000000000 $t
+     /tmp/ccisfGSv.s:107    .text.generate_base_pos_saw:0000000000000000 generate_base_pos_saw
+     /tmp/ccisfGSv.s:161    .text.generate_base_neg_saw:0000000000000000 $t
+     /tmp/ccisfGSv.s:168    .text.generate_base_neg_saw:0000000000000000 generate_base_neg_saw
+     /tmp/ccisfGSv.s:223    .text.generate_base_tri:0000000000000000 $t
+     /tmp/ccisfGSv.s:230    .text.generate_base_tri:0000000000000000 generate_base_tri
+     /tmp/ccisfGSv.s:307    .text.generate_base_sq:0000000000000000 $t
+     /tmp/ccisfGSv.s:314    .text.generate_base_sq:0000000000000000 generate_base_sq
+     /tmp/ccisfGSv.s:354    .text.generate_lfo_sine:0000000000000000 $t
+     /tmp/ccisfGSv.s:361    .text.generate_lfo_sine:0000000000000000 generate_lfo_sine
+     /tmp/ccisfGSv.s:423    .text.generate_lfo_sine:0000000000000048 $d
+     /tmp/ccisfGSv.s:430    .text.init_wavetable:0000000000000000 $t
+     /tmp/ccisfGSv.s:437    .text.init_wavetable:0000000000000000 init_wavetable
+     /tmp/ccisfGSv.s:476    .text.init_wavetable:0000000000000028 $d
                             *COM*:0000000000001000 base_sine
                             *COM*:0000000000001000 base_pos_saw
                             *COM*:0000000000001000 base_neg_saw
                             *COM*:0000000000001000 base_tri
                             *COM*:0000000000001000 base_sq
                             *COM*:0000000000000100 lfo_sine
-     /tmp/ccbQX36c.s:496    .rodata.inv_voices:0000000000000000 inv_voices
-     /tmp/ccbQX36c.s:493    .rodata.inv_voices:0000000000000000 $d
+     /tmp/ccisfGSv.s:496    .rodata.inv_voices:0000000000000000 inv_voices
+     /tmp/ccisfGSv.s:493    .rodata.inv_voices:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

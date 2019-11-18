@@ -51,10 +51,11 @@
 /* Private variables ---------------------------------------------------------*/
 SPI_HandleTypeDef hspi5;
 
+UART_HandleTypeDef huart5;
 UART_HandleTypeDef huart1;
 
 /* USER CODE BEGIN PV */
-
+uint8_t uart_tx_data = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -62,7 +63,9 @@ void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_UART5_Init(void);
 /* USER CODE BEGIN PFP */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 void handle_byte_queue();
 void handle_midi_queue();
 /* USER CODE END PFP */
@@ -81,7 +84,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-
+  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -101,8 +104,9 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_SPI5_Init();
+  //MX_SPI5_Init();
   MX_USART1_UART_Init();
+  MX_UART5_Init();
   /* USER CODE BEGIN 2 */
   uint8_t init_msg[20] = {"\nSTM32F429!\n"};
   HAL_UART_Transmit(&huart1, init_msg, 20, 50);
@@ -117,10 +121,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    uint8_t byte = SPI_ReceiveByte();
-    if(byte != 0){
-      enqueue_byte(byte);
-    }
+    // uint8_t byte = SPI_ReceiveByte();
+    HAL_UART_Receive_IT(&huart5, &uart_tx_data, 1);
+
+    
     handle_byte_queue();
     handle_midi_queue();
   }
@@ -204,6 +208,39 @@ static void MX_SPI5_Init(void)
   /* USER CODE BEGIN SPI5_Init 2 */
 
   /* USER CODE END SPI5_Init 2 */
+
+}
+
+/**
+  * @brief UART5 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_UART5_Init(void)
+{
+
+  /* USER CODE BEGIN UART5_Init 0 */
+
+  /* USER CODE END UART5_Init 0 */
+
+  /* USER CODE BEGIN UART5_Init 1 */
+
+  /* USER CODE END UART5_Init 1 */
+  huart5.Instance = UART5;
+  huart5.Init.BaudRate = 9600;
+  huart5.Init.WordLength = UART_WORDLENGTH_8B;
+  huart5.Init.StopBits = UART_STOPBITS_1;
+  huart5.Init.Parity = UART_PARITY_NONE;
+  huart5.Init.Mode = UART_MODE_TX_RX;
+  huart5.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart5.Init.OverSampling = UART_OVERSAMPLING_16;
+  if (HAL_UART_Init(&huart5) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN UART5_Init 2 */
+
+  /* USER CODE END UART5_Init 2 */
 
 }
 
@@ -490,10 +527,17 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+  // HAL_UART_Transmit(&huart1, &uart_tx_data, 1, 50);
+  if(uart_tx_data != 0 && uart_tx_data != '\n'){
+    enqueue_byte(uart_tx_data);
+  }
+}
+
 void handle_byte_queue() {
   // probably need to refactor these SPI flags
-  //static uint8_t note_on_flag;
-  //static uint8_t note_off_flag;
+  static uint8_t note_on_flag;
+  static uint8_t note_off_flag;
   static uint8_t attack_cc_flag;
   static uint8_t decay_cc_flag;
   static uint8_t sustain_cc_flag;
@@ -502,8 +546,9 @@ void handle_byte_queue() {
   if(spi_byte_queue.head != spi_byte_queue.tail){
     uint8_t value = dequeue_byte();
     uint8_t skip_command = 0;
-    
-    //    uint8_t test = 0x60;
+
+    // HAL_UART_Transmit(&huart1, &value, 1, 50);
+
     if(attack_cc_flag) {
       attack_cc_flag = 0;
       struct midi_msg new_midi_msg =
@@ -552,6 +597,12 @@ void handle_byte_queue() {
       enqueue(new_midi_msg);
       skip_command = 1;
     }
+    else if(note_on_flag) {
+      note_on_flag = 0;
+    }
+    else if (note_off_flag) {
+      note_off_flag = 0;
+    }
 
     if(!skip_command){
       switch(value){
@@ -566,6 +617,12 @@ void handle_byte_queue() {
         break;
       case RELEASE_CC:
         release_cc_flag = 1;
+        break;
+      case MIDI_NOTE_ON:
+        note_on_flag = 1;
+        break;
+      case MIDI_NOTE_OFF:
+        note_off_flag = 1;
         break;
       }
     }
