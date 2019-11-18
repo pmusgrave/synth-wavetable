@@ -24,7 +24,8 @@ void ProcessSpiTx(uint8_t byte){
     // prevent missed MIDI messages for now.
     // the better solution is most likely a queue of MIDI messages 
     while(!complete){ 
-        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK)))// | RxDmaS_CHANNEL_MASK)))
+        if(0u == (CyDmaGetInterruptSourceMasked() ^ (SPI_RxDMA_CHANNEL_MASK))
+        && (SPI_slave_ready_Read() == 1u))// | RxDmaS_CHANNEL_MASK)))
         {
             /* Once asserted, interrupt bits remain high until cleared. */
             CyDmaClearInterruptSource(SPI_RxDMA_CHANNEL_MASK);// | RxDmaS_CHANNEL_MASK);

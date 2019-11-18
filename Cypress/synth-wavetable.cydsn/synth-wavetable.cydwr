@@ -27,6 +27,8 @@
       <Data key="0d776c25-0fda-4bff-af2b-9962432af301/8b77a6c4-10a0-4390-971c-672353e2a49c" value="USB_Dm" />
       <Data key="0d776c25-0fda-4bff-af2b-9962432af301/618a72fc-5ddd-4df5-958f-a3d55102db42" value="USB_Dp" />
       <Data key="2e1e8d66-1e7e-4cfe-bf79-eae640f97731" value="Codec_LRC" />
+      <Data key="3a00d41a-2f3a-4280-99c4-ccb5dfc3e640/23b8206d-1c77-4e61-be4a-b4037d5de5fc" value="UART_tx" />
+      <Data key="3a00d41a-2f3a-4280-99c4-ccb5dfc3e640/78e33e5d-45ea-4b75-88d5-73274e8a7ce4" value="UART_rx" />
       <Data key="3a98f313-e723-4116-abc2-002c80b3388d" value="Green_LED" />
       <Data key="3dbba19d-7851-4a83-b204-a0a386fe8d68/5382e105-1382-4a2e-b9f4-3bb2feba71e0" value="CodecI2CM_sda" />
       <Data key="3dbba19d-7851-4a83-b204-a0a386fe8d68/22863ebe-a37b-476f-b252-6e49a8c00b12" value="CodecI2CM_scl" />
@@ -39,6 +41,7 @@
       <Data key="8c8734ef-3644-4eed-bc55-360072b94fff/ed092b9b-d398-4703-be89-cebf998501f6" value="SPI_mosi_m" />
       <Data key="8c9622c4-ba43-4dcc-95ad-94958b1124ce" value="pot3" />
       <Data key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba" value="trigger" />
+      <Data key="8ebe09cf-65d1-4af9-aa81-2aea42d4fd99" value="SPI_slave_ready" />
       <Data key="9e4b187c-325d-48af-a51b-a1872d68ab71" value="spi_sclk" />
       <Data key="9eb29715-ad55-476d-a248-e455e5881393" value="new_sample" />
       <Data key="15c910bf-7a74-4802-ba5e-e3c6d6f9142e" value="pot2" />
@@ -52,7 +55,7 @@
       <Data key="70748048-42c3-4141-a1d8-dbd9c85a61dc" value="wr_en" />
       <Data key="77715107-f8d5-47e5-a629-0fb83101ac6b" value="pot1" />
       <Data key="aa76144b-bc0b-4c4b-9d8e-31ea7d3defff" value="spi_miso" />
-      <Data key="c054cd9a-6eda-4d4d-a221-bbb2b6397dc2" value="CTS" />
+      <Data key="c054cd9a-6eda-4d4d-a221-bbb2b6397dc2" value="SPI_start" />
       <Data key="cf25cc6f-d208-4020-b61a-99a306f71ed4" value="pot4" />
       <Data key="de616092-3627-4d1c-9049-719cec881e0a" value="Codec_ADCDAT" />
       <Data key="e522a7e0-f158-49d3-97a2-db5d8ba4d077" value="spi_mosi" />
@@ -3928,6 +3931,16 @@
         <Data key="Port Format" value="3,5" />
       </Group>
     </Group>
+    <Group key="3a00d41a-2f3a-4280-99c4-ccb5dfc3e640/23b8206d-1c77-4e61-be4a-b4037d5de5fc">
+      <Group key="0">
+        <Data key="Port Format" value="6,1" />
+      </Group>
+    </Group>
+    <Group key="3a00d41a-2f3a-4280-99c4-ccb5dfc3e640/78e33e5d-45ea-4b75-88d5-73274e8a7ce4">
+      <Group key="0">
+        <Data key="Port Format" value="6,0" />
+      </Group>
+    </Group>
     <Group key="3a98f313-e723-4116-abc2-002c80b3388d">
       <Group key="0">
         <Data key="Port Format" value="5,3" />
@@ -3971,6 +3984,11 @@
     <Group key="8d318d8b-cf7b-4b6b-b02c-ab1c5c49d0ba">
       <Group key="0">
         <Data key="Port Format" value="0,7" />
+      </Group>
+    </Group>
+    <Group key="8ebe09cf-65d1-4af9-aa81-2aea42d4fd99">
+      <Group key="0">
+        <Data key="Port Format" value="3,7" />
       </Group>
     </Group>
     <Group key="9e4b187c-325d-48af-a51b-a1872d68ab71">

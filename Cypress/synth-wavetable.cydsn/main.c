@@ -25,6 +25,7 @@ int main() {
     ADC_StartConvert();
     isr_ADC_EOC_StartEx(ADC_EOC);
     
+    UART_Start();
     SpiInit();
     
     // Init USB and MIDI
@@ -55,7 +56,8 @@ int main() {
 
     uint8_t init_msg[14] = {"Hello world!\n"};
     for(int i = 0; i < 14; i++){
-        ProcessSpiTx(init_msg[i]);   
+        //ProcessSpiTx(init_msg[i]);   
+        UART_UartPutChar(init_msg[i]);
     }
     
     for(;;) {
@@ -64,31 +66,43 @@ int main() {
         if(trigger_flag) {
             if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
                 struct midi_msg current_msg = dequeue();
-                ProcessSpiTx(current_msg.byte0);
-                ProcessSpiTx(current_msg.byte1);
-                ProcessSpiTx(current_msg.byte2);
-                ProcessSpiTx(' ');
+                UART_UartPutChar(current_msg.byte0);
+                UART_UartPutChar(current_msg.byte1);
+                UART_UartPutChar(current_msg.byte2);
+                UART_UartPutChar(' ');
+                //ProcessSpiTx(current_msg.byte0);
+                //ProcessSpiTx(current_msg.byte1);
+                //ProcessSpiTx(current_msg.byte2);
+                //ProcessSpiTx(' ');
             }
             else {
+                UART_UartPutChar('\n');
+                //ProcessSpiTx('\n');
                 for(int i = 0; i < 14; i++){
-                    ProcessSpiTx(init_msg[i]);   
+                    UART_UartPutChar(init_msg[i]);
+                    //ProcessSpiTx(init_msg[i]);   
                 }
             }
         }
         else{
             for(int i = 0; i < 15; i++){
-                ProcessSpiTx(init_msg[i]);
+                UART_UartPutChar(init_msg[i]);
+                //ProcessSpiTx(init_msg[i]);
                 CyDelay(2);
             }
             
             if((midi_msg_queue.head != midi_msg_queue.tail)){// && (CTS_Read() == 0)){
                 struct midi_msg current_msg = dequeue();
-                ProcessSpiTx(current_msg.byte0);
-                ProcessSpiTx(current_msg.byte1);
-                ProcessSpiTx(current_msg.byte2);
+                UART_UartPutChar(current_msg.byte0);
+                UART_UartPutChar(current_msg.byte1);
+                UART_UartPutChar(current_msg.byte2);
+                //ProcessSpiTx(current_msg.byte0);
+                //ProcessSpiTx(current_msg.byte1);
+                //ProcessSpiTx(current_msg.byte2);
             }
             else {
-                ProcessSpiTx('\n');
+                UART_UartPutChar('\n');
+                //ProcessSpiTx('\n');
                 enqueue(test0);
                 enqueue(test1);
                 enqueue(test2);
