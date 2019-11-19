@@ -820,4 +820,45 @@ Wire Wire Line
 Connection ~ 5000 2200
 Text Notes 4850 3150 0    50   ~ 0
 Is this necessary anymore?
+$Comp
+L Connector_Generic:Conn_01x04 J?
+U 1 1 5DD96E79
+P 7900 2650
+F 0 "J?" H 7979 2642 50  0000 L CNN
+F 1 "USB" H 7979 2551 50  0000 L CNN
+F 2 "" H 7900 2650 50  0001 C CNN
+F 3 "~" H 7900 2650 50  0001 C CNN
+	1    7900 2650
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR?
+U 1 1 5DD970B4
+P 7700 2550
+F 0 "#PWR?" H 7700 2400 50  0001 C CNN
+F 1 "+5V" H 7715 2723 50  0000 C CNN
+F 2 "" H 7700 2550 50  0001 C CNN
+F 3 "" H 7700 2550 50  0001 C CNN
+	1    7700 2550
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DD9B64B
+P 7700 2850
+F 0 "#PWR?" H 7700 2600 50  0001 C CNN
+F 1 "GNDD" H 7704 2695 50  0000 C CNN
+F 2 "" H 7700 2850 50  0001 C CNN
+F 3 "" H 7700 2850 50  0001 C CNN
+	1    7700 2850
+	1    0    0    -1  
+$EndComp
+Text Label 7700 2650 2    50   ~ 0
+USB_D_N
+Text Label 7700 2750 2    50   ~ 0
+USB_D_P
+Text Label 1600 2800 2    50   ~ 0
+USB_D_N
+Text Label 1600 2900 2    50   ~ 0
+USB_D_P
 $EndSCHEMATC
