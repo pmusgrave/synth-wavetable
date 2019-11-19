@@ -1,4 +1,7 @@
 EESchema Schematic File Version 4
+LIBS:power
+LIBS:74xx
+LIBS:synth_psoc-cache
 EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
@@ -14,7 +17,7 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L power:+15V #PWR017
+L +15V #PWR017
 U 1 1 5C3922F5
 P 2700 1500
 F 0 "#PWR017" H 2700 1350 50  0001 C CNN
@@ -27,7 +30,7 @@ $EndComp
 Text Notes 1250 1200 0    60   ~ 0
 Check wall wart \npolarity vs DC barrel \njack pinout
 $Comp
-L power:GND #PWR018
+L GND #PWR018
 U 1 1 5C39231B
 P 2150 1750
 F 0 "#PWR018" H 2150 1500 50  0001 C CNN
@@ -79,7 +82,7 @@ F 3 "" H 1900 3400 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR019
+L GND #PWR019
 U 1 1 5C392477
 P 1550 3500
 F 0 "#PWR019" H 1550 3250 50  0001 C CNN
@@ -90,7 +93,7 @@ F 3 "" H 1550 3500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR020
+L GND #PWR020
 U 1 1 5C392498
 P 1900 3500
 F 0 "#PWR020" H 1900 3250 50  0001 C CNN
@@ -101,7 +104,7 @@ F 3 "" H 1900 3500 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:+15V #PWR021
+L +15V #PWR021
 U 1 1 5C3924B7
 P 1550 2800
 F 0 "#PWR021" H 1550 2650 50  0001 C CNN
@@ -139,7 +142,7 @@ Wire Wire Line
 Wire Wire Line
 	4700 2750 4950 2750
 $Comp
-L power:+15V #PWR022
+L +15V #PWR022
 U 1 1 5C392EAE
 P 4700 2650
 F 0 "#PWR022" H 4700 2500 50  0001 C CNN
@@ -151,7 +154,7 @@ F 3 "" H 4700 2650 50  0001 C CNN
 $EndComp
 Connection ~ 4700 2750
 $Comp
-L power:GND #PWR023
+L GND #PWR023
 U 1 1 5C392EE5
 P 4700 3050
 F 0 "#PWR023" H 4700 2800 50  0001 C CNN
@@ -162,7 +165,7 @@ F 3 "" H 4700 3050 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR024
+L GND #PWR024
 U 1 1 5C392F13
 P 5350 3150
 F 0 "#PWR024" H 5350 2900 50  0001 C CNN
@@ -184,7 +187,7 @@ F 3 "" H 5950 3000 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR025
+L GND #PWR025
 U 1 1 5C393000
 P 5950 3100
 F 0 "#PWR025" H 5950 2850 50  0001 C CNN
@@ -195,7 +198,7 @@ F 3 "" H 5950 3100 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L power:GND #PWR026
+L GND #PWR026
 U 1 1 5C39BA81
 P 2200 2550
 F 0 "#PWR026" H 2200 2300 50  0001 C CNN
@@ -206,7 +209,7 @@ F 3 "" H 2200 2550 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L power:+15V #PWR027
+L +15V #PWR027
 U 1 1 5C39BAA7
 P 2200 3150
 F 0 "#PWR027" H 2200 3000 50  0001 C CNN
@@ -276,7 +279,7 @@ Wire Wire Line
 Wire Wire Line
 	5950 2600 5950 2750
 $Comp
-L power:+5V #PWR028
+L +5V #PWR028
 U 1 1 5C548CA8
 P 5950 2600
 F 0 "#PWR028" H 5950 2450 50  0001 C CNN
