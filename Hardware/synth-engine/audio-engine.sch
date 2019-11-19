@@ -311,5 +311,359 @@ Wire Wire Line
 	5000 1250 5000 1400
 Connection ~ 5000 1250
 Wire Wire Line
-	5000 1250 5150 1250
+	5000 1250 5100 1250
+$Comp
+L power:+3.3VA #PWR?
+U 1 1 5DDA723F
+P 2000 2200
+F 0 "#PWR?" H 2000 2050 50  0001 C CNN
+F 1 "+3.3VA" V 2015 2327 50  0000 L CNN
+F 2 "" H 2000 2200 50  0001 C CNN
+F 3 "" H 2000 2200 50  0001 C CNN
+	1    2000 2200
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:+3.3VA #PWR?
+U 1 1 5DDA7288
+P 1900 950
+F 0 "#PWR?" H 1900 800 50  0001 C CNN
+F 1 "+3.3VA" H 1915 1123 50  0000 C CNN
+F 2 "" H 1900 950 50  0001 C CNN
+F 3 "" H 1900 950 50  0001 C CNN
+	1    1900 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDA72B4
+P 1150 950
+F 0 "#SUPPLY?" H 1150 950 50  0001 L BNN
+F 1 "3.3V" H 1150 1124 50  0000 C CNN
+F 2 "" H 1150 950 50  0001 C CNN
+F 3 "" H 1150 950 50  0001 C CNN
+	1    1150 950 
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Ferrite_Bead FB?
+U 1 1 5DDA73A6
+P 1500 950
+F 0 "FB?" V 1226 950 50  0000 C CNN
+F 1 "Ferrite_Bead" V 1317 950 50  0000 C CNN
+F 2 "" V 1430 950 50  0001 C CNN
+F 3 "~" H 1500 950 50  0001 C CNN
+	1    1500 950 
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1150 950  1350 950 
+Wire Wire Line
+	1900 950  1650 950 
+$Comp
+L Device:R R?
+U 1 1 5DDAA26E
+P 2150 2200
+F 0 "R?" V 1943 2200 50  0000 C CNN
+F 1 "R" V 2034 2200 50  0000 C CNN
+F 2 "" V 2080 2200 50  0001 C CNN
+F 3 "~" H 2150 2200 50  0001 C CNN
+	1    2150 2200
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDACB1D
+P 2700 2350
+F 0 "C?" H 2550 2400 50  0000 L CNN
+F 1 "0.1uF" H 2450 2300 50  0000 L CNN
+F 2 "" H 2700 2350 50  0001 C CNN
+F 3 "~" H 2700 2350 50  0001 C CNN
+	1    2700 2350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDACB23
+P 2550 2350
+F 0 "C?" H 2642 2396 50  0000 L CNN
+F 1 "1uF" H 2642 2305 50  0000 L CNN
+F 2 "" H 2550 2350 50  0001 C CNN
+F 3 "~" H 2550 2350 50  0001 C CNN
+	1    2550 2350
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDACB29
+P 2700 2450
+F 0 "#PWR?" H 2700 2200 50  0001 C CNN
+F 1 "GND" H 2705 2277 50  0000 C CNN
+F 2 "" H 2700 2450 50  0001 C CNN
+F 3 "" H 2700 2450 50  0001 C CNN
+	1    2700 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDACB2F
+P 2550 2450
+F 0 "#PWR?" H 2550 2200 50  0001 C CNN
+F 1 "GND" H 2555 2277 50  0000 C CNN
+F 2 "" H 2550 2450 50  0001 C CNN
+F 3 "" H 2550 2450 50  0001 C CNN
+	1    2550 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 2200 2700 2200
+Wire Wire Line
+	2550 2250 2550 2200
+Connection ~ 2550 2200
+Wire Wire Line
+	2550 2200 2300 2200
+Wire Wire Line
+	2700 2250 2700 2200
+Connection ~ 2700 2200
+Wire Wire Line
+	2700 2200 2550 2200
+$Comp
+L Device:C_Small C?
+U 1 1 5DDB17F3
+P 2700 2000
+F 0 "C?" H 2550 2050 50  0000 L CNN
+F 1 "0.1uF" H 2450 1950 50  0000 L CNN
+F 2 "" H 2700 2000 50  0001 C CNN
+F 3 "~" H 2700 2000 50  0001 C CNN
+	1    2700 2000
+	0    1    -1   0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDB18B5
+P 2700 2100
+F 0 "C?" H 2550 2150 50  0000 L CNN
+F 1 "0.1uF" H 2450 2050 50  0000 L CNN
+F 2 "" H 2700 2100 50  0001 C CNN
+F 3 "~" H 2700 2100 50  0001 C CNN
+	1    2700 2100
+	0    1    -1   0   
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDB1DF3
+P 2600 2100
+F 0 "#PWR?" H 2600 1850 50  0001 C CNN
+F 1 "GNDD" V 2604 1990 50  0000 R CNN
+F 2 "" H 2600 2100 50  0001 C CNN
+F 3 "" H 2600 2100 50  0001 C CNN
+	1    2600 2100
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDB43C0
+P 2600 2000
+F 0 "#PWR?" H 2600 1750 50  0001 C CNN
+F 1 "GNDD" V 2604 1890 50  0000 R CNN
+F 2 "" H 2600 2000 50  0001 C CNN
+F 3 "" H 2600 2000 50  0001 C CNN
+	1    2600 2000
+	0    1    1    0   
+$EndComp
+$Comp
+L power:+3.3VA #PWR?
+U 1 1 5DDB5916
+P 5100 1150
+F 0 "#PWR?" H 5100 1000 50  0001 C CNN
+F 1 "+3.3VA" H 5115 1323 50  0000 C CNN
+F 2 "" H 5100 1150 50  0001 C CNN
+F 3 "" H 5100 1150 50  0001 C CNN
+	1    5100 1150
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5100 1150 5100 1250
+Connection ~ 5100 1250
+Wire Wire Line
+	5100 1250 5150 1250
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDB839A
+P 1450 1450
+F 0 "#SUPPLY?" H 1450 1450 50  0001 L BNN
+F 1 "3.3V" H 1450 1624 50  0000 C CNN
+F 2 "" H 1450 1450 50  0001 C CNN
+F 3 "" H 1450 1450 50  0001 C CNN
+	1    1450 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDB844F
+P 1450 2150
+F 0 "#PWR?" H 1450 1900 50  0001 C CNN
+F 1 "GNDD" H 1454 1995 50  0000 C CNN
+F 2 "" H 1450 2150 50  0001 C CNN
+F 3 "" H 1450 2150 50  0001 C CNN
+	1    1450 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDB848D
+P 1450 1600
+F 0 "R?" H 1380 1554 50  0000 R CNN
+F 1 "10k" H 1380 1645 50  0000 R CNN
+F 2 "" V 1380 1600 50  0001 C CNN
+F 3 "~" H 1450 1600 50  0001 C CNN
+	1    1450 1600
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDB921F
+P 1450 2000
+F 0 "R?" H 1380 1954 50  0000 R CNN
+F 1 "10k" H 1380 2045 50  0000 R CNN
+F 2 "" V 1380 2000 50  0001 C CNN
+F 3 "~" H 1450 2000 50  0001 C CNN
+	1    1450 2000
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2800 1800 1450 1800
+Wire Wire Line
+	1450 1750 1450 1800
+Wire Wire Line
+	1450 1800 1450 1850
+Connection ~ 1450 1800
+Text Notes 650  1850 0    50   ~ 0
+only populate one\nof these resistors\nduring production
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDC2F64
+P 5000 3150
+F 0 "#SUPPLY?" H 5000 3150 50  0001 L BNN
+F 1 "3.3V" H 5000 3324 50  0000 C CNN
+F 2 "" H 5000 3150 50  0001 C CNN
+F 3 "" H 5000 3150 50  0001 C CNN
+	1    5000 3150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDC2F6A
+P 5000 3850
+F 0 "#PWR?" H 5000 3600 50  0001 C CNN
+F 1 "GNDD" H 5004 3695 50  0000 C CNN
+F 2 "" H 5000 3850 50  0001 C CNN
+F 3 "" H 5000 3850 50  0001 C CNN
+	1    5000 3850
+	-1   0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDC2F70
+P 5000 3300
+F 0 "R?" H 4930 3254 50  0000 R CNN
+F 1 "10k" H 4930 3345 50  0000 R CNN
+F 2 "" V 4930 3300 50  0001 C CNN
+F 3 "~" H 5000 3300 50  0001 C CNN
+	1    5000 3300
+	-1   0    0    1   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDC2F76
+P 5000 3700
+F 0 "R?" H 4930 3654 50  0000 R CNN
+F 1 "10k" H 4930 3745 50  0000 R CNN
+F 2 "" V 4930 3700 50  0001 C CNN
+F 3 "~" H 5000 3700 50  0001 C CNN
+	1    5000 3700
+	-1   0    0    1   
+$EndComp
+Text Notes 5950 3600 2    50   ~ 0
+only populate one\nof these resistors\nduring production
+Wire Wire Line
+	5000 3450 5000 3500
+Connection ~ 5000 3500
+Wire Wire Line
+	5000 3500 5000 3550
+$Comp
+L Connector_Generic:Conn_01x06 J?
+U 1 1 5DDCAD2A
+P 6450 2550
+F 0 "J?" H 6370 2967 50  0000 C CNN
+F 1 "SWD_JTAG" H 6370 2876 50  0000 C CNN
+F 2 "" H 6450 2550 50  0001 C CNN
+F 3 "~" H 6450 2550 50  0001 C CNN
+	1    6450 2550
+	1    0    0    -1  
+$EndComp
+Text Label 6250 2450 2    50   ~ 0
+SWCLK
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDD353D
+P 6250 2550
+F 0 "#PWR?" H 6250 2300 50  0001 C CNN
+F 1 "GNDD" V 6254 2440 50  0000 R CNN
+F 2 "" H 6250 2550 50  0001 C CNN
+F 3 "" H 6250 2550 50  0001 C CNN
+	1    6250 2550
+	0    1    -1   0   
+$EndComp
+Text Label 6250 2650 2    50   ~ 0
+SWDIO
+Text Label 6250 2750 2    50   ~ 0
+NRST
+Text Label 6250 2850 2    50   ~ 0
+SWO
+Text Label 6000 2350 2    50   ~ 0
+VDD_TARGET
+Wire Wire Line
+	6000 2350 6100 2350
+$Comp
+L Device:R R?
+U 1 1 5DDD5E0C
+P 6100 2050
+F 0 "R?" H 6170 2096 50  0000 L CNN
+F 1 "0" H 6170 2005 50  0000 L CNN
+F 2 "" V 6030 2050 50  0001 C CNN
+F 3 "~" H 6100 2050 50  0001 C CNN
+	1    6100 2050
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	6100 2200 6100 2350
+Connection ~ 6100 2350
+Wire Wire Line
+	6100 2350 6250 2350
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD6F5E
+P 6100 1900
+F 0 "#SUPPLY?" H 6100 1900 50  0001 L BNN
+F 1 "3.3V" H 6100 2074 50  0000 C CNN
+F 2 "" H 6100 1900 50  0001 C CNN
+F 3 "" H 6100 1900 50  0001 C CNN
+	1    6100 1900
+	-1   0    0    -1  
+$EndComp
+Text Label 4600 2900 0    50   ~ 0
+SWDIO
+Text Label 4600 3000 0    50   ~ 0
+SWCLK
+Text Label 4600 3100 0    50   ~ 0
+SWO
+Wire Wire Line
+	4600 3500 5000 3500
+Text Label 2800 1600 2    50   ~ 0
+NRST
+Text Label 4600 3600 0    50   ~ 0
+SWO
+Text Label 4600 3700 0    50   ~ 0
+NRST
 $EndSCHEMATC
