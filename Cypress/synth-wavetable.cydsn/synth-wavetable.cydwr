@@ -45,6 +45,7 @@
       <Data key="9e4b187c-325d-48af-a51b-a1872d68ab71" value="spi_sclk" />
       <Data key="9eb29715-ad55-476d-a248-e455e5881393" value="new_sample" />
       <Data key="15c910bf-7a74-4802-ba5e-e3c6d6f9142e" value="pot2" />
+      <Data key="22c7b936-394b-4226-8583-c06a01822d79" value="pot5" />
       <Data key="43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/23b8206d-1c77-4e61-be4a-b4037d5de5fc" value="UART_tx" />
       <Data key="81bdb20a-a1d8-4c6f-a19b-7ca5c1145873" value="spi_ss" />
       <Data key="92b3b3ef-4dfe-4e74-81f8-0a8f40d7dd48" value="pot4" />
@@ -3999,6 +4000,11 @@
     <Group key="15c910bf-7a74-4802-ba5e-e3c6d6f9142e">
       <Group key="0">
         <Data key="Port Format" value="9,2" />
+      </Group>
+    </Group>
+    <Group key="22c7b936-394b-4226-8583-c06a01822d79">
+      <Group key="0">
+        <Data key="Port Format" value="2,6" />
       </Group>
     </Group>
     <Group key="43ec2fa1-bf22-4b71-9477-b6ca7b97f0b0/23b8206d-1c77-4e61-be4a-b4037d5de5fc">

@@ -117,7 +117,8 @@ int main() {
             decay = ADC_GetResult16(1);
             sustain = ADC_GetResult16(2);
             release = ADC_GetResult16(3);
-
+            waveshape = ADC_GetResult16(4);
+            
             update_ADC_flag = 0;
         }
         
@@ -151,11 +152,18 @@ int main() {
                 0,
                 0
             };
+            struct midi_msg waveshape_cc = {
+                0x17,
+                (uint8_t)(waveshape>>4),
+                0,
+                0
+            };
             
             enqueue(attack_cc);
             enqueue(decay_cc);
             enqueue(sustain_cc);
             enqueue(release_cc);
+            enqueue(waveshape_cc);
             
             Green_LED_Write(~Green_LED_Read());
         }
