@@ -1,4 +1,4 @@
-update=Mon 18 Nov 2019 11:44:33 PM EST
+update=22/05/2015 07:44:53
 version=1
 last_client=kicad
 [general]
@@ -27,16 +27,7 @@ ModuleOutlineThickness=0.150000000000
 [cvpcb]
 version=1
 NetIExt=net
-[schematic_editor]
-version=1
-PageLayoutDescrFile=
-PlotDirectoryName=mcu.pdf
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=
-SpiceAjustPassiveValues=0
-LabSize=50
-ERC_TestSimilarLabels=1
 [eeschema]
 version=1
 LibDir=
+[eeschema/libraries]

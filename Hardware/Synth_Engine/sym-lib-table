@@ -1,3 +1,0 @@
-(sym_lib_table
-  (lib (name synth_psoc-cache)(type Legacy)(uri ${KIPRJMOD}/synth_psoc-cache.lib)(options "")(descr ""))
-)
