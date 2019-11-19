@@ -666,4 +666,102 @@ Text Label 4600 3600 0    50   ~ 0
 SWO
 Text Label 4600 3700 0    50   ~ 0
 NRST
+$Comp
+L Device:R R?
+U 1 1 5DDE8ED5
+P 1650 3250
+F 0 "R?" V 1443 3250 50  0000 C CNN
+F 1 "1MEG" V 1534 3250 50  0000 C CNN
+F 2 "" V 1580 3250 50  0001 C CNN
+F 3 "~" H 1650 3250 50  0001 C CNN
+	1    1650 3250
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDE8EDC
+P 1300 3800
+F 0 "C?" H 1392 3846 50  0000 L CNN
+F 1 "22pF" H 1392 3755 50  0000 L CNN
+F 2 "" H 1300 3800 50  0001 C CNN
+F 3 "~" H 1300 3800 50  0001 C CNN
+	1    1300 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDE8EE3
+P 1950 3800
+F 0 "C?" H 2042 3846 50  0000 L CNN
+F 1 "22pF" H 2042 3755 50  0000 L CNN
+F 2 "" H 1950 3800 50  0001 C CNN
+F 3 "~" H 1950 3800 50  0001 C CNN
+	1    1950 3800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:Crystal Y?
+U 1 1 5DDE8EEA
+P 1650 3600
+AR Path="/5DDBDEEA/5DDE8EEA" Ref="Y?"  Part="1" 
+AR Path="/5DDC7BB6/5DDE8EEA" Ref="Y?"  Part="1" 
+F 0 "Y?" H 1650 3868 50  0000 C CNN
+F 1 "16MHz" H 1650 3777 50  0000 C CNN
+F 2 "" H 1650 3600 50  0001 C CNN
+F 3 "~" H 1650 3600 50  0001 C CNN
+	1    1650 3600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1950 3700 1950 3600
+Wire Wire Line
+	1950 3250 1800 3250
+Wire Wire Line
+	1800 3600 1950 3600
+Connection ~ 1950 3600
+Wire Wire Line
+	1950 3600 1950 3250
+Wire Wire Line
+	1500 3250 1300 3250
+Wire Wire Line
+	1300 3250 1300 3600
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDE8EF8
+P 1300 3900
+F 0 "#PWR?" H 1300 3650 50  0001 C CNN
+F 1 "GNDD" H 1304 3745 50  0000 C CNN
+F 2 "" H 1300 3900 50  0001 C CNN
+F 3 "" H 1300 3900 50  0001 C CNN
+	1    1300 3900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDE8EFE
+P 1950 3900
+F 0 "#PWR?" H 1950 3650 50  0001 C CNN
+F 1 "GNDD" H 1954 3745 50  0000 C CNN
+F 2 "" H 1950 3900 50  0001 C CNN
+F 3 "" H 1950 3900 50  0001 C CNN
+	1    1950 3900
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1500 3600 1300 3600
+Connection ~ 1300 3600
+Wire Wire Line
+	1300 3600 1300 3700
+Wire Wire Line
+	1950 3100 1950 3250
+Connection ~ 1950 3250
+Connection ~ 1300 3250
+Text Notes 1150 4200 0    50   ~ 0
+Is this necessary?
+Wire Wire Line
+	2800 3100 1950 3100
+Wire Wire Line
+	2800 3000 1300 3000
+Wire Wire Line
+	1300 3000 1300 3250
 $EndSCHEMATC
