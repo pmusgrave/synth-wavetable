@@ -15,19 +15,19 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Sheet
-S 2550 3100 1350 1300
+S 3500 3450 1350 1300
 U 5DDBDEEA
 F0 "Control" 50
 F1 "control-mcu.sch" 50
 $EndSheet
 $Sheet
-S 4600 3150 1650 1400
+S 5050 3450 1350 1300
 U 5DDC7BB6
 F0 "Audio Engine" 50
 F1 "audio-engine.sch" 50
 $EndSheet
 $Sheet
-S 7450 3350 1300 1250
+S 6600 3450 1350 1300
 U 5DDC7E61
 F0 "Filter" 50
 F1 "filter.sch" 50

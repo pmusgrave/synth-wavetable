@@ -25,4 +25,496 @@ F 3 "http://www.soundsemiconductor.com/downloads/ssi2144datasheet.pdf" H 5550 34
 	1    4850 3700
 	1    0    0    -1  
 $EndComp
+$Comp
+L Device:R R?
+U 1 1 5DD462EE
+P 3500 2750
+F 0 "R?" V 3293 2750 50  0000 C CNN
+F 1 "68.1k" V 3384 2750 50  0000 C CNN
+F 2 "" V 3430 2750 50  0001 C CNN
+F 3 "~" H 3500 2750 50  0001 C CNN
+	1    3500 2750
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD463B6
+P 3800 2850
+F 0 "C?" H 3892 2896 50  0000 L CNN
+F 1 "3.3nF" H 3892 2805 50  0000 L CNN
+F 2 "" H 3800 2850 50  0001 C CNN
+F 3 "~" H 3800 2850 50  0001 C CNN
+	1    3800 2850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3800 2750 4250 2750
+Wire Wire Line
+	4250 2750 4250 2800
+Wire Wire Line
+	3800 2950 4250 2950
+Wire Wire Line
+	4250 2950 4250 2900
+$Comp
+L Device:C_Small C?
+U 1 1 5DD46595
+P 3950 4100
+F 0 "C?" H 4042 4146 50  0000 L CNN
+F 1 "560pF" H 4042 4055 50  0000 L CNN
+F 2 "" H 3950 4100 50  0001 C CNN
+F 3 "~" H 3950 4100 50  0001 C CNN
+	1    3950 4100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 4000 4250 4000
+Wire Wire Line
+	3950 4200 4250 4200
+$Comp
+L Device:C_Small C?
+U 1 1 5DD46723
+P 3950 3800
+F 0 "C?" H 4042 3846 50  0000 L CNN
+F 1 "6.8nF" H 4042 3755 50  0000 L CNN
+F 2 "" H 3950 3800 50  0001 C CNN
+F 3 "~" H 3950 3800 50  0001 C CNN
+	1    3950 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 3700 4250 3700
+Wire Wire Line
+	3950 3900 4250 3900
+$Comp
+L power:GND #PWR?
+U 1 1 5DD46AA0
+P 4850 4800
+F 0 "#PWR?" H 4850 4550 50  0001 C CNN
+F 1 "GND" H 4855 4627 50  0000 C CNN
+F 2 "" H 4850 4800 50  0001 C CNN
+F 3 "" H 4850 4800 50  0001 C CNN
+	1    4850 4800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4850 4800 4850 4700
+Text GLabel 5000 4800 2    50   Input ~ 0
+VREF
+Wire Wire Line
+	5000 4800 4950 4800
+Wire Wire Line
+	4950 4800 4950 4700
+$Comp
+L power:+15V #PWR?
+U 1 1 5DD46E4A
+P 4850 2600
+F 0 "#PWR?" H 4850 2450 50  0001 C CNN
+F 1 "+15V" H 4865 2773 50  0000 C CNN
+F 2 "" H 4850 2600 50  0001 C CNN
+F 3 "" H 4850 2600 50  0001 C CNN
+	1    4850 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD46F3D
+P 3950 3500
+F 0 "C?" H 4042 3546 50  0000 L CNN
+F 1 "6.8nF" H 4042 3455 50  0000 L CNN
+F 2 "" H 3950 3500 50  0001 C CNN
+F 3 "~" H 3950 3500 50  0001 C CNN
+	1    3950 3500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD46F65
+P 3950 3200
+F 0 "C?" H 4042 3246 50  0000 L CNN
+F 1 "6.8nF" H 4042 3155 50  0000 L CNN
+F 2 "" H 3950 3200 50  0001 C CNN
+F 3 "~" H 3950 3200 50  0001 C CNN
+	1    3950 3200
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3950 3100 4250 3100
+Wire Wire Line
+	3950 3300 4250 3300
+Wire Wire Line
+	3950 3400 4250 3400
+Wire Wire Line
+	3950 3600 4250 3600
+$Comp
+L Device:R R?
+U 1 1 5DD47650
+P 3500 2950
+F 0 "R?" V 3600 2950 50  0000 C CNN
+F 1 "200" V 3700 2950 50  0000 C CNN
+F 2 "" V 3430 2950 50  0001 C CNN
+F 3 "~" H 3500 2950 50  0001 C CNN
+	1    3500 2950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3650 2950 3800 2950
+Connection ~ 3800 2950
+$Comp
+L power:GND #PWR?
+U 1 1 5DD478B2
+P 3350 2950
+F 0 "#PWR?" H 3350 2700 50  0001 C CNN
+F 1 "GND" V 3355 2822 50  0000 R CNN
+F 2 "" H 3350 2950 50  0001 C CNN
+F 3 "" H 3350 2950 50  0001 C CNN
+	1    3350 2950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	3650 2750 3800 2750
+Connection ~ 3800 2750
+Text Label 3000 2750 0    50   ~ 0
+SIG_IN+
+Wire Wire Line
+	3000 2750 3350 2750
+$Comp
+L dk_Linear-Amplifiers-Instrumentation-OP-Amps-Buffer-Amps:TL074CN U?
+U 2 1 5DD486FE
+P 6400 3800
+F 0 "U?" H 6500 3900 60  0000 L CNN
+F 1 "TL074CN" H 6500 3650 60  0000 L CNN
+F 2 "digikey-footprints:DIP-14_W3mm" H 6600 4000 60  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 6600 4100 60  0001 L CNN
+F 4 "296-1777-5-ND" H 6600 4200 60  0001 L CNN "Digi-Key_PN"
+F 5 "TL074CN" H 6600 4300 60  0001 L CNN "MPN"
+F 6 "Integrated Circuits (ICs)" H 6600 4400 60  0001 L CNN "Category"
+F 7 "Linear - Amplifiers - Instrumentation, OP Amps, Buffer Amps" H 6600 4500 60  0001 L CNN "Family"
+F 8 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 6600 4600 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/texas-instruments/TL074CN/296-1777-5-ND/277423" H 6600 4700 60  0001 L CNN "DK_Detail_Page"
+F 10 "IC OPAMP JFET 3MHZ 14DIP" H 6600 4800 60  0001 L CNN "Description"
+F 11 "Texas Instruments" H 6600 4900 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 6600 5000 60  0001 L CNN "Status"
+	2    6400 3800
+	1    0    0    -1  
+$EndComp
+Text GLabel 5950 3900 0    50   Input ~ 0
+VREF
+Wire Wire Line
+	5950 3900 6100 3900
+$Comp
+L power:GND #PWR?
+U 1 1 5DD48C84
+P 6400 4000
+F 0 "#PWR?" H 6400 3750 50  0001 C CNN
+F 1 "GND" H 6405 3827 50  0000 C CNN
+F 2 "" H 6400 4000 50  0001 C CNN
+F 3 "" H 6400 4000 50  0001 C CNN
+	1    6400 4000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+15V #PWR?
+U 1 1 5DD48D38
+P 6400 3600
+F 0 "#PWR?" H 6400 3450 50  0001 C CNN
+F 1 "+15V" H 6415 3773 50  0000 C CNN
+F 2 "" H 6400 3600 50  0001 C CNN
+F 3 "" H 6400 3600 50  0001 C CNN
+	1    6400 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD48D91
+P 6400 3300
+F 0 "C?" V 6171 3300 50  0000 C CNN
+F 1 "100pF" V 6262 3300 50  0000 C CNN
+F 2 "" H 6400 3300 50  0001 C CNN
+F 3 "~" H 6400 3300 50  0001 C CNN
+	1    6400 3300
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DD4905C
+P 6400 3000
+F 0 "R?" V 6193 3000 50  0000 C CNN
+F 1 "33.2k" V 6284 3000 50  0000 C CNN
+F 2 "" V 6330 3000 50  0001 C CNN
+F 3 "~" H 6400 3000 50  0001 C CNN
+	1    6400 3000
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	6700 3800 6800 3800
+Wire Wire Line
+	6800 3800 6800 3300
+Wire Wire Line
+	6800 3000 6550 3000
+Wire Wire Line
+	6250 3000 6000 3000
+Wire Wire Line
+	6000 3000 6000 3300
+Wire Wire Line
+	6000 3700 6100 3700
+Wire Wire Line
+	6000 3700 5450 3700
+Connection ~ 6000 3700
+Wire Wire Line
+	6300 3300 6000 3300
+Connection ~ 6000 3300
+Wire Wire Line
+	6000 3300 6000 3700
+Wire Wire Line
+	6500 3300 6800 3300
+Connection ~ 6800 3300
+Wire Wire Line
+	6800 3300 6800 3000
+$Comp
+L Device:R R?
+U 1 1 5DD4B2C1
+P 3950 4500
+F 0 "R?" V 3950 4500 50  0000 C CNN
+F 1 "26.7k" V 4050 4500 50  0000 C CNN
+F 2 "" V 3880 4500 50  0001 C CNN
+F 3 "~" H 3950 4500 50  0001 C CNN
+	1    3950 4500
+	0    1    1    0   
+$EndComp
+$Comp
+L dk_Linear-Amplifiers-Instrumentation-OP-Amps-Buffer-Amps:TL074CN U?
+U 3 1 5DD4BD67
+P 2250 4400
+F 0 "U?" H 2350 4500 60  0000 L CNN
+F 1 "TL074CN" H 2350 4250 60  0000 L CNN
+F 2 "digikey-footprints:DIP-14_W3mm" H 2450 4600 60  0001 L CNN
+F 3 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 2450 4700 60  0001 L CNN
+F 4 "296-1777-5-ND" H 2450 4800 60  0001 L CNN "Digi-Key_PN"
+F 5 "TL074CN" H 2450 4900 60  0001 L CNN "MPN"
+F 6 "Integrated Circuits (ICs)" H 2450 5000 60  0001 L CNN "Category"
+F 7 "Linear - Amplifiers - Instrumentation, OP Amps, Buffer Amps" H 2450 5100 60  0001 L CNN "Family"
+F 8 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 2450 5200 60  0001 L CNN "DK_Datasheet_Link"
+F 9 "/product-detail/en/texas-instruments/TL074CN/296-1777-5-ND/277423" H 2450 5300 60  0001 L CNN "DK_Detail_Page"
+F 10 "IC OPAMP JFET 3MHZ 14DIP" H 2450 5400 60  0001 L CNN "Description"
+F 11 "Texas Instruments" H 2450 5500 60  0001 L CNN "Manufacturer"
+F 12 "Active" H 2450 5600 60  0001 L CNN "Status"
+	3    2250 4400
+	1    0    0    -1  
+$EndComp
+Text GLabel 1800 4500 0    50   Input ~ 0
+VREF
+Wire Wire Line
+	1800 4500 1950 4500
+$Comp
+L power:GND #PWR?
+U 1 1 5DD4BD6F
+P 2250 4600
+F 0 "#PWR?" H 2250 4350 50  0001 C CNN
+F 1 "GND" H 2255 4427 50  0000 C CNN
+F 2 "" H 2250 4600 50  0001 C CNN
+F 3 "" H 2250 4600 50  0001 C CNN
+	1    2250 4600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+15V #PWR?
+U 1 1 5DD4BD75
+P 2250 4200
+F 0 "#PWR?" H 2250 4050 50  0001 C CNN
+F 1 "+15V" H 2265 4373 50  0000 C CNN
+F 2 "" H 2250 4200 50  0001 C CNN
+F 3 "" H 2250 4200 50  0001 C CNN
+	1    2250 4200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DD4C772
+P 3950 4400
+F 0 "R?" V 3950 4400 50  0000 C CNN
+F 1 "100k" V 3850 4400 50  0000 C CNN
+F 2 "" V 3880 4400 50  0001 C CNN
+F 3 "~" H 3950 4400 50  0001 C CNN
+	1    3950 4400
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4100 4400 4250 4400
+Wire Wire Line
+	3800 4400 3300 4400
+$Comp
+L Device:R R?
+U 1 1 5DD51903
+P 3300 4750
+F 0 "R?" V 3300 4750 50  0000 C CNN
+F 1 "100k" V 3200 4750 50  0000 C CNN
+F 2 "" V 3230 4750 50  0001 C CNN
+F 3 "~" H 3300 4750 50  0001 C CNN
+	1    3300 4750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	3300 4600 3300 4400
+$Comp
+L power:+15V #PWR?
+U 1 1 5DD52558
+P 3150 5050
+F 0 "#PWR?" H 3150 4900 50  0001 C CNN
+F 1 "+15V" V 3165 5178 50  0000 L CNN
+F 2 "" H 3150 5050 50  0001 C CNN
+F 3 "" H 3150 5050 50  0001 C CNN
+	1    3150 5050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DD52599
+P 3450 5050
+F 0 "#PWR?" H 3450 4800 50  0001 C CNN
+F 1 "GND" V 3455 4922 50  0000 R CNN
+F 2 "" H 3450 5050 50  0001 C CNN
+F 3 "" H 3450 5050 50  0001 C CNN
+	1    3450 5050
+	0    -1   -1   0   
+$EndComp
+Text Notes 2850 5600 0    50   ~ 0
+FREQ OFFSET ADJUST\nnot sure if necessary.\nCheck CW/CCW direction
+$Comp
+L Device:R_POT RV?
+U 1 1 5DD530B7
+P 3300 5050
+F 0 "RV?" V 3186 5050 50  0000 C CNN
+F 1 "50k" V 3095 5050 50  0000 C CNN
+F 2 "" H 3300 5050 50  0001 C CNN
+F 3 "~" H 3300 5050 50  0001 C CNN
+	1    3300 5050
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DD5A48A
+P 2600 3900
+F 0 "RV?" V 2486 3900 50  0000 C CNN
+F 1 "50k" V 2395 3900 50  0000 C CNN
+F 2 "" H 2600 3900 50  0001 C CNN
+F 3 "~" H 2600 3900 50  0001 C CNN
+	1    2600 3900
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	1550 4300 1750 4300
+Wire Wire Line
+	2750 3900 2800 3900
+Wire Wire Line
+	2800 3900 2800 3700
+Wire Wire Line
+	2800 3700 2600 3700
+Wire Wire Line
+	2600 3700 2600 3750
+$Comp
+L Device:R R?
+U 1 1 5DD5D998
+P 2100 3900
+F 0 "R?" V 2100 3900 50  0000 C CNN
+F 1 "162k" V 2000 3900 50  0000 C CNN
+F 2 "" V 2030 3900 50  0001 C CNN
+F 3 "~" H 2100 3900 50  0001 C CNN
+	1    2100 3900
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DD5DA1A
+P 1400 4300
+F 0 "R?" V 1400 4300 50  0000 C CNN
+F 1 "100k" V 1300 4300 50  0000 C CNN
+F 2 "" V 1330 4300 50  0001 C CNN
+F 3 "~" H 1400 4300 50  0001 C CNN
+	1    1400 4300
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	1950 3900 1750 3900
+Wire Wire Line
+	1750 3900 1750 4300
+Connection ~ 1750 4300
+Wire Wire Line
+	1750 4300 1950 4300
+Wire Wire Line
+	2800 3900 2850 3900
+Wire Wire Line
+	2850 3900 2850 4400
+Wire Wire Line
+	2850 4400 2550 4400
+Connection ~ 2800 3900
+Wire Wire Line
+	2250 3900 2450 3900
+$Comp
+L Device:R R?
+U 1 1 5DD641A5
+P 2950 4600
+F 0 "R?" V 2950 4600 50  0000 C CNN
+F 1 "1k" V 2850 4600 50  0000 C CNN
+F 2 "" V 2880 4600 50  0001 C CNN
+F 3 "~" H 2950 4600 50  0001 C CNN
+	1    2950 4600
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	2850 4400 2950 4400
+Connection ~ 2850 4400
+Connection ~ 3300 4400
+Wire Wire Line
+	2950 4450 2950 4400
+Connection ~ 2950 4400
+Wire Wire Line
+	2950 4400 3300 4400
+$Comp
+L Device:R R?
+U 1 1 5DD65D8C
+P 4200 4750
+F 0 "R?" V 4200 4750 50  0000 C CNN
+F 1 "499" V 4300 4750 50  0000 C CNN
+F 2 "" V 4130 4750 50  0001 C CNN
+F 3 "~" H 4200 4750 50  0001 C CNN
+	1    4200 4750
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4250 4500 4200 4500
+Wire Wire Line
+	4200 4600 4200 4500
+Connection ~ 4200 4500
+Wire Wire Line
+	4200 4500 4100 4500
+$Comp
+L Device:C_Small C?
+U 1 1 5DD67A08
+P 4200 5000
+F 0 "C?" H 4292 5046 50  0000 L CNN
+F 1 "10nF" H 4292 4955 50  0000 L CNN
+F 2 "" H 4200 5000 50  0001 C CNN
+F 3 "~" H 4200 5000 50  0001 C CNN
+	1    4200 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DD67A82
+P 4200 5100
+F 0 "#PWR?" H 4200 4850 50  0001 C CNN
+F 1 "GND" H 4205 4927 50  0000 C CNN
+F 2 "" H 4200 5100 50  0001 C CNN
+F 3 "" H 4200 5100 50  0001 C CNN
+	1    4200 5100
+	1    0    0    -1  
+$EndComp
+Text Label 3550 4500 0    50   ~ 0
+Q_CTRL
+Wire Wire Line
+	3550 4500 3800 4500
+Text Label 850  4300 0    50   ~ 0
+FREQ_CTRL
+Wire Wire Line
+	850  4300 1250 4300
 $EndSCHEMATC
