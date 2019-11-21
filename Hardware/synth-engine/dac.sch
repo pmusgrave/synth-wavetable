@@ -1,0 +1,481 @@
+EESchema Schematic File Version 4
+LIBS:synth-wavetable-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 6 6
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L dac:AK4490 U?
+U 1 1 5DD48AC0
+P 5100 4050
+F 0 "U?" V 5050 4000 60  0000 L CNN
+F 1 "AK4490" V 5150 3900 60  0000 L CNN
+F 2 "" H 5150 3800 60  0000 C CNN
+F 3 "" H 5150 3800 60  0000 C CNN
+	1    5100 4050
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD49A01
+P 4650 2700
+F 0 "C?" V 4421 2700 50  0000 C CNN
+F 1 "0.1uF" V 4512 2700 50  0000 C CNN
+F 2 "" H 4650 2700 50  0001 C CNN
+F 3 "~" H 4650 2700 50  0001 C CNN
+	1    4650 2700
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD49A9E
+P 4650 2350
+F 0 "C?" V 4878 2350 50  0000 C CNN
+F 1 "10uF" V 4787 2350 50  0000 C CNN
+F 2 "" H 4650 2350 50  0001 C CNN
+F 3 "~" H 4650 2350 50  0001 C CNN
+	1    4650 2350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD49CA7
+P 4950 2700
+F 0 "C?" V 4721 2700 50  0000 C CNN
+F 1 "0.1uF" V 4812 2700 50  0000 C CNN
+F 2 "" H 4950 2700 50  0001 C CNN
+F 3 "~" H 4950 2700 50  0001 C CNN
+	1    4950 2700
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD49CE2
+P 4950 2350
+F 0 "C?" V 4722 2350 50  0000 C CNN
+F 1 "10uF" V 4813 2350 50  0000 C CNN
+F 2 "" H 4950 2350 50  0001 C CNN
+F 3 "~" H 4950 2350 50  0001 C CNN
+	1    4950 2350
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD49D6A
+P 5300 2700
+F 0 "C?" V 5071 2700 50  0000 C CNN
+F 1 "0.1uF" V 5162 2700 50  0000 C CNN
+F 2 "" H 5300 2700 50  0001 C CNN
+F 3 "~" H 5300 2700 50  0001 C CNN
+	1    5300 2700
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD49D90
+P 5600 2650
+F 0 "C?" V 5371 2650 50  0000 C CNN
+F 1 "0.1uF" V 5462 2650 50  0000 C CNN
+F 2 "" H 5600 2650 50  0001 C CNN
+F 3 "~" H 5600 2650 50  0001 C CNN
+	1    5600 2650
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD49EFF
+P 5300 2350
+F 0 "C?" V 5528 2350 50  0000 C CNN
+F 1 "220uF" V 5437 2350 50  0000 C CNN
+F 2 "" H 5300 2350 50  0001 C CNN
+F 3 "~" H 5300 2350 50  0001 C CNN
+	1    5300 2350
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD49F43
+P 5600 2350
+F 0 "C?" V 5372 2350 50  0000 C CNN
+F 1 "10uF" V 5463 2350 50  0000 C CNN
+F 2 "" H 5600 2350 50  0001 C CNN
+F 3 "~" H 5600 2350 50  0001 C CNN
+	1    5600 2350
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4600 2850 4600 2800
+Wire Wire Line
+	4600 2800 4550 2800
+Wire Wire Line
+	4550 2800 4550 2700
+Wire Wire Line
+	4700 2850 4700 2800
+Wire Wire Line
+	4700 2800 4750 2800
+Wire Wire Line
+	4750 2800 4750 2700
+Wire Wire Line
+	4550 2700 4550 2350
+Connection ~ 4550 2700
+Wire Wire Line
+	4750 2700 4750 2350
+Connection ~ 4750 2700
+Wire Wire Line
+	4550 2050 4550 2350
+Connection ~ 4550 2350
+Wire Wire Line
+	4900 2850 4900 2800
+Wire Wire Line
+	4900 2800 4850 2800
+Wire Wire Line
+	4850 2800 4850 2700
+Wire Wire Line
+	5000 2850 5000 2800
+Wire Wire Line
+	5000 2800 5050 2800
+Wire Wire Line
+	5050 2800 5050 2700
+Wire Wire Line
+	5050 2700 5050 2350
+Connection ~ 5050 2700
+Wire Wire Line
+	4850 2700 4850 2350
+Connection ~ 4850 2700
+Wire Wire Line
+	5200 2850 5200 2700
+Wire Wire Line
+	5200 2700 5200 2350
+Connection ~ 5200 2700
+Wire Wire Line
+	5200 2850 5300 2850
+Connection ~ 5200 2850
+Wire Wire Line
+	5400 2850 5500 2850
+Wire Wire Line
+	5400 2850 5400 2700
+Connection ~ 5400 2850
+Wire Wire Line
+	5400 2700 5400 2350
+Connection ~ 5400 2700
+Connection ~ 5500 2850
+Wire Wire Line
+	5500 2650 5500 2350
+Connection ~ 5500 2650
+Wire Wire Line
+	5500 2650 5500 2850
+Wire Wire Line
+	5600 2850 5600 2750
+Wire Wire Line
+	5600 2750 5700 2750
+Wire Wire Line
+	5700 2750 5700 2650
+Wire Wire Line
+	5700 2650 5700 2350
+Connection ~ 5700 2650
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DD4E451
+P 4000 3500
+F 0 "#PWR?" H 4000 3250 50  0001 C CNN
+F 1 "GNDD" V 4004 3390 50  0000 R CNN
+F 2 "" H 4000 3500 50  0001 C CNN
+F 3 "" H 4000 3500 50  0001 C CNN
+	1    4000 3500
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DD4E69A
+P 4600 5300
+F 0 "#PWR?" H 4600 5050 50  0001 C CNN
+F 1 "GNDD" H 4604 5145 50  0000 C CNN
+F 2 "" H 4600 5300 50  0001 C CNN
+F 3 "" H 4600 5300 50  0001 C CNN
+	1    4600 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DD4E80D
+P 4900 5300
+F 0 "#PWR?" H 4900 5050 50  0001 C CNN
+F 1 "GNDD" H 4904 5145 50  0000 C CNN
+F 2 "" H 4900 5300 50  0001 C CNN
+F 3 "" H 4900 5300 50  0001 C CNN
+	1    4900 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DD4F455
+P 5300 5600
+F 0 "C?" V 5071 5600 50  0000 C CNN
+F 1 "0.1uF" V 5162 5600 50  0000 C CNN
+F 2 "" H 5300 5600 50  0001 C CNN
+F 3 "~" H 5300 5600 50  0001 C CNN
+	1    5300 5600
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD4F45B
+P 5300 5950
+F 0 "C?" V 5528 5950 50  0000 C CNN
+F 1 "220uF" V 5437 5950 50  0000 C CNN
+F 2 "" H 5300 5950 50  0001 C CNN
+F 3 "~" H 5300 5950 50  0001 C CNN
+	1    5300 5950
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5300 5300 5200 5300
+Wire Wire Line
+	5400 5300 5500 5300
+Wire Wire Line
+	5200 5600 5200 5300
+Connection ~ 5200 5300
+Wire Wire Line
+	5400 5600 5400 5300
+Connection ~ 5400 5300
+Wire Wire Line
+	5200 5950 5200 5600
+Connection ~ 5200 5600
+Wire Wire Line
+	5400 5950 5400 5600
+Connection ~ 5400 5600
+$Comp
+L Device:C_Small C?
+U 1 1 5DD5436B
+P 5600 5600
+F 0 "C?" V 5371 5600 50  0000 C CNN
+F 1 "0.1uF" V 5462 5600 50  0000 C CNN
+F 2 "" H 5600 5600 50  0001 C CNN
+F 3 "~" H 5600 5600 50  0001 C CNN
+	1    5600 5600
+	0    1    1    0   
+$EndComp
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD5439B
+P 5600 5950
+F 0 "C?" V 5372 5950 50  0000 C CNN
+F 1 "10uF" V 5463 5950 50  0000 C CNN
+F 2 "" H 5600 5950 50  0001 C CNN
+F 3 "~" H 5600 5950 50  0001 C CNN
+	1    5600 5950
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	5500 5950 5500 5600
+Wire Wire Line
+	5500 5600 5500 5300
+Connection ~ 5500 5600
+Connection ~ 5500 5300
+Wire Wire Line
+	5600 5300 5600 5400
+Wire Wire Line
+	5600 5400 5700 5400
+Wire Wire Line
+	5700 5400 5700 5600
+Wire Wire Line
+	5700 5600 5700 5950
+Connection ~ 5700 5600
+$Comp
+L Device:C_Small C?
+U 1 1 5DD56E79
+P 6350 3850
+F 0 "C?" H 6258 3804 50  0000 R CNN
+F 1 "0.1uF" H 6258 3895 50  0000 R CNN
+F 2 "" H 6350 3850 50  0001 C CNN
+F 3 "~" H 6350 3850 50  0001 C CNN
+	1    6350 3850
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6250 3700 6250 3750
+Wire Wire Line
+	6250 3900 6250 3950
+Wire Wire Line
+	6250 4100 6250 4150
+Wire Wire Line
+	6250 4300 6250 4350
+Wire Wire Line
+	6350 3750 6250 3750
+Connection ~ 6250 3750
+Wire Wire Line
+	6250 3750 6250 3800
+Wire Wire Line
+	6350 3950 6250 3950
+Connection ~ 6250 3950
+Wire Wire Line
+	6250 3950 6250 4000
+$Comp
+L Device:C_Small C?
+U 1 1 5DD5A002
+P 6350 4250
+F 0 "C?" H 6258 4204 50  0000 R CNN
+F 1 "0.1uF" H 6258 4295 50  0000 R CNN
+F 2 "" H 6350 4250 50  0001 C CNN
+F 3 "~" H 6350 4250 50  0001 C CNN
+	1    6350 4250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6350 4150 6250 4150
+Connection ~ 6250 4150
+Wire Wire Line
+	6250 4150 6250 4200
+Wire Wire Line
+	6350 4350 6250 4350
+Connection ~ 6250 4350
+Wire Wire Line
+	6250 4350 6250 4400
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD5B479
+P 6700 3850
+F 0 "C?" H 6791 3896 50  0000 L CNN
+F 1 "10uF" H 6791 3805 50  0000 L CNN
+F 2 "" H 6700 3850 50  0001 C CNN
+F 3 "~" H 6700 3850 50  0001 C CNN
+	1    6700 3850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6350 3750 6700 3750
+Connection ~ 6350 3750
+Wire Wire Line
+	6350 3950 6700 3950
+Connection ~ 6350 3950
+$Comp
+L Device:CP1_Small C?
+U 1 1 5DD5F7C4
+P 6700 4250
+F 0 "C?" H 6609 4204 50  0000 R CNN
+F 1 "10uF" H 6609 4295 50  0000 R CNN
+F 2 "" H 6700 4250 50  0001 C CNN
+F 3 "~" H 6700 4250 50  0001 C CNN
+	1    6700 4250
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6700 4150 6350 4150
+Connection ~ 6350 4150
+Wire Wire Line
+	6350 4350 6700 4350
+Connection ~ 6350 4350
+$Comp
+L power:+3.3VA #PWR?
+U 1 1 5DD63162
+P 5050 2050
+F 0 "#PWR?" H 5050 1900 50  0001 C CNN
+F 1 "+3.3VA" H 5065 2223 50  0000 C CNN
+F 2 "" H 5050 2050 50  0001 C CNN
+F 3 "" H 5050 2050 50  0001 C CNN
+	1    5050 2050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 2050 5050 2350
+Connection ~ 5050 2350
+$Comp
+L power:+5V #PWR?
+U 1 1 5DD657D8
+P 5200 1800
+F 0 "#PWR?" H 5200 1650 50  0001 C CNN
+F 1 "+5V" H 5215 1973 50  0000 C CNN
+F 2 "" H 5200 1800 50  0001 C CNN
+F 3 "" H 5200 1800 50  0001 C CNN
+	1    5200 1800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5200 1800 5200 2350
+Connection ~ 5200 2350
+$Comp
+L power:+5V #PWR?
+U 1 1 5DD66485
+P 6700 3650
+F 0 "#PWR?" H 6700 3500 50  0001 C CNN
+F 1 "+5V" H 6715 3823 50  0000 C CNN
+F 2 "" H 6700 3650 50  0001 C CNN
+F 3 "" H 6700 3650 50  0001 C CNN
+	1    6700 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6700 3650 6700 3750
+Connection ~ 6700 3750
+$Comp
+L power:+5V #PWR?
+U 1 1 5DD67828
+P 6700 4500
+F 0 "#PWR?" H 6700 4350 50  0001 C CNN
+F 1 "+5V" H 6715 4673 50  0000 C CNN
+F 2 "" H 6700 4500 50  0001 C CNN
+F 3 "" H 6700 4500 50  0001 C CNN
+	1    6700 4500
+	-1   0    0    1   
+$EndComp
+Connection ~ 6700 4350
+Wire Wire Line
+	6700 4350 6700 4500
+$Comp
+L power:+5V #PWR?
+U 1 1 5DD69850
+P 5150 5950
+F 0 "#PWR?" H 5150 5800 50  0001 C CNN
+F 1 "+5V" V 5165 6078 50  0000 L CNN
+F 2 "" H 5150 5950 50  0001 C CNN
+F 3 "" H 5150 5950 50  0001 C CNN
+	1    5150 5950
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	5150 5950 5200 5950
+Connection ~ 5200 5950
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DD4A95E
+P 4550 2050
+F 0 "#SUPPLY?" H 4550 2050 50  0001 L BNN
+F 1 "3.3V" H 4550 2224 50  0000 C CNN
+F 2 "" H 4550 2050 50  0001 C CNN
+F 3 "" H 4550 2050 50  0001 C CNN
+	1    4550 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DD6B81F
+P 4700 5300
+F 0 "#SUPPLY?" H 4700 5300 50  0001 L BNN
+F 1 "3.3V" H 4700 5474 50  0000 C CNN
+F 2 "" H 4700 5300 50  0001 C CNN
+F 3 "" H 4700 5300 50  0001 C CNN
+	1    4700 5300
+	-1   0    0    1   
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DD6C780
+P 4800 5300
+F 0 "#SUPPLY?" H 4800 5300 50  0001 L BNN
+F 1 "3.3V" H 4800 5474 50  0000 C CNN
+F 2 "" H 4800 5300 50  0001 C CNN
+F 3 "" H 4800 5300 50  0001 C CNN
+	1    4800 5300
+	-1   0    0    1   
+$EndComp
+$EndSCHEMATC
