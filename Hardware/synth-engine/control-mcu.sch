@@ -693,102 +693,6 @@ Wire Wire Line
 Wire Wire Line
 	5500 6550 5650 6550
 $Comp
-L Device:R R?
-U 1 1 5DDBF77B
-P 5350 1650
-F 0 "R?" V 5143 1650 50  0000 C CNN
-F 1 "1MEG" V 5234 1650 50  0000 C CNN
-F 2 "" V 5280 1650 50  0001 C CNN
-F 3 "~" H 5350 1650 50  0001 C CNN
-	1    5350 1650
-	0    1    1    0   
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DDBF782
-P 5000 2200
-F 0 "C?" H 5092 2246 50  0000 L CNN
-F 1 "22pF" H 5092 2155 50  0000 L CNN
-F 2 "" H 5000 2200 50  0001 C CNN
-F 3 "~" H 5000 2200 50  0001 C CNN
-	1    5000 2200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C?
-U 1 1 5DDBF789
-P 5650 2200
-F 0 "C?" H 5742 2246 50  0000 L CNN
-F 1 "22pF" H 5742 2155 50  0000 L CNN
-F 2 "" H 5650 2200 50  0001 C CNN
-F 3 "~" H 5650 2200 50  0001 C CNN
-	1    5650 2200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:Crystal Y?
-U 1 1 5DDBF790
-P 5350 2000
-F 0 "Y?" H 5350 2268 50  0000 C CNN
-F 1 "32.768kHz" H 5350 2177 50  0000 C CNN
-F 2 "" H 5350 2000 50  0001 C CNN
-F 3 "~" H 5350 2000 50  0001 C CNN
-	1    5350 2000
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5650 2100 5650 2000
-Wire Wire Line
-	5650 1650 5500 1650
-Wire Wire Line
-	5500 2000 5650 2000
-Connection ~ 5650 2000
-Wire Wire Line
-	5650 2000 5650 1650
-Wire Wire Line
-	5200 1650 5000 1650
-Wire Wire Line
-	5000 1650 5000 2000
-$Comp
-L power:GNDD #PWR?
-U 1 1 5DDBF79E
-P 5000 2300
-F 0 "#PWR?" H 5000 2050 50  0001 C CNN
-F 1 "GNDD" H 5004 2145 50  0000 C CNN
-F 2 "" H 5000 2300 50  0001 C CNN
-F 3 "" H 5000 2300 50  0001 C CNN
-	1    5000 2300
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GNDD #PWR?
-U 1 1 5DDBF7A4
-P 5650 2300
-F 0 "#PWR?" H 5650 2050 50  0001 C CNN
-F 1 "GNDD" H 5654 2145 50  0000 C CNN
-F 2 "" H 5650 2300 50  0001 C CNN
-F 3 "" H 5650 2300 50  0001 C CNN
-	1    5650 2300
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	5200 2000 5000 2000
-Connection ~ 5000 2000
-Wire Wire Line
-	5000 2000 5000 2100
-Wire Wire Line
-	4100 1500 5650 1500
-Wire Wire Line
-	5650 1500 5650 1650
-Connection ~ 5650 1650
-Wire Wire Line
-	4100 1600 5000 1600
-Wire Wire Line
-	5000 1600 5000 1650
-Connection ~ 5000 1650
-Text Notes 4850 2600 0    50   ~ 0
-Is this necessary anymore?
-$Comp
 L Connector_Generic:Conn_01x04 J?
 U 1 1 5DDBF7B4
 P 1050 850
@@ -1876,4 +1780,100 @@ Text Label 5050 3750 0    50   ~ 0
 osc2_tune
 Text Label 5050 3850 0    50   ~ 0
 osc2_waveshape
+Text Notes 4850 2600 0    50   ~ 0
+Is this necessary anymore?
+Wire Wire Line
+	4100 1600 5000 1600
+Wire Wire Line
+	4100 1500 5650 1500
+Wire Wire Line
+	5000 2000 5000 2100
+Connection ~ 5000 2000
+Wire Wire Line
+	5200 2000 5000 2000
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDBF7A4
+P 5650 2300
+F 0 "#PWR?" H 5650 2050 50  0001 C CNN
+F 1 "GNDD" H 5654 2145 50  0000 C CNN
+F 2 "" H 5650 2300 50  0001 C CNN
+F 3 "" H 5650 2300 50  0001 C CNN
+	1    5650 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GNDD #PWR?
+U 1 1 5DDBF79E
+P 5000 2300
+F 0 "#PWR?" H 5000 2050 50  0001 C CNN
+F 1 "GNDD" H 5004 2145 50  0000 C CNN
+F 2 "" H 5000 2300 50  0001 C CNN
+F 3 "" H 5000 2300 50  0001 C CNN
+	1    5000 2300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5000 1600 5000 1650
+Wire Wire Line
+	5000 1650 5000 2000
+Connection ~ 5000 1650
+Wire Wire Line
+	5200 1650 5000 1650
+Wire Wire Line
+	5500 2000 5650 2000
+Wire Wire Line
+	5650 1500 5650 1650
+Wire Wire Line
+	5650 2000 5650 1650
+Connection ~ 5650 1650
+Wire Wire Line
+	5650 1650 5500 1650
+Connection ~ 5650 2000
+Wire Wire Line
+	5650 2100 5650 2000
+$Comp
+L Device:Crystal Y?
+U 1 1 5DDBF790
+P 5350 2000
+F 0 "Y?" H 5350 2268 50  0000 C CNN
+F 1 "32.768kHz" H 5350 2177 50  0000 C CNN
+F 2 "" H 5350 2000 50  0001 C CNN
+F 3 "~" H 5350 2000 50  0001 C CNN
+	1    5350 2000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDBF789
+P 5650 2200
+F 0 "C?" H 5742 2246 50  0000 L CNN
+F 1 "22pF" H 5742 2155 50  0000 L CNN
+F 2 "" H 5650 2200 50  0001 C CNN
+F 3 "~" H 5650 2200 50  0001 C CNN
+	1    5650 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDBF782
+P 5000 2200
+F 0 "C?" H 5092 2246 50  0000 L CNN
+F 1 "22pF" H 5092 2155 50  0000 L CNN
+F 2 "" H 5000 2200 50  0001 C CNN
+F 3 "~" H 5000 2200 50  0001 C CNN
+	1    5000 2200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDBF77B
+P 5350 1650
+F 0 "R?" V 5143 1650 50  0000 C CNN
+F 1 "1MEG" V 5234 1650 50  0000 C CNN
+F 2 "" V 5280 1650 50  0001 C CNN
+F 3 "~" H 5350 1650 50  0001 C CNN
+	1    5350 1650
+	0    1    1    0   
+$EndComp
 $EndSCHEMATC
