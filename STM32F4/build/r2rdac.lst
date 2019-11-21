@@ -1,0 +1,57 @@
+ARM GAS  /tmp/ccgnfZCT.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"r2rdac.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Update_R2R_DAC,"ax",%progbits
+  18              		.align	1
+  19              		.global	Update_R2R_DAC
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	Update_R2R_DAC:
+  26              	.LFB130:
+  27              		.file 1 "Src/r2rdac.c"
+   1:Src/r2rdac.c  **** #include "r2rdac.h"
+   2:Src/r2rdac.c  **** #include "main.h"
+   3:Src/r2rdac.c  **** 
+   4:Src/r2rdac.c  **** void Update_R2R_DAC() {
+  28              		.loc 1 4 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE130:
+  37              		.text
+  38              	.Letext0:
+  39              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+  40              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+  41              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+  42              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ARM GAS  /tmp/ccgnfZCT.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 r2rdac.c
+     /tmp/ccgnfZCT.s:18     .text.Update_R2R_DAC:0000000000000000 $t
+     /tmp/ccgnfZCT.s:25     .text.Update_R2R_DAC:0000000000000000 Update_R2R_DAC
+                     .debug_frame:0000000000000010 $d
+
+NO UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccjyJrNE.s 			page 1
+ARM GAS  /tmp/ccB1sXLd.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
   29:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****         interrupts pending registers which allow to distinguish which transition
   30:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****         occurs:
   31:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****         (++) Rising edge pending interrupt
-ARM GAS  /tmp/ccjyJrNE.s 			page 2
+ARM GAS  /tmp/ccB1sXLd.s 			page 2
 
 
   32:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****         (++) Falling
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
   86:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** 
   87:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** /** @addtogroup STM32F4xx_HAL_Driver
   88:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   * @{
-ARM GAS  /tmp/ccjyJrNE.s 			page 3
+ARM GAS  /tmp/ccB1sXLd.s 			page 3
 
 
   89:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   */
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
   28              		.loc 1 142 0
   29              		.cfi_startproc
   30              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccjyJrNE.s 			page 4
+ARM GAS  /tmp/ccB1sXLd.s 			page 4
 
 
   31              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
   61              		.loc 1 165 0
   62 0024 4A68     		ldr	r2, [r1, #4]
   63 0026 02F18042 		add	r2, r2, #1073741824
-ARM GAS  /tmp/ccjyJrNE.s 			page 5
+ARM GAS  /tmp/ccB1sXLd.s 			page 5
 
 
   64 002a 02F59E32 		add	r2, r2, #80896
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
   98 0060 0020     		movs	r0, #0
   99              	.LVL8:
  100              	.L2:
-ARM GAS  /tmp/ccjyJrNE.s 			page 6
+ARM GAS  /tmp/ccB1sXLd.s 			page 6
 
 
  186:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** }
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  151              		.syntax unified
  152              		.thumb
  153              		.thumb_func
-ARM GAS  /tmp/ccjyJrNE.s 			page 7
+ARM GAS  /tmp/ccB1sXLd.s 			page 7
 
 
  154              		.fpu fpv4-sp-d16
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  182 001a 1648     		ldr	r0, .L28
  183 001c 4068     		ldr	r0, [r0, #4]
  184 001e 8243     		bics	r2, r2, r0
-ARM GAS  /tmp/ccjyJrNE.s 			page 8
+ARM GAS  /tmp/ccB1sXLd.s 			page 8
 
 
  185 0020 11D0     		beq	.L24
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  209 0040 0022     		movs	r2, #0
  210 0042 4A60     		str	r2, [r1, #4]
  211 0044 EFE7     		b	.L16
-ARM GAS  /tmp/ccjyJrNE.s 			page 9
+ARM GAS  /tmp/ccB1sXLd.s 			page 9
 
 
  212              	.L24:
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  256              	.L29:
  257              		.align	2
  258              	.L28:
-ARM GAS  /tmp/ccjyJrNE.s 			page 10
+ARM GAS  /tmp/ccB1sXLd.s 			page 10
 
 
  259 0074 003C0140 		.word	1073822720
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  293 0018 5960     		str	r1, [r3, #4]
  269:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** 
  270:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   /* 3] Clear triggers */
-ARM GAS  /tmp/ccjyJrNE.s 			page 11
+ARM GAS  /tmp/ccB1sXLd.s 			page 11
 
 
  271:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   EXTI->RTSR = (EXTI->RTSR & ~hexti->Line);
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  333              		.cfi_startproc
  334              		@ args = 0, pretend = 0, frame = 0
  335              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccjyJrNE.s 			page 12
+ARM GAS  /tmp/ccB1sXLd.s 			page 12
 
 
  336              		@ link register save eliminated.
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  311:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** {
  367              		.loc 1 311 0
  368              		.cfi_startproc
-ARM GAS  /tmp/ccjyJrNE.s 			page 13
+ARM GAS  /tmp/ccB1sXLd.s 			page 13
 
 
  369              		@ args = 0, pretend = 0, frame = 0
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  335:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   *
  336:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** @verbatim
  337:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****  ===============================================================================
-ARM GAS  /tmp/ccjyJrNE.s 			page 14
+ARM GAS  /tmp/ccB1sXLd.s 			page 14
 
 
  338:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****                        ##### IO operation functions #####
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  432              	.LFE135:
  434              		.section	.text.HAL_EXTI_GetPending,"ax",%progbits
  435              		.align	1
-ARM GAS  /tmp/ccjyJrNE.s 			page 15
+ARM GAS  /tmp/ccB1sXLd.s 			page 15
 
 
  436              		.global	HAL_EXTI_GetPending
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
    6:Drivers/CMSIS/Include/cmsis_gcc.h ****  ******************************************************************************/
    7:Drivers/CMSIS/Include/cmsis_gcc.h **** /*
    8:Drivers/CMSIS/Include/cmsis_gcc.h ****  * Copyright (c) 2009-2018 Arm Limited. All rights reserved.
-ARM GAS  /tmp/ccjyJrNE.s 			page 16
+ARM GAS  /tmp/ccB1sXLd.s 			page 16
 
 
    9:Drivers/CMSIS/Include/cmsis_gcc.h ****  *
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
   63:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
   64:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED_STRUCT
   65:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __PACKED_STRUCT                        struct __attribute__((packed, aligned(1)))
-ARM GAS  /tmp/ccjyJrNE.s 			page 17
+ARM GAS  /tmp/ccB1sXLd.s 			page 17
 
 
   66:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  120:Drivers/CMSIS/Include/cmsis_gcc.h ****     \defgroup CMSIS_Core_RegAccFunctions CMSIS Core Register Access Functions
  121:Drivers/CMSIS/Include/cmsis_gcc.h ****   @{
  122:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  /tmp/ccjyJrNE.s 			page 18
+ARM GAS  /tmp/ccB1sXLd.s 			page 18
 
 
  123:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  177:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Control Register
  178:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Writes the given value to the Control Register.
  179:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    control  Control Register value to set
-ARM GAS  /tmp/ccjyJrNE.s 			page 19
+ARM GAS  /tmp/ccB1sXLd.s 			page 19
 
 
  180:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  234:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  235:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
  236:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccjyJrNE.s 			page 20
+ARM GAS  /tmp/ccB1sXLd.s 			page 20
 
 
  237:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, xpsr" : "=r" (result) );
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  291:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR psp_ns, %0" : : "r" (topOfProcStack) : );
  292:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  293:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccjyJrNE.s 			page 21
+ARM GAS  /tmp/ccB1sXLd.s 			page 21
 
 
  294:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  348:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  349:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  350:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE ) && (__ARM_FEATURE_CMSE == 3))
-ARM GAS  /tmp/ccjyJrNE.s 			page 22
+ARM GAS  /tmp/ccB1sXLd.s 			page 22
 
 
  351:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  405:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  406:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  407:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/ccjyJrNE.s 			page 23
+ARM GAS  /tmp/ccB1sXLd.s 			page 23
 
 
  408:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Priority Mask
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  462:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  463:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
  464:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccjyJrNE.s 			page 24
+ARM GAS  /tmp/ccB1sXLd.s 			page 24
 
 
  465:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, basepri" : "=r" (result) );
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  519:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  520:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  521:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccjyJrNE.s 			page 25
+ARM GAS  /tmp/ccB1sXLd.s 			page 25
 
 
  522:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  576:Drivers/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
  577:Drivers/CMSIS/Include/cmsis_gcc.h ****            (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    ) */
  578:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccjyJrNE.s 			page 26
+ARM GAS  /tmp/ccB1sXLd.s 			page 26
 
 
  579:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  633:Drivers/CMSIS/Include/cmsis_gcc.h ****   
  634:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Process Stack Pointer Limit (PSPLIM).
  635:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    ProcStackPtrLimit  Process Stack Pointer Limit value to set
-ARM GAS  /tmp/ccjyJrNE.s 			page 27
+ARM GAS  /tmp/ccB1sXLd.s 			page 27
 
 
  636:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  690:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  691:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  692:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccjyJrNE.s 			page 28
+ARM GAS  /tmp/ccB1sXLd.s 			page 28
 
 
  693:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE  ) && (__ARM_FEATURE_CMSE   == 3))
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  747:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  748:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)))
  749:Drivers/CMSIS/Include/cmsis_gcc.h ****   // without main extensions, the non-secure MSPLIM is RAZ/WI
-ARM GAS  /tmp/ccjyJrNE.s 			page 29
+ARM GAS  /tmp/ccB1sXLd.s 			page 29
 
 
  750:Drivers/CMSIS/Include/cmsis_gcc.h ****   (void)MainStackPtrLimit;
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  804:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
  805:Drivers/CMSIS/Include/cmsis_gcc.h ****   (void)fpscr;
  806:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccjyJrNE.s 			page 30
+ARM GAS  /tmp/ccB1sXLd.s 			page 30
 
 
  807:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  861:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Instruction Synchronization Barrier
  862:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Instruction Synchronization Barrier flushes the pipeline in the processor,
  863:Drivers/CMSIS/Include/cmsis_gcc.h ****            so that all instructions following the ISB are fetched from cache or memory,
-ARM GAS  /tmp/ccjyJrNE.s 			page 31
+ARM GAS  /tmp/ccB1sXLd.s 			page 31
 
 
  864:Drivers/CMSIS/Include/cmsis_gcc.h ****            after the instruction has been completed.
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  918:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  919:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __REV16(uint32_t value)
  920:Drivers/CMSIS/Include/cmsis_gcc.h **** {
-ARM GAS  /tmp/ccjyJrNE.s 			page 32
+ARM GAS  /tmp/ccB1sXLd.s 			page 32
 
 
  921:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  975:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  976:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Reverse bit order of value
  977:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Reverses the bit order of the given value.
-ARM GAS  /tmp/ccjyJrNE.s 			page 33
+ARM GAS  /tmp/ccB1sXLd.s 			page 33
 
 
  978:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    value  Value to reverse
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  399:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   * @retval None.
  400:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c ****   */
  401:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** void HAL_EXTI_ClearPending(EXTI_HandleTypeDef *hexti, uint32_t Edge)
-ARM GAS  /tmp/ccjyJrNE.s 			page 34
+ARM GAS  /tmp/ccB1sXLd.s 			page 34
 
 
  402:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c **** {
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  530 0004 1A61     		str	r2, [r3, #16]
  531 0006 7047     		bx	lr
  532              	.L56:
-ARM GAS  /tmp/ccjyJrNE.s 			page 35
+ARM GAS  /tmp/ccB1sXLd.s 			page 35
 
 
  533              		.align	2
@@ -2055,36 +2055,36 @@ ARM GAS  /tmp/ccjyJrNE.s 			page 1
  545              		.file 7 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
  546              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
  547              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h"
-ARM GAS  /tmp/ccjyJrNE.s 			page 36
+ARM GAS  /tmp/ccB1sXLd.s 			page 36
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_hal_exti.c
-     /tmp/ccjyJrNE.s:18     .text.HAL_EXTI_SetConfigLine:0000000000000000 $t
-     /tmp/ccjyJrNE.s:25     .text.HAL_EXTI_SetConfigLine:0000000000000000 HAL_EXTI_SetConfigLine
-     /tmp/ccjyJrNE.s:144    .text.HAL_EXTI_SetConfigLine:0000000000000088 $d
-     /tmp/ccjyJrNE.s:149    .text.HAL_EXTI_GetConfigLine:0000000000000000 $t
-     /tmp/ccjyJrNE.s:156    .text.HAL_EXTI_GetConfigLine:0000000000000000 HAL_EXTI_GetConfigLine
-     /tmp/ccjyJrNE.s:259    .text.HAL_EXTI_GetConfigLine:0000000000000074 $d
-     /tmp/ccjyJrNE.s:264    .text.HAL_EXTI_ClearConfigLine:0000000000000000 $t
-     /tmp/ccjyJrNE.s:271    .text.HAL_EXTI_ClearConfigLine:0000000000000000 HAL_EXTI_ClearConfigLine
-     /tmp/ccjyJrNE.s:318    .text.HAL_EXTI_ClearConfigLine:0000000000000038 $d
-     /tmp/ccjyJrNE.s:323    .text.HAL_EXTI_RegisterCallback:0000000000000000 $t
-     /tmp/ccjyJrNE.s:330    .text.HAL_EXTI_RegisterCallback:0000000000000000 HAL_EXTI_RegisterCallback
-     /tmp/ccjyJrNE.s:358    .text.HAL_EXTI_GetHandle:0000000000000000 $t
-     /tmp/ccjyJrNE.s:365    .text.HAL_EXTI_GetHandle:0000000000000000 HAL_EXTI_GetHandle
-     /tmp/ccjyJrNE.s:392    .text.HAL_EXTI_IRQHandler:0000000000000000 $t
-     /tmp/ccjyJrNE.s:399    .text.HAL_EXTI_IRQHandler:0000000000000000 HAL_EXTI_IRQHandler
-     /tmp/ccjyJrNE.s:430    .text.HAL_EXTI_IRQHandler:0000000000000018 $d
-     /tmp/ccjyJrNE.s:435    .text.HAL_EXTI_GetPending:0000000000000000 $t
-     /tmp/ccjyJrNE.s:442    .text.HAL_EXTI_GetPending:0000000000000000 HAL_EXTI_GetPending
-     /tmp/ccjyJrNE.s:479    .text.HAL_EXTI_GetPending:0000000000000018 $d
-     /tmp/ccjyJrNE.s:484    .text.HAL_EXTI_ClearPending:0000000000000000 $t
-     /tmp/ccjyJrNE.s:491    .text.HAL_EXTI_ClearPending:0000000000000000 HAL_EXTI_ClearPending
-     /tmp/ccjyJrNE.s:507    .text.HAL_EXTI_ClearPending:0000000000000008 $d
-     /tmp/ccjyJrNE.s:512    .text.HAL_EXTI_GenerateSWI:0000000000000000 $t
-     /tmp/ccjyJrNE.s:519    .text.HAL_EXTI_GenerateSWI:0000000000000000 HAL_EXTI_GenerateSWI
-     /tmp/ccjyJrNE.s:535    .text.HAL_EXTI_GenerateSWI:0000000000000008 $d
+     /tmp/ccB1sXLd.s:18     .text.HAL_EXTI_SetConfigLine:0000000000000000 $t
+     /tmp/ccB1sXLd.s:25     .text.HAL_EXTI_SetConfigLine:0000000000000000 HAL_EXTI_SetConfigLine
+     /tmp/ccB1sXLd.s:144    .text.HAL_EXTI_SetConfigLine:0000000000000088 $d
+     /tmp/ccB1sXLd.s:149    .text.HAL_EXTI_GetConfigLine:0000000000000000 $t
+     /tmp/ccB1sXLd.s:156    .text.HAL_EXTI_GetConfigLine:0000000000000000 HAL_EXTI_GetConfigLine
+     /tmp/ccB1sXLd.s:259    .text.HAL_EXTI_GetConfigLine:0000000000000074 $d
+     /tmp/ccB1sXLd.s:264    .text.HAL_EXTI_ClearConfigLine:0000000000000000 $t
+     /tmp/ccB1sXLd.s:271    .text.HAL_EXTI_ClearConfigLine:0000000000000000 HAL_EXTI_ClearConfigLine
+     /tmp/ccB1sXLd.s:318    .text.HAL_EXTI_ClearConfigLine:0000000000000038 $d
+     /tmp/ccB1sXLd.s:323    .text.HAL_EXTI_RegisterCallback:0000000000000000 $t
+     /tmp/ccB1sXLd.s:330    .text.HAL_EXTI_RegisterCallback:0000000000000000 HAL_EXTI_RegisterCallback
+     /tmp/ccB1sXLd.s:358    .text.HAL_EXTI_GetHandle:0000000000000000 $t
+     /tmp/ccB1sXLd.s:365    .text.HAL_EXTI_GetHandle:0000000000000000 HAL_EXTI_GetHandle
+     /tmp/ccB1sXLd.s:392    .text.HAL_EXTI_IRQHandler:0000000000000000 $t
+     /tmp/ccB1sXLd.s:399    .text.HAL_EXTI_IRQHandler:0000000000000000 HAL_EXTI_IRQHandler
+     /tmp/ccB1sXLd.s:430    .text.HAL_EXTI_IRQHandler:0000000000000018 $d
+     /tmp/ccB1sXLd.s:435    .text.HAL_EXTI_GetPending:0000000000000000 $t
+     /tmp/ccB1sXLd.s:442    .text.HAL_EXTI_GetPending:0000000000000000 HAL_EXTI_GetPending
+     /tmp/ccB1sXLd.s:479    .text.HAL_EXTI_GetPending:0000000000000018 $d
+     /tmp/ccB1sXLd.s:484    .text.HAL_EXTI_ClearPending:0000000000000000 $t
+     /tmp/ccB1sXLd.s:491    .text.HAL_EXTI_ClearPending:0000000000000000 HAL_EXTI_ClearPending
+     /tmp/ccB1sXLd.s:507    .text.HAL_EXTI_ClearPending:0000000000000008 $d
+     /tmp/ccB1sXLd.s:512    .text.HAL_EXTI_GenerateSWI:0000000000000000 $t
+     /tmp/ccB1sXLd.s:519    .text.HAL_EXTI_GenerateSWI:0000000000000000 HAL_EXTI_GenerateSWI
+     /tmp/ccB1sXLd.s:535    .text.HAL_EXTI_GenerateSWI:0000000000000008 $d
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

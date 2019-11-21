@@ -31,7 +31,9 @@ build/main.o: Src/main.c Inc/main.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
- Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h
+ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h Inc/globals.h \
+ Inc/main.h Inc/spi_handler.h Inc/globals.h Inc/midi.h Inc/waves.h \
+ Inc/oscillator.h Inc/lfo.h Inc/envelopes.h Inc/r2rdac.h
 
 Inc/main.h:
 
@@ -104,3 +106,23 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
+
+Inc/globals.h:
+
+Inc/main.h:
+
+Inc/spi_handler.h:
+
+Inc/globals.h:
+
+Inc/midi.h:
+
+Inc/waves.h:
+
+Inc/oscillator.h:
+
+Inc/lfo.h:
+
+Inc/envelopes.h:
+
+Inc/r2rdac.h:

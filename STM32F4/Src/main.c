@@ -23,7 +23,14 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "globals.h"
+#include "spi_handler.h"
+#include "midi.h"
+#include "waves.h"
+#include "oscillator.h"
+#include "lfo.h"
+#include "envelopes.h"
+#include "r2rdac.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,19 +50,13 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac;
-
 I2C_HandleTypeDef hi2c1;
-
 I2S_HandleTypeDef hi2s2;
-
 SPI_HandleTypeDef hspi1;
-
 TIM_HandleTypeDef htim6;
-
 UART_HandleTypeDef huart4;
-
 /* USER CODE BEGIN PV */
-
+uint8_t uart_tx_data = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -68,7 +69,10 @@ static void MX_SPI1_Init(void);
 static void MX_TIM6_Init(void);
 static void MX_UART4_Init(void);
 /* USER CODE BEGIN PFP */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim);
+void handle_byte_queue();
+void handle_midi_queue();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -112,7 +116,21 @@ int main(void)
   MX_TIM6_Init();
   MX_UART4_Init();
   /* USER CODE BEGIN 2 */
+  /* USER CODE BEGIN 2 */
+  // uint8_t init_msg[20] = {"\nSTM32F429!\n"};
+  // HAL_UART_Transmit(&huart4, init_msg, 20, 50);
+  HAL_Delay(1000);
+  init_wavetable();
+  HAL_TIM_Base_Start_IT(&htim6);
+  HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
 
+  for(int i = 0; i < VOICES; i++) {
+    env_state[i] = NOT_TRIGGERED;
+    note_on[i] = MIDI_NOTE_OFF;
+    note_freq[i] = 0;
+    lfo_freq[i] = 20;
+  }
+  //  uint8_t process_msg_flag  = 0;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -122,6 +140,17 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    // uint8_t byte = SPI_ReceiveByte();
+    HAL_UART_Receive_IT(&huart4, &uart_tx_data, 1);
+    handle_byte_queue();
+    handle_midi_queue();
+    if(update_value_flag){
+      update_value_flag = 0;
+      update_lfos();
+      update_envelope();
+      update_output_value();
+      HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
+    }
   }
   /* USER CODE END 3 */
 }
@@ -440,7 +469,235 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+  if(uart_tx_data != 0 && uart_tx_data != '\n'){
+    // HAL_UART_Transmit(&huart1, &uart_tx_data, 1, 50);
+    enqueue_byte(uart_tx_data);
+  }
+}
 
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+  if(htim->Instance == TIM6){
+    update_value_flag = 1;
+  }
+}
+
+void handle_byte_queue() {
+  // probably need to refactor these SPI flags
+  static uint8_t note_on_flag;
+  static uint8_t note_off_flag;
+  static uint8_t attack_cc_flag;
+  static uint8_t decay_cc_flag;
+  static uint8_t sustain_cc_flag;
+  static uint8_t release_cc_flag;
+  static uint8_t waveshape_cc_flag;
+  static uint8_t lfo_cc_flag;
+
+  if(spi_byte_queue.head != spi_byte_queue.tail){
+    uint8_t value = dequeue_byte();
+    uint8_t skip_command = 0;
+
+    // HAL_UART_Transmit(&huart1, &value, 1, 50);
+
+    if(attack_cc_flag) {
+      attack_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         ATTACK_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(decay_cc_flag) {
+      decay_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         DECAY_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(sustain_cc_flag) {
+      sustain_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         SUSTAIN_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(release_cc_flag) {
+      release_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         RELEASE_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(note_on_flag) {
+      note_on_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         MIDI_NOTE_ON,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if (note_off_flag) {
+      note_off_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         MIDI_NOTE_OFF,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(waveshape_cc_flag) {
+      waveshape_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         WAVESHAPE_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+    else if(lfo_cc_flag){
+      lfo_cc_flag = 0;
+      struct midi_msg new_midi_msg =
+        {
+         LFO_CC,
+         value,
+         0,
+         0
+        };
+      enqueue(new_midi_msg);
+      skip_command = 1;
+    }
+
+    if(!skip_command){
+      switch(value){
+      case ATTACK_CC:
+        attack_cc_flag = 1;
+        break;
+      case DECAY_CC:
+        decay_cc_flag = 1;
+        break;
+      case SUSTAIN_CC:
+        sustain_cc_flag = 1;
+        break;
+      case RELEASE_CC:
+        release_cc_flag = 1;
+        break;
+      case MIDI_NOTE_ON:
+        note_on_flag = 1;
+        break;
+      case MIDI_NOTE_OFF:
+        note_off_flag = 1;
+        break;
+      case WAVESHAPE_CC:
+        waveshape_cc_flag = 1;
+        break;
+      case LFO_CC:
+        lfo_cc_flag = 1;
+      }
+    }
+  }
+}
+
+void handle_midi_queue() {
+  // uint8_t value;
+
+  if(midi_msg_queue.head != midi_msg_queue.tail) {
+    struct midi_msg current_midi_msg = dequeue();
+    // value = current_midi_msg.byte1;
+
+    switch(current_midi_msg.byte0) {
+    case ATTACK_CC:
+      attack = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
+      break;
+    case DECAY_CC:
+      decay = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
+      break;
+    case SUSTAIN_CC:
+      sustain = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
+      break;
+    case RELEASE_CC:
+      release = current_midi_msg.byte1 * 2;
+      //UART_PrintADSR(&huart1);
+      break;
+    case MIDI_NOTE_ON:
+      for (int i = 0; i < VOICES; i++) {
+        if(note_on[i] == MIDI_NOTE_OFF){
+          note_on[i] = MIDI_NOTE_ON;
+          note_freq[i] = current_midi_msg.byte1;
+          env_state[i] = ATTACK_MODE;
+          break;
+        }
+      }
+      break;
+    case MIDI_NOTE_OFF:
+      for (int i = 0; i < VOICES; i++) {
+        if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
+          //note_on[i] = MIDI_NOTE_OFF;
+          env_state[i] = RELEASE_MODE;
+        }
+      }
+      break;
+      /*
+    case WAVESHAPE_CC:
+      if(current_midi_msg.byte1 < 50) {
+        waveshape1 = base_sine;
+        waveshape2 = base_tri;
+      }
+      else if(current_midi_msg.byte1 < 100) {
+        waveshape1 = base_tri;
+        waveshape2 = base_pos_saw;
+      }
+      else if(current_midi_msg.byte1 < 150) {
+        waveshape1 = base_pos_saw;
+        waveshape2 = base_neg_saw;
+      }
+      else if(current_midi_msg.byte1 < 200) {
+        waveshape1 = base_neg_saw;
+        waveshape2 = base_sq;
+      }
+      else {
+        waveshape1 = base_sq;
+        waveshape2 = base_sine;
+      }
+      break;
+    case LFO_CC:
+      global_lfo_freq = current_midi_msg.byte1 * 2;
+      break;
+      */
+    }
+  }
+}
 /* USER CODE END 4 */
 
 /**

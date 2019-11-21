@@ -1,0 +1,434 @@
+ARM GAS  /tmp/ccOXdOeL.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"midi.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.Receive_MIDI,"ax",%progbits
+  18              		.align	1
+  19              		.global	Receive_MIDI
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	Receive_MIDI:
+  26              	.LFB130:
+  27              		.file 1 "Src/midi.c"
+   1:Src/midi.c    **** #include "midi.h"
+   2:Src/midi.c    **** #include "globals.h"
+   3:Src/midi.c    **** #include <stdint.h>
+   4:Src/midi.c    **** 
+   5:Src/midi.c    **** volatile struct midi_msg current_midi_msg = {0,0,0,0};
+   6:Src/midi.c    **** struct msg_queue  midi_msg_queue;
+   7:Src/midi.c    **** 
+   8:Src/midi.c    **** volatile uint8_t MIDI_flag = 0;
+   9:Src/midi.c    **** 
+  10:Src/midi.c    **** const float midi_notes[88] = {
+  11:Src/midi.c    ****                                27.5,
+  12:Src/midi.c    ****                                29.13524,
+  13:Src/midi.c    ****                                30.86771,
+  14:Src/midi.c    ****                                32.7032,
+  15:Src/midi.c    ****                                34.64783,
+  16:Src/midi.c    ****                                36.7081,
+  17:Src/midi.c    ****                                38.89087,
+  18:Src/midi.c    ****                                41.20344,
+  19:Src/midi.c    ****                                43.65353,
+  20:Src/midi.c    ****                                46.2493,
+  21:Src/midi.c    ****                                48.99943,
+  22:Src/midi.c    ****                                51.91309,
+  23:Src/midi.c    ****                                55,
+  24:Src/midi.c    ****                                58.27047,
+  25:Src/midi.c    ****                                61.73541,
+  26:Src/midi.c    ****                                65.40639,
+  27:Src/midi.c    ****                                69.29566,
+  28:Src/midi.c    ****                                73.41619,
+  29:Src/midi.c    ****                                77.78175,
+  30:Src/midi.c    ****                                82.40689,
+  31:Src/midi.c    ****                                87.30706,
+ARM GAS  /tmp/ccOXdOeL.s 			page 2
+
+
+  32:Src/midi.c    ****                                92.49861,
+  33:Src/midi.c    ****                                97.99886,
+  34:Src/midi.c    ****                                103.8262,
+  35:Src/midi.c    ****                                110,
+  36:Src/midi.c    ****                                116.5409,
+  37:Src/midi.c    ****                                123.4708,
+  38:Src/midi.c    ****                                130.8128,
+  39:Src/midi.c    ****                                138.5913,
+  40:Src/midi.c    ****                                146.8324,
+  41:Src/midi.c    ****                                155.5635,
+  42:Src/midi.c    ****                                164.8138,
+  43:Src/midi.c    ****                                174.6141,
+  44:Src/midi.c    ****                                184.9972,
+  45:Src/midi.c    ****                                195.9977,
+  46:Src/midi.c    ****                                207.6523,
+  47:Src/midi.c    ****                                220,
+  48:Src/midi.c    ****                                233.0819,
+  49:Src/midi.c    ****                                246.9417,
+  50:Src/midi.c    ****                                261.6256,
+  51:Src/midi.c    ****                                277.1826,
+  52:Src/midi.c    ****                                293.6648,
+  53:Src/midi.c    ****                                311.127,
+  54:Src/midi.c    ****                                329.6276,
+  55:Src/midi.c    ****                                349.2282,
+  56:Src/midi.c    ****                                369.9944,
+  57:Src/midi.c    ****                                391.9954,
+  58:Src/midi.c    ****                                415.3047,
+  59:Src/midi.c    ****                                440,
+  60:Src/midi.c    ****                                466.1638,
+  61:Src/midi.c    ****                                493.8833,
+  62:Src/midi.c    ****                                523.2511,
+  63:Src/midi.c    ****                                554.3653,
+  64:Src/midi.c    ****                                587.3295,
+  65:Src/midi.c    ****                                622.254,
+  66:Src/midi.c    ****                                659.2551,
+  67:Src/midi.c    ****                                698.4565,
+  68:Src/midi.c    ****                                739.9888,
+  69:Src/midi.c    ****                                783.9909,
+  70:Src/midi.c    ****                                830.6094,
+  71:Src/midi.c    ****                                880     ,
+  72:Src/midi.c    ****                                932.3275,
+  73:Src/midi.c    ****                                987.7666,
+  74:Src/midi.c    ****                                1046.502,
+  75:Src/midi.c    ****                                1108.731,
+  76:Src/midi.c    ****                                1174.659,
+  77:Src/midi.c    ****                                1244.508,
+  78:Src/midi.c    ****                                1318.51 ,
+  79:Src/midi.c    ****                                1396.913,
+  80:Src/midi.c    ****                                1479.978,
+  81:Src/midi.c    ****                                1567.982,
+  82:Src/midi.c    ****                                1661.219,
+  83:Src/midi.c    ****                                1760    ,
+  84:Src/midi.c    ****                                1864.655,
+  85:Src/midi.c    ****                                1975.533,
+  86:Src/midi.c    ****                                2093.005,
+  87:Src/midi.c    ****                                2217.461,
+  88:Src/midi.c    ****                                2349.318,
+ARM GAS  /tmp/ccOXdOeL.s 			page 3
+
+
+  89:Src/midi.c    ****                                2489.016,
+  90:Src/midi.c    ****                                2637.02 ,
+  91:Src/midi.c    ****                                2793.826,
+  92:Src/midi.c    ****                                2959.955,
+  93:Src/midi.c    ****                                3135.963,
+  94:Src/midi.c    ****                                3322.438,
+  95:Src/midi.c    ****                                3520    ,
+  96:Src/midi.c    ****                                3729.31 ,
+  97:Src/midi.c    ****                                3951.066,
+  98:Src/midi.c    **** };
+  99:Src/midi.c    **** 
+ 100:Src/midi.c    **** void Receive_MIDI(SPI_HandleTypeDef* hspi, uint8_t* spi_rx_buffer) {
+  28              		.loc 1 100 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 30B5     		push	{r4, r5, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 12
+  36              		.cfi_offset 4, -12
+  37              		.cfi_offset 5, -8
+  38              		.cfi_offset 14, -4
+  39 0002 83B0     		sub	sp, sp, #12
+  40              	.LCFI1:
+  41              		.cfi_def_cfa_offset 24
+  42 0004 0446     		mov	r4, r0
+  43 0006 0D46     		mov	r5, r1
+ 101:Src/midi.c    ****   //  if(!HAL_GPIO_ReadPin(GPIOF,GPIO_PIN_6) &&
+ 102:Src/midi.c    ****   if(HAL_SPI_GetState(hspi) == HAL_SPI_STATE_READY) {
+  44              		.loc 1 102 0
+  45 0008 FFF7FEFF 		bl	HAL_SPI_GetState
+  46              	.LVL1:
+  47 000c 0128     		cmp	r0, #1
+  48 000e 01D0     		beq	.L4
+  49              	.L1:
+ 103:Src/midi.c    ****     uint8_t data = 0xAA;
+ 104:Src/midi.c    ****     HAL_SPI_TransmitReceive_IT(hspi, &data, spi_rx_buffer, 1);
+ 105:Src/midi.c    ****   }
+ 106:Src/midi.c    **** }
+  50              		.loc 1 106 0
+  51 0010 03B0     		add	sp, sp, #12
+  52              	.LCFI2:
+  53              		.cfi_remember_state
+  54              		.cfi_def_cfa_offset 12
+  55              		@ sp needed
+  56 0012 30BD     		pop	{r4, r5, pc}
+  57              	.LVL2:
+  58              	.L4:
+  59              	.LCFI3:
+  60              		.cfi_restore_state
+  61              	.LBB2:
+ 103:Src/midi.c    ****     uint8_t data = 0xAA;
+  62              		.loc 1 103 0
+  63 0014 02A9     		add	r1, sp, #8
+  64 0016 AA23     		movs	r3, #170
+  65 0018 01F8013D 		strb	r3, [r1, #-1]!
+ARM GAS  /tmp/ccOXdOeL.s 			page 4
+
+
+ 104:Src/midi.c    ****   }
+  66              		.loc 1 104 0
+  67 001c 0123     		movs	r3, #1
+  68 001e 2A46     		mov	r2, r5
+  69 0020 2046     		mov	r0, r4
+  70 0022 FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
+  71              	.LVL3:
+  72              	.LBE2:
+  73              		.loc 1 106 0
+  74 0026 F3E7     		b	.L1
+  75              		.cfi_endproc
+  76              	.LFE130:
+  78              		.section	.text.enqueue,"ax",%progbits
+  79              		.align	1
+  80              		.global	enqueue
+  81              		.syntax unified
+  82              		.thumb
+  83              		.thumb_func
+  84              		.fpu fpv4-sp-d16
+  86              	enqueue:
+  87              	.LFB131:
+ 107:Src/midi.c    **** 
+ 108:Src/midi.c    **** void enqueue (struct midi_msg midi_msg) {
+  88              		.loc 1 108 0
+  89              		.cfi_startproc
+  90              		@ args = 0, pretend = 0, frame = 8
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		@ link register save eliminated.
+  93 0000 82B0     		sub	sp, sp, #8
+  94              	.LCFI4:
+  95              		.cfi_def_cfa_offset 8
+ 109:Src/midi.c    ****   midi_msg_queue.queue[midi_msg_queue.head++] = midi_msg;
+  96              		.loc 1 109 0
+  97 0002 054B     		ldr	r3, .L7
+  98 0004 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+  99 0006 511C     		adds	r1, r2, #1
+ 100 0008 1970     		strb	r1, [r3]
+ 101 000a 03EB8203 		add	r3, r3, r2, lsl #2
+ 102 000e C3F80200 		str	r0, [r3, #2]	@ unaligned
+ 110:Src/midi.c    **** }
+ 103              		.loc 1 110 0
+ 104 0012 02B0     		add	sp, sp, #8
+ 105              	.LCFI5:
+ 106              		.cfi_def_cfa_offset 0
+ 107              		@ sp needed
+ 108 0014 7047     		bx	lr
+ 109              	.L8:
+ 110 0016 00BF     		.align	2
+ 111              	.L7:
+ 112 0018 00000000 		.word	midi_msg_queue
+ 113              		.cfi_endproc
+ 114              	.LFE131:
+ 116              		.section	.text.dequeue,"ax",%progbits
+ 117              		.align	1
+ 118              		.global	dequeue
+ 119              		.syntax unified
+ 120              		.thumb
+ARM GAS  /tmp/ccOXdOeL.s 			page 5
+
+
+ 121              		.thumb_func
+ 122              		.fpu fpv4-sp-d16
+ 124              	dequeue:
+ 125              	.LFB132:
+ 111:Src/midi.c    **** 
+ 112:Src/midi.c    **** struct midi_msg dequeue(void) {
+ 126              		.loc 1 112 0
+ 127              		.cfi_startproc
+ 128              		@ args = 0, pretend = 0, frame = 8
+ 129              		@ frame_needed = 0, uses_anonymous_args = 0
+ 130              		@ link register save eliminated.
+ 131 0000 82B0     		sub	sp, sp, #8
+ 132              	.LCFI6:
+ 133              		.cfi_def_cfa_offset 8
+ 113:Src/midi.c    ****   return midi_msg_queue.queue[midi_msg_queue.tail++];
+ 134              		.loc 1 113 0
+ 135 0002 0D4B     		ldr	r3, .L11
+ 136 0004 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 137 0006 511C     		adds	r1, r2, #1
+ 138 0008 5970     		strb	r1, [r3, #1]
+ 139 000a 03EB8203 		add	r3, r3, r2, lsl #2
+ 140 000e D3F80200 		ldr	r0, [r3, #2]	@ unaligned
+ 141 0012 0023     		movs	r3, #0
+ 142 0014 C2B2     		uxtb	r2, r0
+ 143 0016 62F30703 		bfi	r3, r2, #0, #8
+ 144 001a C0F30722 		ubfx	r2, r0, #8, #8
+ 145 001e 62F30F23 		bfi	r3, r2, #8, #8
+ 146 0022 C0F30742 		ubfx	r2, r0, #16, #8
+ 147 0026 62F31743 		bfi	r3, r2, #16, #8
+ 148 002a 000E     		lsrs	r0, r0, #24
+ 149 002c 60F31F63 		bfi	r3, r0, #24, #8
+ 114:Src/midi.c    **** }
+ 150              		.loc 1 114 0
+ 151 0030 1846     		mov	r0, r3
+ 152 0032 02B0     		add	sp, sp, #8
+ 153              	.LCFI7:
+ 154              		.cfi_def_cfa_offset 0
+ 155              		@ sp needed
+ 156 0034 7047     		bx	lr
+ 157              	.L12:
+ 158 0036 00BF     		.align	2
+ 159              	.L11:
+ 160 0038 00000000 		.word	midi_msg_queue
+ 161              		.cfi_endproc
+ 162              	.LFE132:
+ 164              		.global	midi_notes
+ 165              		.global	MIDI_flag
+ 166              		.comm	midi_msg_queue,1022,4
+ 167              		.global	current_midi_msg
+ 168              		.section	.bss.MIDI_flag,"aw",%nobits
+ 171              	MIDI_flag:
+ 172 0000 00       		.space	1
+ 173              		.section	.bss.current_midi_msg,"aw",%nobits
+ 174              		.align	2
+ 177              	current_midi_msg:
+ 178 0000 00000000 		.space	4
+ 179              		.section	.rodata.midi_notes,"a",%progbits
+ARM GAS  /tmp/ccOXdOeL.s 			page 6
+
+
+ 180              		.align	2
+ 183              	midi_notes:
+ 184 0000 0000DC41 		.word	1104936960
+ 185 0004 F914E941 		.word	1105794297
+ 186 0008 12F1F641 		.word	1106702610
+ 187 000c 14D00242 		.word	1107480596
+ 188 0010 61970A42 		.word	1107990369
+ 189 0014 18D51242 		.word	1108530456
+ 190 0018 40901B42 		.word	1109102656
+ 191 001c 53D02442 		.word	1109708883
+ 192 0020 379D2E42 		.word	1110351159
+ 193 0024 48FF3842 		.word	1111031624
+ 194 0028 6BFF4342 		.word	1111752555
+ 195 002c 01A74F42 		.word	1112516353
+ 196 0030 00005C42 		.word	1113325568
+ 197 0034 F6146942 		.word	1114182902
+ 198 0038 0FF17642 		.word	1115091215
+ 199 003c 12D08242 		.word	1115869202
+ 200 0040 61978A42 		.word	1116378977
+ 201 0044 17D59242 		.word	1116919063
+ 202 0048 42909B42 		.word	1117491266
+ 203 004c 54D0A442 		.word	1118097492
+ 204 0050 379DAE42 		.word	1118739767
+ 205 0054 4AFFB842 		.word	1119420234
+ 206 0058 6BFFC342 		.word	1120141163
+ 207 005c 04A7CF42 		.word	1120904964
+ 208 0060 0000DC42 		.word	1121714176
+ 209 0064 F114E942 		.word	1122571505
+ 210 0068 0DF1F642 		.word	1123479821
+ 211 006c 14D00243 		.word	1124257812
+ 212 0070 5F970A43 		.word	1124767583
+ 213 0074 18D51243 		.word	1125307672
+ 214 0078 42901B43 		.word	1125879874
+ 215 007c 55D02443 		.word	1126486101
+ 216 0080 369D2E43 		.word	1127128374
+ 217 0084 48FF3843 		.word	1127808840
+ 218 0088 69FF4343 		.word	1128529769
+ 219 008c FDA64F43 		.word	1129293565
+ 220 0090 00005C43 		.word	1130102784
+ 221 0094 F7146943 		.word	1130960119
+ 222 0098 13F17643 		.word	1131868435
+ 223 009c 14D08243 		.word	1132646420
+ 224 00a0 5F978A43 		.word	1133156191
+ 225 00a4 18D59243 		.word	1133696280
+ 226 00a8 42909B43 		.word	1134268482
+ 227 00ac 55D0A443 		.word	1134874709
+ 228 00b0 369DAE43 		.word	1135516982
+ 229 00b4 48FFB843 		.word	1136197448
+ 230 00b8 69FFC343 		.word	1136918377
+ 231 00bc 00A7CF43 		.word	1137682176
+ 232 00c0 0000DC43 		.word	1138491392
+ 233 00c4 F714E943 		.word	1139348727
+ 234 00c8 10F1F643 		.word	1140257040
+ 235 00cc 12D00244 		.word	1141035026
+ 236 00d0 61970A44 		.word	1141544801
+ 237 00d4 17D51244 		.word	1142084887
+ 238 00d8 42901B44 		.word	1142657090
+ARM GAS  /tmp/ccOXdOeL.s 			page 7
+
+
+ 239 00dc 54D02444 		.word	1143263316
+ 240 00e0 379D2E44 		.word	1143905591
+ 241 00e4 48FF3844 		.word	1144586056
+ 242 00e8 6BFF4344 		.word	1145306987
+ 243 00ec 00A74F44 		.word	1146070784
+ 244 00f0 00005C44 		.word	1146880000
+ 245 00f4 F6146944 		.word	1147737334
+ 246 00f8 10F17644 		.word	1148645648
+ 247 00fc 10D08244 		.word	1149423632
+ 248 0100 64978A44 		.word	1149933412
+ 249 0104 17D59244 		.word	1150473495
+ 250 0108 42909B44 		.word	1151045698
+ 251 010c 52D0A444 		.word	1151651922
+ 252 0110 379DAE44 		.word	1152294199
+ 253 0114 4CFFB844 		.word	1152974668
+ 254 0118 6DFFC344 		.word	1153695597
+ 255 011c 02A7CF44 		.word	1154459394
+ 256 0120 0000DC44 		.word	1155268608
+ 257 0124 F614E944 		.word	1156125942
+ 258 0128 0EF1F644 		.word	1157034254
+ 259 012c 14D00245 		.word	1157812244
+ 260 0130 60970A45 		.word	1158322016
+ 261 0134 17D51245 		.word	1158862103
+ 262 0138 42901B45 		.word	1159434306
+ 263 013c 52D02445 		.word	1160040530
+ 264 0140 379D2E45 		.word	1160682807
+ 265 0144 48FF3845 		.word	1161363272
+ 266 0148 68FF4345 		.word	1162084200
+ 267 014c 02A74F45 		.word	1162848002
+ 268 0150 00005C45 		.word	1163657216
+ 269 0154 F6146945 		.word	1164514550
+ 270 0158 0EF17645 		.word	1165422862
+ 271 015c 00000000 		.space	4
+ 272              		.text
+ 273              	.Letext0:
+ 274              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 275              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 276              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 277              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 278              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 279              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 280              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 281              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 282              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 283              		.file 11 "Inc/globals.h"
+ 284              		.file 12 "Inc/midi.h"
+ARM GAS  /tmp/ccOXdOeL.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 midi.c
+     /tmp/ccOXdOeL.s:18     .text.Receive_MIDI:0000000000000000 $t
+     /tmp/ccOXdOeL.s:25     .text.Receive_MIDI:0000000000000000 Receive_MIDI
+     /tmp/ccOXdOeL.s:79     .text.enqueue:0000000000000000 $t
+     /tmp/ccOXdOeL.s:86     .text.enqueue:0000000000000000 enqueue
+     /tmp/ccOXdOeL.s:112    .text.enqueue:0000000000000018 $d
+                            *COM*:00000000000003fe midi_msg_queue
+     /tmp/ccOXdOeL.s:117    .text.dequeue:0000000000000000 $t
+     /tmp/ccOXdOeL.s:124    .text.dequeue:0000000000000000 dequeue
+     /tmp/ccOXdOeL.s:160    .text.dequeue:0000000000000038 $d
+     /tmp/ccOXdOeL.s:183    .rodata.midi_notes:0000000000000000 midi_notes
+     /tmp/ccOXdOeL.s:171    .bss.MIDI_flag:0000000000000000 MIDI_flag
+     /tmp/ccOXdOeL.s:177    .bss.current_midi_msg:0000000000000000 current_midi_msg
+     /tmp/ccOXdOeL.s:172    .bss.MIDI_flag:0000000000000000 $d
+     /tmp/ccOXdOeL.s:174    .bss.current_midi_msg:0000000000000000 $d
+     /tmp/ccOXdOeL.s:180    .rodata.midi_notes:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_SPI_GetState
+HAL_SPI_TransmitReceive_IT

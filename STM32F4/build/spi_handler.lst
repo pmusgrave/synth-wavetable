@@ -1,0 +1,274 @@
+ARM GAS  /tmp/ccKSoT3V.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"spi_handler.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.HAL_GPIO_EXTI_Callback,"ax",%progbits
+  18              		.align	1
+  19              		.global	HAL_GPIO_EXTI_Callback
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	HAL_GPIO_EXTI_Callback:
+  26              	.LFB130:
+  27              		.file 1 "Src/spi_handler.c"
+   1:Src/spi_handler.c **** #include "main.h"
+   2:Src/spi_handler.c **** #include "globals.h"
+   3:Src/spi_handler.c **** #include "spi_handler.h"
+   4:Src/spi_handler.c **** 
+   5:Src/spi_handler.c **** struct byte_queue spi_byte_queue;
+   6:Src/spi_handler.c **** uint8_t spi_flag = 0;
+   7:Src/spi_handler.c **** 
+   8:Src/spi_handler.c **** void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin){
+  28              		.loc 1 8 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33              	.LVL0:
+  34 0000 7047     		bx	lr
+  35              		.cfi_endproc
+  36              	.LFE130:
+  38              		.section	.text.SPI_ReceiveByte,"ax",%progbits
+  39              		.align	1
+  40              		.global	SPI_ReceiveByte
+  41              		.syntax unified
+  42              		.thumb
+  43              		.thumb_func
+  44              		.fpu fpv4-sp-d16
+  46              	SPI_ReceiveByte:
+  47              	.LFB131:
+   9:Src/spi_handler.c ****   //spi_flag = 1;
+  10:Src/spi_handler.c ****   //HAL_GPIO_WritePin(GPIOF, GPIO_PIN_11, GPIO_PIN_RESET);
+  11:Src/spi_handler.c **** }
+  12:Src/spi_handler.c **** 
+  13:Src/spi_handler.c **** uint8_t SPI_ReceiveByte(){
+ARM GAS  /tmp/ccKSoT3V.s 			page 2
+
+
+  48              		.loc 1 13 0
+  49              		.cfi_startproc
+  50              		@ args = 0, pretend = 0, frame = 8
+  51              		@ frame_needed = 0, uses_anonymous_args = 0
+  52              		.loc 1 13 0
+  53 0000 10B5     		push	{r4, lr}
+  54              	.LCFI0:
+  55              		.cfi_def_cfa_offset 8
+  56              		.cfi_offset 4, -8
+  57              		.cfi_offset 14, -4
+  58 0002 82B0     		sub	sp, sp, #8
+  59              	.LCFI1:
+  60              		.cfi_def_cfa_offset 16
+  14:Src/spi_handler.c ****   uint8_t rx_buffer = 0;
+  61              		.loc 1 14 0
+  62 0004 0023     		movs	r3, #0
+  63 0006 8DF80730 		strb	r3, [sp, #7]
+  15:Src/spi_handler.c ****   HAL_GPIO_WritePin(GPIOF, GPIO_PIN_11, GPIO_PIN_SET);
+  64              		.loc 1 15 0
+  65 000a 134C     		ldr	r4, .L6
+  66 000c 0122     		movs	r2, #1
+  67 000e 4FF40061 		mov	r1, #2048
+  68 0012 2046     		mov	r0, r4
+  69 0014 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  70              	.LVL1:
+  16:Src/spi_handler.c ****   //if(spi_flag){
+  17:Src/spi_handler.c ****   //    spi_flag = 0;
+  18:Src/spi_handler.c **** 
+  19:Src/spi_handler.c ****   if(HAL_GPIO_ReadPin(GPIOF, GPIO_PIN_6) == GPIO_PIN_RESET){
+  71              		.loc 1 19 0
+  72 0018 4021     		movs	r1, #64
+  73 001a 2046     		mov	r0, r4
+  74 001c FFF7FEFF 		bl	HAL_GPIO_ReadPin
+  75              	.LVL2:
+  76 0020 18B1     		cbz	r0, .L5
+  77              	.L3:
+  20:Src/spi_handler.c ****       
+  21:Src/spi_handler.c ****     HAL_SPI_Receive(&hspi5, &rx_buffer, 1, HAL_MAX_DELAY);
+  22:Src/spi_handler.c ****     HAL_UART_Transmit(&huart1, &rx_buffer, 1, HAL_MAX_DELAY);
+  23:Src/spi_handler.c ****     HAL_GPIO_WritePin(GPIOF, GPIO_PIN_11, GPIO_PIN_SET);
+  24:Src/spi_handler.c ****     // MIDI_flag = 1;
+  25:Src/spi_handler.c ****     //}
+  26:Src/spi_handler.c ****    }
+  27:Src/spi_handler.c **** 
+  28:Src/spi_handler.c ****   return rx_buffer;
+  29:Src/spi_handler.c **** }
+  78              		.loc 1 29 0
+  79 0022 9DF80700 		ldrb	r0, [sp, #7]	@ zero_extendqisi2
+  80 0026 02B0     		add	sp, sp, #8
+  81              	.LCFI2:
+  82              		.cfi_remember_state
+  83              		.cfi_def_cfa_offset 8
+  84              		@ sp needed
+  85 0028 10BD     		pop	{r4, pc}
+  86              	.L5:
+  87              	.LCFI3:
+  88              		.cfi_restore_state
+ARM GAS  /tmp/ccKSoT3V.s 			page 3
+
+
+  21:Src/spi_handler.c ****     HAL_UART_Transmit(&huart1, &rx_buffer, 1, HAL_MAX_DELAY);
+  89              		.loc 1 21 0
+  90 002a 4FF0FF33 		mov	r3, #-1
+  91 002e 0122     		movs	r2, #1
+  92 0030 0DF10701 		add	r1, sp, #7
+  93 0034 0948     		ldr	r0, .L6+4
+  94 0036 FFF7FEFF 		bl	HAL_SPI_Receive
+  95              	.LVL3:
+  22:Src/spi_handler.c ****     HAL_GPIO_WritePin(GPIOF, GPIO_PIN_11, GPIO_PIN_SET);
+  96              		.loc 1 22 0
+  97 003a 4FF0FF33 		mov	r3, #-1
+  98 003e 0122     		movs	r2, #1
+  99 0040 0DF10701 		add	r1, sp, #7
+ 100 0044 0648     		ldr	r0, .L6+8
+ 101 0046 FFF7FEFF 		bl	HAL_UART_Transmit
+ 102              	.LVL4:
+  23:Src/spi_handler.c ****     // MIDI_flag = 1;
+ 103              		.loc 1 23 0
+ 104 004a 0122     		movs	r2, #1
+ 105 004c 4FF40061 		mov	r1, #2048
+ 106 0050 2046     		mov	r0, r4
+ 107 0052 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 108              	.LVL5:
+ 109 0056 E4E7     		b	.L3
+ 110              	.L7:
+ 111              		.align	2
+ 112              	.L6:
+ 113 0058 00140240 		.word	1073878016
+ 114 005c 00000000 		.word	hspi5
+ 115 0060 00000000 		.word	huart1
+ 116              		.cfi_endproc
+ 117              	.LFE131:
+ 119              		.section	.text.enqueue_byte,"ax",%progbits
+ 120              		.align	1
+ 121              		.global	enqueue_byte
+ 122              		.syntax unified
+ 123              		.thumb
+ 124              		.thumb_func
+ 125              		.fpu fpv4-sp-d16
+ 127              	enqueue_byte:
+ 128              	.LFB132:
+  30:Src/spi_handler.c **** 
+  31:Src/spi_handler.c **** void enqueue_byte (uint8_t byte) {
+ 129              		.loc 1 31 0
+ 130              		.cfi_startproc
+ 131              		@ args = 0, pretend = 0, frame = 0
+ 132              		@ frame_needed = 0, uses_anonymous_args = 0
+ 133              		@ link register save eliminated.
+ 134              	.LVL6:
+  32:Src/spi_handler.c ****   spi_byte_queue.queue[spi_byte_queue.head++] = byte;
+ 135              		.loc 1 32 0
+ 136 0000 034B     		ldr	r3, .L9
+ 137 0002 1A78     		ldrb	r2, [r3]	@ zero_extendqisi2
+ 138 0004 511C     		adds	r1, r2, #1
+ 139 0006 1970     		strb	r1, [r3]
+ 140 0008 1344     		add	r3, r3, r2
+ 141 000a 9870     		strb	r0, [r3, #2]
+ARM GAS  /tmp/ccKSoT3V.s 			page 4
+
+
+ 142 000c 7047     		bx	lr
+ 143              	.L10:
+ 144 000e 00BF     		.align	2
+ 145              	.L9:
+ 146 0010 00000000 		.word	spi_byte_queue
+ 147              		.cfi_endproc
+ 148              	.LFE132:
+ 150              		.section	.text.dequeue_byte,"ax",%progbits
+ 151              		.align	1
+ 152              		.global	dequeue_byte
+ 153              		.syntax unified
+ 154              		.thumb
+ 155              		.thumb_func
+ 156              		.fpu fpv4-sp-d16
+ 158              	dequeue_byte:
+ 159              	.LFB133:
+  33:Src/spi_handler.c **** }
+  34:Src/spi_handler.c **** 
+  35:Src/spi_handler.c **** uint8_t dequeue_byte(void) {
+ 160              		.loc 1 35 0
+ 161              		.cfi_startproc
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		@ link register save eliminated.
+  36:Src/spi_handler.c ****   return spi_byte_queue.queue[spi_byte_queue.tail++];
+ 165              		.loc 1 36 0
+ 166 0000 034B     		ldr	r3, .L12
+ 167 0002 5A78     		ldrb	r2, [r3, #1]	@ zero_extendqisi2
+ 168 0004 511C     		adds	r1, r2, #1
+ 169 0006 5970     		strb	r1, [r3, #1]
+ 170 0008 1344     		add	r3, r3, r2
+  37:Src/spi_handler.c **** }
+ 171              		.loc 1 37 0
+ 172 000a 9878     		ldrb	r0, [r3, #2]	@ zero_extendqisi2
+ 173 000c 7047     		bx	lr
+ 174              	.L13:
+ 175 000e 00BF     		.align	2
+ 176              	.L12:
+ 177 0010 00000000 		.word	spi_byte_queue
+ 178              		.cfi_endproc
+ 179              	.LFE133:
+ 181              		.global	spi_flag
+ 182              		.comm	spi_byte_queue,257,4
+ 183              		.section	.bss.spi_flag,"aw",%nobits
+ 186              	spi_flag:
+ 187 0000 00       		.space	1
+ 188              		.text
+ 189              	.Letext0:
+ 190              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 191              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 192              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 193              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 194              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 195              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 196              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 197              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 198              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ARM GAS  /tmp/ccKSoT3V.s 			page 5
+
+
+ 199              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 200              		.file 12 "Inc/globals.h"
+ 201              		.file 13 "Inc/spi_handler.h"
+ARM GAS  /tmp/ccKSoT3V.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi_handler.c
+     /tmp/ccKSoT3V.s:18     .text.HAL_GPIO_EXTI_Callback:0000000000000000 $t
+     /tmp/ccKSoT3V.s:25     .text.HAL_GPIO_EXTI_Callback:0000000000000000 HAL_GPIO_EXTI_Callback
+     /tmp/ccKSoT3V.s:39     .text.SPI_ReceiveByte:0000000000000000 $t
+     /tmp/ccKSoT3V.s:46     .text.SPI_ReceiveByte:0000000000000000 SPI_ReceiveByte
+     /tmp/ccKSoT3V.s:113    .text.SPI_ReceiveByte:0000000000000058 $d
+     /tmp/ccKSoT3V.s:120    .text.enqueue_byte:0000000000000000 $t
+     /tmp/ccKSoT3V.s:127    .text.enqueue_byte:0000000000000000 enqueue_byte
+     /tmp/ccKSoT3V.s:146    .text.enqueue_byte:0000000000000010 $d
+                            *COM*:0000000000000101 spi_byte_queue
+     /tmp/ccKSoT3V.s:151    .text.dequeue_byte:0000000000000000 $t
+     /tmp/ccKSoT3V.s:158    .text.dequeue_byte:0000000000000000 dequeue_byte
+     /tmp/ccKSoT3V.s:177    .text.dequeue_byte:0000000000000010 $d
+     /tmp/ccKSoT3V.s:186    .bss.spi_flag:0000000000000000 spi_flag
+     /tmp/ccKSoT3V.s:187    .bss.spi_flag:0000000000000000 $d
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+HAL_GPIO_ReadPin
+HAL_SPI_Receive
+HAL_UART_Transmit
+hspi5
+huart1
