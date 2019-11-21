@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <device schemaVersion="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="CMSIS-SVD_Schema_1_0.xsd">
-  <name>CY8C4248BZI_L489</name>
+  <name>CY8C4246AZI_L445</name>
   <version>0.1</version>
   <description>PSoC 4200L</description>
   <addressUnitBits>8</addressUnitBits>
@@ -4553,7 +4553,7 @@
         <register>
           <name>TX_MIDI1_UART_TX_DATA</name>
           <description>TX Data Register</description>
-          <addressOffset>0x400F0046</addressOffset>
+          <addressOffset>0x400F0045</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -4562,7 +4562,7 @@
         <register>
           <name>RX_MIDI1_UART_RX_STATUS</name>
           <description>RX status register</description>
-          <addressOffset>0x400F0060</addressOffset>
+          <addressOffset>0x400F0063</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -31512,7 +31512,7 @@
         <register>
           <name>CONTROL_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0077</addressOffset>
+          <addressOffset>0x400F0074</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
@@ -31678,7 +31678,7 @@
         <register>
           <name>AudioClkSel_CONTROL_REG</name>
           <description>No description available</description>
-          <addressOffset>0x400F0075</addressOffset>
+          <addressOffset>0x400F0070</addressOffset>
           <size>8</size>
           <access>read-write</access>
           <resetValue>0</resetValue>
