@@ -28,12 +28,12 @@ $EndComp
 $Comp
 L Device:R R?
 U 1 1 5DD462EE
-P 5050 2650
-F 0 "R?" V 4843 2650 50  0000 C CNN
-F 1 "68.1k" V 4934 2650 50  0000 C CNN
-F 2 "" V 4980 2650 50  0001 C CNN
-F 3 "~" H 5050 2650 50  0001 C CNN
-	1    5050 2650
+P 4750 2650
+F 0 "R?" V 4543 2650 50  0000 C CNN
+F 1 "68.1k" V 4634 2650 50  0000 C CNN
+F 2 "" V 4680 2650 50  0001 C CNN
+F 3 "~" H 4750 2650 50  0001 C CNN
+	1    4750 2650
 	0    1    1    0   
 $EndComp
 $Comp
@@ -148,24 +148,18 @@ Wire Wire Line
 $Comp
 L Device:R R?
 U 1 1 5DD47650
-P 5050 2850
-F 0 "R?" V 5150 2850 50  0000 C CNN
-F 1 "200" V 5250 2850 50  0000 C CNN
-F 2 "" V 4980 2850 50  0001 C CNN
-F 3 "~" H 5050 2850 50  0001 C CNN
-	1    5050 2850
+P 4750 2850
+F 0 "R?" V 4850 2850 50  0000 C CNN
+F 1 "100k" V 4950 2850 50  0000 C CNN
+F 2 "" V 4680 2850 50  0001 C CNN
+F 3 "~" H 4750 2850 50  0001 C CNN
+	1    4750 2850
 	0    1    1    0   
 $EndComp
 Wire Wire Line
-	5200 2850 5350 2850
+	4900 2850 5150 2850
 Connection ~ 5350 2850
-Wire Wire Line
-	5200 2650 5250 2650
 Connection ~ 5350 2650
-Text Label 4550 2650 0    50   ~ 0
-SIG_IN+
-Wire Wire Line
-	4550 2650 4900 2650
 $Comp
 L dk_Linear-Amplifiers-Instrumentation-OP-Amps-Buffer-Amps:TL074CN U?
 U 2 1 5DD486FE
@@ -495,35 +489,24 @@ Text Label 2400 4200 0    50   ~ 0
 FREQ_CTRL
 Wire Wire Line
 	2400 4200 2800 4200
-Text GLabel 4800 2850 0    50   Input ~ 0
-VREF
-Wire Wire Line
-	4800 2850 4900 2850
 Text GLabel 5750 5150 3    50   Input ~ 0
 VREF
 Wire Wire Line
 	5750 5150 5750 5000
-Text GLabel 5250 2150 1    50   Input ~ 0
+Text GLabel 5150 2250 1    50   Input ~ 0
 VREF
 $Comp
 L Device:R R?
 U 1 1 5DD74FCF
-P 5250 2400
-F 0 "R?" H 5180 2354 50  0000 R CNN
-F 1 "68.1k" H 5180 2445 50  0000 R CNN
-F 2 "" V 5180 2400 50  0001 C CNN
-F 3 "~" H 5250 2400 50  0001 C CNN
-	1    5250 2400
+P 5150 2400
+F 0 "R?" H 5080 2354 50  0000 R CNN
+F 1 "68.1k" H 5080 2445 50  0000 R CNN
+F 2 "" V 5080 2400 50  0001 C CNN
+F 3 "~" H 5150 2400 50  0001 C CNN
+	1    5150 2400
 	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	5250 2550 5250 2650
-Connection ~ 5250 2650
-Wire Wire Line
-	5250 2650 5350 2650
-Wire Wire Line
-	5250 2150 5250 2250
-Text Notes 3050 2400 0    50   ~ 0
+Text Notes 2950 2400 0    50   ~ 0
 Set this resistive divider to limit input voltage range
 $Comp
 L Device:R R?
@@ -752,4 +735,37 @@ F 3 "" H 2150 5850 50  0001 C CNN
 $EndComp
 Text Label 2500 5650 0    50   ~ 0
 Q_CTRL
+$Comp
+L Device:R R?
+U 1 1 5DE8132C
+P 5150 3100
+F 0 "R?" H 5080 3054 50  0000 R CNN
+F 1 "200" H 5080 3145 50  0000 R CNN
+F 2 "" V 5080 3100 50  0001 C CNN
+F 3 "~" H 5150 3100 50  0001 C CNN
+	1    5150 3100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	5150 2950 5150 2850
+Connection ~ 5150 2850
+Wire Wire Line
+	5150 2850 5350 2850
+Text GLabel 5150 3250 3    50   Input ~ 0
+VREF
+Text HLabel 4400 2650 0    50   Input ~ 0
+AOUT_L
+Text HLabel 4400 2850 0    50   Input ~ 0
+AOUT_R
+Wire Wire Line
+	4400 2650 4600 2650
+Wire Wire Line
+	4600 2850 4400 2850
+Wire Wire Line
+	4900 2650 5150 2650
+Wire Wire Line
+	5150 2550 5150 2650
+Connection ~ 5150 2650
+Wire Wire Line
+	5150 2650 5350 2650
 $EndSCHEMATC
