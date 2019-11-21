@@ -494,9 +494,9 @@ Text HLabel 4000 4000 0    50   BiDi ~ 0
 I2S_WCLK
 Text HLabel 4000 4100 0    50   BiDi ~ 0
 CSN
-Text HLabel 4000 4200 0    50   BiDi ~ 0
+Text HLabel 2800 4200 0    50   BiDi ~ 0
 I2C_SCL
-Text HLabel 4000 4300 0    50   BiDi ~ 0
+Text HLabel 2800 4300 0    50   BiDi ~ 0
 I2C_SDA
 Text HLabel 4000 4400 0    50   BiDi ~ 0
 DIF0
@@ -508,4 +508,62 @@ Text HLabel 5000 5600 3    50   BiDi ~ 0
 CAD1
 Wire Wire Line
 	5000 5600 5000 5300
+$Comp
+L Device:R R?
+U 1 1 5DD990DD
+P 3150 3850
+F 0 "R?" H 3000 3900 50  0000 L CNN
+F 1 "2.2k" V 3150 3750 50  0000 L CNN
+F 2 "" V 3080 3850 50  0001 C CNN
+F 3 "~" H 3150 3850 50  0001 C CNN
+	1    3150 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DD99194
+P 3250 3850
+F 0 "R?" H 3320 3896 50  0000 L CNN
+F 1 "2.2k" V 3250 3750 50  0000 L CNN
+F 2 "" V 3180 3850 50  0001 C CNN
+F 3 "~" H 3250 3850 50  0001 C CNN
+	1    3250 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DD9B51B
+P 3250 3700
+F 0 "#SUPPLY?" H 3250 3700 50  0001 L BNN
+F 1 "3.3V" H 3250 3874 50  0000 C CNN
+F 2 "" H 3250 3700 50  0001 C CNN
+F 3 "" H 3250 3700 50  0001 C CNN
+	1    3250 3700
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DD9B54C
+P 3150 3700
+F 0 "#SUPPLY?" H 3150 3700 50  0001 L BNN
+F 1 "3.3V" H 3150 3874 50  0000 C CNN
+F 2 "" H 3150 3700 50  0001 C CNN
+F 3 "" H 3150 3700 50  0001 C CNN
+	1    3150 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 4200 3150 4200
+Wire Wire Line
+	2800 4300 3250 4300
+Wire Wire Line
+	3150 4000 3150 4200
+Connection ~ 3150 4200
+Wire Wire Line
+	3150 4200 4000 4200
+Wire Wire Line
+	3250 4000 3250 4300
+Connection ~ 3250 4300
+Wire Wire Line
+	3250 4300 4000 4300
 $EndSCHEMATC
