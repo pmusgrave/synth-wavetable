@@ -1119,4 +1119,6 @@ Connection ~ 9250 3600
 Wire Wire Line
 	9800 5150 9250 5150
 Connection ~ 9250 5150
+Text Notes 9650 4200 0    50   ~ 0
+I think I  could DC couple this\nand remove coupling caps\nbecause filters will be biased\nto the same VREF (?)
 $EndSCHEMATC
