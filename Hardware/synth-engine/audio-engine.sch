@@ -764,4 +764,30 @@ Wire Wire Line
 	2800 3000 1300 3000
 Wire Wire Line
 	1300 3000 1300 3250
+Text HLabel 6850 4300 2    50   BiDi ~ 0
+PDN
+Text HLabel 6850 4400 2    50   BiDi ~ 0
+I2S_BCLK
+Text HLabel 6850 4500 2    50   BiDi ~ 0
+I2S_SDA
+Text HLabel 6850 4600 2    50   BiDi ~ 0
+I2S_LRCLK
+Text HLabel 6850 4700 2    50   BiDi ~ 0
+I2S_WCLK
+Text HLabel 6850 4800 2    50   BiDi ~ 0
+CSN
+Text HLabel 6850 4900 2    50   BiDi ~ 0
+I2C_SCL
+Text HLabel 6850 5000 2    50   BiDi ~ 0
+I2C_SDA
+Text HLabel 6850 5100 2    50   BiDi ~ 0
+DIF0
+Text HLabel 6850 5200 2    50   BiDi ~ 0
+DIF1
+Text HLabel 6850 5300 2    50   BiDi ~ 0
+DIF2
+Text HLabel 6850 4200 2    50   BiDi ~ 0
+MCLK
+Text HLabel 6850 5400 2    50   BiDi ~ 0
+CAD1
 $EndSCHEMATC

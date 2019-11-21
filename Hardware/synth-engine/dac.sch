@@ -461,7 +461,7 @@ L SparkFun-Aesthetics:3.3V #SUPPLY?
 U 1 1 5DD6B81F
 P 4700 5300
 F 0 "#SUPPLY?" H 4700 5300 50  0001 L BNN
-F 1 "3.3V" H 4700 5474 50  0000 C CNN
+F 1 "3.3V" H 4750 5550 50  0000 C CNN
 F 2 "" H 4700 5300 50  0001 C CNN
 F 3 "" H 4700 5300 50  0001 C CNN
 	1    4700 5300
@@ -472,10 +472,40 @@ L SparkFun-Aesthetics:3.3V #SUPPLY?
 U 1 1 5DD6C780
 P 4800 5300
 F 0 "#SUPPLY?" H 4800 5300 50  0001 L BNN
-F 1 "3.3V" H 4800 5474 50  0000 C CNN
+F 1 "3.3V" H 4750 5550 50  0000 C CNN
 F 2 "" H 4800 5300 50  0001 C CNN
 F 3 "" H 4800 5300 50  0001 C CNN
 	1    4800 5300
 	-1   0    0    1   
 $EndComp
+Text HLabel 4800 2100 1    50   BiDi ~ 0
+MCLK
+Wire Wire Line
+	4800 2100 4800 2850
+Text HLabel 4000 3600 0    50   BiDi ~ 0
+PDN
+Text HLabel 4000 3700 0    50   BiDi ~ 0
+I2S_BCLK
+Text HLabel 4000 3800 0    50   BiDi ~ 0
+I2S_SDA
+Text HLabel 4000 3900 0    50   BiDi ~ 0
+I2S_LRCLK
+Text HLabel 4000 4000 0    50   BiDi ~ 0
+I2S_WCLK
+Text HLabel 4000 4100 0    50   BiDi ~ 0
+CSN
+Text HLabel 4000 4200 0    50   BiDi ~ 0
+I2C_SCL
+Text HLabel 4000 4300 0    50   BiDi ~ 0
+I2C_SDA
+Text HLabel 4000 4400 0    50   BiDi ~ 0
+DIF0
+Text HLabel 4000 4500 0    50   BiDi ~ 0
+DIF1
+Text HLabel 4000 4600 0    50   BiDi ~ 0
+DIF2
+Text HLabel 5000 5600 3    50   BiDi ~ 0
+CAD1
+Wire Wire Line
+	5000 5600 5000 5300
 $EndSCHEMATC
