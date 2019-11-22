@@ -50,11 +50,17 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac;
+
 I2C_HandleTypeDef hi2c1;
+
 I2S_HandleTypeDef hi2s2;
+
 SPI_HandleTypeDef hspi1;
+
 TIM_HandleTypeDef htim6;
+
 UART_HandleTypeDef huart4;
+
 /* USER CODE BEGIN PV */
 uint8_t uart_tx_data = 0;
 /* USER CODE END PV */
@@ -455,12 +461,12 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10 
-                          |GPIO_PIN_11|GPIO_PIN_12, GPIO_PIN_RESET);
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PE7 PE8 PE9 PE10 
-                           PE11 PE12 */
+                           PE11 PE12 PE13 */
   GPIO_InitStruct.Pin = GPIO_PIN_7|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10 
-                          |GPIO_PIN_11|GPIO_PIN_12;
+                          |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
