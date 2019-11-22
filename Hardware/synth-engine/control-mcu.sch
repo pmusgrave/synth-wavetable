@@ -497,7 +497,7 @@ U 1 1 5DDBF704
 P 2750 6900
 F 0 "D1" V 2704 6979 50  0000 L CNN
 F 1 "D" V 2795 6979 50  0000 L CNN
-F 2 "SparkFun-DiscreteSemi:SMA-DIODE" H 2750 6900 50  0001 C CNN
+F 2 "SparkFun-DiscreteSemi:SMB-DIODE" H 2750 6900 50  0001 C CNN
 F 3 "~" H 2750 6900 50  0001 C CNN
 	1    2750 6900
 	0    1    1    0   
@@ -611,7 +611,7 @@ U 1 1 5DDBF74F
 P 5400 6850
 F 0 "Q1" H 5588 6903 60  0000 L CNN
 F 1 "2N3904" H 5588 6797 60  0000 L CNN
-F 2 "digikey-footprints:TO-92-3" H 5600 7050 60  0001 L CNN
+F 2 "SparkFun-DiscreteSemi:SOT23-3" H 5600 7050 60  0001 L CNN
 F 3 "https://my.centralsemi.com/get_document.php?cmp=1&mergetype=pd&mergepath=pd&pdf_id=LSSGP072.PDF" H 5600 7150 60  0001 L CNN
 F 4 "2N3904CS-ND" H 5600 7250 60  0001 L CNN "Digi-Key_PN"
 F 5 "2N3904" H 5600 7350 60  0001 L CNN "MPN"
@@ -1746,14 +1746,14 @@ Text Label 5050 3750 0    50   ~ 0
 osc2_tune
 Text Label 5050 3850 0    50   ~ 0
 osc2_waveshape
-Wire Wire Line
-	1600 2150 1450 2150
-Wire Wire Line
-	1450 2250 1600 2250
-Wire Wire Line
-	1600 2350 1450 2350
 Text HLabel 5100 3000 2    50   Output ~ 0
 UART_TX
 Text HLabel 5100 3100 2    50   Input ~ 0
 UART_RX
+Wire Wire Line
+	1450 2150 1600 2150
+Wire Wire Line
+	1450 2250 1600 2250
+Wire Wire Line
+	1450 2350 1600 2350
 $EndSCHEMATC

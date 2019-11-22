@@ -692,8 +692,6 @@ Connection ~ 4700 5950
 Connection ~ 4650 5950
 Text GLabel 6700 2400 0    50   Input ~ 0
 VREF
-Text GLabel 6700 1450 0    50   Input ~ 0
-VREF
 $Comp
 L Device:R R62
 U 1 1 5DDCF2E5
@@ -828,14 +826,7 @@ Wire Wire Line
 Wire Wire Line
 	8450 2950 8500 2950
 Wire Wire Line
-	8500 2950 8500 3250
-Wire Wire Line
-	8500 3250 8050 3250
-Wire Wire Line
 	7850 3600 8500 3600
-Wire Wire Line
-	8500 3600 8500 3250
-Connection ~ 8500 3250
 Wire Wire Line
 	7550 3600 6800 3600
 Wire Wire Line
@@ -852,14 +843,14 @@ Wire Wire Line
 Wire Wire Line
 	5500 3600 6500 3600
 $Comp
-L Amplifier_Operational:NJM4580 U11
-U 1 1 5DE1F686
+L Amplifier_Operational:NJM4580 U10
+U 2 1 5DE1F686
 P 8150 5150
-F 0 "U11" H 8150 5517 50  0000 C CNN
+F 0 "U10" H 8150 5517 50  0000 C CNN
 F 1 "NJM4580" H 8150 5426 50  0000 C CNN
 F 2 "SparkFun-DigitalIC:SO08" H 8150 5150 50  0001 C CNN
 F 3 "http://www.njr.com/semicon/PDF/NJM4580_E.pdf" H 8150 5150 50  0001 C CNN
-	1    8150 5150
+	2    8150 5150
 	1    0    0    1   
 $EndComp
 Text GLabel 6700 5700 0    50   Input ~ 0
@@ -1121,4 +1112,11 @@ Wire Wire Line
 Connection ~ 9250 5150
 Text Notes 9650 4200 0    50   ~ 0
 I think I  could DC couple this\nand remove coupling caps\nbecause filters will be biased\nto the same VREF (?)
+Wire Wire Line
+	8500 3600 8500 3250
+Wire Wire Line
+	8500 2950 8500 3250
+Connection ~ 8500 3250
+Wire Wire Line
+	8500 3250 8050 3250
 $EndSCHEMATC

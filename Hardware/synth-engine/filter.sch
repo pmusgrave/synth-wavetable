@@ -20,7 +20,7 @@ U 1 1 5DDC7EE1
 P 6400 3600
 F 0 "U5" H 6400 3750 50  0000 L CNN
 F 1 "SSI2144" H 6300 3600 50  0000 L CNN
-F 2 "Package_SO:SSOP-16_3.9x4.9mm_P0.635mm" H 7300 3500 50  0001 C CNN
+F 2 "SparkFun-AnalogIC:SSOP16" H 7300 3500 50  0001 C CNN
 F 3 "http://www.soundsemiconductor.com/downloads/ssi2144datasheet.pdf" H 7100 3350 50  0001 C CNN
 	1    6400 3600
 	1    0    0    -1  
@@ -166,7 +166,7 @@ U 2 1 5DD486FE
 P 7950 3700
 F 0 "U4" H 8050 3800 60  0000 L CNN
 F 1 "TL074CN" H 8050 3550 60  0000 L CNN
-F 2 "digikey-footprints:DIP-14_W3mm" H 8150 3900 60  0001 L CNN
+F 2 "SparkFun-AnalogIC:SOIC8" H 8150 3900 60  0001 L CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 8150 4000 60  0001 L CNN
 F 4 "296-1777-5-ND" H 8150 4100 60  0001 L CNN "Digi-Key_PN"
 F 5 "TL074CN" H 8150 4200 60  0001 L CNN "MPN"
@@ -270,7 +270,7 @@ U 3 1 5DD4BD67
 P 3800 4300
 F 0 "U4" H 3900 4400 60  0000 L CNN
 F 1 "TL074CN" H 3900 4150 60  0000 L CNN
-F 2 "digikey-footprints:DIP-14_W3mm" H 4000 4500 60  0001 L CNN
+F 2 "SparkFun-AnalogIC:SOIC8" H 4000 4500 60  0001 L CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 4000 4600 60  0001 L CNN
 F 4 "296-1777-5-ND" H 4000 4700 60  0001 L CNN "Digi-Key_PN"
 F 5 "TL074CN" H 4000 4800 60  0001 L CNN "MPN"
@@ -485,10 +485,6 @@ Text Label 5100 4400 0    50   ~ 0
 Q_CTRL
 Wire Wire Line
 	5100 4400 5350 4400
-Text Label 2400 4200 0    50   ~ 0
-FREQ_CTRL
-Wire Wire Line
-	2400 4200 2800 4200
 Text GLabel 5750 5150 3    50   Input ~ 0
 VREF
 Wire Wire Line
@@ -826,4 +822,6 @@ Wire Wire Line
 	9750 3900 9650 3900
 Text Notes 9300 4400 0    50   ~ 0
 MASTER VOL
+Text HLabel 2800 4200 0    50   Input ~ 0
+FREQ_CTRL
 $EndSCHEMATC
