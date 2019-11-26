@@ -5235,8 +5235,8 @@
     (pad VBUS thru_hole circle (at 1.9812 1.24968 270) (size 1.6764 1.6764) (drill 0.9144) (layers F&B.Cu F.Paste F.SilkS F.Mask))
   )
 
-  (module SparkFun-Connectors:2X12 (layer F.Cu) (tedit 200000) (tstamp 5DE46D9C)
-    (at 3.73 74.27 90)
+  (module SparkFun-Connectors:2X12 (layer F.Cu) (tedit 200000) (tstamp 5DDD754B)
+    (at 3.73 74.03 90)
     (path /5DDCA8E8/5DDCF210)
     (attr virtual)
     (fp_text reference J8 (at -12.065 -3.81 90) (layer B.SilkS)
