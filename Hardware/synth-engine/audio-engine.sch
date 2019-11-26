@@ -4,7 +4,7 @@ EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 3 6
+Sheet 3 7
 Title ""
 Date ""
 Rev ""
@@ -727,7 +727,7 @@ Wire Wire Line
 	2800 3000 1700 3000
 Wire Wire Line
 	1700 3000 1700 3250
-Text HLabel 2800 4000 0    50   BiDi ~ 0
+Text HLabel 2800 4600 0    50   BiDi ~ 0
 PDN
 Text HLabel 4600 4300 2    50   BiDi ~ 0
 I2S_BCLK
@@ -735,23 +735,23 @@ Text HLabel 4600 5300 2    50   BiDi ~ 0
 I2S_SDA
 Text HLabel 4600 4500 2    50   BiDi ~ 0
 I2S_LRCLK
-Text HLabel 2800 4600 0    50   BiDi ~ 0
+Text HLabel 2800 4000 0    50   BiDi ~ 0
 I2S_WCLK
-Text HLabel 2800 4100 0    50   BiDi ~ 0
+Text HLabel 2800 4500 0    50   BiDi ~ 0
 CSN
 Text HLabel 4600 3900 2    50   BiDi ~ 0
 I2C_SCL
 Text HLabel 4600 4000 2    50   BiDi ~ 0
 I2C_SDA
-Text HLabel 2800 4200 0    50   BiDi ~ 0
+Text HLabel 2800 4400 0    50   BiDi ~ 0
 DIF0
 Text HLabel 2800 4300 0    50   BiDi ~ 0
 DIF1
-Text HLabel 2800 4400 0    50   BiDi ~ 0
+Text HLabel 2800 4200 0    50   BiDi ~ 0
 DIF2
 Text HLabel 4600 5600 2    50   BiDi ~ 0
 MCLK
-Text HLabel 2800 4500 0    50   BiDi ~ 0
+Text HLabel 2800 4100 0    50   BiDi ~ 0
 CAD1
 Text HLabel 4600 1600 2    50   Output ~ 0
 UART_TX

@@ -4,7 +4,7 @@ EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 5 6
+Sheet 5 7
 Title ""
 Date ""
 Rev ""
@@ -15,40 +15,16 @@ Comment3 ""
 Comment4 ""
 $EndDescr
 $Comp
-L Connector_Generic:Conn_01x02 J7
-U 1 1 5DD42AA9
-P 1400 1350
-F 0 "J7" H 1320 1567 50  0000 C CNN
-F 1 "Conn_01x02" H 1320 1476 50  0000 C CNN
-F 2 "SparkFun-Connectors:POWER_JACK_SLOT" H 1400 1350 50  0001 C CNN
-F 3 "~" H 1400 1350 50  0001 C CNN
-	1    1400 1350
-	-1   0    0    -1  
-$EndComp
-$Comp
 L power:GND #PWR080
 U 1 1 5DD42D7D
-P 1600 1450
-F 0 "#PWR080" H 1600 1200 50  0001 C CNN
-F 1 "GND" H 1605 1277 50  0000 C CNN
-F 2 "" H 1600 1450 50  0001 C CNN
-F 3 "" H 1600 1450 50  0001 C CNN
-	1    1600 1450
+P 1600 1550
+F 0 "#PWR080" H 1600 1300 50  0001 C CNN
+F 1 "GND" H 1605 1377 50  0000 C CNN
+F 2 "" H 1600 1550 50  0001 C CNN
+F 3 "" H 1600 1550 50  0001 C CNN
+	1    1600 1550
 	1    0    0    -1  
 $EndComp
-$Comp
-L Device:D_Schottky D2
-U 1 1 5DD42DBE
-P 1950 1350
-F 0 "D2" H 1950 1134 50  0000 C CNN
-F 1 "D_Schottky" H 1950 1225 50  0000 C CNN
-F 2 "SparkFun-DiscreteSemi:SMB-DIODE" H 1950 1350 50  0001 C CNN
-F 3 "~" H 1950 1350 50  0001 C CNN
-	1    1950 1350
-	-1   0    0    1   
-$EndComp
-Wire Wire Line
-	1800 1350 1600 1350
 $Comp
 L power:+15V #PWR083
 U 1 1 5DD42E55
@@ -165,7 +141,7 @@ U 1 1 5DD4417C
 P 2450 2900
 F 0 "U4" H 2550 3000 60  0000 L CNN
 F 1 "TL074CN" H 2550 2750 60  0000 L CNN
-F 2 "SparkFun-AnalogIC:SOIC8" H 2650 3100 60  0001 L CNN
+F 2 "SparkFun-AnalogIC:SO16" H 2650 3100 60  0001 L CNN
 F 3 "http://www.ti.com/lit/ds/symlink/tl071a.pdf" H 2650 3200 60  0001 L CNN
 F 4 "296-1777-5-ND" H 2650 3300 60  0001 L CNN "Digi-Key_PN"
 F 5 "TL074CN" H 2650 3400 60  0001 L CNN "MPN"
@@ -701,4 +677,33 @@ Wire Wire Line
 	1400 4300 1400 4400
 Wire Wire Line
 	1700 4400 1700 4300
+$Comp
+L Diode:1N5711 D2
+U 1 1 5DDE1471
+P 1950 1350
+F 0 "D2" H 1950 1134 50  0000 C CNN
+F 1 "1N5711" H 1950 1225 50  0000 C CNN
+F 2 "SparkFun-Passives:1210" H 1950 1175 50  0001 C CNN
+F 3 "https://www.microsemi.com/document-portal/doc_download/8865-lds-0040-datasheet" H 1950 1350 50  0001 C CNN
+	1    1950 1350
+	-1   0    0    1   
+$EndComp
+Text Notes 1600 1000 0    50   ~ 0
+Pick new schottky diode
+Wire Wire Line
+	1600 1350 1800 1350
+$Comp
+L SparkFun-Connectors:POWER_JACKPTH J7
+U 1 1 5DDEA308
+P 1500 1650
+F 0 "J7" H 1356 2145 50  0000 C CNN
+F 1 "POWER_JACKPTH" H 1356 2054 50  0000 C CNN
+F 2 "SparkFun-Connectors:POWER_JACK_PTH" H 1530 1800 20  0001 C CNN
+F 3 "" H 1500 1650 60  0000 C CNN
+	1    1500 1650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1600 1550 1600 1450
+Connection ~ 1600 1550
 $EndSCHEMATC

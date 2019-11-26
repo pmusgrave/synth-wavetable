@@ -4,7 +4,7 @@ EELAYER 26 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 2 6
+Sheet 2 7
 Title ""
 Date ""
 Rev ""
@@ -431,7 +431,7 @@ U 1 1 5DDBF704
 P 2750 6900
 F 0 "D1" V 2704 6979 50  0000 L CNN
 F 1 "D" V 2795 6979 50  0000 L CNN
-F 2 "SparkFun-DiscreteSemi:SMB-DIODE" H 2750 6900 50  0001 C CNN
+F 2 "SparkFun-Passives:1210" H 2750 6900 50  0001 C CNN
 F 3 "~" H 2750 6900 50  0001 C CNN
 	1    2750 6900
 	0    1    1    0   
@@ -612,17 +612,6 @@ Wire Wire Line
 Wire Wire Line
 	5500 6550 5650 6550
 $Comp
-L Connector_Generic:Conn_01x04 J2
-U 1 1 5DDBF7B4
-P 1250 2250
-F 0 "J2" H 1329 2242 50  0000 L CNN
-F 1 "USB" H 1329 2151 50  0000 L CNN
-F 2 "SparkFun-Connectors:USB-B-PTH" H 1250 2250 50  0001 C CNN
-F 3 "~" H 1250 2250 50  0001 C CNN
-	1    1250 2250
-	-1   0    0    -1  
-$EndComp
-$Comp
 L power:GNDD #PWR013
 U 1 1 5DDBF7C1
 P 1450 2450
@@ -633,590 +622,21 @@ F 3 "" H 1450 2450 50  0001 C CNN
 	1    1450 2450
 	-1   0    0    -1  
 $EndComp
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY02
-U 1 1 5DD4D59D
-P 7400 3050
-F 0 "#SUPPLY02" H 7400 3050 50  0001 L BNN
-F 1 "3.3V" H 7400 3224 50  0000 C CNN
-F 2 "" H 7400 3050 50  0001 C CNN
-F 3 "" H 7400 3050 50  0001 C CNN
-	1    7400 3050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R10
-U 1 1 5DD4D7B3
-P 7400 3200
-F 0 "R10" H 7330 3246 50  0000 R CNN
-F 1 "0" H 7330 3155 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 7330 3200 50  0001 C CNN
-F 3 "~" H 7400 3200 50  0001 C CNN
-	1    7400 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV2
-U 1 1 5DD4D8A7
-P 7400 3500
-F 0 "RV2" H 7330 3546 50  0000 R CNN
-F 1 "20kB" H 7330 3455 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 7400 3500 50  0001 C CNN
-F 3 "~" H 7400 3500 50  0001 C CNN
-	1    7400 3500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R11
-U 1 1 5DD4D98F
-P 7400 3800
-F 0 "R11" H 7470 3846 50  0000 L CNN
-F 1 "0" H 7470 3755 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 7330 3800 50  0001 C CNN
-F 3 "~" H 7400 3800 50  0001 C CNN
-	1    7400 3800
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR022
-U 1 1 5DD4DA86
-P 7400 3950
-F 0 "#PWR022" H 7400 3700 50  0001 C CNN
-F 1 "GND" H 7405 3777 50  0000 C CNN
-F 2 "" H 7400 3950 50  0001 C CNN
-F 3 "" H 7400 3950 50  0001 C CNN
-	1    7400 3950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C13
-U 1 1 5DD4DB54
-P 7550 3600
-F 0 "C13" H 7642 3646 50  0000 L CNN
-F 1 "C_Small" H 7642 3555 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 7550 3600 50  0001 C CNN
-F 3 "~" H 7550 3600 50  0001 C CNN
-	1    7550 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR024
-U 1 1 5DD4DBE8
-P 7550 3700
-F 0 "#PWR024" H 7550 3450 50  0001 C CNN
-F 1 "GND" H 7555 3527 50  0000 C CNN
-F 2 "" H 7550 3700 50  0001 C CNN
-F 3 "" H 7550 3700 50  0001 C CNN
-	1    7550 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY05
-U 1 1 5DD5D829
-P 8250 3050
-F 0 "#SUPPLY05" H 8250 3050 50  0001 L BNN
-F 1 "3.3V" H 8250 3224 50  0000 C CNN
-F 2 "" H 8250 3050 50  0001 C CNN
-F 3 "" H 8250 3050 50  0001 C CNN
-	1    8250 3050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R16
-U 1 1 5DD5D82F
-P 8250 3200
-F 0 "R16" H 8180 3246 50  0000 R CNN
-F 1 "0" H 8180 3155 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 8180 3200 50  0001 C CNN
-F 3 "~" H 8250 3200 50  0001 C CNN
-	1    8250 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV5
-U 1 1 5DD5D835
-P 8250 3500
-F 0 "RV5" H 8180 3546 50  0000 R CNN
-F 1 "20kB" H 8180 3455 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 8250 3500 50  0001 C CNN
-F 3 "~" H 8250 3500 50  0001 C CNN
-	1    8250 3500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R17
-U 1 1 5DD5D83B
-P 8250 3800
-F 0 "R17" H 8320 3846 50  0000 L CNN
-F 1 "0" H 8320 3755 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 8180 3800 50  0001 C CNN
-F 3 "~" H 8250 3800 50  0001 C CNN
-	1    8250 3800
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR028
-U 1 1 5DD5D841
-P 8250 3950
-F 0 "#PWR028" H 8250 3700 50  0001 C CNN
-F 1 "GND" H 8255 3777 50  0000 C CNN
-F 2 "" H 8250 3950 50  0001 C CNN
-F 3 "" H 8250 3950 50  0001 C CNN
-	1    8250 3950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C16
-U 1 1 5DD5D847
-P 8400 3600
-F 0 "C16" H 8492 3646 50  0000 L CNN
-F 1 "C_Small" H 8492 3555 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 8400 3600 50  0001 C CNN
-F 3 "~" H 8400 3600 50  0001 C CNN
-	1    8400 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR030
-U 1 1 5DD5D84D
-P 8400 3700
-F 0 "#PWR030" H 8400 3450 50  0001 C CNN
-F 1 "GND" H 8405 3527 50  0000 C CNN
-F 2 "" H 8400 3700 50  0001 C CNN
-F 3 "" H 8400 3700 50  0001 C CNN
-	1    8400 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY08
-U 1 1 5DD5FCE0
-P 9100 3050
-F 0 "#SUPPLY08" H 9100 3050 50  0001 L BNN
-F 1 "3.3V" H 9100 3224 50  0000 C CNN
-F 2 "" H 9100 3050 50  0001 C CNN
-F 3 "" H 9100 3050 50  0001 C CNN
-	1    9100 3050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R22
-U 1 1 5DD5FCE6
-P 9100 3200
-F 0 "R22" H 9030 3246 50  0000 R CNN
-F 1 "0" H 9030 3155 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 9030 3200 50  0001 C CNN
-F 3 "~" H 9100 3200 50  0001 C CNN
-	1    9100 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV8
-U 1 1 5DD5FCEC
-P 9100 3500
-F 0 "RV8" H 9030 3546 50  0000 R CNN
-F 1 "20kB" H 9030 3455 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9100 3500 50  0001 C CNN
-F 3 "~" H 9100 3500 50  0001 C CNN
-	1    9100 3500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R23
-U 1 1 5DD5FCF2
-P 9100 3800
-F 0 "R23" H 9170 3846 50  0000 L CNN
-F 1 "0" H 9170 3755 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 9030 3800 50  0001 C CNN
-F 3 "~" H 9100 3800 50  0001 C CNN
-	1    9100 3800
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR033
-U 1 1 5DD5FCF8
-P 9100 3950
-F 0 "#PWR033" H 9100 3700 50  0001 C CNN
-F 1 "GND" H 9105 3777 50  0000 C CNN
-F 2 "" H 9100 3950 50  0001 C CNN
-F 3 "" H 9100 3950 50  0001 C CNN
-	1    9100 3950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C19
-U 1 1 5DD5FCFE
-P 9250 3600
-F 0 "C19" H 9342 3646 50  0000 L CNN
-F 1 "C_Small" H 9342 3555 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 9250 3600 50  0001 C CNN
-F 3 "~" H 9250 3600 50  0001 C CNN
-	1    9250 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR036
-U 1 1 5DD5FD04
-P 9250 3700
-F 0 "#PWR036" H 9250 3450 50  0001 C CNN
-F 1 "GND" H 9255 3527 50  0000 C CNN
-F 2 "" H 9250 3700 50  0001 C CNN
-F 3 "" H 9250 3700 50  0001 C CNN
-	1    9250 3700
-	1    0    0    -1  
-$EndComp
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY011
-U 1 1 5DD5FD0A
-P 9950 3050
-F 0 "#SUPPLY011" H 9950 3050 50  0001 L BNN
-F 1 "3.3V" H 9950 3224 50  0000 C CNN
-F 2 "" H 9950 3050 50  0001 C CNN
-F 3 "" H 9950 3050 50  0001 C CNN
-	1    9950 3050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R28
-U 1 1 5DD5FD10
-P 9950 3200
-F 0 "R28" H 9880 3246 50  0000 R CNN
-F 1 "0" H 9880 3155 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 9880 3200 50  0001 C CNN
-F 3 "~" H 9950 3200 50  0001 C CNN
-	1    9950 3200
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV11
-U 1 1 5DD5FD16
-P 9950 3500
-F 0 "RV11" H 9880 3546 50  0000 R CNN
-F 1 "20kB" H 9880 3455 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9950 3500 50  0001 C CNN
-F 3 "~" H 9950 3500 50  0001 C CNN
-	1    9950 3500
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R29
-U 1 1 5DD5FD1C
-P 9950 3800
-F 0 "R29" H 10020 3846 50  0000 L CNN
-F 1 "0" H 10020 3755 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 9880 3800 50  0001 C CNN
-F 3 "~" H 9950 3800 50  0001 C CNN
-	1    9950 3800
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR039
-U 1 1 5DD5FD22
-P 9950 3950
-F 0 "#PWR039" H 9950 3700 50  0001 C CNN
-F 1 "GND" H 9955 3777 50  0000 C CNN
-F 2 "" H 9950 3950 50  0001 C CNN
-F 3 "" H 9950 3950 50  0001 C CNN
-	1    9950 3950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C22
-U 1 1 5DD5FD28
-P 10100 3600
-F 0 "C22" H 10192 3646 50  0000 L CNN
-F 1 "C_Small" H 10192 3555 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 10100 3600 50  0001 C CNN
-F 3 "~" H 10100 3600 50  0001 C CNN
-	1    10100 3600
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR042
-U 1 1 5DD5FD2E
-P 10100 3700
-F 0 "#PWR042" H 10100 3450 50  0001 C CNN
-F 1 "GND" H 10105 3527 50  0000 C CNN
-F 2 "" H 10100 3700 50  0001 C CNN
-F 3 "" H 10100 3700 50  0001 C CNN
-	1    10100 3700
-	1    0    0    -1  
-$EndComp
-Text Notes 8100 2700 0    50   ~ 0
-Envelope Control Pots (ADSR)
-Text Label 7550 3500 0    50   ~ 0
+Text Label 6650 3850 2    50   ~ 0
 attack
-Text Label 8400 3500 0    50   ~ 0
+Text Label 6650 3950 2    50   ~ 0
 decay
-Text Label 9250 3500 0    50   ~ 0
+Text Label 6650 4050 2    50   ~ 0
 sustain
-Text Label 10100 3500 0    50   ~ 0
+Text Label 6650 4150 2    50   ~ 0
 release
-Text Label 5050 4100 0    50   ~ 0
-attack
-Text Label 5050 4200 0    50   ~ 0
-decay
-Text Label 5050 4300 0    50   ~ 0
-sustain
-Text Label 5050 4400 0    50   ~ 0
-release
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY01
-U 1 1 5DD66482
-P 7150 1150
-F 0 "#SUPPLY01" H 7150 1150 50  0001 L BNN
-F 1 "3.3V" H 7150 1324 50  0000 C CNN
-F 2 "" H 7150 1150 50  0001 C CNN
-F 3 "" H 7150 1150 50  0001 C CNN
-	1    7150 1150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R8
-U 1 1 5DD66488
-P 7150 1300
-F 0 "R8" H 7080 1346 50  0000 R CNN
-F 1 "0" H 7080 1255 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 7080 1300 50  0001 C CNN
-F 3 "~" H 7150 1300 50  0001 C CNN
-	1    7150 1300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV1
-U 1 1 5DD6648E
-P 7150 1600
-F 0 "RV1" H 7080 1646 50  0000 R CNN
-F 1 "20kB" H 7080 1555 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 7150 1600 50  0001 C CNN
-F 3 "~" H 7150 1600 50  0001 C CNN
-	1    7150 1600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R9
-U 1 1 5DD66494
-P 7150 1900
-F 0 "R9" H 7220 1946 50  0000 L CNN
-F 1 "0" H 7220 1855 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 7080 1900 50  0001 C CNN
-F 3 "~" H 7150 1900 50  0001 C CNN
-	1    7150 1900
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR020
-U 1 1 5DD6649A
-P 7150 2050
-F 0 "#PWR020" H 7150 1800 50  0001 C CNN
-F 1 "GND" H 7155 1877 50  0000 C CNN
-F 2 "" H 7150 2050 50  0001 C CNN
-F 3 "" H 7150 2050 50  0001 C CNN
-	1    7150 2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C12
-U 1 1 5DD664A0
-P 7300 1700
-F 0 "C12" H 7392 1746 50  0000 L CNN
-F 1 "C_Small" H 7392 1655 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 7300 1700 50  0001 C CNN
-F 3 "~" H 7300 1700 50  0001 C CNN
-	1    7300 1700
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR021
-U 1 1 5DD664A6
-P 7300 1800
-F 0 "#PWR021" H 7300 1550 50  0001 C CNN
-F 1 "GND" H 7305 1627 50  0000 C CNN
-F 2 "" H 7300 1800 50  0001 C CNN
-F 3 "" H 7300 1800 50  0001 C CNN
-	1    7300 1800
-	1    0    0    -1  
-$EndComp
-Text Label 7300 1600 0    50   ~ 0
-osc1_tune
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY09
-U 1 1 5DD68819
-P 9200 4800
-F 0 "#SUPPLY09" H 9200 4800 50  0001 L BNN
-F 1 "3.3V" H 9200 4974 50  0000 C CNN
-F 2 "" H 9200 4800 50  0001 C CNN
-F 3 "" H 9200 4800 50  0001 C CNN
-	1    9200 4800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R24
-U 1 1 5DD6881F
-P 9200 4950
-F 0 "R24" H 9130 4996 50  0000 R CNN
-F 1 "0" H 9130 4905 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 9130 4950 50  0001 C CNN
-F 3 "~" H 9200 4950 50  0001 C CNN
-	1    9200 4950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV9
-U 1 1 5DD68825
-P 9200 5250
-F 0 "RV9" H 9130 5296 50  0000 R CNN
-F 1 "20kB" H 9130 5205 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9200 5250 50  0001 C CNN
-F 3 "~" H 9200 5250 50  0001 C CNN
-	1    9200 5250
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R25
-U 1 1 5DD6882B
-P 9200 5550
-F 0 "R25" H 9270 5596 50  0000 L CNN
-F 1 "0" H 9270 5505 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 9130 5550 50  0001 C CNN
-F 3 "~" H 9200 5550 50  0001 C CNN
-	1    9200 5550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR034
-U 1 1 5DD68831
-P 9200 5700
-F 0 "#PWR034" H 9200 5450 50  0001 C CNN
-F 1 "GND" H 9205 5527 50  0000 C CNN
-F 2 "" H 9200 5700 50  0001 C CNN
-F 3 "" H 9200 5700 50  0001 C CNN
-	1    9200 5700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C20
-U 1 1 5DD68837
-P 9350 5350
-F 0 "C20" H 9442 5396 50  0000 L CNN
-F 1 "C_Small" H 9442 5305 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 9350 5350 50  0001 C CNN
-F 3 "~" H 9350 5350 50  0001 C CNN
-	1    9350 5350
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR037
-U 1 1 5DD6883D
-P 9350 5450
-F 0 "#PWR037" H 9350 5200 50  0001 C CNN
-F 1 "GND" H 9355 5277 50  0000 C CNN
-F 2 "" H 9350 5450 50  0001 C CNN
-F 3 "" H 9350 5450 50  0001 C CNN
-	1    9350 5450
-	1    0    0    -1  
-$EndComp
-Text Label 9350 5250 0    50   ~ 0
-global_lfo_rate
-Text Label 5050 4600 0    50   ~ 0
+Text Label 6650 4250 2    50   ~ 0
 lfo_rate
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY012
-U 1 1 5DD6B4C0
-P 10050 4800
-F 0 "#SUPPLY012" H 10050 4800 50  0001 L BNN
-F 1 "3.3V" H 10050 4974 50  0000 C CNN
-F 2 "" H 10050 4800 50  0001 C CNN
-F 3 "" H 10050 4800 50  0001 C CNN
-	1    10050 4800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R30
-U 1 1 5DD6B4C6
-P 10050 4950
-F 0 "R30" H 9980 4996 50  0000 R CNN
-F 1 "0" H 9980 4905 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 9980 4950 50  0001 C CNN
-F 3 "~" H 10050 4950 50  0001 C CNN
-	1    10050 4950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV12
-U 1 1 5DD6B4CC
-P 10050 5250
-F 0 "RV12" H 9980 5296 50  0000 R CNN
-F 1 "20kB" H 9980 5205 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 10050 5250 50  0001 C CNN
-F 3 "~" H 10050 5250 50  0001 C CNN
-	1    10050 5250
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R31
-U 1 1 5DD6B4D2
-P 10050 5550
-F 0 "R31" H 10120 5596 50  0000 L CNN
-F 1 "0" H 10120 5505 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 9980 5550 50  0001 C CNN
-F 3 "~" H 10050 5550 50  0001 C CNN
-	1    10050 5550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR040
-U 1 1 5DD6B4D8
-P 10050 5700
-F 0 "#PWR040" H 10050 5450 50  0001 C CNN
-F 1 "GND" H 10055 5527 50  0000 C CNN
-F 2 "" H 10050 5700 50  0001 C CNN
-F 3 "" H 10050 5700 50  0001 C CNN
-	1    10050 5700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C23
-U 1 1 5DD6B4DE
-P 10200 5350
-F 0 "C23" H 10292 5396 50  0000 L CNN
-F 1 "C_Small" H 10292 5305 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 10200 5350 50  0001 C CNN
-F 3 "~" H 10200 5350 50  0001 C CNN
-	1    10200 5350
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR043
-U 1 1 5DD6B4E4
-P 10200 5450
-F 0 "#PWR043" H 10200 5200 50  0001 C CNN
-F 1 "GND" H 10205 5277 50  0000 C CNN
-F 2 "" H 10200 5450 50  0001 C CNN
-F 3 "" H 10200 5450 50  0001 C CNN
-	1    10200 5450
-	1    0    0    -1  
-$EndComp
-Text Label 10200 5250 0    50   ~ 0
-global_lfo_depth
-Text Label 5050 4700 0    50   ~ 0
+Text Label 6650 4350 2    50   ~ 0
 lfo_depth
-Text Notes 9550 4550 0    50   ~ 0
-GLOBAL LFO
-Wire Notes Line
-	10600 5950 10600 4450
-Wire Notes Line
-	7100 4200 10500 4200
-Wire Notes Line
-	10500 4200 10500 2600
-Wire Notes Line
-	10500 2600 7100 2600
-Wire Notes Line
-	7100 2600 7100 4200
-Text Notes 8350 900  0    50   ~ 0
-OSCILLATORS
-Text Label 5050 4900 0    50   ~ 0
+Text Label 4100 4600 0    50   ~ 0
 MIDI_IN
-Text Label 5050 5000 0    50   ~ 0
+Text Label 4100 4700 0    50   ~ 0
 MIDI_OUT
 $Comp
 L Connector_Generic:Conn_01x02 J3
@@ -1261,440 +681,25 @@ F 3 "~" H 750 7350 50  0001 C CNN
 	1    750  7350
 	-1   0    0    -1  
 $EndComp
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY04
-U 1 1 5DD72862
-P 8000 1150
-F 0 "#SUPPLY04" H 8000 1150 50  0001 L BNN
-F 1 "3.3V" H 8000 1324 50  0000 C CNN
-F 2 "" H 8000 1150 50  0001 C CNN
-F 3 "" H 8000 1150 50  0001 C CNN
-	1    8000 1150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R14
-U 1 1 5DD72868
-P 8000 1300
-F 0 "R14" H 7930 1346 50  0000 R CNN
-F 1 "0" H 7930 1255 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 7930 1300 50  0001 C CNN
-F 3 "~" H 8000 1300 50  0001 C CNN
-	1    8000 1300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV4
-U 1 1 5DD7286E
-P 8000 1600
-F 0 "RV4" H 7930 1646 50  0000 R CNN
-F 1 "20kB" H 7930 1555 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 8000 1600 50  0001 C CNN
-F 3 "~" H 8000 1600 50  0001 C CNN
-	1    8000 1600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R15
-U 1 1 5DD72874
-P 8000 1900
-F 0 "R15" H 8070 1946 50  0000 L CNN
-F 1 "0" H 8070 1855 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 7930 1900 50  0001 C CNN
-F 3 "~" H 8000 1900 50  0001 C CNN
-	1    8000 1900
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR026
-U 1 1 5DD7287A
-P 8000 2050
-F 0 "#PWR026" H 8000 1800 50  0001 C CNN
-F 1 "GND" H 8005 1877 50  0000 C CNN
-F 2 "" H 8000 2050 50  0001 C CNN
-F 3 "" H 8000 2050 50  0001 C CNN
-	1    8000 2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C15
-U 1 1 5DD72880
-P 8150 1700
-F 0 "C15" H 8242 1746 50  0000 L CNN
-F 1 "C_Small" H 8242 1655 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 8150 1700 50  0001 C CNN
-F 3 "~" H 8150 1700 50  0001 C CNN
-	1    8150 1700
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR027
-U 1 1 5DD72886
-P 8150 1800
-F 0 "#PWR027" H 8150 1550 50  0001 C CNN
-F 1 "GND" H 8155 1627 50  0000 C CNN
-F 2 "" H 8150 1800 50  0001 C CNN
-F 3 "" H 8150 1800 50  0001 C CNN
-	1    8150 1800
-	1    0    0    -1  
-$EndComp
-Text Label 8150 1600 0    50   ~ 0
-osc1_waveshape
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY07
-U 1 1 5DD763DC
-P 9100 1150
-F 0 "#SUPPLY07" H 9100 1150 50  0001 L BNN
-F 1 "3.3V" H 9100 1324 50  0000 C CNN
-F 2 "" H 9100 1150 50  0001 C CNN
-F 3 "" H 9100 1150 50  0001 C CNN
-	1    9100 1150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R20
-U 1 1 5DD763E2
-P 9100 1300
-F 0 "R20" H 9030 1346 50  0000 R CNN
-F 1 "0" H 9030 1255 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 9030 1300 50  0001 C CNN
-F 3 "~" H 9100 1300 50  0001 C CNN
-	1    9100 1300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV7
-U 1 1 5DD763E8
-P 9100 1600
-F 0 "RV7" H 9030 1646 50  0000 R CNN
-F 1 "20kB" H 9030 1555 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9100 1600 50  0001 C CNN
-F 3 "~" H 9100 1600 50  0001 C CNN
-	1    9100 1600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R21
-U 1 1 5DD763EE
-P 9100 1900
-F 0 "R21" H 9170 1946 50  0000 L CNN
-F 1 "0" H 9170 1855 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 9030 1900 50  0001 C CNN
-F 3 "~" H 9100 1900 50  0001 C CNN
-	1    9100 1900
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR032
-U 1 1 5DD763F4
-P 9100 2050
-F 0 "#PWR032" H 9100 1800 50  0001 C CNN
-F 1 "GND" H 9105 1877 50  0000 C CNN
-F 2 "" H 9100 2050 50  0001 C CNN
-F 3 "" H 9100 2050 50  0001 C CNN
-	1    9100 2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C18
-U 1 1 5DD763FA
-P 9250 1700
-F 0 "C18" H 9342 1746 50  0000 L CNN
-F 1 "C_Small" H 9342 1655 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 9250 1700 50  0001 C CNN
-F 3 "~" H 9250 1700 50  0001 C CNN
-	1    9250 1700
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR035
-U 1 1 5DD76400
-P 9250 1800
-F 0 "#PWR035" H 9250 1550 50  0001 C CNN
-F 1 "GND" H 9255 1627 50  0000 C CNN
-F 2 "" H 9250 1800 50  0001 C CNN
-F 3 "" H 9250 1800 50  0001 C CNN
-	1    9250 1800
-	1    0    0    -1  
-$EndComp
-Text Label 9250 1600 0    50   ~ 0
-osc2_tune
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY010
-U 1 1 5DD76408
-P 9950 1150
-F 0 "#SUPPLY010" H 9950 1150 50  0001 L BNN
-F 1 "3.3V" H 9950 1324 50  0000 C CNN
-F 2 "" H 9950 1150 50  0001 C CNN
-F 3 "" H 9950 1150 50  0001 C CNN
-	1    9950 1150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R26
-U 1 1 5DD7640E
-P 9950 1300
-F 0 "R26" H 9880 1346 50  0000 R CNN
-F 1 "0" H 9880 1255 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 9880 1300 50  0001 C CNN
-F 3 "~" H 9950 1300 50  0001 C CNN
-	1    9950 1300
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV10
-U 1 1 5DD76414
-P 9950 1600
-F 0 "RV10" H 9880 1646 50  0000 R CNN
-F 1 "20kB" H 9880 1555 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9950 1600 50  0001 C CNN
-F 3 "~" H 9950 1600 50  0001 C CNN
-	1    9950 1600
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R27
-U 1 1 5DD7641A
-P 9950 1900
-F 0 "R27" H 10020 1946 50  0000 L CNN
-F 1 "0" H 10020 1855 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 9880 1900 50  0001 C CNN
-F 3 "~" H 9950 1900 50  0001 C CNN
-	1    9950 1900
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR038
-U 1 1 5DD76420
-P 9950 2050
-F 0 "#PWR038" H 9950 1800 50  0001 C CNN
-F 1 "GND" H 9955 1877 50  0000 C CNN
-F 2 "" H 9950 2050 50  0001 C CNN
-F 3 "" H 9950 2050 50  0001 C CNN
-	1    9950 2050
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C21
-U 1 1 5DD76426
-P 10100 1700
-F 0 "C21" H 10192 1746 50  0000 L CNN
-F 1 "C_Small" H 10192 1655 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 10100 1700 50  0001 C CNN
-F 3 "~" H 10100 1700 50  0001 C CNN
-	1    10100 1700
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR041
-U 1 1 5DD7642C
-P 10100 1800
-F 0 "#PWR041" H 10100 1550 50  0001 C CNN
-F 1 "GND" H 10105 1627 50  0000 C CNN
-F 2 "" H 10100 1800 50  0001 C CNN
-F 3 "" H 10100 1800 50  0001 C CNN
-	1    10100 1800
-	1    0    0    -1  
-$EndComp
-Text Label 10100 1600 0    50   ~ 0
-osc2_waveshape
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY03
-U 1 1 5DD94FCA
-P 7400 4800
-F 0 "#SUPPLY03" H 7400 4800 50  0001 L BNN
-F 1 "3.3V" H 7400 4974 50  0000 C CNN
-F 2 "" H 7400 4800 50  0001 C CNN
-F 3 "" H 7400 4800 50  0001 C CNN
-	1    7400 4800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R12
-U 1 1 5DD94FD0
-P 7400 4950
-F 0 "R12" H 7330 4996 50  0000 R CNN
-F 1 "0" H 7330 4905 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 7330 4950 50  0001 C CNN
-F 3 "~" H 7400 4950 50  0001 C CNN
-	1    7400 4950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV3
-U 1 1 5DD94FD6
-P 7400 5250
-F 0 "RV3" H 7330 5296 50  0000 R CNN
-F 1 "20kB" H 7330 5205 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 7400 5250 50  0001 C CNN
-F 3 "~" H 7400 5250 50  0001 C CNN
-	1    7400 5250
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R13
-U 1 1 5DD94FDC
-P 7400 5550
-F 0 "R13" H 7470 5596 50  0000 L CNN
-F 1 "0" H 7470 5505 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 7330 5550 50  0001 C CNN
-F 3 "~" H 7400 5550 50  0001 C CNN
-	1    7400 5550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR023
-U 1 1 5DD94FE2
-P 7400 5700
-F 0 "#PWR023" H 7400 5450 50  0001 C CNN
-F 1 "GND" H 7405 5527 50  0000 C CNN
-F 2 "" H 7400 5700 50  0001 C CNN
-F 3 "" H 7400 5700 50  0001 C CNN
-	1    7400 5700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C14
-U 1 1 5DD94FE8
-P 7550 5350
-F 0 "C14" H 7642 5396 50  0000 L CNN
-F 1 "C_Small" H 7642 5305 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 7550 5350 50  0001 C CNN
-F 3 "~" H 7550 5350 50  0001 C CNN
-	1    7550 5350
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR025
-U 1 1 5DD94FEE
-P 7550 5450
-F 0 "#PWR025" H 7550 5200 50  0001 C CNN
-F 1 "GND" H 7555 5277 50  0000 C CNN
-F 2 "" H 7550 5450 50  0001 C CNN
-F 3 "" H 7550 5450 50  0001 C CNN
-	1    7550 5450
-	1    0    0    -1  
-$EndComp
-Text Label 7550 5250 0    50   ~ 0
-lfo_rate
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY06
-U 1 1 5DD94FF5
-P 8250 4800
-F 0 "#SUPPLY06" H 8250 4800 50  0001 L BNN
-F 1 "3.3V" H 8250 4974 50  0000 C CNN
-F 2 "" H 8250 4800 50  0001 C CNN
-F 3 "" H 8250 4800 50  0001 C CNN
-	1    8250 4800
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R18
-U 1 1 5DD94FFB
-P 8250 4950
-F 0 "R18" H 8180 4996 50  0000 R CNN
-F 1 "0" H 8180 4905 50  0000 R CNN
-F 2 "SparkFun-Passives:0805" V 8180 4950 50  0001 C CNN
-F 3 "~" H 8250 4950 50  0001 C CNN
-	1    8250 4950
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV6
-U 1 1 5DD95001
-P 8250 5250
-F 0 "RV6" H 8180 5296 50  0000 R CNN
-F 1 "20kB" H 8180 5205 50  0000 R CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 8250 5250 50  0001 C CNN
-F 3 "~" H 8250 5250 50  0001 C CNN
-	1    8250 5250
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R R19
-U 1 1 5DD95007
-P 8250 5550
-F 0 "R19" H 8320 5596 50  0000 L CNN
-F 1 "0" H 8320 5505 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 8180 5550 50  0001 C CNN
-F 3 "~" H 8250 5550 50  0001 C CNN
-	1    8250 5550
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR029
-U 1 1 5DD9500D
-P 8250 5700
-F 0 "#PWR029" H 8250 5450 50  0001 C CNN
-F 1 "GND" H 8255 5527 50  0000 C CNN
-F 2 "" H 8250 5700 50  0001 C CNN
-F 3 "" H 8250 5700 50  0001 C CNN
-	1    8250 5700
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C17
-U 1 1 5DD95013
-P 8400 5350
-F 0 "C17" H 8492 5396 50  0000 L CNN
-F 1 "C_Small" H 8492 5305 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 8400 5350 50  0001 C CNN
-F 3 "~" H 8400 5350 50  0001 C CNN
-	1    8400 5350
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR031
-U 1 1 5DD95019
-P 8400 5450
-F 0 "#PWR031" H 8400 5200 50  0001 C CNN
-F 1 "GND" H 8405 5277 50  0000 C CNN
-F 2 "" H 8400 5450 50  0001 C CNN
-F 3 "" H 8400 5450 50  0001 C CNN
-	1    8400 5450
-	1    0    0    -1  
-$EndComp
-Text Label 8400 5250 0    50   ~ 0
-lfo_depth
-Text Notes 7750 4550 0    50   ~ 0
-PER VOICE LFO
-Wire Notes Line
-	7100 4450 7100 5950
-Wire Notes Line
-	7100 5950 10600 5950
-Wire Notes Line
-	7100 4450 10600 4450
-Wire Notes Line
-	6850 2350 10800 2350
-Wire Notes Line
-	10800 2350 10800 750 
-Wire Notes Line
-	10800 750  6850 750 
-Wire Notes Line
-	6850 750  6850 2350
-Text Label 5050 3550 0    50   ~ 0
+Text Label 6650 3450 2    50   ~ 0
 osc1_tune
-Text Label 5050 3650 0    50   ~ 0
+Text Label 6650 3550 2    50   ~ 0
 osc1_waveshape
-Text Label 5050 3750 0    50   ~ 0
+Text Label 6650 3650 2    50   ~ 0
 osc2_tune
-Text Label 5050 3850 0    50   ~ 0
+Text Label 6650 3750 2    50   ~ 0
 osc2_waveshape
-Text HLabel 5100 3000 2    50   Output ~ 0
+Text HLabel 4100 3200 2    50   Output ~ 0
 UART_TX
-Text HLabel 5100 3100 2    50   Input ~ 0
+Text HLabel 4100 3300 2    50   Input ~ 0
 UART_RX
-Wire Wire Line
-	1450 2150 1600 2150
-Wire Wire Line
-	1450 2250 1600 2250
 Wire Wire Line
 	1450 2350 1600 2350
 $Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
+L SparkFun-Aesthetics:3.3V #SUPPLY0101
 U 1 1 5DDD3D34
 P 1400 1250
-F 0 "#SUPPLY?" H 1400 1250 50  0001 L BNN
+F 0 "#SUPPLY0101" H 1400 1250 50  0001 L BNN
 F 1 "3.3V" H 1400 1424 50  0000 C CNN
 F 2 "" H 1400 1250 50  0001 C CNN
 F 3 "" H 1400 1250 50  0001 C CNN
@@ -1702,10 +707,10 @@ F 3 "" H 1400 1250 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
+L SparkFun-Aesthetics:3.3V #SUPPLY0102
 U 1 1 5DDD5545
 P 950 2750
-F 0 "#SUPPLY?" H 950 2750 50  0001 L BNN
+F 0 "#SUPPLY0102" H 950 2750 50  0001 L BNN
 F 1 "3.3V" H 950 2924 50  0000 C CNN
 F 2 "" H 950 2750 50  0001 C CNN
 F 3 "" H 950 2750 50  0001 C CNN
@@ -1713,10 +718,10 @@ F 3 "" H 950 2750 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
+L SparkFun-Aesthetics:3.3V #SUPPLY0103
 U 1 1 5DDD6153
 P 650 3200
-F 0 "#SUPPLY?" H 650 3200 50  0001 L BNN
+F 0 "#SUPPLY0103" H 650 3200 50  0001 L BNN
 F 1 "3.3V" H 650 3374 50  0000 C CNN
 F 2 "" H 650 3200 50  0001 C CNN
 F 3 "" H 650 3200 50  0001 C CNN
@@ -1724,10 +729,10 @@ F 3 "" H 650 3200 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
+L SparkFun-Aesthetics:3.3V #SUPPLY0104
 U 1 1 5DDD61F4
 P 850 3600
-F 0 "#SUPPLY?" H 850 3600 50  0001 L BNN
+F 0 "#SUPPLY0104" H 850 3600 50  0001 L BNN
 F 1 "3.3V" H 1000 3650 50  0000 C CNN
 F 2 "" H 850 3600 50  0001 C CNN
 F 3 "" H 850 3600 50  0001 C CNN
@@ -1735,10 +740,10 @@ F 3 "" H 850 3600 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
+L SparkFun-Aesthetics:3.3V #SUPPLY0105
 U 1 1 5DDD6380
 P 1050 4250
-F 0 "#SUPPLY?" H 1050 4250 50  0001 L BNN
+F 0 "#SUPPLY0105" H 1050 4250 50  0001 L BNN
 F 1 "3.3V" H 1050 4424 50  0000 C CNN
 F 2 "" H 1050 4250 50  0001 C CNN
 F 3 "" H 1050 4250 50  0001 C CNN
@@ -1746,14 +751,97 @@ F 3 "" H 1050 4250 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
+L SparkFun-Aesthetics:3.3V #SUPPLY0106
 U 1 1 5DDD845B
 P 1050 7000
-F 0 "#SUPPLY?" H 1050 7000 50  0001 L BNN
+F 0 "#SUPPLY0106" H 1050 7000 50  0001 L BNN
 F 1 "3.3V" H 1050 7174 50  0000 C CNN
 F 2 "" H 1050 7000 50  0001 C CNN
 F 3 "" H 1050 7000 50  0001 C CNN
 	1    1050 7000
 	1    0    0    -1  
 $EndComp
+$Comp
+L SparkFun-Connectors:USB-B-S J2
+U 1 1 5DDF016B
+P 1050 2450
+F 0 "J2" H 1094 2965 50  0000 C CNN
+F 1 "USB-B-S" H 1094 2874 50  0000 C CNN
+F 2 "SparkFun-Connectors:USB-B-PTH" H 1080 2600 20  0001 C CNN
+F 3 "" H 1050 2450 60  0000 C CNN
+	1    1050 2450
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	1150 2450 1450 2450
+Wire Wire Line
+	1150 2250 1600 2250
+Wire Wire Line
+	1150 2150 1250 2150
+Wire Wire Line
+	1250 2150 1250 2050
+Wire Wire Line
+	1250 2050 1450 2050
+Wire Wire Line
+	1450 2050 1450 2350
+Wire Wire Line
+	1150 2350 1350 2350
+Wire Wire Line
+	1350 2350 1350 2150
+Wire Wire Line
+	1350 2150 1600 2150
+Text HLabel 6650 3450 2    50   Input ~ 0
+osc1_tune
+Text HLabel 6650 3550 2    50   Input ~ 0
+osc1_waveshape
+Text HLabel 6650 3650 2    50   Input ~ 0
+osc2_tune
+Text HLabel 6650 3750 2    50   Input ~ 0
+osc2_waveshape
+Text HLabel 6650 3850 2    50   Input ~ 0
+attack
+Text HLabel 6650 3950 2    50   Input ~ 0
+decay
+Text HLabel 6650 4050 2    50   Input ~ 0
+sustain
+Text HLabel 6650 4150 2    50   Input ~ 0
+release
+Text HLabel 6650 4250 2    50   Input ~ 0
+lfo_rate
+Text HLabel 6650 4350 2    50   Input ~ 0
+lfo_depth
+Text HLabel 6650 4450 2    50   Input ~ 0
+global_lfo_rate
+Text HLabel 6650 4550 2    50   Input ~ 0
+global_lfo_depth
+Text Label 6650 4450 2    50   ~ 0
+global_lfo_rate
+Text Label 6650 4550 2    50   ~ 0
+global_lfo_depth
+Text Label 4100 3800 0    50   ~ 0
+attack
+Text Label 4100 3900 0    50   ~ 0
+decay
+Text Label 4100 4000 0    50   ~ 0
+sustain
+Text Label 4100 4100 0    50   ~ 0
+release
+Text Label 4100 4200 0    50   ~ 0
+lfo_rate
+Text Label 4100 4300 0    50   ~ 0
+lfo_depth
+Text Label 4100 3400 0    50   ~ 0
+osc1_tune
+Text Label 4100 3500 0    50   ~ 0
+osc1_waveshape
+Text Label 4100 3600 0    50   ~ 0
+osc2_tune
+Text Label 4100 3700 0    50   ~ 0
+osc2_waveshape
+Text Label 4100 4400 0    50   ~ 0
+global_lfo_rate
+Text Label 4100 4500 0    50   ~ 0
+global_lfo_depth
+Text Notes 4300 4800 0    50   ~ 0
+GPIOs need to be changed!
 $EndSCHEMATC

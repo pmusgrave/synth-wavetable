@@ -1,0 +1,1862 @@
+EESchema Schematic File Version 4
+LIBS:control-cache
+EELAYER 26 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0829
+P 7700 3400
+AR Path="/5DDBDEEA/5DDD0829" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0829" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0829" Ref="#SUPPLY0101"  Part="1" 
+F 0 "#SUPPLY0101" H 7700 3400 50  0001 L BNN
+F 1 "3.3V" H 7700 3574 50  0000 C CNN
+F 2 "" H 7700 3400 50  0001 C CNN
+F 3 "" H 7700 3400 50  0001 C CNN
+	1    7700 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD082F
+P 7700 3550
+AR Path="/5DDBDEEA/5DDD082F" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD082F" Ref="R?"  Part="1" 
+AR Path="/5DDD082F" Ref="R11"  Part="1" 
+F 0 "R11" H 7630 3596 50  0000 R CNN
+F 1 "0" H 7630 3505 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 7630 3550 50  0001 C CNN
+F 3 "~" H 7700 3550 50  0001 C CNN
+	1    7700 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0836
+P 7700 3850
+AR Path="/5DDBDEEA/5DDD0836" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0836" Ref="RV?"  Part="1" 
+AR Path="/5DDD0836" Ref="RV2"  Part="1" 
+F 0 "RV2" H 7630 3896 50  0000 R CNN
+F 1 "20kB" H 7630 3805 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 7700 3850 50  0001 C CNN
+F 3 "~" H 7700 3850 50  0001 C CNN
+	1    7700 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD083D
+P 7700 4150
+AR Path="/5DDBDEEA/5DDD083D" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD083D" Ref="R?"  Part="1" 
+AR Path="/5DDD083D" Ref="R12"  Part="1" 
+F 0 "R12" H 7770 4196 50  0000 L CNN
+F 1 "0" H 7770 4105 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 7630 4150 50  0001 C CNN
+F 3 "~" H 7700 4150 50  0001 C CNN
+	1    7700 4150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0844
+P 7700 4300
+AR Path="/5DDBDEEA/5DDD0844" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0844" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0844" Ref="#PWR0101"  Part="1" 
+F 0 "#PWR0101" H 7700 4050 50  0001 C CNN
+F 1 "GND" H 7705 4127 50  0000 C CNN
+F 2 "" H 7700 4300 50  0001 C CNN
+F 3 "" H 7700 4300 50  0001 C CNN
+	1    7700 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD084A
+P 7850 3950
+AR Path="/5DDBDEEA/5DDD084A" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD084A" Ref="C?"  Part="1" 
+AR Path="/5DDD084A" Ref="C2"  Part="1" 
+F 0 "C2" H 7942 3996 50  0000 L CNN
+F 1 "C_Small" H 7942 3905 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 7850 3950 50  0001 C CNN
+F 3 "~" H 7850 3950 50  0001 C CNN
+	1    7850 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0851
+P 7850 4050
+AR Path="/5DDBDEEA/5DDD0851" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0851" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0851" Ref="#PWR0102"  Part="1" 
+F 0 "#PWR0102" H 7850 3800 50  0001 C CNN
+F 1 "GND" H 7855 3877 50  0000 C CNN
+F 2 "" H 7850 4050 50  0001 C CNN
+F 3 "" H 7850 4050 50  0001 C CNN
+	1    7850 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0857
+P 8550 3400
+AR Path="/5DDBDEEA/5DDD0857" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0857" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0857" Ref="#SUPPLY0102"  Part="1" 
+F 0 "#SUPPLY0102" H 8550 3400 50  0001 L BNN
+F 1 "3.3V" H 8550 3574 50  0000 C CNN
+F 2 "" H 8550 3400 50  0001 C CNN
+F 3 "" H 8550 3400 50  0001 C CNN
+	1    8550 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD085D
+P 8550 3550
+AR Path="/5DDBDEEA/5DDD085D" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD085D" Ref="R?"  Part="1" 
+AR Path="/5DDD085D" Ref="R17"  Part="1" 
+F 0 "R17" H 8480 3596 50  0000 R CNN
+F 1 "0" H 8480 3505 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 8480 3550 50  0001 C CNN
+F 3 "~" H 8550 3550 50  0001 C CNN
+	1    8550 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0864
+P 8550 3850
+AR Path="/5DDBDEEA/5DDD0864" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0864" Ref="RV?"  Part="1" 
+AR Path="/5DDD0864" Ref="RV5"  Part="1" 
+F 0 "RV5" H 8480 3896 50  0000 R CNN
+F 1 "20kB" H 8480 3805 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 8550 3850 50  0001 C CNN
+F 3 "~" H 8550 3850 50  0001 C CNN
+	1    8550 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD086B
+P 8550 4150
+AR Path="/5DDBDEEA/5DDD086B" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD086B" Ref="R?"  Part="1" 
+AR Path="/5DDD086B" Ref="R18"  Part="1" 
+F 0 "R18" H 8620 4196 50  0000 L CNN
+F 1 "0" H 8620 4105 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 8480 4150 50  0001 C CNN
+F 3 "~" H 8550 4150 50  0001 C CNN
+	1    8550 4150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0872
+P 8550 4300
+AR Path="/5DDBDEEA/5DDD0872" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0872" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0872" Ref="#PWR0103"  Part="1" 
+F 0 "#PWR0103" H 8550 4050 50  0001 C CNN
+F 1 "GND" H 8555 4127 50  0000 C CNN
+F 2 "" H 8550 4300 50  0001 C CNN
+F 3 "" H 8550 4300 50  0001 C CNN
+	1    8550 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD0878
+P 8700 3950
+AR Path="/5DDBDEEA/5DDD0878" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD0878" Ref="C?"  Part="1" 
+AR Path="/5DDD0878" Ref="C5"  Part="1" 
+F 0 "C5" H 8792 3996 50  0000 L CNN
+F 1 "C_Small" H 8792 3905 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 8700 3950 50  0001 C CNN
+F 3 "~" H 8700 3950 50  0001 C CNN
+	1    8700 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD087F
+P 8700 4050
+AR Path="/5DDBDEEA/5DDD087F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD087F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD087F" Ref="#PWR0104"  Part="1" 
+F 0 "#PWR0104" H 8700 3800 50  0001 C CNN
+F 1 "GND" H 8705 3877 50  0000 C CNN
+F 2 "" H 8700 4050 50  0001 C CNN
+F 3 "" H 8700 4050 50  0001 C CNN
+	1    8700 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0885
+P 9400 3400
+AR Path="/5DDBDEEA/5DDD0885" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0885" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0885" Ref="#SUPPLY0103"  Part="1" 
+F 0 "#SUPPLY0103" H 9400 3400 50  0001 L BNN
+F 1 "3.3V" H 9400 3574 50  0000 C CNN
+F 2 "" H 9400 3400 50  0001 C CNN
+F 3 "" H 9400 3400 50  0001 C CNN
+	1    9400 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD088B
+P 9400 3550
+AR Path="/5DDBDEEA/5DDD088B" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD088B" Ref="R?"  Part="1" 
+AR Path="/5DDD088B" Ref="R23"  Part="1" 
+F 0 "R23" H 9330 3596 50  0000 R CNN
+F 1 "0" H 9330 3505 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 9330 3550 50  0001 C CNN
+F 3 "~" H 9400 3550 50  0001 C CNN
+	1    9400 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0892
+P 9400 3850
+AR Path="/5DDBDEEA/5DDD0892" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0892" Ref="RV?"  Part="1" 
+AR Path="/5DDD0892" Ref="RV8"  Part="1" 
+F 0 "RV8" H 9330 3896 50  0000 R CNN
+F 1 "20kB" H 9330 3805 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9400 3850 50  0001 C CNN
+F 3 "~" H 9400 3850 50  0001 C CNN
+	1    9400 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0899
+P 9400 4150
+AR Path="/5DDBDEEA/5DDD0899" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0899" Ref="R?"  Part="1" 
+AR Path="/5DDD0899" Ref="R24"  Part="1" 
+F 0 "R24" H 9470 4196 50  0000 L CNN
+F 1 "0" H 9470 4105 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 9330 4150 50  0001 C CNN
+F 3 "~" H 9400 4150 50  0001 C CNN
+	1    9400 4150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD08A0
+P 9400 4300
+AR Path="/5DDBDEEA/5DDD08A0" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD08A0" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD08A0" Ref="#PWR0105"  Part="1" 
+F 0 "#PWR0105" H 9400 4050 50  0001 C CNN
+F 1 "GND" H 9405 4127 50  0000 C CNN
+F 2 "" H 9400 4300 50  0001 C CNN
+F 3 "" H 9400 4300 50  0001 C CNN
+	1    9400 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD08A6
+P 9550 3950
+AR Path="/5DDBDEEA/5DDD08A6" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD08A6" Ref="C?"  Part="1" 
+AR Path="/5DDD08A6" Ref="C8"  Part="1" 
+F 0 "C8" H 9642 3996 50  0000 L CNN
+F 1 "C_Small" H 9642 3905 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 9550 3950 50  0001 C CNN
+F 3 "~" H 9550 3950 50  0001 C CNN
+	1    9550 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD08AD
+P 9550 4050
+AR Path="/5DDBDEEA/5DDD08AD" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD08AD" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD08AD" Ref="#PWR0106"  Part="1" 
+F 0 "#PWR0106" H 9550 3800 50  0001 C CNN
+F 1 "GND" H 9555 3877 50  0000 C CNN
+F 2 "" H 9550 4050 50  0001 C CNN
+F 3 "" H 9550 4050 50  0001 C CNN
+	1    9550 4050
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD08B3
+P 10250 3400
+AR Path="/5DDBDEEA/5DDD08B3" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD08B3" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD08B3" Ref="#SUPPLY0104"  Part="1" 
+F 0 "#SUPPLY0104" H 10250 3400 50  0001 L BNN
+F 1 "3.3V" H 10250 3574 50  0000 C CNN
+F 2 "" H 10250 3400 50  0001 C CNN
+F 3 "" H 10250 3400 50  0001 C CNN
+	1    10250 3400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD08B9
+P 10250 3550
+AR Path="/5DDBDEEA/5DDD08B9" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD08B9" Ref="R?"  Part="1" 
+AR Path="/5DDD08B9" Ref="R29"  Part="1" 
+F 0 "R29" H 10180 3596 50  0000 R CNN
+F 1 "0" H 10180 3505 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 10180 3550 50  0001 C CNN
+F 3 "~" H 10250 3550 50  0001 C CNN
+	1    10250 3550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD08C0
+P 10250 3850
+AR Path="/5DDBDEEA/5DDD08C0" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD08C0" Ref="RV?"  Part="1" 
+AR Path="/5DDD08C0" Ref="RV11"  Part="1" 
+F 0 "RV11" H 10180 3896 50  0000 R CNN
+F 1 "20kB" H 10180 3805 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 10250 3850 50  0001 C CNN
+F 3 "~" H 10250 3850 50  0001 C CNN
+	1    10250 3850
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD08C7
+P 10250 4150
+AR Path="/5DDBDEEA/5DDD08C7" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD08C7" Ref="R?"  Part="1" 
+AR Path="/5DDD08C7" Ref="R30"  Part="1" 
+F 0 "R30" H 10320 4196 50  0000 L CNN
+F 1 "0" H 10320 4105 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 10180 4150 50  0001 C CNN
+F 3 "~" H 10250 4150 50  0001 C CNN
+	1    10250 4150
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD08CE
+P 10250 4300
+AR Path="/5DDBDEEA/5DDD08CE" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD08CE" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD08CE" Ref="#PWR0107"  Part="1" 
+F 0 "#PWR0107" H 10250 4050 50  0001 C CNN
+F 1 "GND" H 10255 4127 50  0000 C CNN
+F 2 "" H 10250 4300 50  0001 C CNN
+F 3 "" H 10250 4300 50  0001 C CNN
+	1    10250 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD08D4
+P 10400 3950
+AR Path="/5DDBDEEA/5DDD08D4" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD08D4" Ref="C?"  Part="1" 
+AR Path="/5DDD08D4" Ref="C11"  Part="1" 
+F 0 "C11" H 10492 3996 50  0000 L CNN
+F 1 "C_Small" H 10492 3905 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 10400 3950 50  0001 C CNN
+F 3 "~" H 10400 3950 50  0001 C CNN
+	1    10400 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD08DB
+P 10400 4050
+AR Path="/5DDBDEEA/5DDD08DB" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD08DB" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD08DB" Ref="#PWR0108"  Part="1" 
+F 0 "#PWR0108" H 10400 3800 50  0001 C CNN
+F 1 "GND" H 10405 3877 50  0000 C CNN
+F 2 "" H 10400 4050 50  0001 C CNN
+F 3 "" H 10400 4050 50  0001 C CNN
+	1    10400 4050
+	1    0    0    -1  
+$EndComp
+Text Notes 8400 3050 0    50   ~ 0
+Envelope Control Pots (ADSR)
+Text Label 7850 3850 0    50   ~ 0
+attack
+Text Label 8700 3850 0    50   ~ 0
+decay
+Text Label 9550 3850 0    50   ~ 0
+sustain
+Text Label 10400 3850 0    50   ~ 0
+release
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD08E6
+P 7450 1500
+AR Path="/5DDBDEEA/5DDD08E6" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD08E6" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD08E6" Ref="#SUPPLY0105"  Part="1" 
+F 0 "#SUPPLY0105" H 7450 1500 50  0001 L BNN
+F 1 "3.3V" H 7450 1674 50  0000 C CNN
+F 2 "" H 7450 1500 50  0001 C CNN
+F 3 "" H 7450 1500 50  0001 C CNN
+	1    7450 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD08EC
+P 7450 1650
+AR Path="/5DDBDEEA/5DDD08EC" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD08EC" Ref="R?"  Part="1" 
+AR Path="/5DDD08EC" Ref="R9"  Part="1" 
+F 0 "R9" H 7380 1696 50  0000 R CNN
+F 1 "0" H 7380 1605 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 7380 1650 50  0001 C CNN
+F 3 "~" H 7450 1650 50  0001 C CNN
+	1    7450 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD08F3
+P 7450 1950
+AR Path="/5DDBDEEA/5DDD08F3" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD08F3" Ref="RV?"  Part="1" 
+AR Path="/5DDD08F3" Ref="RV1"  Part="1" 
+F 0 "RV1" H 7380 1996 50  0000 R CNN
+F 1 "20kB" H 7380 1905 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 7450 1950 50  0001 C CNN
+F 3 "~" H 7450 1950 50  0001 C CNN
+	1    7450 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD08FA
+P 7450 2250
+AR Path="/5DDBDEEA/5DDD08FA" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD08FA" Ref="R?"  Part="1" 
+AR Path="/5DDD08FA" Ref="R10"  Part="1" 
+F 0 "R10" H 7520 2296 50  0000 L CNN
+F 1 "0" H 7520 2205 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 7380 2250 50  0001 C CNN
+F 3 "~" H 7450 2250 50  0001 C CNN
+	1    7450 2250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0901
+P 7450 2400
+AR Path="/5DDBDEEA/5DDD0901" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0901" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0901" Ref="#PWR0109"  Part="1" 
+F 0 "#PWR0109" H 7450 2150 50  0001 C CNN
+F 1 "GND" H 7455 2227 50  0000 C CNN
+F 2 "" H 7450 2400 50  0001 C CNN
+F 3 "" H 7450 2400 50  0001 C CNN
+	1    7450 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD0907
+P 7600 2050
+AR Path="/5DDBDEEA/5DDD0907" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD0907" Ref="C?"  Part="1" 
+AR Path="/5DDD0907" Ref="C1"  Part="1" 
+F 0 "C1" H 7692 2096 50  0000 L CNN
+F 1 "C_Small" H 7692 2005 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 7600 2050 50  0001 C CNN
+F 3 "~" H 7600 2050 50  0001 C CNN
+	1    7600 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD090E
+P 7600 2150
+AR Path="/5DDBDEEA/5DDD090E" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD090E" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD090E" Ref="#PWR0110"  Part="1" 
+F 0 "#PWR0110" H 7600 1900 50  0001 C CNN
+F 1 "GND" H 7605 1977 50  0000 C CNN
+F 2 "" H 7600 2150 50  0001 C CNN
+F 3 "" H 7600 2150 50  0001 C CNN
+	1    7600 2150
+	1    0    0    -1  
+$EndComp
+Text Label 7600 1950 0    50   ~ 0
+osc1_tune
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0915
+P 9500 5150
+AR Path="/5DDBDEEA/5DDD0915" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0915" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0915" Ref="#SUPPLY0106"  Part="1" 
+F 0 "#SUPPLY0106" H 9500 5150 50  0001 L BNN
+F 1 "3.3V" H 9500 5324 50  0000 C CNN
+F 2 "" H 9500 5150 50  0001 C CNN
+F 3 "" H 9500 5150 50  0001 C CNN
+	1    9500 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD091B
+P 9500 5300
+AR Path="/5DDBDEEA/5DDD091B" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD091B" Ref="R?"  Part="1" 
+AR Path="/5DDD091B" Ref="R25"  Part="1" 
+F 0 "R25" H 9430 5346 50  0000 R CNN
+F 1 "0" H 9430 5255 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 9430 5300 50  0001 C CNN
+F 3 "~" H 9500 5300 50  0001 C CNN
+	1    9500 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0922
+P 9500 5600
+AR Path="/5DDBDEEA/5DDD0922" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0922" Ref="RV?"  Part="1" 
+AR Path="/5DDD0922" Ref="RV9"  Part="1" 
+F 0 "RV9" H 9430 5646 50  0000 R CNN
+F 1 "20kB" H 9430 5555 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9500 5600 50  0001 C CNN
+F 3 "~" H 9500 5600 50  0001 C CNN
+	1    9500 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0929
+P 9500 5900
+AR Path="/5DDBDEEA/5DDD0929" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0929" Ref="R?"  Part="1" 
+AR Path="/5DDD0929" Ref="R26"  Part="1" 
+F 0 "R26" H 9570 5946 50  0000 L CNN
+F 1 "0" H 9570 5855 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 9430 5900 50  0001 C CNN
+F 3 "~" H 9500 5900 50  0001 C CNN
+	1    9500 5900
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0930
+P 9500 6050
+AR Path="/5DDBDEEA/5DDD0930" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0930" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0930" Ref="#PWR0111"  Part="1" 
+F 0 "#PWR0111" H 9500 5800 50  0001 C CNN
+F 1 "GND" H 9505 5877 50  0000 C CNN
+F 2 "" H 9500 6050 50  0001 C CNN
+F 3 "" H 9500 6050 50  0001 C CNN
+	1    9500 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD0936
+P 9650 5700
+AR Path="/5DDBDEEA/5DDD0936" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD0936" Ref="C?"  Part="1" 
+AR Path="/5DDD0936" Ref="C9"  Part="1" 
+F 0 "C9" H 9742 5746 50  0000 L CNN
+F 1 "C_Small" H 9742 5655 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 9650 5700 50  0001 C CNN
+F 3 "~" H 9650 5700 50  0001 C CNN
+	1    9650 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD093D
+P 9650 5800
+AR Path="/5DDBDEEA/5DDD093D" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD093D" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD093D" Ref="#PWR0112"  Part="1" 
+F 0 "#PWR0112" H 9650 5550 50  0001 C CNN
+F 1 "GND" H 9655 5627 50  0000 C CNN
+F 2 "" H 9650 5800 50  0001 C CNN
+F 3 "" H 9650 5800 50  0001 C CNN
+	1    9650 5800
+	1    0    0    -1  
+$EndComp
+Text Label 9650 5600 0    50   ~ 0
+global_lfo_rate
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0944
+P 10350 5150
+AR Path="/5DDBDEEA/5DDD0944" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0944" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0944" Ref="#SUPPLY0107"  Part="1" 
+F 0 "#SUPPLY0107" H 10350 5150 50  0001 L BNN
+F 1 "3.3V" H 10350 5324 50  0000 C CNN
+F 2 "" H 10350 5150 50  0001 C CNN
+F 3 "" H 10350 5150 50  0001 C CNN
+	1    10350 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD094A
+P 10350 5300
+AR Path="/5DDBDEEA/5DDD094A" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD094A" Ref="R?"  Part="1" 
+AR Path="/5DDD094A" Ref="R31"  Part="1" 
+F 0 "R31" H 10280 5346 50  0000 R CNN
+F 1 "0" H 10280 5255 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 10280 5300 50  0001 C CNN
+F 3 "~" H 10350 5300 50  0001 C CNN
+	1    10350 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0951
+P 10350 5600
+AR Path="/5DDBDEEA/5DDD0951" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0951" Ref="RV?"  Part="1" 
+AR Path="/5DDD0951" Ref="RV12"  Part="1" 
+F 0 "RV12" H 10280 5646 50  0000 R CNN
+F 1 "20kB" H 10280 5555 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 10350 5600 50  0001 C CNN
+F 3 "~" H 10350 5600 50  0001 C CNN
+	1    10350 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0958
+P 10350 5900
+AR Path="/5DDBDEEA/5DDD0958" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0958" Ref="R?"  Part="1" 
+AR Path="/5DDD0958" Ref="R32"  Part="1" 
+F 0 "R32" H 10420 5946 50  0000 L CNN
+F 1 "0" H 10420 5855 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 10280 5900 50  0001 C CNN
+F 3 "~" H 10350 5900 50  0001 C CNN
+	1    10350 5900
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD095F
+P 10350 6050
+AR Path="/5DDBDEEA/5DDD095F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD095F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD095F" Ref="#PWR0113"  Part="1" 
+F 0 "#PWR0113" H 10350 5800 50  0001 C CNN
+F 1 "GND" H 10355 5877 50  0000 C CNN
+F 2 "" H 10350 6050 50  0001 C CNN
+F 3 "" H 10350 6050 50  0001 C CNN
+	1    10350 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD0965
+P 10500 5700
+AR Path="/5DDBDEEA/5DDD0965" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD0965" Ref="C?"  Part="1" 
+AR Path="/5DDD0965" Ref="C12"  Part="1" 
+F 0 "C12" H 10592 5746 50  0000 L CNN
+F 1 "C_Small" H 10592 5655 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 10500 5700 50  0001 C CNN
+F 3 "~" H 10500 5700 50  0001 C CNN
+	1    10500 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD096C
+P 10500 5800
+AR Path="/5DDBDEEA/5DDD096C" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD096C" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD096C" Ref="#PWR0114"  Part="1" 
+F 0 "#PWR0114" H 10500 5550 50  0001 C CNN
+F 1 "GND" H 10505 5627 50  0000 C CNN
+F 2 "" H 10500 5800 50  0001 C CNN
+F 3 "" H 10500 5800 50  0001 C CNN
+	1    10500 5800
+	1    0    0    -1  
+$EndComp
+Text Label 10500 5600 0    50   ~ 0
+global_lfo_depth
+Text Notes 9850 4900 0    50   ~ 0
+GLOBAL LFO
+Wire Notes Line
+	10900 6300 10900 4800
+Wire Notes Line
+	7400 4550 10800 4550
+Wire Notes Line
+	10800 4550 10800 2950
+Wire Notes Line
+	10800 2950 7400 2950
+Wire Notes Line
+	7400 2950 7400 4550
+Text Notes 8650 1250 0    50   ~ 0
+OSCILLATORS
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD097A
+P 8300 1500
+AR Path="/5DDBDEEA/5DDD097A" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD097A" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD097A" Ref="#SUPPLY0108"  Part="1" 
+F 0 "#SUPPLY0108" H 8300 1500 50  0001 L BNN
+F 1 "3.3V" H 8300 1674 50  0000 C CNN
+F 2 "" H 8300 1500 50  0001 C CNN
+F 3 "" H 8300 1500 50  0001 C CNN
+	1    8300 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0980
+P 8300 1650
+AR Path="/5DDBDEEA/5DDD0980" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0980" Ref="R?"  Part="1" 
+AR Path="/5DDD0980" Ref="R15"  Part="1" 
+F 0 "R15" H 8230 1696 50  0000 R CNN
+F 1 "0" H 8230 1605 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 8230 1650 50  0001 C CNN
+F 3 "~" H 8300 1650 50  0001 C CNN
+	1    8300 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0987
+P 8300 1950
+AR Path="/5DDBDEEA/5DDD0987" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0987" Ref="RV?"  Part="1" 
+AR Path="/5DDD0987" Ref="RV4"  Part="1" 
+F 0 "RV4" H 8230 1996 50  0000 R CNN
+F 1 "20kB" H 8230 1905 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 8300 1950 50  0001 C CNN
+F 3 "~" H 8300 1950 50  0001 C CNN
+	1    8300 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD098E
+P 8300 2250
+AR Path="/5DDBDEEA/5DDD098E" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD098E" Ref="R?"  Part="1" 
+AR Path="/5DDD098E" Ref="R16"  Part="1" 
+F 0 "R16" H 8370 2296 50  0000 L CNN
+F 1 "0" H 8370 2205 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 8230 2250 50  0001 C CNN
+F 3 "~" H 8300 2250 50  0001 C CNN
+	1    8300 2250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0995
+P 8300 2400
+AR Path="/5DDBDEEA/5DDD0995" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0995" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0995" Ref="#PWR0115"  Part="1" 
+F 0 "#PWR0115" H 8300 2150 50  0001 C CNN
+F 1 "GND" H 8305 2227 50  0000 C CNN
+F 2 "" H 8300 2400 50  0001 C CNN
+F 3 "" H 8300 2400 50  0001 C CNN
+	1    8300 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD099B
+P 8450 2050
+AR Path="/5DDBDEEA/5DDD099B" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD099B" Ref="C?"  Part="1" 
+AR Path="/5DDD099B" Ref="C4"  Part="1" 
+F 0 "C4" H 8542 2096 50  0000 L CNN
+F 1 "C_Small" H 8542 2005 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 8450 2050 50  0001 C CNN
+F 3 "~" H 8450 2050 50  0001 C CNN
+	1    8450 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD09A2
+P 8450 2150
+AR Path="/5DDBDEEA/5DDD09A2" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD09A2" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD09A2" Ref="#PWR0116"  Part="1" 
+F 0 "#PWR0116" H 8450 1900 50  0001 C CNN
+F 1 "GND" H 8455 1977 50  0000 C CNN
+F 2 "" H 8450 2150 50  0001 C CNN
+F 3 "" H 8450 2150 50  0001 C CNN
+	1    8450 2150
+	1    0    0    -1  
+$EndComp
+Text Label 8450 1950 0    50   ~ 0
+osc1_waveshape
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD09A9
+P 9400 1500
+AR Path="/5DDBDEEA/5DDD09A9" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD09A9" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD09A9" Ref="#SUPPLY0109"  Part="1" 
+F 0 "#SUPPLY0109" H 9400 1500 50  0001 L BNN
+F 1 "3.3V" H 9400 1674 50  0000 C CNN
+F 2 "" H 9400 1500 50  0001 C CNN
+F 3 "" H 9400 1500 50  0001 C CNN
+	1    9400 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD09AF
+P 9400 1650
+AR Path="/5DDBDEEA/5DDD09AF" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD09AF" Ref="R?"  Part="1" 
+AR Path="/5DDD09AF" Ref="R21"  Part="1" 
+F 0 "R21" H 9330 1696 50  0000 R CNN
+F 1 "0" H 9330 1605 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 9330 1650 50  0001 C CNN
+F 3 "~" H 9400 1650 50  0001 C CNN
+	1    9400 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD09B6
+P 9400 1950
+AR Path="/5DDBDEEA/5DDD09B6" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD09B6" Ref="RV?"  Part="1" 
+AR Path="/5DDD09B6" Ref="RV7"  Part="1" 
+F 0 "RV7" H 9330 1996 50  0000 R CNN
+F 1 "20kB" H 9330 1905 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9400 1950 50  0001 C CNN
+F 3 "~" H 9400 1950 50  0001 C CNN
+	1    9400 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD09BD
+P 9400 2250
+AR Path="/5DDBDEEA/5DDD09BD" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD09BD" Ref="R?"  Part="1" 
+AR Path="/5DDD09BD" Ref="R22"  Part="1" 
+F 0 "R22" H 9470 2296 50  0000 L CNN
+F 1 "0" H 9470 2205 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 9330 2250 50  0001 C CNN
+F 3 "~" H 9400 2250 50  0001 C CNN
+	1    9400 2250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD09C4
+P 9400 2400
+AR Path="/5DDBDEEA/5DDD09C4" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD09C4" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD09C4" Ref="#PWR0117"  Part="1" 
+F 0 "#PWR0117" H 9400 2150 50  0001 C CNN
+F 1 "GND" H 9405 2227 50  0000 C CNN
+F 2 "" H 9400 2400 50  0001 C CNN
+F 3 "" H 9400 2400 50  0001 C CNN
+	1    9400 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD09CA
+P 9550 2050
+AR Path="/5DDBDEEA/5DDD09CA" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD09CA" Ref="C?"  Part="1" 
+AR Path="/5DDD09CA" Ref="C7"  Part="1" 
+F 0 "C7" H 9642 2096 50  0000 L CNN
+F 1 "C_Small" H 9642 2005 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 9550 2050 50  0001 C CNN
+F 3 "~" H 9550 2050 50  0001 C CNN
+	1    9550 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD09D1
+P 9550 2150
+AR Path="/5DDBDEEA/5DDD09D1" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD09D1" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD09D1" Ref="#PWR0118"  Part="1" 
+F 0 "#PWR0118" H 9550 1900 50  0001 C CNN
+F 1 "GND" H 9555 1977 50  0000 C CNN
+F 2 "" H 9550 2150 50  0001 C CNN
+F 3 "" H 9550 2150 50  0001 C CNN
+	1    9550 2150
+	1    0    0    -1  
+$EndComp
+Text Label 9550 1950 0    50   ~ 0
+osc2_tune
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD09D8
+P 10250 1500
+AR Path="/5DDBDEEA/5DDD09D8" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD09D8" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD09D8" Ref="#SUPPLY0110"  Part="1" 
+F 0 "#SUPPLY0110" H 10250 1500 50  0001 L BNN
+F 1 "3.3V" H 10250 1674 50  0000 C CNN
+F 2 "" H 10250 1500 50  0001 C CNN
+F 3 "" H 10250 1500 50  0001 C CNN
+	1    10250 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD09DE
+P 10250 1650
+AR Path="/5DDBDEEA/5DDD09DE" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD09DE" Ref="R?"  Part="1" 
+AR Path="/5DDD09DE" Ref="R27"  Part="1" 
+F 0 "R27" H 10180 1696 50  0000 R CNN
+F 1 "0" H 10180 1605 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 10180 1650 50  0001 C CNN
+F 3 "~" H 10250 1650 50  0001 C CNN
+	1    10250 1650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD09E5
+P 10250 1950
+AR Path="/5DDBDEEA/5DDD09E5" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD09E5" Ref="RV?"  Part="1" 
+AR Path="/5DDD09E5" Ref="RV10"  Part="1" 
+F 0 "RV10" H 10180 1996 50  0000 R CNN
+F 1 "20kB" H 10180 1905 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 10250 1950 50  0001 C CNN
+F 3 "~" H 10250 1950 50  0001 C CNN
+	1    10250 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD09EC
+P 10250 2250
+AR Path="/5DDBDEEA/5DDD09EC" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD09EC" Ref="R?"  Part="1" 
+AR Path="/5DDD09EC" Ref="R28"  Part="1" 
+F 0 "R28" H 10320 2296 50  0000 L CNN
+F 1 "0" H 10320 2205 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 10180 2250 50  0001 C CNN
+F 3 "~" H 10250 2250 50  0001 C CNN
+	1    10250 2250
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD09F3
+P 10250 2400
+AR Path="/5DDBDEEA/5DDD09F3" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD09F3" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD09F3" Ref="#PWR0119"  Part="1" 
+F 0 "#PWR0119" H 10250 2150 50  0001 C CNN
+F 1 "GND" H 10255 2227 50  0000 C CNN
+F 2 "" H 10250 2400 50  0001 C CNN
+F 3 "" H 10250 2400 50  0001 C CNN
+	1    10250 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD09F9
+P 10400 2050
+AR Path="/5DDBDEEA/5DDD09F9" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD09F9" Ref="C?"  Part="1" 
+AR Path="/5DDD09F9" Ref="C10"  Part="1" 
+F 0 "C10" H 10492 2096 50  0000 L CNN
+F 1 "C_Small" H 10492 2005 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 10400 2050 50  0001 C CNN
+F 3 "~" H 10400 2050 50  0001 C CNN
+	1    10400 2050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0A00
+P 10400 2150
+AR Path="/5DDBDEEA/5DDD0A00" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A00" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0A00" Ref="#PWR0120"  Part="1" 
+F 0 "#PWR0120" H 10400 1900 50  0001 C CNN
+F 1 "GND" H 10405 1977 50  0000 C CNN
+F 2 "" H 10400 2150 50  0001 C CNN
+F 3 "" H 10400 2150 50  0001 C CNN
+	1    10400 2150
+	1    0    0    -1  
+$EndComp
+Text Label 10400 1950 0    50   ~ 0
+osc2_waveshape
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0A07
+P 7700 5150
+AR Path="/5DDBDEEA/5DDD0A07" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A07" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0A07" Ref="#SUPPLY0111"  Part="1" 
+F 0 "#SUPPLY0111" H 7700 5150 50  0001 L BNN
+F 1 "3.3V" H 7700 5324 50  0000 C CNN
+F 2 "" H 7700 5150 50  0001 C CNN
+F 3 "" H 7700 5150 50  0001 C CNN
+	1    7700 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0A0D
+P 7700 5300
+AR Path="/5DDBDEEA/5DDD0A0D" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A0D" Ref="R?"  Part="1" 
+AR Path="/5DDD0A0D" Ref="R13"  Part="1" 
+F 0 "R13" H 7630 5346 50  0000 R CNN
+F 1 "0" H 7630 5255 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 7630 5300 50  0001 C CNN
+F 3 "~" H 7700 5300 50  0001 C CNN
+	1    7700 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0A14
+P 7700 5600
+AR Path="/5DDBDEEA/5DDD0A14" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A14" Ref="RV?"  Part="1" 
+AR Path="/5DDD0A14" Ref="RV3"  Part="1" 
+F 0 "RV3" H 7630 5646 50  0000 R CNN
+F 1 "20kB" H 7630 5555 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 7700 5600 50  0001 C CNN
+F 3 "~" H 7700 5600 50  0001 C CNN
+	1    7700 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0A1B
+P 7700 5900
+AR Path="/5DDBDEEA/5DDD0A1B" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A1B" Ref="R?"  Part="1" 
+AR Path="/5DDD0A1B" Ref="R14"  Part="1" 
+F 0 "R14" H 7770 5946 50  0000 L CNN
+F 1 "0" H 7770 5855 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 7630 5900 50  0001 C CNN
+F 3 "~" H 7700 5900 50  0001 C CNN
+	1    7700 5900
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0A22
+P 7700 6050
+AR Path="/5DDBDEEA/5DDD0A22" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A22" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0A22" Ref="#PWR0121"  Part="1" 
+F 0 "#PWR0121" H 7700 5800 50  0001 C CNN
+F 1 "GND" H 7705 5877 50  0000 C CNN
+F 2 "" H 7700 6050 50  0001 C CNN
+F 3 "" H 7700 6050 50  0001 C CNN
+	1    7700 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD0A28
+P 7850 5700
+AR Path="/5DDBDEEA/5DDD0A28" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A28" Ref="C?"  Part="1" 
+AR Path="/5DDD0A28" Ref="C3"  Part="1" 
+F 0 "C3" H 7942 5746 50  0000 L CNN
+F 1 "C_Small" H 7942 5655 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 7850 5700 50  0001 C CNN
+F 3 "~" H 7850 5700 50  0001 C CNN
+	1    7850 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0A2F
+P 7850 5800
+AR Path="/5DDBDEEA/5DDD0A2F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A2F" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0A2F" Ref="#PWR0122"  Part="1" 
+F 0 "#PWR0122" H 7850 5550 50  0001 C CNN
+F 1 "GND" H 7855 5627 50  0000 C CNN
+F 2 "" H 7850 5800 50  0001 C CNN
+F 3 "" H 7850 5800 50  0001 C CNN
+	1    7850 5800
+	1    0    0    -1  
+$EndComp
+Text Label 7850 5600 0    50   ~ 0
+lfo_rate
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD0A36
+P 8550 5150
+AR Path="/5DDBDEEA/5DDD0A36" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A36" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD0A36" Ref="#SUPPLY0112"  Part="1" 
+F 0 "#SUPPLY0112" H 8550 5150 50  0001 L BNN
+F 1 "3.3V" H 8550 5324 50  0000 C CNN
+F 2 "" H 8550 5150 50  0001 C CNN
+F 3 "" H 8550 5150 50  0001 C CNN
+	1    8550 5150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0A3C
+P 8550 5300
+AR Path="/5DDBDEEA/5DDD0A3C" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A3C" Ref="R?"  Part="1" 
+AR Path="/5DDD0A3C" Ref="R19"  Part="1" 
+F 0 "R19" H 8480 5346 50  0000 R CNN
+F 1 "0" H 8480 5255 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 8480 5300 50  0001 C CNN
+F 3 "~" H 8550 5300 50  0001 C CNN
+	1    8550 5300
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDD0A43
+P 8550 5600
+AR Path="/5DDBDEEA/5DDD0A43" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A43" Ref="RV?"  Part="1" 
+AR Path="/5DDD0A43" Ref="RV6"  Part="1" 
+F 0 "RV6" H 8480 5646 50  0000 R CNN
+F 1 "20kB" H 8480 5555 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 8550 5600 50  0001 C CNN
+F 3 "~" H 8550 5600 50  0001 C CNN
+	1    8550 5600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD0A4A
+P 8550 5900
+AR Path="/5DDBDEEA/5DDD0A4A" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A4A" Ref="R?"  Part="1" 
+AR Path="/5DDD0A4A" Ref="R20"  Part="1" 
+F 0 "R20" H 8620 5946 50  0000 L CNN
+F 1 "0" H 8620 5855 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 8480 5900 50  0001 C CNN
+F 3 "~" H 8550 5900 50  0001 C CNN
+	1    8550 5900
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0A51
+P 8550 6050
+AR Path="/5DDBDEEA/5DDD0A51" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A51" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0A51" Ref="#PWR0123"  Part="1" 
+F 0 "#PWR0123" H 8550 5800 50  0001 C CNN
+F 1 "GND" H 8555 5877 50  0000 C CNN
+F 2 "" H 8550 6050 50  0001 C CNN
+F 3 "" H 8550 6050 50  0001 C CNN
+	1    8550 6050
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C_Small C?
+U 1 1 5DDD0A57
+P 8700 5700
+AR Path="/5DDBDEEA/5DDD0A57" Ref="C?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A57" Ref="C?"  Part="1" 
+AR Path="/5DDD0A57" Ref="C6"  Part="1" 
+F 0 "C6" H 8792 5746 50  0000 L CNN
+F 1 "C_Small" H 8792 5655 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" H 8700 5700 50  0001 C CNN
+F 3 "~" H 8700 5700 50  0001 C CNN
+	1    8700 5700
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD0A5E
+P 8700 5800
+AR Path="/5DDBDEEA/5DDD0A5E" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD0A5E" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD0A5E" Ref="#PWR0124"  Part="1" 
+F 0 "#PWR0124" H 8700 5550 50  0001 C CNN
+F 1 "GND" H 8705 5627 50  0000 C CNN
+F 2 "" H 8700 5800 50  0001 C CNN
+F 3 "" H 8700 5800 50  0001 C CNN
+	1    8700 5800
+	1    0    0    -1  
+$EndComp
+Text Label 8700 5600 0    50   ~ 0
+lfo_depth
+Text Notes 8050 4900 0    50   ~ 0
+PER VOICE LFO
+Wire Notes Line
+	7400 4800 7400 6300
+Wire Notes Line
+	7400 6300 10900 6300
+Wire Notes Line
+	7400 4800 10900 4800
+Wire Notes Line
+	7150 2700 11100 2700
+Wire Notes Line
+	11100 2700 11100 1100
+Wire Notes Line
+	11100 1100 7150 1100
+Wire Notes Line
+	7150 1100 7150 2700
+Text Label 3250 6350 2    50   ~ 0
+attack
+Text Label 3250 6450 2    50   ~ 0
+decay
+Text Label 3750 5950 0    50   ~ 0
+sustain
+Text Label 3750 6050 0    50   ~ 0
+release
+Text Label 3750 6150 0    50   ~ 0
+lfo_rate
+Text Label 3750 6250 0    50   ~ 0
+lfo_depth
+Text Label 3250 5950 2    50   ~ 0
+osc1_tune
+Text Label 3250 6050 2    50   ~ 0
+osc1_waveshape
+Text Label 3250 6150 2    50   ~ 0
+osc2_tune
+Text Label 3250 6250 2    50   ~ 0
+osc2_waveshape
+Text Label 3750 6350 0    50   ~ 0
+global_lfo_rate
+Text Label 3750 6450 0    50   ~ 0
+global_lfo_depth
+$Comp
+L Connector_Generic:Conn_02x12_Odd_Even J1
+U 1 1 5DDCCD44
+P 3450 6350
+F 0 "J1" H 3500 7067 50  0000 C CNN
+F 1 "Conn_02x12_Odd_Even" H 3500 6976 50  0000 C CNN
+F 2 "SparkFun-Connectors:2X12" H 3450 6350 50  0001 C CNN
+F 3 "~" H 3450 6350 50  0001 C CNN
+	1    3450 6350
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDCD082
+P 2800 5850
+AR Path="/5DDBDEEA/5DDCD082" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDCD082" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCD082" Ref="#SUPPLY0113"  Part="1" 
+F 0 "#SUPPLY0113" H 2800 5850 50  0001 L BNN
+F 1 "3.3V" H 2800 6024 50  0000 C CNN
+F 2 "" H 2800 5850 50  0001 C CNN
+F 3 "" H 2800 5850 50  0001 C CNN
+	1    2800 5850
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDCD710
+P 4200 5850
+AR Path="/5DDBDEEA/5DDCD710" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDCD710" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCD710" Ref="#PWR0125"  Part="1" 
+F 0 "#PWR0125" H 4200 5600 50  0001 C CNN
+F 1 "GND" H 4205 5677 50  0000 C CNN
+F 2 "" H 4200 5850 50  0001 C CNN
+F 3 "" H 4200 5850 50  0001 C CNN
+	1    4200 5850
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 5850 3750 5850
+$Comp
+L power:GND #PWR?
+U 1 1 5DDCD851
+P 4200 6550
+AR Path="/5DDBDEEA/5DDCD851" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDCD851" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCD851" Ref="#PWR0126"  Part="1" 
+F 0 "#PWR0126" H 4200 6300 50  0001 C CNN
+F 1 "GND" H 4205 6377 50  0000 C CNN
+F 2 "" H 4200 6550 50  0001 C CNN
+F 3 "" H 4200 6550 50  0001 C CNN
+	1    4200 6550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	4200 6550 3750 6550
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDCD9C6
+P 2800 6550
+AR Path="/5DDBDEEA/5DDCD9C6" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDCD9C6" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCD9C6" Ref="#SUPPLY0114"  Part="1" 
+F 0 "#SUPPLY0114" H 2800 6550 50  0001 L BNN
+F 1 "3.3V" H 2800 6724 50  0000 C CNN
+F 2 "" H 2800 6550 50  0001 C CNN
+F 3 "" H 2800 6550 50  0001 C CNN
+	1    2800 6550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2800 6550 3250 6550
+Wire Wire Line
+	2800 5850 3250 5850
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S1
+U 1 1 5DDD8B17
+P 1550 1950
+F 0 "S1" V 1504 2028 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 1595 2028 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 1580 2100 20  0001 C CNN
+F 3 "" H 1550 1950 50  0001 C CNN
+	1    1550 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDD8CBA
+P 1550 2150
+AR Path="/5DDBDEEA/5DDD8CBA" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDD8CBA" Ref="#PWR?"  Part="1" 
+AR Path="/5DDD8CBA" Ref="#PWR0127"  Part="1" 
+F 0 "#PWR0127" H 1550 1900 50  0001 C CNN
+F 1 "GND" H 1555 1977 50  0000 C CNN
+F 2 "" H 1550 2150 50  0001 C CNN
+F 3 "" H 1550 2150 50  0001 C CNN
+	1    1550 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDD9699
+P 1550 1500
+AR Path="/5DDBDEEA/5DDD9699" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDD9699" Ref="R?"  Part="1" 
+AR Path="/5DDD9699" Ref="R1"  Part="1" 
+F 0 "R1" H 1480 1546 50  0000 R CNN
+F 1 "0" H 1480 1455 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 1480 1500 50  0001 C CNN
+F 3 "~" H 1550 1500 50  0001 C CNN
+	1    1550 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDD9785
+P 1550 1350
+AR Path="/5DDBDEEA/5DDD9785" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDD9785" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDD9785" Ref="#SUPPLY0115"  Part="1" 
+F 0 "#SUPPLY0115" H 1550 1350 50  0001 L BNN
+F 1 "3.3V" H 1550 1524 50  0000 C CNN
+F 2 "" H 1550 1350 50  0001 C CNN
+F 3 "" H 1550 1350 50  0001 C CNN
+	1    1550 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 1650 1550 1700
+Text Label 1650 1700 0    50   ~ 0
+mod1
+Wire Wire Line
+	1650 1700 1550 1700
+Connection ~ 1550 1700
+Wire Wire Line
+	1550 1700 1550 1750
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S3
+U 1 1 5DDDAF23
+P 2700 1950
+F 0 "S3" V 2654 2028 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 2745 2028 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 2730 2100 20  0001 C CNN
+F 3 "" H 2700 1950 50  0001 C CNN
+	1    2700 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDDAF29
+P 2700 2150
+AR Path="/5DDBDEEA/5DDDAF29" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDDAF29" Ref="#PWR?"  Part="1" 
+AR Path="/5DDDAF29" Ref="#PWR0128"  Part="1" 
+F 0 "#PWR0128" H 2700 1900 50  0001 C CNN
+F 1 "GND" H 2705 1977 50  0000 C CNN
+F 2 "" H 2700 2150 50  0001 C CNN
+F 3 "" H 2700 2150 50  0001 C CNN
+	1    2700 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDAF2F
+P 2700 1500
+AR Path="/5DDBDEEA/5DDDAF2F" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDAF2F" Ref="R?"  Part="1" 
+AR Path="/5DDDAF2F" Ref="R3"  Part="1" 
+F 0 "R3" H 2630 1546 50  0000 R CNN
+F 1 "0" H 2630 1455 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 2630 1500 50  0001 C CNN
+F 3 "~" H 2700 1500 50  0001 C CNN
+	1    2700 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDDAF35
+P 2700 1350
+AR Path="/5DDBDEEA/5DDDAF35" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDDAF35" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDDAF35" Ref="#SUPPLY0116"  Part="1" 
+F 0 "#SUPPLY0116" H 2700 1350 50  0001 L BNN
+F 1 "3.3V" H 2700 1524 50  0000 C CNN
+F 2 "" H 2700 1350 50  0001 C CNN
+F 3 "" H 2700 1350 50  0001 C CNN
+	1    2700 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 1650 2700 1700
+Text Label 2800 1700 0    50   ~ 0
+mod2
+Wire Wire Line
+	2800 1700 2700 1700
+Connection ~ 2700 1700
+Wire Wire Line
+	2700 1700 2700 1750
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S5
+U 1 1 5DDDB28F
+P 3900 1950
+F 0 "S5" V 3854 2028 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 3945 2028 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 3930 2100 20  0001 C CNN
+F 3 "" H 3900 1950 50  0001 C CNN
+	1    3900 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDDB295
+P 3900 2150
+AR Path="/5DDBDEEA/5DDDB295" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDDB295" Ref="#PWR?"  Part="1" 
+AR Path="/5DDDB295" Ref="#PWR0129"  Part="1" 
+F 0 "#PWR0129" H 3900 1900 50  0001 C CNN
+F 1 "GND" H 3905 1977 50  0000 C CNN
+F 2 "" H 3900 2150 50  0001 C CNN
+F 3 "" H 3900 2150 50  0001 C CNN
+	1    3900 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDB29B
+P 3900 1500
+AR Path="/5DDBDEEA/5DDDB29B" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDB29B" Ref="R?"  Part="1" 
+AR Path="/5DDDB29B" Ref="R5"  Part="1" 
+F 0 "R5" H 3830 1546 50  0000 R CNN
+F 1 "0" H 3830 1455 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 3830 1500 50  0001 C CNN
+F 3 "~" H 3900 1500 50  0001 C CNN
+	1    3900 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDDB2A1
+P 3900 1350
+AR Path="/5DDBDEEA/5DDDB2A1" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDDB2A1" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDDB2A1" Ref="#SUPPLY0117"  Part="1" 
+F 0 "#SUPPLY0117" H 3900 1350 50  0001 L BNN
+F 1 "3.3V" H 3900 1524 50  0000 C CNN
+F 2 "" H 3900 1350 50  0001 C CNN
+F 3 "" H 3900 1350 50  0001 C CNN
+	1    3900 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 1650 3900 1700
+Text Label 4000 1700 0    50   ~ 0
+mod3
+Wire Wire Line
+	4000 1700 3900 1700
+Connection ~ 3900 1700
+Wire Wire Line
+	3900 1700 3900 1750
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S7
+U 1 1 5DDDB592
+P 5050 1950
+F 0 "S7" V 5004 2028 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 5095 2028 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 5080 2100 20  0001 C CNN
+F 3 "" H 5050 1950 50  0001 C CNN
+	1    5050 1950
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDDB598
+P 5050 2150
+AR Path="/5DDBDEEA/5DDDB598" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDDB598" Ref="#PWR?"  Part="1" 
+AR Path="/5DDDB598" Ref="#PWR0130"  Part="1" 
+F 0 "#PWR0130" H 5050 1900 50  0001 C CNN
+F 1 "GND" H 5055 1977 50  0000 C CNN
+F 2 "" H 5050 2150 50  0001 C CNN
+F 3 "" H 5050 2150 50  0001 C CNN
+	1    5050 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDB59E
+P 5050 1500
+AR Path="/5DDBDEEA/5DDDB59E" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDB59E" Ref="R?"  Part="1" 
+AR Path="/5DDDB59E" Ref="R7"  Part="1" 
+F 0 "R7" H 4980 1546 50  0000 R CNN
+F 1 "0" H 4980 1455 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 4980 1500 50  0001 C CNN
+F 3 "~" H 5050 1500 50  0001 C CNN
+	1    5050 1500
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDDB5A4
+P 5050 1350
+AR Path="/5DDBDEEA/5DDDB5A4" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDDB5A4" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDDB5A4" Ref="#SUPPLY0118"  Part="1" 
+F 0 "#SUPPLY0118" H 5050 1350 50  0001 L BNN
+F 1 "3.3V" H 5050 1524 50  0000 C CNN
+F 2 "" H 5050 1350 50  0001 C CNN
+F 3 "" H 5050 1350 50  0001 C CNN
+	1    5050 1350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 1650 5050 1700
+Text Label 5150 1700 0    50   ~ 0
+mod4
+Wire Wire Line
+	5150 1700 5050 1700
+Connection ~ 5050 1700
+Wire Wire Line
+	5050 1700 5050 1750
+Text Label 3250 6650 2    50   ~ 0
+mod1
+Text Label 3750 6650 0    50   ~ 0
+mod2
+Text Label 3250 6750 2    50   ~ 0
+mod3
+Text Label 3750 6750 0    50   ~ 0
+mod4
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S2
+U 1 1 5DDE0457
+P 1550 3400
+F 0 "S2" V 1504 3478 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 1595 3478 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 1580 3550 20  0001 C CNN
+F 3 "" H 1550 3400 50  0001 C CNN
+	1    1550 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDE045D
+P 1550 3600
+AR Path="/5DDBDEEA/5DDE045D" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDE045D" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE045D" Ref="#PWR0131"  Part="1" 
+F 0 "#PWR0131" H 1550 3350 50  0001 C CNN
+F 1 "GND" H 1555 3427 50  0000 C CNN
+F 2 "" H 1550 3600 50  0001 C CNN
+F 3 "" H 1550 3600 50  0001 C CNN
+	1    1550 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDE0463
+P 1550 2950
+AR Path="/5DDBDEEA/5DDE0463" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDE0463" Ref="R?"  Part="1" 
+AR Path="/5DDE0463" Ref="R2"  Part="1" 
+F 0 "R2" H 1480 2996 50  0000 R CNN
+F 1 "0" H 1480 2905 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 1480 2950 50  0001 C CNN
+F 3 "~" H 1550 2950 50  0001 C CNN
+	1    1550 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDE0469
+P 1550 2800
+AR Path="/5DDBDEEA/5DDE0469" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDE0469" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDE0469" Ref="#SUPPLY0119"  Part="1" 
+F 0 "#SUPPLY0119" H 1550 2800 50  0001 L BNN
+F 1 "3.3V" H 1550 2974 50  0000 C CNN
+F 2 "" H 1550 2800 50  0001 C CNN
+F 3 "" H 1550 2800 50  0001 C CNN
+	1    1550 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 3100 1550 3150
+Text Label 1650 3150 0    50   ~ 0
+mod5
+Wire Wire Line
+	1650 3150 1550 3150
+Connection ~ 1550 3150
+Wire Wire Line
+	1550 3150 1550 3200
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S4
+U 1 1 5DDE0474
+P 2700 3400
+F 0 "S4" V 2654 3478 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 2745 3478 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 2730 3550 20  0001 C CNN
+F 3 "" H 2700 3400 50  0001 C CNN
+	1    2700 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDE047A
+P 2700 3600
+AR Path="/5DDBDEEA/5DDE047A" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDE047A" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE047A" Ref="#PWR0132"  Part="1" 
+F 0 "#PWR0132" H 2700 3350 50  0001 C CNN
+F 1 "GND" H 2705 3427 50  0000 C CNN
+F 2 "" H 2700 3600 50  0001 C CNN
+F 3 "" H 2700 3600 50  0001 C CNN
+	1    2700 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDE0480
+P 2700 2950
+AR Path="/5DDBDEEA/5DDE0480" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDE0480" Ref="R?"  Part="1" 
+AR Path="/5DDE0480" Ref="R4"  Part="1" 
+F 0 "R4" H 2630 2996 50  0000 R CNN
+F 1 "0" H 2630 2905 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 2630 2950 50  0001 C CNN
+F 3 "~" H 2700 2950 50  0001 C CNN
+	1    2700 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDE0486
+P 2700 2800
+AR Path="/5DDBDEEA/5DDE0486" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDE0486" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDE0486" Ref="#SUPPLY0120"  Part="1" 
+F 0 "#SUPPLY0120" H 2700 2800 50  0001 L BNN
+F 1 "3.3V" H 2700 2974 50  0000 C CNN
+F 2 "" H 2700 2800 50  0001 C CNN
+F 3 "" H 2700 2800 50  0001 C CNN
+	1    2700 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 3100 2700 3150
+Text Label 2800 3150 0    50   ~ 0
+mod6
+Wire Wire Line
+	2800 3150 2700 3150
+Connection ~ 2700 3150
+Wire Wire Line
+	2700 3150 2700 3200
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S6
+U 1 1 5DDE0491
+P 3900 3400
+F 0 "S6" V 3854 3478 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 3945 3478 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 3930 3550 20  0001 C CNN
+F 3 "" H 3900 3400 50  0001 C CNN
+	1    3900 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDE0497
+P 3900 3600
+AR Path="/5DDBDEEA/5DDE0497" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDE0497" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE0497" Ref="#PWR0133"  Part="1" 
+F 0 "#PWR0133" H 3900 3350 50  0001 C CNN
+F 1 "GND" H 3905 3427 50  0000 C CNN
+F 2 "" H 3900 3600 50  0001 C CNN
+F 3 "" H 3900 3600 50  0001 C CNN
+	1    3900 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDE049D
+P 3900 2950
+AR Path="/5DDBDEEA/5DDE049D" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDE049D" Ref="R?"  Part="1" 
+AR Path="/5DDE049D" Ref="R6"  Part="1" 
+F 0 "R6" H 3830 2996 50  0000 R CNN
+F 1 "0" H 3830 2905 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 3830 2950 50  0001 C CNN
+F 3 "~" H 3900 2950 50  0001 C CNN
+	1    3900 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDE04A3
+P 3900 2800
+AR Path="/5DDBDEEA/5DDE04A3" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDE04A3" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDE04A3" Ref="#SUPPLY0121"  Part="1" 
+F 0 "#SUPPLY0121" H 3900 2800 50  0001 L BNN
+F 1 "3.3V" H 3900 2974 50  0000 C CNN
+F 2 "" H 3900 2800 50  0001 C CNN
+F 3 "" H 3900 2800 50  0001 C CNN
+	1    3900 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3900 3100 3900 3150
+Text Label 4000 3150 0    50   ~ 0
+mod7
+Wire Wire Line
+	4000 3150 3900 3150
+Connection ~ 3900 3150
+Wire Wire Line
+	3900 3150 3900 3200
+$Comp
+L SparkFun-Electromechanical:SWITCH-MOMENTARY-2PTH S8
+U 1 1 5DDE04AE
+P 5050 3400
+F 0 "S8" V 5004 3478 50  0000 L CNN
+F 1 "SWITCH-MOMENTARY-2PTH" V 5095 3478 50  0000 L CNN
+F 2 "SparkFun-Electromechanical:TACTILE-PTH" H 5080 3550 20  0001 C CNN
+F 3 "" H 5050 3400 50  0001 C CNN
+	1    5050 3400
+	0    1    1    0   
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDE04B4
+P 5050 3600
+AR Path="/5DDBDEEA/5DDE04B4" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDE04B4" Ref="#PWR?"  Part="1" 
+AR Path="/5DDE04B4" Ref="#PWR0134"  Part="1" 
+F 0 "#PWR0134" H 5050 3350 50  0001 C CNN
+F 1 "GND" H 5055 3427 50  0000 C CNN
+F 2 "" H 5050 3600 50  0001 C CNN
+F 3 "" H 5050 3600 50  0001 C CNN
+	1    5050 3600
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDE04BA
+P 5050 2950
+AR Path="/5DDBDEEA/5DDE04BA" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDE04BA" Ref="R?"  Part="1" 
+AR Path="/5DDE04BA" Ref="R8"  Part="1" 
+F 0 "R8" H 4980 2996 50  0000 R CNN
+F 1 "0" H 4980 2905 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 4980 2950 50  0001 C CNN
+F 3 "~" H 5050 2950 50  0001 C CNN
+	1    5050 2950
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDE04C0
+P 5050 2800
+AR Path="/5DDBDEEA/5DDE04C0" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDE04C0" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDE04C0" Ref="#SUPPLY0122"  Part="1" 
+F 0 "#SUPPLY0122" H 5050 2800 50  0001 L BNN
+F 1 "3.3V" H 5050 2974 50  0000 C CNN
+F 2 "" H 5050 2800 50  0001 C CNN
+F 3 "" H 5050 2800 50  0001 C CNN
+	1    5050 2800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5050 3100 5050 3150
+Text Label 5150 3150 0    50   ~ 0
+mod8
+Wire Wire Line
+	5150 3150 5050 3150
+Connection ~ 5050 3150
+Wire Wire Line
+	5050 3150 5050 3200
+Text Label 3250 6850 2    50   ~ 0
+mod5
+Text Label 3750 6850 0    50   ~ 0
+mod6
+Text Label 3250 6950 2    50   ~ 0
+mod7
+Text Label 3750 6950 0    50   ~ 0
+mod8
+Text Notes 2300 4200 0    50   ~ 0
+Haven't decided what to do with these switches yet.\nNeed to rename once I settle on how the mod\nmatrix will work.
+$EndSCHEMATC
