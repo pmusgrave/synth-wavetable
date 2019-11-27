@@ -442,7 +442,7 @@ U 1 1 5DDBF70B
 P 3300 6850
 F 0 "U2" H 3300 7175 50  0000 C CNN
 F 1 "4N28" H 3300 7084 50  0000 C CNN
-F 2 "Package_DIP:DIP-6_W7.62mm" H 3100 6650 50  0001 L CIN
+F 2 "SparkFun-AnalogIC:DIL-08" H 3100 6650 50  0001 L CIN
 F 3 "https://www.vishay.com/docs/83725/4n25.pdf" H 3300 6850 50  0001 L CNN
 	1    3300 6850
 	1    0    0    -1  
@@ -634,9 +634,9 @@ Text Label 6650 4250 2    50   ~ 0
 lfo_rate
 Text Label 6650 4350 2    50   ~ 0
 lfo_depth
-Text Label 4100 4600 0    50   ~ 0
+Text Label 4100 1300 0    50   ~ 0
 MIDI_IN
-Text Label 4100 4700 0    50   ~ 0
+Text Label 4100 3500 0    50   ~ 0
 MIDI_OUT
 $Comp
 L Connector_Generic:Conn_01x02 J3
@@ -689,9 +689,9 @@ Text Label 6650 3650 2    50   ~ 0
 osc2_tune
 Text Label 6650 3750 2    50   ~ 0
 osc2_waveshape
-Text HLabel 4100 3200 2    50   Output ~ 0
+Text HLabel 4100 5400 2    50   Output ~ 0
 UART_TX
-Text HLabel 4100 3300 2    50   Input ~ 0
+Text HLabel 4100 5300 2    50   Input ~ 0
 UART_RX
 Wire Wire Line
 	1450 2350 1600 2350
@@ -818,7 +818,7 @@ Text Label 6650 4450 2    50   ~ 0
 global_lfo_rate
 Text Label 6650 4550 2    50   ~ 0
 global_lfo_depth
-Text Label 4100 3800 0    50   ~ 0
+Text Label 4100 2200 0    50   ~ 0
 attack
 Text Label 4100 3900 0    50   ~ 0
 decay
@@ -832,16 +832,34 @@ Text Label 4100 4300 0    50   ~ 0
 lfo_depth
 Text Label 4100 3400 0    50   ~ 0
 osc1_tune
-Text Label 4100 3500 0    50   ~ 0
+Text Label 4100 3300 0    50   ~ 0
 osc1_waveshape
-Text Label 4100 3600 0    50   ~ 0
+Text Label 4100 3200 0    50   ~ 0
 osc2_tune
-Text Label 4100 3700 0    50   ~ 0
+Text Label 4100 3100 0    50   ~ 0
 osc2_waveshape
 Text Label 4100 4400 0    50   ~ 0
 global_lfo_rate
 Text Label 4100 4500 0    50   ~ 0
 global_lfo_depth
-Text Notes 4300 4800 0    50   ~ 0
+Text Notes 4750 2800 0    50   ~ 0
 GPIOs need to be changed!
+Text HLabel 4100 1100 2    50   BiDi ~ 0
+FREQ_CTRL
+Text HLabel 4100 2900 2    50   BiDi ~ 0
+mod1
+Text HLabel 4100 2800 2    50   BiDi ~ 0
+mod2
+Text HLabel 4100 2700 2    50   BiDi ~ 0
+mod3
+Text HLabel 4100 2600 2    50   BiDi ~ 0
+mod4
+Text HLabel 4100 2000 2    50   BiDi ~ 0
+mod5
+Text HLabel 4100 1900 2    50   BiDi ~ 0
+mod6
+Text HLabel 4100 5000 2    50   BiDi ~ 0
+mod7
+Text HLabel 4100 4900 2    50   BiDi ~ 0
+mod8
 $EndSCHEMATC

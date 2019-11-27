@@ -25,37 +25,6 @@ F 3 "~" H 5550 3950 50  0001 C CNN
 	1    5550 3950
 	1    0    0    -1  
 $EndComp
-Text Label 5350 3950 2    50   ~ 0
-attack
-Text Label 5350 4050 2    50   ~ 0
-decay
-Text Label 5850 3550 0    50   ~ 0
-sustain
-Text Label 8950 3850 2    50   ~ 0
-release
-Text Label 8950 3950 2    50   ~ 0
-lfo_rate
-Text Label 8950 4050 2    50   ~ 0
-lfo_depth
-Text Label 5350 3550 2    50   ~ 0
-osc1_tune
-Text Label 5350 3650 2    50   ~ 0
-osc1_waveshape
-Text Label 5350 3750 2    50   ~ 0
-osc2_tune
-Text Label 5350 3850 2    50   ~ 0
-osc2_waveshape
-$Comp
-L power:+3.3V #PWR0121
-U 1 1 5DDD170E
-P 4950 3400
-F 0 "#PWR0121" H 4950 3250 50  0001 C CNN
-F 1 "+3.3V" H 4965 3573 50  0000 C CNN
-F 2 "" H 4950 3400 50  0001 C CNN
-F 3 "" H 4950 3400 50  0001 C CNN
-	1    4950 3400
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	4950 3400 4950 3450
 Wire Wire Line
@@ -64,72 +33,70 @@ Wire Wire Line
 	6250 3500 6250 3450
 Wire Wire Line
 	6250 3450 5850 3450
-$Comp
-L power:GND #PWR0123
-U 1 1 5DDD1795
-P 6300 4150
-F 0 "#PWR0123" H 6300 3900 50  0001 C CNN
-F 1 "GND" H 6305 3977 50  0000 C CNN
-F 2 "" H 6300 4150 50  0001 C CNN
-F 3 "" H 6300 4150 50  0001 C CNN
-	1    6300 4150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	6300 4150 5850 4150
-$Comp
-L power:+3.3V #PWR0124
-U 1 1 5DDD17B1
-P 4950 4150
-F 0 "#PWR0124" H 4950 4000 50  0001 C CNN
-F 1 "+3.3V" H 4965 4323 50  0000 C CNN
-F 2 "" H 4950 4150 50  0001 C CNN
-F 3 "" H 4950 4150 50  0001 C CNN
-	1    4950 4150
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4950 4150 5350 4150
-Text Label 8950 4150 2    50   ~ 0
-global_lfo_rate
-Text Label 8950 4250 2    50   ~ 0
-global_lfo_depth
-Text Label 8950 3550 2    50   ~ 0
-attack
-Text Label 8950 3650 2    50   ~ 0
-decay
-Text Label 8950 3150 2    50   ~ 0
+Text HLabel 5350 3550 0    50   Output ~ 0
 osc1_tune
-Text Label 8950 3250 2    50   ~ 0
+Text HLabel 5350 3650 0    50   Output ~ 0
 osc1_waveshape
-Text Label 8950 3350 2    50   ~ 0
+Text HLabel 5350 3750 0    50   Output ~ 0
 osc2_tune
-Text Label 8950 3450 2    50   ~ 0
+Text HLabel 5350 3850 0    50   Output ~ 0
 osc2_waveshape
-Text Label 8950 3750 2    50   ~ 0
-sustain
-Text HLabel 8950 3150 2    50   Output ~ 0
-osc1_tune
-Text HLabel 8950 3250 2    50   Output ~ 0
-osc1_waveshape
-Text HLabel 8950 3350 2    50   Output ~ 0
-osc2_tune
-Text HLabel 8950 3450 2    50   Output ~ 0
-osc2_waveshape
-Text HLabel 8950 3550 2    50   Output ~ 0
+Text HLabel 5350 3950 0    50   Output ~ 0
 attack
-Text HLabel 8950 3650 2    50   Output ~ 0
+Text HLabel 5350 4050 0    50   Output ~ 0
 decay
-Text HLabel 8950 3750 2    50   Output ~ 0
+Text HLabel 5850 3550 2    50   Output ~ 0
 sustain
-Text HLabel 8950 3850 2    50   Output ~ 0
+Text HLabel 5850 3650 2    50   Output ~ 0
 release
-Text HLabel 8950 3950 2    50   Output ~ 0
+Text HLabel 5850 3750 2    50   Output ~ 0
 lfo_rate
-Text HLabel 8950 4050 2    50   Output ~ 0
+Text HLabel 5850 3850 2    50   Output ~ 0
 lfo_depth
-Text HLabel 8950 4150 2    50   Output ~ 0
+Text HLabel 5850 3950 2    50   Output ~ 0
 global_lfo_rate
-Text HLabel 8950 4250 2    50   Output ~ 0
+Text HLabel 5850 4050 2    50   Output ~ 0
 global_lfo_depth
+Text HLabel 5350 4150 0    50   BiDi ~ 0
+filter_freq
+Text HLabel 5850 4150 2    50   BiDi ~ 0
+filter_resonance
+$Comp
+L power:GND #PWR0122
+U 1 1 5DE076CA
+P 6250 3500
+F 0 "#PWR0122" H 6250 3250 50  0001 C CNN
+F 1 "GND" H 6255 3327 50  0000 C CNN
+F 2 "" H 6250 3500 50  0001 C CNN
+F 3 "" H 6250 3500 50  0001 C CNN
+	1    6250 3500
+	1    0    0    -1  
+$EndComp
+Text HLabel 5350 4250 0    50   BiDi ~ 0
+mod1
+Text HLabel 5850 4250 2    50   BiDi ~ 0
+mod2
+Text HLabel 5350 4350 0    50   BiDi ~ 0
+mod3
+Text HLabel 5850 4350 2    50   BiDi ~ 0
+mod4
+Text HLabel 5350 4450 0    50   BiDi ~ 0
+mod5
+Text HLabel 5850 4450 2    50   BiDi ~ 0
+mod6
+Text HLabel 5350 4550 0    50   BiDi ~ 0
+mod7
+Text HLabel 5850 4550 2    50   BiDi ~ 0
+mod8
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY0107
+U 1 1 5DE1F03B
+P 4950 3400
+F 0 "#SUPPLY0107" H 4950 3400 50  0001 L BNN
+F 1 "3.3V" H 4950 3574 50  0000 C CNN
+F 2 "" H 4950 3400 50  0001 C CNN
+F 3 "" H 4950 3400 50  0001 C CNN
+	1    4950 3400
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC

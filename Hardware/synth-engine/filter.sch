@@ -354,13 +354,13 @@ L power:GND #PWR069
 U 1 1 5DD52599
 P 5000 5100
 F 0 "#PWR069" H 5000 4850 50  0001 C CNN
-F 1 "GND" V 5005 4972 50  0000 R CNN
+F 1 "GND" V 5100 5050 50  0000 R CNN
 F 2 "" H 5000 5100 50  0001 C CNN
 F 3 "" H 5000 5100 50  0001 C CNN
 	1    5000 5100
 	0    -1   -1   0   
 $EndComp
-Text Notes 4400 5600 0    50   ~ 0
+Text Notes 4200 5550 0    50   ~ 0
 FREQ OFFSET ADJUST\nnot sure if necessary.\nCheck CW/CCW direction
 $Comp
 L Device:R_POT RV16
@@ -368,7 +368,7 @@ U 1 1 5DD530B7
 P 4850 5100
 F 0 "RV16" V 4736 5100 50  0000 C CNN
 F 1 "50k" V 4645 5100 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 4850 5100 50  0001 C CNN
+F 2 "SparkFun-Electromechanical:TRIMPOT-3MM-2" H 4850 5100 50  0001 C CNN
 F 3 "~" H 4850 5100 50  0001 C CNN
 	1    4850 5100
 	0    -1   -1   0   
@@ -379,7 +379,7 @@ U 1 1 5DD5A48A
 P 4150 3800
 F 0 "RV15" V 4036 3800 50  0000 C CNN
 F 1 "50k" V 3945 3800 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 4150 3800 50  0001 C CNN
+F 2 "SparkFun-Electromechanical:TRIMPOT-3MM-2" H 4150 3800 50  0001 C CNN
 F 3 "~" H 4150 3800 50  0001 C CNN
 	1    4150 3800
 	0    -1   -1   0   
@@ -481,10 +481,6 @@ F 3 "~" H 5750 4900 50  0001 C CNN
 	1    5750 4900
 	1    0    0    -1  
 $EndComp
-Text Label 5100 4400 0    50   ~ 0
-Q_CTRL
-Wire Wire Line
-	5100 4400 5350 4400
 Text GLabel 5750 5150 3    50   Input ~ 0
 VREF
 Wire Wire Line
@@ -564,168 +560,6 @@ F 3 "" H 8950 4100 50  0001 C CNN
 	1    8950 4100
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:+15V #PWR060
-U 1 1 5DDC8B0C
-P 2000 3500
-F 0 "#PWR060" H 2000 3350 50  0001 C CNN
-F 1 "+15V" V 2015 3628 50  0000 L CNN
-F 2 "" H 2000 3500 50  0001 C CNN
-F 3 "" H 2000 3500 50  0001 C CNN
-	1    2000 3500
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR061
-U 1 1 5DDC8B12
-P 2000 4400
-F 0 "#PWR061" H 2000 4150 50  0001 C CNN
-F 1 "GND" V 2005 4272 50  0000 R CNN
-F 2 "" H 2000 4400 50  0001 C CNN
-F 3 "" H 2000 4400 50  0001 C CNN
-	1    2000 4400
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV13
-U 1 1 5DDC8B18
-P 2000 3950
-F 0 "RV13" V 1886 3950 50  0000 C CNN
-F 1 "20k" V 1795 3950 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 2000 3950 50  0001 C CNN
-F 3 "~" H 2000 3950 50  0001 C CNN
-	1    2000 3950
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2150 3950 2800 3950
-$Comp
-L Device:R R40
-U 1 1 5DDD4D4F
-P 2000 4250
-F 0 "R40" H 2070 4296 50  0000 L CNN
-F 1 "R" H 2070 4205 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 1930 4250 50  0001 C CNN
-F 3 "~" H 2000 4250 50  0001 C CNN
-	1    2000 4250
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:R R39
-U 1 1 5DDD7C21
-P 2000 3650
-F 0 "R39" H 2070 3696 50  0000 L CNN
-F 1 "R" H 2070 3605 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 1930 3650 50  0001 C CNN
-F 3 "~" H 2000 3650 50  0001 C CNN
-	1    2000 3650
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C40
-U 1 1 5DDDB3D4
-P 2150 4050
-F 0 "C40" H 2242 4096 50  0000 L CNN
-F 1 "C_Small" H 2242 4005 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 2150 4050 50  0001 C CNN
-F 3 "~" H 2150 4050 50  0001 C CNN
-	1    2150 4050
-	1    0    0    -1  
-$EndComp
-Connection ~ 2150 3950
-$Comp
-L power:GND #PWR064
-U 1 1 5DDDB4EF
-P 2150 4150
-F 0 "#PWR064" H 2150 3900 50  0001 C CNN
-F 1 "GND" H 2155 3977 50  0000 C CNN
-F 2 "" H 2150 4150 50  0001 C CNN
-F 3 "" H 2150 4150 50  0001 C CNN
-	1    2150 4150
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:+15V #PWR062
-U 1 1 5DDE1C9A
-P 2000 5200
-F 0 "#PWR062" H 2000 5050 50  0001 C CNN
-F 1 "+15V" V 2015 5328 50  0000 L CNN
-F 2 "" H 2000 5200 50  0001 C CNN
-F 3 "" H 2000 5200 50  0001 C CNN
-	1    2000 5200
-	1    0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR063
-U 1 1 5DDE1CA0
-P 2000 6100
-F 0 "#PWR063" H 2000 5850 50  0001 C CNN
-F 1 "GND" V 2005 5972 50  0000 R CNN
-F 2 "" H 2000 6100 50  0001 C CNN
-F 3 "" H 2000 6100 50  0001 C CNN
-	1    2000 6100
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:R_POT RV14
-U 1 1 5DDE1CA6
-P 2000 5650
-F 0 "RV14" V 1886 5650 50  0000 C CNN
-F 1 "20k" V 1795 5650 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 2000 5650 50  0001 C CNN
-F 3 "~" H 2000 5650 50  0001 C CNN
-	1    2000 5650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2150 5650 2500 5650
-$Comp
-L Device:R R42
-U 1 1 5DDE1CAD
-P 2000 5950
-F 0 "R42" H 2070 5996 50  0000 L CNN
-F 1 "R" H 2070 5905 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 1930 5950 50  0001 C CNN
-F 3 "~" H 2000 5950 50  0001 C CNN
-	1    2000 5950
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:R R41
-U 1 1 5DDE1CB3
-P 2000 5350
-F 0 "R41" H 2070 5396 50  0000 L CNN
-F 1 "R" H 2070 5305 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" V 1930 5350 50  0001 C CNN
-F 3 "~" H 2000 5350 50  0001 C CNN
-	1    2000 5350
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Device:C_Small C41
-U 1 1 5DDE1CB9
-P 2150 5750
-F 0 "C41" H 2242 5796 50  0000 L CNN
-F 1 "C_Small" H 2242 5705 50  0000 L CNN
-F 2 "SparkFun-Passives:0805" H 2150 5750 50  0001 C CNN
-F 3 "~" H 2150 5750 50  0001 C CNN
-	1    2150 5750
-	1    0    0    -1  
-$EndComp
-Connection ~ 2150 5650
-$Comp
-L power:GND #PWR065
-U 1 1 5DDE1CC0
-P 2150 5850
-F 0 "#PWR065" H 2150 5600 50  0001 C CNN
-F 1 "GND" H 2155 5677 50  0000 C CNN
-F 2 "" H 2150 5850 50  0001 C CNN
-F 3 "" H 2150 5850 50  0001 C CNN
-	1    2150 5850
-	1    0    0    -1  
-$EndComp
-Text Label 2500 5650 0    50   ~ 0
-Q_CTRL
 $Comp
 L Device:R R51
 U 1 1 5DE8132C
@@ -824,4 +658,14 @@ Text Notes 9300 4400 0    50   ~ 0
 MASTER VOL
 Text HLabel 2800 4200 0    50   Input ~ 0
 FREQ_CTRL
+Text HLabel 2800 3950 0    50   BiDi ~ 0
+filter_freq
+Text HLabel 5100 5850 0    50   BiDi ~ 0
+filter_resonance
+Wire Wire Line
+	5250 4400 5250 5850
+Wire Wire Line
+	5250 5850 5100 5850
+Wire Wire Line
+	5250 4400 5350 4400
 $EndSCHEMATC

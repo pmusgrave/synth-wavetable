@@ -1271,17 +1271,6 @@ global_lfo_rate
 Text Label 3750 6450 0    50   ~ 0
 global_lfo_depth
 $Comp
-L Connector_Generic:Conn_02x12_Odd_Even J1
-U 1 1 5DDCCD44
-P 3450 6350
-F 0 "J1" H 3500 7067 50  0000 C CNN
-F 1 "Conn_02x12_Odd_Even" H 3500 6976 50  0000 C CNN
-F 2 "SparkFun-Connectors:2X12" H 3450 6350 50  0001 C CNN
-F 3 "~" H 3450 6350 50  0001 C CNN
-	1    3450 6350
-	1    0    0    -1  
-$EndComp
-$Comp
 L SparkFun-Aesthetics:3.3V #SUPPLY?
 U 1 1 5DDCD082
 P 2800 5850
@@ -1311,38 +1300,6 @@ F 3 "" H 4200 5850 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	4200 5850 3750 5850
-$Comp
-L power:GND #PWR?
-U 1 1 5DDCD851
-P 4200 6550
-AR Path="/5DDBDEEA/5DDCD851" Ref="#PWR?"  Part="1" 
-AR Path="/5DDCB333/5DDCD851" Ref="#PWR?"  Part="1" 
-AR Path="/5DDCD851" Ref="#PWR0126"  Part="1" 
-F 0 "#PWR0126" H 4200 6300 50  0001 C CNN
-F 1 "GND" H 4205 6377 50  0000 C CNN
-F 2 "" H 4200 6550 50  0001 C CNN
-F 3 "" H 4200 6550 50  0001 C CNN
-	1    4200 6550
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	4200 6550 3750 6550
-$Comp
-L SparkFun-Aesthetics:3.3V #SUPPLY?
-U 1 1 5DDCD9C6
-P 2800 6550
-AR Path="/5DDBDEEA/5DDCD9C6" Ref="#SUPPLY?"  Part="1" 
-AR Path="/5DDCB333/5DDCD9C6" Ref="#SUPPLY?"  Part="1" 
-AR Path="/5DDCD9C6" Ref="#SUPPLY0114"  Part="1" 
-F 0 "#SUPPLY0114" H 2800 6550 50  0001 L BNN
-F 1 "3.3V" H 2800 6724 50  0000 C CNN
-F 2 "" H 2800 6550 50  0001 C CNN
-F 3 "" H 2800 6550 50  0001 C CNN
-	1    2800 6550
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2800 6550 3250 6550
 Wire Wire Line
 	2800 5850 3250 5850
 $Comp
@@ -1859,4 +1816,163 @@ Text Label 3750 6950 0    50   ~ 0
 mod8
 Text Notes 2300 4200 0    50   ~ 0
 Haven't decided what to do with these switches yet.\nNeed to rename once I settle on how the mod\nmatrix will work.
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDDDEAA
+P 5350 4550
+AR Path="/5DDBDEEA/5DDDDEAA" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDDDEAA" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDDDEAA" Ref="#SUPPLY0114"  Part="1" 
+F 0 "#SUPPLY0114" H 5350 4550 50  0001 L BNN
+F 1 "3.3V" H 5350 4724 50  0000 C CNN
+F 2 "" H 5350 4550 50  0001 C CNN
+F 3 "" H 5350 4550 50  0001 C CNN
+	1    5350 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDDEB0
+P 5350 4700
+AR Path="/5DDBDEEA/5DDDDEB0" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDDEB0" Ref="R?"  Part="1" 
+AR Path="/5DDDDEB0" Ref="R33"  Part="1" 
+F 0 "R33" H 5280 4746 50  0000 R CNN
+F 1 "0" H 5280 4655 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 5280 4700 50  0001 C CNN
+F 3 "~" H 5350 4700 50  0001 C CNN
+	1    5350 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDDDEB6
+P 5350 5000
+AR Path="/5DDBDEEA/5DDDDEB6" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDDDEB6" Ref="RV?"  Part="1" 
+AR Path="/5DDDDEB6" Ref="RV13"  Part="1" 
+F 0 "RV13" H 5280 5046 50  0000 R CNN
+F 1 "20kB" H 5280 4955 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 5350 5000 50  0001 C CNN
+F 3 "~" H 5350 5000 50  0001 C CNN
+	1    5350 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDDEBC
+P 5350 5300
+AR Path="/5DDBDEEA/5DDDDEBC" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDDEBC" Ref="R?"  Part="1" 
+AR Path="/5DDDDEBC" Ref="R34"  Part="1" 
+F 0 "R34" H 5420 5346 50  0000 L CNN
+F 1 "0" H 5420 5255 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 5280 5300 50  0001 C CNN
+F 3 "~" H 5350 5300 50  0001 C CNN
+	1    5350 5300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDDDEC2
+P 5350 5450
+AR Path="/5DDBDEEA/5DDDDEC2" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDDDEC2" Ref="#PWR?"  Part="1" 
+AR Path="/5DDDDEC2" Ref="#PWR0126"  Part="1" 
+F 0 "#PWR0126" H 5350 5200 50  0001 C CNN
+F 1 "GND" H 5355 5277 50  0000 C CNN
+F 2 "" H 5350 5450 50  0001 C CNN
+F 3 "" H 5350 5450 50  0001 C CNN
+	1    5350 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Aesthetics:3.3V #SUPPLY?
+U 1 1 5DDDE35B
+P 6200 4550
+AR Path="/5DDBDEEA/5DDDE35B" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDCB333/5DDDE35B" Ref="#SUPPLY?"  Part="1" 
+AR Path="/5DDDE35B" Ref="#SUPPLY0123"  Part="1" 
+F 0 "#SUPPLY0123" H 6200 4550 50  0001 L BNN
+F 1 "3.3V" H 6200 4724 50  0000 C CNN
+F 2 "" H 6200 4550 50  0001 C CNN
+F 3 "" H 6200 4550 50  0001 C CNN
+	1    6200 4550
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDE361
+P 6200 4700
+AR Path="/5DDBDEEA/5DDDE361" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDE361" Ref="R?"  Part="1" 
+AR Path="/5DDDE361" Ref="R35"  Part="1" 
+F 0 "R35" H 6130 4746 50  0000 R CNN
+F 1 "0" H 6130 4655 50  0000 R CNN
+F 2 "SparkFun-Passives:0805" V 6130 4700 50  0001 C CNN
+F 3 "~" H 6200 4700 50  0001 C CNN
+	1    6200 4700
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R_POT RV?
+U 1 1 5DDDE367
+P 6200 5000
+AR Path="/5DDBDEEA/5DDDE367" Ref="RV?"  Part="1" 
+AR Path="/5DDCB333/5DDDE367" Ref="RV?"  Part="1" 
+AR Path="/5DDDE367" Ref="RV14"  Part="1" 
+F 0 "RV14" H 6130 5046 50  0000 R CNN
+F 1 "20kB" H 6130 4955 50  0000 R CNN
+F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 6200 5000 50  0001 C CNN
+F 3 "~" H 6200 5000 50  0001 C CNN
+	1    6200 5000
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 5DDDE36D
+P 6200 5300
+AR Path="/5DDBDEEA/5DDDE36D" Ref="R?"  Part="1" 
+AR Path="/5DDCB333/5DDDE36D" Ref="R?"  Part="1" 
+AR Path="/5DDDE36D" Ref="R36"  Part="1" 
+F 0 "R36" H 6270 5346 50  0000 L CNN
+F 1 "0" H 6270 5255 50  0000 L CNN
+F 2 "SparkFun-Passives:0805" V 6130 5300 50  0001 C CNN
+F 3 "~" H 6200 5300 50  0001 C CNN
+	1    6200 5300
+	-1   0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5DDDE373
+P 6200 5450
+AR Path="/5DDBDEEA/5DDDE373" Ref="#PWR?"  Part="1" 
+AR Path="/5DDCB333/5DDDE373" Ref="#PWR?"  Part="1" 
+AR Path="/5DDDE373" Ref="#PWR0135"  Part="1" 
+F 0 "#PWR0135" H 6200 5200 50  0001 C CNN
+F 1 "GND" H 6205 5277 50  0000 C CNN
+F 2 "" H 6200 5450 50  0001 C CNN
+F 3 "" H 6200 5450 50  0001 C CNN
+	1    6200 5450
+	1    0    0    -1  
+$EndComp
+Text Label 5500 5000 0    50   ~ 0
+filter_freq
+Text Label 6350 5000 0    50   ~ 0
+filter_resonance
+$Comp
+L Connector_Generic:Conn_02x12_Odd_Even J1
+U 1 1 5DDCCD44
+P 3450 6350
+F 0 "J1" H 3500 7067 50  0000 C CNN
+F 1 "Conn_02x12_Odd_Even" H 3500 6976 50  0000 C CNN
+F 2 "SparkFun-Connectors:2X12" H 3450 6350 50  0001 C CNN
+F 3 "~" H 3450 6350 50  0001 C CNN
+	1    3450 6350
+	1    0    0    -1  
+$EndComp
+Text Label 3250 6550 2    50   ~ 0
+filter_freq
+Text Label 3750 6550 0    50   ~ 0
+filter_resonance
 $EndSCHEMATC
