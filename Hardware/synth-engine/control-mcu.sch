@@ -761,17 +761,6 @@ F 3 "" H 1050 7000 50  0001 C CNN
 	1    1050 7000
 	1    0    0    -1  
 $EndComp
-$Comp
-L SparkFun-Connectors:USB-B-S J2
-U 1 1 5DDF016B
-P 1050 2450
-F 0 "J2" H 1094 2965 50  0000 C CNN
-F 1 "USB-B-S" H 1094 2874 50  0000 C CNN
-F 2 "SparkFun-Connectors:USB-B-PTH" H 1080 2600 20  0001 C CNN
-F 3 "" H 1050 2450 60  0000 C CNN
-	1    1050 2450
-	-1   0    0    -1  
-$EndComp
 Wire Wire Line
 	1150 2450 1450 2450
 Wire Wire Line
@@ -789,7 +778,7 @@ Wire Wire Line
 Wire Wire Line
 	1350 2350 1350 2150
 Wire Wire Line
-	1350 2150 1600 2150
+	1350 2150 1550 2150
 Text HLabel 6650 3450 2    50   Input ~ 0
 osc1_tune
 Text HLabel 6650 3550 2    50   Input ~ 0
@@ -862,4 +851,31 @@ Text HLabel 4100 5000 2    50   BiDi ~ 0
 mod7
 Text HLabel 4100 4900 2    50   BiDi ~ 0
 mod8
+$Comp
+L power:VBUS #PWR0121
+U 1 1 5DE5C7FD
+P 1550 2100
+F 0 "#PWR0121" H 1550 1950 50  0001 C CNN
+F 1 "VBUS" H 1565 2273 50  0000 C CNN
+F 2 "" H 1550 2100 50  0001 C CNN
+F 3 "" H 1550 2100 50  0001 C CNN
+	1    1550 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1550 2100 1550 2150
+Connection ~ 1550 2150
+Wire Wire Line
+	1550 2150 1600 2150
+$Comp
+L Connector_Generic:Conn_01x04 J2
+U 1 1 5DE792F8
+P 950 2250
+F 0 "J2" H 870 2567 50  0000 C CNN
+F 1 "Conn_01x04" H 870 2476 50  0000 C CNN
+F 2 "SparkFun-Connectors:1X04" H 950 2250 50  0001 C CNN
+F 3 "~" H 950 2250 50  0001 C CNN
+	1    950  2250
+	-1   0    0    -1  
+$EndComp
 $EndSCHEMATC

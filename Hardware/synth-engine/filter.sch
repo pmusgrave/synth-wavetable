@@ -593,44 +593,6 @@ Wire Wire Line
 Connection ~ 5150 2650
 Wire Wire Line
 	5150 2650 5350 2650
-$Comp
-L SparkFun-Connectors:AUDIO-JACK4-.25-HORIZ-TRS J6
-U 1 1 5DE9AC5B
-P 10100 4000
-F 0 "J6" H 9822 4096 50  0000 R CNN
-F 1 "AUDIO-JACK4-.25-HORIZ-TRS" H 10450 3700 50  0000 R CNN
-F 2 "SparkFun-Connectors:AUDIO-JACK-.25-INCH-HORIZ-PTH" H 10130 4150 20  0001 C CNN
-F 3 "" H 10100 4000 60  0000 C CNN
-	1    10100 4000
-	-1   0    0    -1  
-$EndComp
-$Comp
-L power:GND #PWR076
-U 1 1 5DE9C6F0
-P 9900 3700
-F 0 "#PWR076" H 9900 3450 50  0001 C CNN
-F 1 "GND" H 9905 3527 50  0000 C CNN
-F 2 "" H 9900 3700 50  0001 C CNN
-F 3 "" H 9900 3700 50  0001 C CNN
-	1    9900 3700
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	9900 3800 9900 3700
-Connection ~ 9900 3700
-$Comp
-L Device:R_POT RV17
-U 1 1 5DEA599F
-P 9500 3900
-F 0 "RV17" V 9386 3900 50  0000 C CNN
-F 1 "50k" V 9295 3900 50  0000 C CNN
-F 2 "Potentiometer_THT:Potentiometer_Alps_RK09K_Single_Vertical" H 9500 3900 50  0001 C CNN
-F 3 "~" H 9500 3900 50  0001 C CNN
-	1    9500 3900
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	9500 3750 9500 3700
 Wire Wire Line
 	9500 3700 8950 3700
 Connection ~ 8950 3700
@@ -645,16 +607,7 @@ F 3 "" H 9500 4050 50  0001 C CNN
 	1    9500 4050
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	9900 3900 9750 3900
-Wire Wire Line
-	9750 3900 9750 4100
-Wire Wire Line
-	9750 4100 9900 4100
-Connection ~ 9750 3900
-Wire Wire Line
-	9750 3900 9650 3900
-Text Notes 9300 4400 0    50   ~ 0
+Text Notes 9200 4350 0    50   ~ 0
 MASTER VOL
 Text HLabel 2800 4200 0    50   Input ~ 0
 FREQ_CTRL
@@ -668,4 +621,69 @@ Wire Wire Line
 	5250 5850 5100 5850
 Wire Wire Line
 	5250 4400 5350 4400
+$Comp
+L Connector_Generic:Conn_01x06 J9
+U 1 1 5DE609DC
+P 10300 3950
+F 0 "J9" H 10380 3942 50  0000 L CNN
+F 1 "Conn_01x06" H 10380 3851 50  0000 L CNN
+F 2 "SparkFun-Connectors:1X06" H 10300 3950 50  0001 C CNN
+F 3 "~" H 10300 3950 50  0001 C CNN
+	1    10300 3950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0123
+U 1 1 5DE61520
+P 10050 4300
+F 0 "#PWR0123" H 10050 4050 50  0001 C CNN
+F 1 "GND" H 10055 4127 50  0000 C CNN
+F 2 "" H 10050 4300 50  0001 C CNN
+F 3 "" H 10050 4300 50  0001 C CNN
+	1    10050 4300
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	10050 4300 10050 4250
+Wire Wire Line
+	10050 4250 10100 4250
+Wire Wire Line
+	10100 4150 10050 4150
+Wire Wire Line
+	10050 4150 10050 4250
+Connection ~ 10050 4250
+Wire Wire Line
+	9800 3950 9800 3750
+Wire Wire Line
+	9800 3750 10100 3750
+Wire Wire Line
+	9800 3950 10100 3950
+Connection ~ 9800 3950
+Wire Wire Line
+	10100 3850 10050 3850
+Wire Wire Line
+	10050 3850 10050 4050
+Connection ~ 10050 4150
+Wire Wire Line
+	10100 4050 10050 4050
+Connection ~ 10050 4050
+Wire Wire Line
+	10050 4050 10050 4150
+$Comp
+L Connector_Generic:Conn_01x03 J6
+U 1 1 5DE6BE76
+P 9300 3950
+F 0 "J6" H 9220 4267 50  0000 C CNN
+F 1 "Conn_01x03" H 9220 4176 50  0000 C CNN
+F 2 "SparkFun-Connectors:1X03" H 9300 3950 50  0001 C CNN
+F 3 "~" H 9300 3950 50  0001 C CNN
+	1    9300 3950
+	-1   0    0    -1  
+$EndComp
+Wire Wire Line
+	9500 3700 9500 3850
+Wire Wire Line
+	9500 3950 9800 3950
+Text Notes 10150 4400 0    50   ~ 0
+AUDIO OUT TRS
 $EndSCHEMATC
