@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc8pF6Ix.s 			page 1
+ARM GAS  /tmp/ccm0fFP5.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
   30:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****             (+++) Declare a DMA handle structure for the Tx/Rx Stream/Channel.
   31:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****             (+++) Enable the DMAx interface clock.
   32:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****             (+++) Configure the declared DMA handle structure with the required Tx/Rx parameters.
-ARM GAS  /tmp/cc8pF6Ix.s 			page 2
+ARM GAS  /tmp/ccm0fFP5.s 			page 2
 
 
   33:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****             (+++) Configure the DMA Tx/Rx Stream/Channel.
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
   87:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****          add his own code by customization of function pointer HAL_I2S_ErrorCallback
   88:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****      (+) Pause the DMA Transfer using HAL_I2S_DMAPause()
   89:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****      (+) Resume the DMA Transfer using HAL_I2S_DMAResume()
-ARM GAS  /tmp/cc8pF6Ix.s 			page 3
+ARM GAS  /tmp/ccm0fFP5.s 			page 3
 
 
   90:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****      (+) Stop the DMA Transfer using HAL_I2S_DMAStop()
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  144:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****        examples HAL_I2S_MasterTxCpltCallback(), HAL_I2S_MasterRxCpltCallback().
  145:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****        Exception done for MspInit and MspDeInit functions that are
  146:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****        reset to the legacy weak functions in the HAL_I2S_Init()/ HAL_I2S_DeInit() only when
-ARM GAS  /tmp/cc8pF6Ix.s 			page 4
+ARM GAS  /tmp/ccm0fFP5.s 			page 4
 
 
  147:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****        these callbacks are null (not registered beforehand).
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  201:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** static void               I2S_DMATxHalfCplt(DMA_HandleTypeDef *hdma);
  202:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** static void               I2S_DMARxCplt(DMA_HandleTypeDef *hdma);
  203:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** static void               I2S_DMARxHalfCplt(DMA_HandleTypeDef *hdma);
-ARM GAS  /tmp/cc8pF6Ix.s 			page 5
+ARM GAS  /tmp/ccm0fFP5.s 			page 5
 
 
  204:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** static void               I2S_DMAError(DMA_HandleTypeDef *hdma);
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  258:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t i2sdiv;
  259:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t i2sodd;
  260:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t packetlength;
-ARM GAS  /tmp/cc8pF6Ix.s 			page 6
+ARM GAS  /tmp/ccm0fFP5.s 			page 6
 
 
  261:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t tmp;
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  315:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */
  316:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
  317:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 7
+ARM GAS  /tmp/ccm0fFP5.s 			page 7
 
 
  318:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   hi2s->State = HAL_I2S_STATE_BUSY;
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  372:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       else
  373:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       {
  374:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****         tmp = (uint32_t)(((((i2sclk / (packetlength * 8U)) * 10U) / hi2s->Init.AudioFreq)) + 5U);
-ARM GAS  /tmp/cc8pF6Ix.s 			page 8
+ARM GAS  /tmp/ccm0fFP5.s 			page 8
 
 
  375:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       }
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  429:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     SET_BIT(hi2s->Instance->I2SCFGR, SPI_I2SCFGR_ASTRTEN);
  430:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
  431:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #endif
-ARM GAS  /tmp/cc8pF6Ix.s 			page 9
+ARM GAS  /tmp/ccm0fFP5.s 			page 9
 
 
  432:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  486:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* Check the I2S handle allocation */
  487:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   if (hi2s == NULL)
  488:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
-ARM GAS  /tmp/cc8pF6Ix.s 			page 10
+ARM GAS  /tmp/ccm0fFP5.s 			page 10
 
 
  489:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     return HAL_ERROR;
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  543:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   */
  544:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** __weak void HAL_I2S_MspDeInit(I2S_HandleTypeDef *hi2s)
  545:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** {
-ARM GAS  /tmp/cc8pF6Ix.s 			page 11
+ARM GAS  /tmp/ccm0fFP5.s 			page 11
 
 
  546:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* Prevent unused argument(s) compilation warning */
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  600:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       case HAL_I2S_RX_HALF_COMPLETE_CB_ID :
  601:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****         hi2s->RxHalfCpltCallback = pCallback;
  602:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****         break;
-ARM GAS  /tmp/cc8pF6Ix.s 			page 12
+ARM GAS  /tmp/ccm0fFP5.s 			page 12
 
 
  603:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  657:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     /* Return error status */
  658:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     status =  HAL_ERROR;
  659:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
-ARM GAS  /tmp/cc8pF6Ix.s 			page 13
+ARM GAS  /tmp/ccm0fFP5.s 			page 13
 
 
  660:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  714:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****         hi2s->ErrorCallback = HAL_I2S_ErrorCallback;                  /* Legacy weak ErrorCallback 
  715:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****         break;
  716:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 14
+ARM GAS  /tmp/ccm0fFP5.s 			page 14
 
 
  717:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       case HAL_I2S_MSPINIT_CB_ID :
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  771:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   */
  772:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  773:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** /** @defgroup I2S_Exported_Functions_Group2 IO operation functions
-ARM GAS  /tmp/cc8pF6Ix.s 			page 15
+ARM GAS  /tmp/ccm0fFP5.s 			page 15
 
 
  774:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *  @brief Data transfers functions
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  828:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @retval HAL status
  829:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   */
  830:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** HAL_StatusTypeDef HAL_I2S_Transmit(I2S_HandleTypeDef *hi2s, uint16_t *pData, uint16_t Size, uint32_
-ARM GAS  /tmp/cc8pF6Ix.s 			page 16
+ARM GAS  /tmp/ccm0fFP5.s 			page 16
 
 
  831:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** {
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  885:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   while (hi2s->TxXferCount > 0U)
  886:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
  887:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     hi2s->Instance->DR = (*hi2s->pTxBuffPtr);
-ARM GAS  /tmp/cc8pF6Ix.s 			page 17
+ARM GAS  /tmp/ccm0fFP5.s 			page 17
 
 
  888:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     hi2s->pTxBuffPtr++;
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  942:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @note   The I2S is kept enabled at the end of transaction to avoid the clock de-synchronization
  943:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *         between Master and Slave(example: audio streaming).
  944:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @note   In I2S Master Receiver mode, just after enabling the peripheral the clock will be gener
-ARM GAS  /tmp/cc8pF6Ix.s 			page 18
+ARM GAS  /tmp/ccm0fFP5.s 			page 18
 
 
  945:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *         in continuous way and as the I2S is not disabled at the end of the I2S transaction.
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  999:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* Receive data */
 1000:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   while (hi2s->RxXferCount > 0U)
 1001:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
-ARM GAS  /tmp/cc8pF6Ix.s 			page 19
+ARM GAS  /tmp/ccm0fFP5.s 			page 19
 
 
 1002:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     /* Wait until RXNE flag is set */
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1056:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   __HAL_LOCK(hi2s);
 1057:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
 1058:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   if (hi2s->State != HAL_I2S_STATE_READY)
-ARM GAS  /tmp/cc8pF6Ix.s 			page 20
+ARM GAS  /tmp/ccm0fFP5.s 			page 20
 
 
 1059:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1113:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** {
 1114:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t tmpreg_cfgr;
 1115:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 21
+ARM GAS  /tmp/ccm0fFP5.s 			page 21
 
 
 1116:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   if ((pData == NULL) || (Size == 0U))
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1170:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *         in the transaction and when a 24-bit data frame or a 32-bit data frame is selected
 1171:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *         the Size parameter means the number of 16-bit data length.
 1172:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @note   The I2S is kept enabled at the end of transaction to avoid the clock de-synchronization
-ARM GAS  /tmp/cc8pF6Ix.s 			page 22
+ARM GAS  /tmp/ccm0fFP5.s 			page 22
 
 
 1173:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *         between Master and Slave(example: audio streaming).
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1227:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
 1228:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     __HAL_UNLOCK(hi2s);
 1229:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     return HAL_ERROR;
-ARM GAS  /tmp/cc8pF6Ix.s 			page 23
+ARM GAS  /tmp/ccm0fFP5.s 			page 23
 
 
 1230:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1284:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   hi2s->ErrorCode = HAL_I2S_ERROR_NONE;
 1285:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   hi2s->pRxBuffPtr = pData;
 1286:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 24
+ARM GAS  /tmp/ccm0fFP5.s 			page 24
 
 
 1287:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   tmpreg_cfgr = hi2s->Instance->I2SCFGR & (SPI_I2SCFGR_DATLEN | SPI_I2SCFGR_CHLEN);
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1341:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
 1342:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   __HAL_UNLOCK(hi2s);
 1343:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   return HAL_OK;
-ARM GAS  /tmp/cc8pF6Ix.s 			page 25
+ARM GAS  /tmp/ccm0fFP5.s 			page 25
 
 
 1344:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** }
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1398:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
 1399:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     /* Enable the I2S DMA Tx request */
 1400:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     SET_BIT(hi2s->Instance->CR2, SPI_CR2_TXDMAEN);
-ARM GAS  /tmp/cc8pF6Ix.s 			page 26
+ARM GAS  /tmp/ccm0fFP5.s 			page 26
 
 
 1401:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1455:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* Disable the I2S Tx/Rx DMA requests */
 1456:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   CLEAR_BIT(hi2s->Instance->CR2, SPI_CR2_TXDMAEN);
 1457:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   CLEAR_BIT(hi2s->Instance->CR2, SPI_CR2_RXDMAEN);
-ARM GAS  /tmp/cc8pF6Ix.s 			page 27
+ARM GAS  /tmp/ccm0fFP5.s 			page 27
 
 
 1458:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1512:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
 1513:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** /**
 1514:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @brief  Tx Transfer Half completed callbacks
-ARM GAS  /tmp/cc8pF6Ix.s 			page 28
+ARM GAS  /tmp/ccm0fFP5.s 			page 28
 
 
 1515:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @param  hi2s pointer to a I2S_HandleTypeDef structure that contains
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1569:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* Prevent unused argument(s) compilation warning */
 1570:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   UNUSED(hi2s);
 1571:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 29
+ARM GAS  /tmp/ccm0fFP5.s 			page 29
 
 
 1572:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* NOTE : This function Should not be modified, when the callback is needed,
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1626:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   *         the configuration information for I2S module
 1627:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   * @retval I2S Error Code
 1628:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   */
-ARM GAS  /tmp/cc8pF6Ix.s 			page 30
+ARM GAS  /tmp/ccm0fFP5.s 			page 30
 
 
 1629:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** uint32_t HAL_I2S_GetError(I2S_HandleTypeDef *hi2s)
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1683:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   hi2s->TxHalfCpltCallback(hi2s);
 1684:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #else
 1685:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   HAL_I2S_TxHalfCpltCallback(hi2s);
-ARM GAS  /tmp/cc8pF6Ix.s 			page 31
+ARM GAS  /tmp/ccm0fFP5.s 			page 31
 
 
 1686:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1740:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** {
 1741:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation
 1742:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 32
+ARM GAS  /tmp/ccm0fFP5.s 			page 32
 
 
 1743:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   /* Disable Rx and Tx DMA Request */
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1797:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   (*hi2s->pRxBuffPtr) = (uint16_t)hi2s->Instance->DR;
 1798:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   hi2s->pRxBuffPtr++;
 1799:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   hi2s->RxXferCount--;
-ARM GAS  /tmp/cc8pF6Ix.s 			page 33
+ARM GAS  /tmp/ccm0fFP5.s 			page 33
 
 
 1800:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1854:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */
 1855:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     }
 1856:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
-ARM GAS  /tmp/cc8pF6Ix.s 			page 34
+ARM GAS  /tmp/ccm0fFP5.s 			page 34
 
 
 1857:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
   37              		.cfi_offset 6, -16
   38              		.cfi_offset 7, -12
   39              		.cfi_offset 8, -8
-ARM GAS  /tmp/cc8pF6Ix.s 			page 35
+ARM GAS  /tmp/ccm0fFP5.s 			page 35
 
 
   40              		.cfi_offset 14, -4
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
   77 0040 0023     		movs	r3, #0
   78 0042 85F84030 		strb	r3, [r5, #64]
 1918:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 36
+ARM GAS  /tmp/ccm0fFP5.s 			page 36
 
 
 1919:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****         return HAL_TIMEOUT;
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  128 0002 00F0BF80 		beq	.L25
  257:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t i2sdiv;
  129              		.loc 1 257 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 37
+ARM GAS  /tmp/ccm0fFP5.s 			page 37
 
 
  130 0006 70B5     		push	{r4, r5, r6, lr}
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  175              	.L15:
  361:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #endif
  176              		.loc 1 361 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 38
+ARM GAS  /tmp/ccm0fFP5.s 			page 38
 
 
  177 0040 0120     		movs	r0, #1
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  223 0080 0B62     		str	r3, [r1, #32]
  417:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****                                        SPI_I2SCFGR_CKPOL | SPI_I2SCFGR_I2SSTD | \
  224              		.loc 1 417 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 39
+ARM GAS  /tmp/ccm0fFP5.s 			page 39
 
 
  225 0082 2168     		ldr	r1, [r4]
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  270 00c8 E368     		ldr	r3, [r4, #12]
  271 00ca 53B1     		cbz	r3, .L17
  370:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       }
-ARM GAS  /tmp/cc8pF6Ix.s 			page 40
+ARM GAS  /tmp/ccm0fFP5.s 			page 40
 
 
  272              		.loc 1 370 0
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  320 010e 214B     		ldr	r3, .L44+12
  321 0110 9A42     		cmp	r2, r3
  322 0112 2BD0     		beq	.L41
-ARM GAS  /tmp/cc8pF6Ix.s 			page 41
+ARM GAS  /tmp/ccm0fFP5.s 			page 41
 
 
  323 0114 4FF04022 		mov	r2, #1073758208
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  465:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  366              		.loc 1 465 0
  367 0156 238B     		ldrh	r3, [r4, #24]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 42
+ARM GAS  /tmp/ccm0fFP5.s 			page 42
 
 
  464:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****                                     (uint16_t)hi2s->Init.CPOL))));
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  413              	.LVL41:
  414 0186 7047     		bx	lr
  415              	.L45:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 43
+ARM GAS  /tmp/ccm0fFP5.s 			page 43
 
 
  416              		.align	2
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  495:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  470              		.loc 1 495 0
  471 0006 0223     		movs	r3, #2
-ARM GAS  /tmp/cc8pF6Ix.s 			page 44
+ARM GAS  /tmp/ccm0fFP5.s 			page 44
 
 
  472 0008 80F84130 		strb	r3, [r0, #65]
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  520              		.cfi_def_cfa_offset 20
  521              		.cfi_offset 4, -20
  522              		.cfi_offset 5, -16
-ARM GAS  /tmp/cc8pF6Ix.s 			page 45
+ARM GAS  /tmp/ccm0fFP5.s 			page 45
 
 
  523              		.cfi_offset 6, -12
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  853:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  567              		.loc 1 853 0
  568 0044 0168     		ldr	r1, [r0]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 46
+ARM GAS  /tmp/ccm0fFP5.s 			page 46
 
 
  569 0046 C969     		ldr	r1, [r1, #28]
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  887:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     hi2s->pTxBuffPtr++;
  614              		.loc 1 887 0
  615 0086 2368     		ldr	r3, [r4]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 47
+ARM GAS  /tmp/ccm0fFP5.s 			page 47
 
 
  616 0088 626A     		ldr	r2, [r4, #36]
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  662              		.loc 1 858 0
  663 00d0 4285     		strh	r2, [r0, #42]	@ movhi
  664 00d2 C1E7     		b	.L59
-ARM GAS  /tmp/cc8pF6Ix.s 			page 48
+ARM GAS  /tmp/ccm0fFP5.s 			page 48
 
 
  665              	.LVL59:
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  928:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** }
  707              		.loc 1 928 0
  708 0118 15E0     		b	.L55
-ARM GAS  /tmp/cc8pF6Ix.s 			page 49
+ARM GAS  /tmp/ccm0fFP5.s 			page 49
 
 
  709              	.L65:
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  755              		.cfi_endproc
  756              	.LFE134:
  758              		.section	.text.HAL_I2S_Receive,"ax",%progbits
-ARM GAS  /tmp/cc8pF6Ix.s 			page 50
+ARM GAS  /tmp/ccm0fFP5.s 			page 50
 
 
  759              		.align	1
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  806              	.LVL67:
  807 002c 80F84030 		strb	r3, [r0, #64]
  963:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
-ARM GAS  /tmp/cc8pF6Ix.s 			page 51
+ARM GAS  /tmp/ccm0fFP5.s 			page 51
 
 
  808              		.loc 1 963 0
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  852              	.LVL73:
  992:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
  853              		.loc 1 992 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 52
+ARM GAS  /tmp/ccm0fFP5.s 			page 52
 
 
  854 006a 0268     		ldr	r2, [r0]
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  901 00b8 0192     		str	r2, [sp, #4]
  902 00ba 9B68     		ldr	r3, [r3, #8]
  903 00bc 0193     		str	r3, [sp, #4]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 53
+ARM GAS  /tmp/ccm0fFP5.s 			page 53
 
 
  904 00be 019B     		ldr	r3, [sp, #4]
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  949              		.loc 1 1027 0
  950 00fa 0123     		movs	r3, #1
  951 00fc 84F84130 		strb	r3, [r4, #65]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 54
+ARM GAS  /tmp/ccm0fFP5.s 			page 54
 
 
 1028:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   return HAL_OK;
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1002              		.fpu fpv4-sp-d16
  1004              	HAL_I2S_Transmit_IT:
  1005              	.LFB136:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 55
+ARM GAS  /tmp/ccm0fFP5.s 			page 55
 
 
 1047:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t tmpreg_cfgr;
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1049 0034 0023     		movs	r3, #0
  1050 0036 4364     		str	r3, [r0, #68]
 1067:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
-ARM GAS  /tmp/cc8pF6Ix.s 			page 56
+ARM GAS  /tmp/ccm0fFP5.s 			page 56
 
 
  1051              		.loc 1 1067 0
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1073:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     hi2s->TxXferCount = (Size << 1U);
  1095              		.loc 1 1073 0
  1096 0074 5200     		lsls	r2, r2, #1
-ARM GAS  /tmp/cc8pF6Ix.s 			page 57
+ARM GAS  /tmp/ccm0fFP5.s 			page 57
 
 
  1097              	.LVL95:
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1148              		.loc 1 1113 0
  1149              		.cfi_startproc
  1150              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 58
+ARM GAS  /tmp/ccm0fFP5.s 			page 58
 
 
  1151              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1194 0038 C162     		str	r1, [r0, #44]
 1135:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  1195              		.loc 1 1135 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 59
+ARM GAS  /tmp/ccm0fFP5.s 			page 59
 
 
  1196 003a 0368     		ldr	r3, [r0]
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1240 0076 92B2     		uxth	r2, r2
  1241 0078 0286     		strh	r2, [r0, #48]	@ movhi
 1140:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
-ARM GAS  /tmp/cc8pF6Ix.s 			page 60
+ARM GAS  /tmp/ccm0fFP5.s 			page 60
 
 
  1242              		.loc 1 1140 0
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1294              	.LVL117:
 1180:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
  1295              		.loc 1 1180 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 61
+ARM GAS  /tmp/ccm0fFP5.s 			page 61
 
 
  1296 0000 0029     		cmp	r1, #0
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1339              	.LVL118:
 1201:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
  1340              		.loc 1 1201 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 62
+ARM GAS  /tmp/ccm0fFP5.s 			page 62
 
 
  1341 0042 032B     		cmp	r3, #3
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1386 0082 41F48061 		orr	r1, r1, #1024
  1387 0086 D161     		str	r1, [r2, #28]
  1388              	.L131:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 63
+ARM GAS  /tmp/ccm0fFP5.s 			page 63
 
 
 1240:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1433              		.cfi_restore 14
 1182:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
  1434              		.loc 1 1182 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 64
+ARM GAS  /tmp/ccm0fFP5.s 			page 64
 
 
  1435 00c2 0123     		movs	r3, #1
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1265:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   uint32_t tmpreg_cfgr;
  1485              		.loc 1 1265 0 discriminator 1
  1486 0004 10B5     		push	{r4, lr}
-ARM GAS  /tmp/cc8pF6Ix.s 			page 65
+ARM GAS  /tmp/ccm0fFP5.s 			page 65
 
 
  1487              	.LCFI28:
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1530              		.loc 1 1289 0
  1531 0044 032B     		cmp	r3, #3
  1532 0046 33D0     		beq	.L146
-ARM GAS  /tmp/cc8pF6Ix.s 			page 66
+ARM GAS  /tmp/ccm0fFP5.s 			page 66
 
 
 1289:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1578 0088 11F4806F 		tst	r1, #1024
  1579 008c 03D1     		bne	.L151
 1332:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   }
-ARM GAS  /tmp/cc8pF6Ix.s 			page 67
+ARM GAS  /tmp/ccm0fFP5.s 			page 67
 
 
  1580              		.loc 1 1332 0
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1626 00ca 636C     		ldr	r3, [r4, #68]
  1627 00cc 43F00803 		orr	r3, r3, #8
  1628 00d0 6364     		str	r3, [r4, #68]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 68
+ARM GAS  /tmp/ccm0fFP5.s 			page 68
 
 
 1322:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1675 00f2 00BF     		.align	2
  1676              	.L162:
  1677 00f4 00000000 		.word	I2S_DMARxHalfCplt
-ARM GAS  /tmp/cc8pF6Ix.s 			page 69
+ARM GAS  /tmp/ccm0fFP5.s 			page 69
 
 
  1678 00f8 00000000 		.word	I2S_DMARxCplt
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1726              		.loc 1 1383 0
  1727 0034 1846     		mov	r0, r3
  1728              	.LVL149:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 70
+ARM GAS  /tmp/ccm0fFP5.s 			page 70
 
 
  1729 0036 7047     		bx	lr
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1775              	.L176:
  1776 0078 00380040 		.word	1073756160
  1777 007c 00340040 		.word	1073755136
-ARM GAS  /tmp/cc8pF6Ix.s 			page 71
+ARM GAS  /tmp/ccm0fFP5.s 			page 71
 
 
  1778              		.cfi_endproc
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1826              		.loc 1 1431 0
  1827 0038 DA69     		ldr	r2, [r3, #28]
  1828 003a 42F48062 		orr	r2, r2, #1024
-ARM GAS  /tmp/cc8pF6Ix.s 			page 72
+ARM GAS  /tmp/ccm0fFP5.s 			page 72
 
 
  1829 003e DA61     		str	r2, [r3, #28]
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1415:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****     {
  1875              		.loc 1 1415 0 is_stmt 0
  1876 0088 4FF04023 		mov	r3, #1073758208
-ARM GAS  /tmp/cc8pF6Ix.s 			page 73
+ARM GAS  /tmp/ccm0fFP5.s 			page 73
 
 
  1877              	.L184:
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1926              		.cfi_def_cfa_offset 16
  1927              		.cfi_offset 3, -16
  1928              		.cfi_offset 4, -12
-ARM GAS  /tmp/cc8pF6Ix.s 			page 74
+ARM GAS  /tmp/ccm0fFP5.s 			page 74
 
 
  1929              		.cfi_offset 5, -8
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  1973              		.loc 1 1477 0
  1974 0040 0125     		movs	r5, #1
  1975              	.LVL164:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 75
+ARM GAS  /tmp/ccm0fFP5.s 			page 75
 
 
  1976              	.L198:
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2020              		.loc 1 1486 0 discriminator 4
  2021 0084 5368     		ldr	r3, [r2, #4]
  2022 0086 23F00103 		bic	r3, r3, #1
-ARM GAS  /tmp/cc8pF6Ix.s 			page 76
+ARM GAS  /tmp/ccm0fFP5.s 			page 76
 
 
  2023 008a 5360     		str	r3, [r2, #4]
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2072 0000 08B5     		push	{r3, lr}
  2073              	.LCFI35:
  2074              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/cc8pF6Ix.s 			page 77
+ARM GAS  /tmp/ccm0fFP5.s 			page 77
 
 
  2075              		.cfi_offset 3, -8
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2128              	.LVL172:
  2129 0004 FFF7FEFF 		bl	HAL_I2S_TxHalfCpltCallback
  2130              	.LVL173:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 78
+ARM GAS  /tmp/ccm0fFP5.s 			page 78
 
 
  2131 0008 08BD     		pop	{r3, pc}
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1771:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  2184              		.loc 1 1771 0
  2185 0010 438D     		ldrh	r3, [r0, #42]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 79
+ARM GAS  /tmp/ccm0fFP5.s 			page 79
 
 
  2186 0012 9BB2     		uxth	r3, r3
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2235 0002 836B     		ldr	r3, [r0, #56]
  2236              	.LVL180:
 1655:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   {
-ARM GAS  /tmp/cc8pF6Ix.s 			page 80
+ARM GAS  /tmp/ccm0fFP5.s 			page 80
 
 
  2237              		.loc 1 1655 0
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1722:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****   I2S_HandleTypeDef *hi2s = (I2S_HandleTypeDef *)((DMA_HandleTypeDef *)hdma)->Parent; /* Derogation
  2290              		.loc 1 1722 0
  2291              		.cfi_startproc
-ARM GAS  /tmp/cc8pF6Ix.s 			page 81
+ARM GAS  /tmp/ccm0fFP5.s 			page 81
 
 
  2292              		@ args = 0, pretend = 0, frame = 0
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2345              		.loc 1 1795 0
  2346 0000 08B5     		push	{r3, lr}
  2347              	.LCFI40:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 82
+ARM GAS  /tmp/ccm0fFP5.s 			page 82
 
 
  2348              		.cfi_def_cfa_offset 8
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2395              		.thumb_func
  2396              		.fpu fpv4-sp-d16
  2398              	I2S_DMARxCplt:
-ARM GAS  /tmp/cc8pF6Ix.s 			page 83
+ARM GAS  /tmp/ccm0fFP5.s 			page 83
 
 
  2399              	.LFB153:
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2447              		.loc 1 1584 0
  2448              		.cfi_startproc
  2449              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 84
+ARM GAS  /tmp/ccm0fFP5.s 			page 84
 
 
  2450              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2500              	.LCFI44:
  2501              		.cfi_remember_state
  2502              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/cc8pF6Ix.s 			page 85
+ARM GAS  /tmp/ccm0fFP5.s 			page 85
 
 
  2503              		@ sp needed
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2549 006a 6364     		str	r3, [r4, #68]
 1853:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** #endif /* USE_HAL_I2S_REGISTER_CALLBACKS */
  2550              		.loc 1 1853 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 86
+ARM GAS  /tmp/ccm0fFP5.s 			page 86
 
 
  2551 006c 2046     		mov	r0, r4
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
 1879:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c ****       /* Call user error callback */
  2597              		.loc 1 1879 0
  2598 00b8 636C     		ldr	r3, [r4, #68]
-ARM GAS  /tmp/cc8pF6Ix.s 			page 87
+ARM GAS  /tmp/ccm0fFP5.s 			page 87
 
 
  2599 00ba 43F00403 		orr	r3, r3, #4
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2647 0012 4386     		strh	r3, [r0, #50]	@ movhi
 1748:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** 
  2648              		.loc 1 1748 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 88
+ARM GAS  /tmp/ccm0fFP5.s 			page 88
 
 
  2649 0014 0123     		movs	r3, #1
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2701              	.LVL212:
 1631:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c **** }
  2702              		.loc 1 1631 0
-ARM GAS  /tmp/cc8pF6Ix.s 			page 89
+ARM GAS  /tmp/ccm0fFP5.s 			page 89
 
 
  2703 0000 406C     		ldr	r0, [r0, #68]
@@ -5301,80 +5301,80 @@ ARM GAS  /tmp/cc8pF6Ix.s 			page 1
  2720              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h"
  2721              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
  2722              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
-ARM GAS  /tmp/cc8pF6Ix.s 			page 90
+ARM GAS  /tmp/ccm0fFP5.s 			page 90
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_hal_i2s.c
-     /tmp/cc8pF6Ix.s:18     .text.I2S_WaitFlagStateUntilTimeout:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:24     .text.I2S_WaitFlagStateUntilTimeout:0000000000000000 I2S_WaitFlagStateUntilTimeout
-     /tmp/cc8pF6Ix.s:92     .text.HAL_I2S_MspInit:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:99     .text.HAL_I2S_MspInit:0000000000000000 HAL_I2S_MspInit
-     /tmp/cc8pF6Ix.s:112    .text.HAL_I2S_Init:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:119    .text.HAL_I2S_Init:0000000000000000 HAL_I2S_Init
-     /tmp/cc8pF6Ix.s:418    .text.HAL_I2S_Init:0000000000000188 $d
-     /tmp/cc8pF6Ix.s:2464   .text.I2S_IRQHandler:0000000000000000 I2S_IRQHandler
-     /tmp/cc8pF6Ix.s:427    .text.HAL_I2S_MspDeInit:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:434    .text.HAL_I2S_MspDeInit:0000000000000000 HAL_I2S_MspDeInit
-     /tmp/cc8pF6Ix.s:447    .text.HAL_I2S_DeInit:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:454    .text.HAL_I2S_DeInit:0000000000000000 HAL_I2S_DeInit
-     /tmp/cc8pF6Ix.s:504    .text.HAL_I2S_Transmit:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:511    .text.HAL_I2S_Transmit:0000000000000000 HAL_I2S_Transmit
-     /tmp/cc8pF6Ix.s:759    .text.HAL_I2S_Receive:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:766    .text.HAL_I2S_Receive:0000000000000000 HAL_I2S_Receive
-     /tmp/cc8pF6Ix.s:997    .text.HAL_I2S_Transmit_IT:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1004   .text.HAL_I2S_Transmit_IT:0000000000000000 HAL_I2S_Transmit_IT
-     /tmp/cc8pF6Ix.s:1139   .text.HAL_I2S_Receive_IT:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1146   .text.HAL_I2S_Receive_IT:0000000000000000 HAL_I2S_Receive_IT
-     /tmp/cc8pF6Ix.s:1281   .text.HAL_I2S_Transmit_DMA:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1288   .text.HAL_I2S_Transmit_DMA:0000000000000000 HAL_I2S_Transmit_DMA
-     /tmp/cc8pF6Ix.s:1461   .text.HAL_I2S_Transmit_DMA:00000000000000d4 $d
-     /tmp/cc8pF6Ix.s:2112   .text.I2S_DMATxHalfCplt:0000000000000000 I2S_DMATxHalfCplt
-     /tmp/cc8pF6Ix.s:2222   .text.I2S_DMATxCplt:0000000000000000 I2S_DMATxCplt
-     /tmp/cc8pF6Ix.s:2623   .text.I2S_DMAError:0000000000000000 I2S_DMAError
-     /tmp/cc8pF6Ix.s:1468   .text.HAL_I2S_Receive_DMA:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1475   .text.HAL_I2S_Receive_DMA:0000000000000000 HAL_I2S_Receive_DMA
-     /tmp/cc8pF6Ix.s:1677   .text.HAL_I2S_Receive_DMA:00000000000000f4 $d
-     /tmp/cc8pF6Ix.s:2288   .text.I2S_DMARxHalfCplt:0000000000000000 I2S_DMARxHalfCplt
-     /tmp/cc8pF6Ix.s:2398   .text.I2S_DMARxCplt:0000000000000000 I2S_DMARxCplt
-     /tmp/cc8pF6Ix.s:1684   .text.HAL_I2S_DMAPause:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1691   .text.HAL_I2S_DMAPause:0000000000000000 HAL_I2S_DMAPause
-     /tmp/cc8pF6Ix.s:1776   .text.HAL_I2S_DMAPause:0000000000000078 $d
-     /tmp/cc8pF6Ix.s:1782   .text.HAL_I2S_DMAResume:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1789   .text.HAL_I2S_DMAResume:0000000000000000 HAL_I2S_DMAResume
-     /tmp/cc8pF6Ix.s:1904   .text.HAL_I2S_DMAResume:00000000000000ac $d
-     /tmp/cc8pF6Ix.s:1910   .text.HAL_I2S_DMAStop:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:1917   .text.HAL_I2S_DMAStop:0000000000000000 HAL_I2S_DMAStop
-     /tmp/cc8pF6Ix.s:2052   .text.HAL_I2S_DMAStop:00000000000000b0 $d
-     /tmp/cc8pF6Ix.s:2058   .text.HAL_I2S_IRQHandler:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2065   .text.HAL_I2S_IRQHandler:0000000000000000 HAL_I2S_IRQHandler
-     /tmp/cc8pF6Ix.s:2086   .text.HAL_I2S_TxHalfCpltCallback:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2093   .text.HAL_I2S_TxHalfCpltCallback:0000000000000000 HAL_I2S_TxHalfCpltCallback
-     /tmp/cc8pF6Ix.s:2106   .text.I2S_DMATxHalfCplt:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2136   .text.HAL_I2S_TxCpltCallback:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2143   .text.HAL_I2S_TxCpltCallback:0000000000000000 HAL_I2S_TxCpltCallback
-     /tmp/cc8pF6Ix.s:2156   .text.I2S_Transmit_IT:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2162   .text.I2S_Transmit_IT:0000000000000000 I2S_Transmit_IT
-     /tmp/cc8pF6Ix.s:2216   .text.I2S_DMATxCplt:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2262   .text.HAL_I2S_RxHalfCpltCallback:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2269   .text.HAL_I2S_RxHalfCpltCallback:0000000000000000 HAL_I2S_RxHalfCpltCallback
-     /tmp/cc8pF6Ix.s:2282   .text.I2S_DMARxHalfCplt:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2312   .text.HAL_I2S_RxCpltCallback:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2319   .text.HAL_I2S_RxCpltCallback:0000000000000000 HAL_I2S_RxCpltCallback
-ARM GAS  /tmp/cc8pF6Ix.s 			page 91
+     /tmp/ccm0fFP5.s:18     .text.I2S_WaitFlagStateUntilTimeout:0000000000000000 $t
+     /tmp/ccm0fFP5.s:24     .text.I2S_WaitFlagStateUntilTimeout:0000000000000000 I2S_WaitFlagStateUntilTimeout
+     /tmp/ccm0fFP5.s:92     .text.HAL_I2S_MspInit:0000000000000000 $t
+     /tmp/ccm0fFP5.s:99     .text.HAL_I2S_MspInit:0000000000000000 HAL_I2S_MspInit
+     /tmp/ccm0fFP5.s:112    .text.HAL_I2S_Init:0000000000000000 $t
+     /tmp/ccm0fFP5.s:119    .text.HAL_I2S_Init:0000000000000000 HAL_I2S_Init
+     /tmp/ccm0fFP5.s:418    .text.HAL_I2S_Init:0000000000000188 $d
+     /tmp/ccm0fFP5.s:2464   .text.I2S_IRQHandler:0000000000000000 I2S_IRQHandler
+     /tmp/ccm0fFP5.s:427    .text.HAL_I2S_MspDeInit:0000000000000000 $t
+     /tmp/ccm0fFP5.s:434    .text.HAL_I2S_MspDeInit:0000000000000000 HAL_I2S_MspDeInit
+     /tmp/ccm0fFP5.s:447    .text.HAL_I2S_DeInit:0000000000000000 $t
+     /tmp/ccm0fFP5.s:454    .text.HAL_I2S_DeInit:0000000000000000 HAL_I2S_DeInit
+     /tmp/ccm0fFP5.s:504    .text.HAL_I2S_Transmit:0000000000000000 $t
+     /tmp/ccm0fFP5.s:511    .text.HAL_I2S_Transmit:0000000000000000 HAL_I2S_Transmit
+     /tmp/ccm0fFP5.s:759    .text.HAL_I2S_Receive:0000000000000000 $t
+     /tmp/ccm0fFP5.s:766    .text.HAL_I2S_Receive:0000000000000000 HAL_I2S_Receive
+     /tmp/ccm0fFP5.s:997    .text.HAL_I2S_Transmit_IT:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1004   .text.HAL_I2S_Transmit_IT:0000000000000000 HAL_I2S_Transmit_IT
+     /tmp/ccm0fFP5.s:1139   .text.HAL_I2S_Receive_IT:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1146   .text.HAL_I2S_Receive_IT:0000000000000000 HAL_I2S_Receive_IT
+     /tmp/ccm0fFP5.s:1281   .text.HAL_I2S_Transmit_DMA:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1288   .text.HAL_I2S_Transmit_DMA:0000000000000000 HAL_I2S_Transmit_DMA
+     /tmp/ccm0fFP5.s:1461   .text.HAL_I2S_Transmit_DMA:00000000000000d4 $d
+     /tmp/ccm0fFP5.s:2112   .text.I2S_DMATxHalfCplt:0000000000000000 I2S_DMATxHalfCplt
+     /tmp/ccm0fFP5.s:2222   .text.I2S_DMATxCplt:0000000000000000 I2S_DMATxCplt
+     /tmp/ccm0fFP5.s:2623   .text.I2S_DMAError:0000000000000000 I2S_DMAError
+     /tmp/ccm0fFP5.s:1468   .text.HAL_I2S_Receive_DMA:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1475   .text.HAL_I2S_Receive_DMA:0000000000000000 HAL_I2S_Receive_DMA
+     /tmp/ccm0fFP5.s:1677   .text.HAL_I2S_Receive_DMA:00000000000000f4 $d
+     /tmp/ccm0fFP5.s:2288   .text.I2S_DMARxHalfCplt:0000000000000000 I2S_DMARxHalfCplt
+     /tmp/ccm0fFP5.s:2398   .text.I2S_DMARxCplt:0000000000000000 I2S_DMARxCplt
+     /tmp/ccm0fFP5.s:1684   .text.HAL_I2S_DMAPause:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1691   .text.HAL_I2S_DMAPause:0000000000000000 HAL_I2S_DMAPause
+     /tmp/ccm0fFP5.s:1776   .text.HAL_I2S_DMAPause:0000000000000078 $d
+     /tmp/ccm0fFP5.s:1782   .text.HAL_I2S_DMAResume:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1789   .text.HAL_I2S_DMAResume:0000000000000000 HAL_I2S_DMAResume
+     /tmp/ccm0fFP5.s:1904   .text.HAL_I2S_DMAResume:00000000000000ac $d
+     /tmp/ccm0fFP5.s:1910   .text.HAL_I2S_DMAStop:0000000000000000 $t
+     /tmp/ccm0fFP5.s:1917   .text.HAL_I2S_DMAStop:0000000000000000 HAL_I2S_DMAStop
+     /tmp/ccm0fFP5.s:2052   .text.HAL_I2S_DMAStop:00000000000000b0 $d
+     /tmp/ccm0fFP5.s:2058   .text.HAL_I2S_IRQHandler:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2065   .text.HAL_I2S_IRQHandler:0000000000000000 HAL_I2S_IRQHandler
+     /tmp/ccm0fFP5.s:2086   .text.HAL_I2S_TxHalfCpltCallback:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2093   .text.HAL_I2S_TxHalfCpltCallback:0000000000000000 HAL_I2S_TxHalfCpltCallback
+     /tmp/ccm0fFP5.s:2106   .text.I2S_DMATxHalfCplt:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2136   .text.HAL_I2S_TxCpltCallback:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2143   .text.HAL_I2S_TxCpltCallback:0000000000000000 HAL_I2S_TxCpltCallback
+     /tmp/ccm0fFP5.s:2156   .text.I2S_Transmit_IT:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2162   .text.I2S_Transmit_IT:0000000000000000 I2S_Transmit_IT
+     /tmp/ccm0fFP5.s:2216   .text.I2S_DMATxCplt:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2262   .text.HAL_I2S_RxHalfCpltCallback:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2269   .text.HAL_I2S_RxHalfCpltCallback:0000000000000000 HAL_I2S_RxHalfCpltCallback
+     /tmp/ccm0fFP5.s:2282   .text.I2S_DMARxHalfCplt:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2312   .text.HAL_I2S_RxCpltCallback:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2319   .text.HAL_I2S_RxCpltCallback:0000000000000000 HAL_I2S_RxCpltCallback
+ARM GAS  /tmp/ccm0fFP5.s 			page 91
 
 
-     /tmp/cc8pF6Ix.s:2332   .text.I2S_Receive_IT:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2338   .text.I2S_Receive_IT:0000000000000000 I2S_Receive_IT
-     /tmp/cc8pF6Ix.s:2392   .text.I2S_DMARxCplt:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2438   .text.HAL_I2S_ErrorCallback:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2445   .text.HAL_I2S_ErrorCallback:0000000000000000 HAL_I2S_ErrorCallback
-     /tmp/cc8pF6Ix.s:2458   .text.I2S_IRQHandler:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2617   .text.I2S_DMAError:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2663   .text.HAL_I2S_GetState:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2670   .text.HAL_I2S_GetState:0000000000000000 HAL_I2S_GetState
-     /tmp/cc8pF6Ix.s:2687   .text.HAL_I2S_GetError:0000000000000000 $t
-     /tmp/cc8pF6Ix.s:2694   .text.HAL_I2S_GetError:0000000000000000 HAL_I2S_GetError
+     /tmp/ccm0fFP5.s:2332   .text.I2S_Receive_IT:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2338   .text.I2S_Receive_IT:0000000000000000 I2S_Receive_IT
+     /tmp/ccm0fFP5.s:2392   .text.I2S_DMARxCplt:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2438   .text.HAL_I2S_ErrorCallback:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2445   .text.HAL_I2S_ErrorCallback:0000000000000000 HAL_I2S_ErrorCallback
+     /tmp/ccm0fFP5.s:2458   .text.I2S_IRQHandler:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2617   .text.I2S_DMAError:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2663   .text.HAL_I2S_GetState:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2670   .text.HAL_I2S_GetState:0000000000000000 HAL_I2S_GetState
+     /tmp/ccm0fFP5.s:2687   .text.HAL_I2S_GetError:0000000000000000 $t
+     /tmp/ccm0fFP5.s:2694   .text.HAL_I2S_GetError:0000000000000000 HAL_I2S_GetError
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS

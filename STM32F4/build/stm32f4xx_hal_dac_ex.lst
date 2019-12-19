@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccRcgtd5.s 			page 1
+ARM GAS  /tmp/ccDqSi0t.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
   29:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * This software component is licensed by ST under BSD 3-Clause license,
   30:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * the "License"; You may not use this file except in compliance with the
   31:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * License. You may obtain a copy of the License at:
-ARM GAS  /tmp/ccRcgtd5.s 			page 2
+ARM GAS  /tmp/ccDqSi0t.s 			page 2
 
 
   32:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *                        opensource.org/licenses/BSD-3-Clause
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
   86:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c **** /**
   87:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * @brief  Returns the last data output value of the selected DAC channel.
   88:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * @param  hdac pointer to a DAC_HandleTypeDef structure that contains
-ARM GAS  /tmp/ccRcgtd5.s 			page 3
+ARM GAS  /tmp/ccDqSi0t.s 			page 3
 
 
   89:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *         the configuration information for the specified DAC.
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  115:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            @arg DAC_TRIANGLEAMPLITUDE_7: Select max triangle amplitude of 7
  116:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            @arg DAC_TRIANGLEAMPLITUDE_15: Select max triangle amplitude of 15
  117:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            @arg DAC_TRIANGLEAMPLITUDE_31: Select max triangle amplitude of 31
-ARM GAS  /tmp/ccRcgtd5.s 			page 4
+ARM GAS  /tmp/ccDqSi0t.s 			page 4
 
 
  118:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            @arg DAC_TRIANGLEAMPLITUDE_63: Select max triangle amplitude of 63
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
   88              	.LVL5:
   89 0022 02FA01F1 		lsl	r1, r2, r1
   90              	.LVL6:
-ARM GAS  /tmp/ccRcgtd5.s 			page 5
+ARM GAS  /tmp/ccDqSi0t.s 			page 5
 
 
   91 0026 1943     		orrs	r1, r1, r3
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  159:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * @param  Amplitude Unmask DAC channel LFSR for noise wave generation. 
  160:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *          This parameter can be one of the following values: 
  161:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            @arg DAC_LFSRUNMASK_BIT0: Unmask DAC channel LFSR bit0 for noise wave generation
-ARM GAS  /tmp/ccRcgtd5.s 			page 6
+ARM GAS  /tmp/ccDqSi0t.s 			page 6
 
 
  162:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            @arg DAC_LFSRUNMASK_BITS1_0: Unmask DAC channel LFSR bit[1:0] for noise wave generat
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  154 0014 4FF47C64 		mov	r4, #4032
  155 0018 8C40     		lsls	r4, r4, r1
  156 001a 23EA0403 		bic	r3, r3, r4
-ARM GAS  /tmp/ccRcgtd5.s 			page 7
+ARM GAS  /tmp/ccDqSi0t.s 			page 7
 
 
  157 001e 42F04002 		orr	r2, r2, #64
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  203:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *               the configuration information for the specified DAC.
  204:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   * @param  Alignment Specifies the data alignment for dual channel DAC.
  205:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *          This parameter can be one of the following values:
-ARM GAS  /tmp/ccRcgtd5.s 			page 8
+ARM GAS  /tmp/ccDqSi0t.s 			page 8
 
 
  206:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   *            DAC_ALIGN_8B_R: 8bit right data alignment selected
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  239:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   
  240:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   /* Return function status */
  241:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   return HAL_OK;
-ARM GAS  /tmp/ccRcgtd5.s 			page 9
+ARM GAS  /tmp/ccDqSi0t.s 			page 9
 
 
  242:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c **** }
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  256:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   /* Prevent unused argument(s) compilation warning */
  257:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   UNUSED(hdac);
  258:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   /* NOTE : This function Should not be modified, when the callback is needed,
-ARM GAS  /tmp/ccRcgtd5.s 			page 10
+ARM GAS  /tmp/ccDqSi0t.s 			page 10
 
 
  259:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****             the HAL_DAC_ConvCpltCallback could be implemented in the user file
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  292              		.section	.text.HAL_DACEx_DMAUnderrunCallbackCh2,"ax",%progbits
  293              		.align	1
  294              		.weak	HAL_DACEx_DMAUnderrunCallbackCh2
-ARM GAS  /tmp/ccRcgtd5.s 			page 11
+ARM GAS  /tmp/ccDqSi0t.s 			page 11
 
 
  295              		.syntax unified
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  322              		.loc 1 315 0
  323              		.cfi_startproc
  324              		@ args = 0, pretend = 0, frame = 0
-ARM GAS  /tmp/ccRcgtd5.s 			page 12
+ARM GAS  /tmp/ccDqSi0t.s 			page 12
 
 
  325              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  362              	.LVL31:
  363 0000 08B5     		push	{r3, lr}
  364              	.LCFI5:
-ARM GAS  /tmp/ccRcgtd5.s 			page 13
+ARM GAS  /tmp/ccDqSi0t.s 			page 13
 
 
  365              		.cfi_def_cfa_offset 8
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  355:Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c ****   hdac->ErrorCode |= HAL_DAC_ERROR_DMA;
  401              		.loc 1 355 0
  402 0004 2369     		ldr	r3, [r4, #16]
-ARM GAS  /tmp/ccRcgtd5.s 			page 14
+ARM GAS  /tmp/ccDqSi0t.s 			page 14
 
 
  403 0006 43F00403 		orr	r3, r3, #4
@@ -812,33 +812,33 @@ ARM GAS  /tmp/ccRcgtd5.s 			page 1
  424              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
  425              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
  426              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
-ARM GAS  /tmp/ccRcgtd5.s 			page 15
+ARM GAS  /tmp/ccDqSi0t.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f4xx_hal_dac_ex.c
-     /tmp/ccRcgtd5.s:18     .text.HAL_DACEx_DualGetValue:0000000000000000 $t
-     /tmp/ccRcgtd5.s:25     .text.HAL_DACEx_DualGetValue:0000000000000000 HAL_DACEx_DualGetValue
-     /tmp/ccRcgtd5.s:49     .text.HAL_DACEx_TriangleWaveGenerate:0000000000000000 $t
-     /tmp/ccRcgtd5.s:56     .text.HAL_DACEx_TriangleWaveGenerate:0000000000000000 HAL_DACEx_TriangleWaveGenerate
-     /tmp/ccRcgtd5.s:119    .text.HAL_DACEx_NoiseWaveGenerate:0000000000000000 $t
-     /tmp/ccRcgtd5.s:126    .text.HAL_DACEx_NoiseWaveGenerate:0000000000000000 HAL_DACEx_NoiseWaveGenerate
-     /tmp/ccRcgtd5.s:189    .text.HAL_DACEx_DualSetValue:0000000000000000 $t
-     /tmp/ccRcgtd5.s:196    .text.HAL_DACEx_DualSetValue:0000000000000000 HAL_DACEx_DualSetValue
-     /tmp/ccRcgtd5.s:233    .text.HAL_DACEx_ConvCpltCallbackCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:240    .text.HAL_DACEx_ConvCpltCallbackCh2:0000000000000000 HAL_DACEx_ConvCpltCallbackCh2
-     /tmp/ccRcgtd5.s:253    .text.HAL_DACEx_ConvHalfCpltCallbackCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:260    .text.HAL_DACEx_ConvHalfCpltCallbackCh2:0000000000000000 HAL_DACEx_ConvHalfCpltCallbackCh2
-     /tmp/ccRcgtd5.s:273    .text.HAL_DACEx_ErrorCallbackCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:280    .text.HAL_DACEx_ErrorCallbackCh2:0000000000000000 HAL_DACEx_ErrorCallbackCh2
-     /tmp/ccRcgtd5.s:293    .text.HAL_DACEx_DMAUnderrunCallbackCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:300    .text.HAL_DACEx_DMAUnderrunCallbackCh2:0000000000000000 HAL_DACEx_DMAUnderrunCallbackCh2
-     /tmp/ccRcgtd5.s:313    .text.DAC_DMAConvCpltCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:320    .text.DAC_DMAConvCpltCh2:0000000000000000 DAC_DMAConvCpltCh2
-     /tmp/ccRcgtd5.s:349    .text.DAC_DMAHalfConvCpltCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:356    .text.DAC_DMAHalfConvCpltCh2:0000000000000000 DAC_DMAHalfConvCpltCh2
-     /tmp/ccRcgtd5.s:379    .text.DAC_DMAErrorCh2:0000000000000000 $t
-     /tmp/ccRcgtd5.s:386    .text.DAC_DMAErrorCh2:0000000000000000 DAC_DMAErrorCh2
+     /tmp/ccDqSi0t.s:18     .text.HAL_DACEx_DualGetValue:0000000000000000 $t
+     /tmp/ccDqSi0t.s:25     .text.HAL_DACEx_DualGetValue:0000000000000000 HAL_DACEx_DualGetValue
+     /tmp/ccDqSi0t.s:49     .text.HAL_DACEx_TriangleWaveGenerate:0000000000000000 $t
+     /tmp/ccDqSi0t.s:56     .text.HAL_DACEx_TriangleWaveGenerate:0000000000000000 HAL_DACEx_TriangleWaveGenerate
+     /tmp/ccDqSi0t.s:119    .text.HAL_DACEx_NoiseWaveGenerate:0000000000000000 $t
+     /tmp/ccDqSi0t.s:126    .text.HAL_DACEx_NoiseWaveGenerate:0000000000000000 HAL_DACEx_NoiseWaveGenerate
+     /tmp/ccDqSi0t.s:189    .text.HAL_DACEx_DualSetValue:0000000000000000 $t
+     /tmp/ccDqSi0t.s:196    .text.HAL_DACEx_DualSetValue:0000000000000000 HAL_DACEx_DualSetValue
+     /tmp/ccDqSi0t.s:233    .text.HAL_DACEx_ConvCpltCallbackCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:240    .text.HAL_DACEx_ConvCpltCallbackCh2:0000000000000000 HAL_DACEx_ConvCpltCallbackCh2
+     /tmp/ccDqSi0t.s:253    .text.HAL_DACEx_ConvHalfCpltCallbackCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:260    .text.HAL_DACEx_ConvHalfCpltCallbackCh2:0000000000000000 HAL_DACEx_ConvHalfCpltCallbackCh2
+     /tmp/ccDqSi0t.s:273    .text.HAL_DACEx_ErrorCallbackCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:280    .text.HAL_DACEx_ErrorCallbackCh2:0000000000000000 HAL_DACEx_ErrorCallbackCh2
+     /tmp/ccDqSi0t.s:293    .text.HAL_DACEx_DMAUnderrunCallbackCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:300    .text.HAL_DACEx_DMAUnderrunCallbackCh2:0000000000000000 HAL_DACEx_DMAUnderrunCallbackCh2
+     /tmp/ccDqSi0t.s:313    .text.DAC_DMAConvCpltCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:320    .text.DAC_DMAConvCpltCh2:0000000000000000 DAC_DMAConvCpltCh2
+     /tmp/ccDqSi0t.s:349    .text.DAC_DMAHalfConvCpltCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:356    .text.DAC_DMAHalfConvCpltCh2:0000000000000000 DAC_DMAHalfConvCpltCh2
+     /tmp/ccDqSi0t.s:379    .text.DAC_DMAErrorCh2:0000000000000000 $t
+     /tmp/ccDqSi0t.s:386    .text.DAC_DMAErrorCh2:0000000000000000 DAC_DMAErrorCh2
                      .debug_frame:0000000000000010 $d
 
 NO UNDEFINED SYMBOLS

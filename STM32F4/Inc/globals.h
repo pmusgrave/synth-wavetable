@@ -16,7 +16,7 @@ extern volatile uint8_t env_state[];
 extern volatile uint8_t note_on[];
 extern volatile uint8_t note_freq[];
 extern volatile uint32_t phase_accumulator[VOICES];
-extern volatile uint8_t output_val;
+extern uint16_t output_val;
 extern uint8_t* waveshape1;
 extern uint8_t* waveshape2;
 extern volatile uint32_t lfo_phase_accumulator[];

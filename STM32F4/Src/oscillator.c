@@ -6,9 +6,9 @@
 
 volatile uint8_t update_value_flag = 0;
 volatile uint32_t phase_accumulator[VOICES] = {0};
-volatile uint8_t output_val = 0;
-uint8_t* waveshape1 = base_pos_saw;
-uint8_t* waveshape2 = base_pos_saw;
+uint16_t output_val = 0;
+uint8_t* waveshape1 = base_sine;
+uint8_t* waveshape2 = base_sine;
 
 void update_output_value() {
   float val = 0;
@@ -18,5 +18,5 @@ void update_output_value() {
     val += ((waveshape1[(phase_accumulator[i]>>10)%4096] + waveshape2[(phase_accumulator[i]>>10)%4096]) * envelope[i]) / (2*AMPLITUDE);
   }
 
-  output_val = (uint8_t) (val / VOICES);
+  output_val = (uint16_t) (val / VOICES);
 }

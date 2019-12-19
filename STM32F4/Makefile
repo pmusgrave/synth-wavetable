@@ -44,6 +44,7 @@ Src/oscillator.c \
 Src/r2rdac.c \
 Src/spi_handler.c \
 Src/waves.c \
+Src/dac.c \
 Src/stm32f4xx_it.c \
 Src/stm32f4xx_hal_msp.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c \
@@ -119,9 +120,6 @@ AS_DEFS =
 C_DEFS =  \
 -DUSE_HAL_DRIVER \
 -DSTM32F429xx
--DUSE_HAL_DRIVER \
--DSTM32F429xx
-
 
 # AS includes
 AS_INCLUDES = 
@@ -132,7 +130,6 @@ C_INCLUDES =  \
 -IDrivers/STM32F4xx_HAL_Driver/Inc \
 -IDrivers/STM32F4xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \
--IDrivers/CMSIS/Include
 -IDrivers/CMSIS/Include
 
 

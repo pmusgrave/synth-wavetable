@@ -30,7 +30,8 @@
 #include "oscillator.h"
 #include "lfo.h"
 #include "envelopes.h"
-#include "r2rdac.h"
+//#include "r2rdac.h"
+#include "dac.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,17 +51,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 DAC_HandleTypeDef hdac;
-
 I2C_HandleTypeDef hi2c1;
-
 I2S_HandleTypeDef hi2s2;
-
 SPI_HandleTypeDef hspi1;
-
 TIM_HandleTypeDef htim6;
-
 UART_HandleTypeDef huart4;
-
 /* USER CODE BEGIN PV */
 uint8_t uart_tx_data = 0;
 /* USER CODE END PV */
@@ -95,7 +90,6 @@ int main(void)
   /* USER CODE BEGIN 1 */
 
   /* USER CODE END 1 */
-  
 
   /* MCU Configuration--------------------------------------------------------*/
 
@@ -126,6 +120,7 @@ int main(void)
   // uint8_t init_msg[20] = {"\nSTM32F429!\n"};
   // HAL_UART_Transmit(&huart4, init_msg, 20, 50);
   HAL_Delay(1000);
+  Dac_Init(&hi2c1);
   init_wavetable();
   HAL_TIM_Base_Start_IT(&htim6);
   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
@@ -136,6 +131,17 @@ int main(void)
     note_freq[i] = 0;
     lfo_freq[i] = 20;
   }
+
+  // DAC TEST NOTE
+  struct midi_msg test_msg = {
+                              0x90,
+                              0x82,
+                              0xFF,
+                              0x00
+  };
+  enqueue(test_msg);
+  // END DAC TEST NOTE
+
   //  uint8_t process_msg_flag  = 0;
   /* USER CODE END 2 */
 
@@ -155,7 +161,9 @@ int main(void)
       update_lfos();
       update_envelope();
       update_output_value();
-      HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
+      //HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
+
+      HAL_I2S_Transmit(&hi2s2, &output_val, 32, 100);
     }
   }
   /* USER CODE END 3 */
