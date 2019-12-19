@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccdyiyl6.s 			page 1
+ARM GAS  /tmp/ccpiw8q0.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -17,15 +17,15 @@ ARM GAS  /tmp/ccdyiyl6.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.Dac_SendData,"ax",%progbits
+  17              		.section	.text.InitDac,"ax",%progbits
   18              		.align	1
-  19              		.global	Dac_SendData
+  19              		.global	InitDac
   20              		.syntax unified
   21              		.thumb
   22              		.thumb_func
   23              		.fpu fpv4-sp-d16
-  25              	Dac_SendData:
-  26              	.LFB131:
+  25              	InitDac:
+  26              	.LFB130:
   27              		.file 1 "Src/dac.c"
    1:Src/dac.c     **** #include "dac.h"
    2:Src/dac.c     **** #include "globals.h"
@@ -34,524 +34,639 @@ ARM GAS  /tmp/ccdyiyl6.s 			page 1
    5:Src/dac.c     **** 
    6:Src/dac.c     **** #define I2C_WRITE_OPERATION		(0x00)
    7:Src/dac.c     **** 
-   8:Src/dac.c     **** I2C_HandleTypeDef* hi2c;
+   8:Src/dac.c     **** static I2C_HandleTypeDef* hi2c;
    9:Src/dac.c     **** 
-  10:Src/dac.c     **** //static uint16_t Dac_analogPathSetting = DAC_DEF_ANALOG_CTRL;
-  11:Src/dac.c     **** //uint32 Dac_powerControlSetting = DAC_DEF_POWER_CTRL;
+  10:Src/dac.c     **** DacRegister DacWrite;
+  11:Src/dac.c     **** uint8_t dacInit = 0;
   12:Src/dac.c     **** 
-  13:Src/dac.c     **** /*******************************************************************************
-  14:Src/dac.c     **** * Function Name: Dac_Init
-  15:Src/dac.c     **** ********************************************************************************
-  16:Src/dac.c     **** * Summary:
-  17:Src/dac.c     **** *   Initializes the codec with default settings.
-  18:Src/dac.c     **** *
-  19:Src/dac.c     **** *
-  20:Src/dac.c     **** * Parameters:
-  21:Src/dac.c     **** *	None
-  22:Src/dac.c     **** *
-  23:Src/dac.c     **** * Return:
-  24:Src/dac.c     **** *   uint8_t - I2C master transaction error status
-  25:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error
-  26:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST
-  27:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK
-  28:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress
-  29:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-  30:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-  31:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR
-ARM GAS  /tmp/ccdyiyl6.s 			page 2
+  13:Src/dac.c     **** extern volatile uint8_t USB_currentVolume[];
+  14:Src/dac.c     **** extern volatile uint8_t USB_currentMute;
+  15:Src/dac.c     **** 
+  16:Src/dac.c     **** /*******************************************************************************
+  17:Src/dac.c     ****  * Function Name: InitDac
+  18:Src/dac.c     ****  ********************************************************************************
+  19:Src/dac.c     ****  * Summary: Initializes the dac as per the datasheet to enable
+  20:Src/dac.c     ****  *          audio output DAC (with volume control support enabled) and audio input
+  21:Src/dac.c     ****  *          ADC
+  22:Src/dac.c     ****  *
+  23:Src/dac.c     ****  * Parameters:
+  24:Src/dac.c     ****  *  void
+  25:Src/dac.c     ****  *
+  26:Src/dac.c     ****  * Return:
+  27:Src/dac.c     ****  *  void
+  28:Src/dac.c     ****  *
+  29:Src/dac.c     ****  *******************************************************************************/
+  30:Src/dac.c     **** void InitDac(I2C_HandleTypeDef* i2c_handle)
+  31:Src/dac.c     **** {
+ARM GAS  /tmp/ccpiw8q0.s 			page 2
 
 
-  32:Src/dac.c     **** *
-  33:Src/dac.c     **** *******************************************************************************/
-  34:Src/dac.c     **** uint8_t Dac_Init(I2C_HandleTypeDef* i2c_handle)
-  35:Src/dac.c     **** {
-  36:Src/dac.c     ****   hi2c = i2c_handle;
-  37:Src/dac.c     **** 
-  38:Src/dac.c     ****   //PDN_Write(0);
-  39:Src/dac.c     ****   //CyDelay(10);
-  40:Src/dac.c     ****   //PDN_Write(1);
-  41:Src/dac.c     ****   //CSN_Write(0);
-  42:Src/dac.c     **** 
-  43:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
-  44:Src/dac.c     ****   HAL_Delay(10);
-  45:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET);
-  46:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
-  47:Src/dac.c     **** 
-  48:Src/dac.c     **** 	uint8_t ret = 0;
-  49:Src/dac.c     **** 
-  50:Src/dac.c     ****   if(hi2c){
-  51:Src/dac.c     ****     ret = Dac_ResetOverI2C();
-  52:Src/dac.c     ****     //CyDelay(DAC_RESET_WAIT_DELAY);
-  53:Src/dac.c     ****     HAL_Delay(DAC_RESET_WAIT_DELAY);
-  54:Src/dac.c     **** 
-  55:Src/dac.c     ****     ret = Dac_SendData(DAC_REG_INTERFACE_SET, 0b10000111);
-  56:Src/dac.c     ****   }
-  57:Src/dac.c     **** 
-  58:Src/dac.c     **** 	return ret;
-  59:Src/dac.c     **** }
-  60:Src/dac.c     **** 
-  61:Src/dac.c     **** /*******************************************************************************
-  62:Src/dac.c     **** * Function Name: Dac_SendData
-  63:Src/dac.c     **** ********************************************************************************
-  64:Src/dac.c     **** * Summary:
-  65:Src/dac.c     **** *   Low level API to send data to codec over I2C.
-  66:Src/dac.c     **** *
-  67:Src/dac.c     **** *
-  68:Src/dac.c     **** * Parameters:  
-  69:Src/dac.c     **** *	regAddr - Address of the codec register to be updated
-  70:Src/dac.c     **** *	data - 16-bit data to be updated in the register
-  71:Src/dac.c     **** *
-  72:Src/dac.c     **** * Return:
-  73:Src/dac.c     **** *   uint8_t - I2C master transaction error status
-  74:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-  75:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-  76:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-  77:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-  78:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-  79:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-  80:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-  81:Src/dac.c     **** *
-  82:Src/dac.c     **** *******************************************************************************/
-  83:Src/dac.c     **** uint8_t Dac_SendData(uint8_t regAddr, uint16_t data)
-  84:Src/dac.c     **** {
-  28              		.loc 1 84 0
+  28              		.loc 1 31 0
   29              		.cfi_startproc
-  30              		@ args = 0, pretend = 0, frame = 8
+  30              		@ args = 0, pretend = 0, frame = 0
   31              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccdyiyl6.s 			page 3
-
-
   32              	.LVL0:
-  33 0000 F0B5     		push	{r4, r5, r6, r7, lr}
+  33 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
   34              	.LCFI0:
-  35              		.cfi_def_cfa_offset 20
-  36              		.cfi_offset 4, -20
-  37              		.cfi_offset 5, -16
-  38              		.cfi_offset 6, -12
-  39              		.cfi_offset 7, -8
-  40              		.cfi_offset 14, -4
-  41 0002 85B0     		sub	sp, sp, #20
-  42              	.LCFI1:
-  43              		.cfi_def_cfa_offset 40
-  44              	.LVL1:
-  85:Src/dac.c     ****   uint8_t temp = 0;
-  86:Src/dac.c     ****   uint8_t byte = I2C_WRITE_OPERATION;
-  45              		.loc 1 86 0
-  46 0004 0023     		movs	r3, #0
-  47 0006 8DF80F30 		strb	r3, [sp, #15]
-  87:Src/dac.c     ****   if(hi2c){
-  48              		.loc 1 87 0
-  49 000a 154B     		ldr	r3, .L5
-  50 000c 1F68     		ldr	r7, [r3]
-  51 000e 2FB3     		cbz	r7, .L3
-  52 0010 0C46     		mov	r4, r1
-  53 0012 0546     		mov	r5, r0
-  88:Src/dac.c     ****     temp = HAL_I2C_Master_Transmit(hi2c, DAC_I2C_ADDR, &byte, 8, 100);
-  54              		.loc 1 88 0
-  55 0014 6426     		movs	r6, #100
-  56 0016 0096     		str	r6, [sp]
-  57 0018 0823     		movs	r3, #8
-  58 001a 0DF10F02 		add	r2, sp, #15
-  59 001e 1A21     		movs	r1, #26
-  60              	.LVL2:
-  61 0020 3846     		mov	r0, r7
+  35              		.cfi_def_cfa_offset 36
+  36              		.cfi_offset 4, -36
+  37              		.cfi_offset 5, -32
+  38              		.cfi_offset 6, -28
+  39              		.cfi_offset 7, -24
+  40              		.cfi_offset 8, -20
+  41              		.cfi_offset 9, -16
+  42              		.cfi_offset 10, -12
+  43              		.cfi_offset 11, -8
+  44              		.cfi_offset 14, -4
+  45 0004 85B0     		sub	sp, sp, #20
+  46              	.LCFI1:
+  47              		.cfi_def_cfa_offset 56
+  32:Src/dac.c     ****   hi2c = i2c_handle;
+  48              		.loc 1 32 0
+  49 0006 DFF83881 		ldr	r8, .L3+8
+  50 000a C8F80000 		str	r0, [r8]
+  33:Src/dac.c     **** 
+  34:Src/dac.c     ****   // Make sure DAC is reset
+  35:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
+  51              		.loc 1 35 0
+  52 000e DFF834A1 		ldr	r10, .L3+12
+  53 0012 0022     		movs	r2, #0
+  54 0014 4FF40051 		mov	r1, #8192
+  55 0018 5046     		mov	r0, r10
+  56              	.LVL1:
+  57 001a FFF7FEFF 		bl	HAL_GPIO_WritePin
+  58              	.LVL2:
+  36:Src/dac.c     ****   // '“L” time of 150ns or more is needed to reset the DAC.'  1 us should be fine.
+  37:Src/dac.c     ****   HAL_Delay(DAC_RESET_WAIT_DELAY);
+  59              		.loc 1 37 0
+  60 001e 6420     		movs	r0, #100
+  61 0020 FFF7FEFF 		bl	HAL_Delay
   62              	.LVL3:
-  63 0022 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
-  64              	.LVL4:
-  89:Src/dac.c     ****     //    if(temp == HAL_OK) {
-  90:Src/dac.c     ****       byte = ((regAddr << 0x01) | ((data>>8) & 0x01));
-  65              		.loc 1 90 0
-  66 0026 C4F30020 		ubfx	r0, r4, #8, #1
-  67 002a 40EA4500 		orr	r0, r0, r5, lsl #1
-  68 002e 8DF80F00 		strb	r0, [sp, #15]
-  91:Src/dac.c     ****       temp = HAL_I2C_Master_Transmit(hi2c, DAC_I2C_ADDR, &byte, 8, 100);
-  69              		.loc 1 91 0
-  70 0032 0B4D     		ldr	r5, .L5
-  71 0034 0096     		str	r6, [sp]
-  72 0036 0823     		movs	r3, #8
-  73 0038 0DF10F02 		add	r2, sp, #15
-  74 003c 1A21     		movs	r1, #26
-  75 003e 2868     		ldr	r0, [r5]
-  76 0040 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
-  77              	.LVL5:
-  92:Src/dac.c     ****       //if(temp == HAL_OK) {
-  93:Src/dac.c     ****         byte = (data&0xFF);
-  78              		.loc 1 93 0
-  79 0044 8DF80F40 		strb	r4, [sp, #15]
-ARM GAS  /tmp/ccdyiyl6.s 			page 4
+  38:Src/dac.c     **** 
+  39:Src/dac.c     ****   // Power on DAC
+  40:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET);
+  63              		.loc 1 40 0
+  64 0024 0122     		movs	r2, #1
+  65 0026 4FF40051 		mov	r1, #8192
+  66 002a 5046     		mov	r0, r10
+  67 002c FFF7FEFF 		bl	HAL_GPIO_WritePin
+  68              	.LVL4:
+  41:Src/dac.c     ****   HAL_Delay(DAC_RESET_WAIT_DELAY + 100);
+  69              		.loc 1 41 0
+  70 0030 C820     		movs	r0, #200
+  71 0032 FFF7FEFF 		bl	HAL_Delay
+  72              	.LVL5:
+  42:Src/dac.c     **** 
+  43:Src/dac.c     ****   DacWrite.address = DAC_CTRL_1;
+ARM GAS  /tmp/ccpiw8q0.s 			page 3
 
 
-  94:Src/dac.c     ****         temp = HAL_I2C_Master_Transmit(hi2c, DAC_I2C_ADDR, &byte, 8, 100);
-  80              		.loc 1 94 0
-  81 0048 2868     		ldr	r0, [r5]
-  82 004a 0096     		str	r6, [sp]
-  83 004c 0823     		movs	r3, #8
-  84 004e 0DF10F02 		add	r2, sp, #15
-  85 0052 1A21     		movs	r1, #26
-  86 0054 FFF7FEFF 		bl	HAL_I2C_Master_Transmit
-  87              	.LVL6:
-  88              	.L2:
-  95:Src/dac.c     ****         //}
-  96:Src/dac.c     ****         // }
-  97:Src/dac.c     ****   }
-  98:Src/dac.c     **** 
-  99:Src/dac.c     ****   return temp;
- 100:Src/dac.c     **** 
- 101:Src/dac.c     ****   /*
- 102:Src/dac.c     ****   temp = DacI2CM_I2CMasterSendStart(DAC_I2C_ADDR, I2C_WRITE_OPERATION);
- 103:Src/dac.c     **** 
- 104:Src/dac.c     **** 	if(temp == DacI2CM_I2C_MSTR_NO_ERROR)
- 105:Src/dac.c     **** 	{
- 106:Src/dac.c     **** 		temp = DacI2CM_I2CMasterWriteByte(((regAddr << 0x01) | (HI8(data) & 0x01)));
- 107:Src/dac.c     **** 
- 108:Src/dac.c     **** 		if(temp == DacI2CM_I2C_MSTR_NO_ERROR)
- 109:Src/dac.c     **** 		{
- 110:Src/dac.c     **** 			temp = DacI2CM_I2CMasterWriteByte(LO8(data));
- 111:Src/dac.c     **** 
- 112:Src/dac.c     **** 			if(temp == DacI2CM_I2C_MSTR_NO_ERROR)
- 113:Src/dac.c     **** 			{
- 114:Src/dac.c     **** 				temp = DacI2CM_I2CMasterSendStop();
- 115:Src/dac.c     **** 			}
- 116:Src/dac.c     **** 		}
- 117:Src/dac.c     **** 	}
- 118:Src/dac.c     **** 
- 119:Src/dac.c     **** 	return temp;
- 120:Src/dac.c     ****   */
- 121:Src/dac.c     **** }
-  89              		.loc 1 121 0
-  90 0058 05B0     		add	sp, sp, #20
-  91              	.LCFI2:
-  92              		.cfi_remember_state
-  93              		.cfi_def_cfa_offset 20
-  94              		@ sp needed
-  95 005a F0BD     		pop	{r4, r5, r6, r7, pc}
-  96              	.LVL7:
-  97              	.L3:
-  98              	.LCFI3:
-  99              		.cfi_restore_state
-  85:Src/dac.c     ****   uint8_t byte = I2C_WRITE_OPERATION;
- 100              		.loc 1 85 0
- 101 005c 0020     		movs	r0, #0
- 102              	.LVL8:
- 103 005e FBE7     		b	.L2
- 104              	.L6:
- 105              		.align	2
- 106              	.L5:
- 107 0060 00000000 		.word	hi2c
-ARM GAS  /tmp/ccdyiyl6.s 			page 5
+  73              		.loc 1 43 0
+  74 0036 404D     		ldr	r5, .L3
+  75 0038 0027     		movs	r7, #0
+  76 003a 2F70     		strb	r7, [r5]
+  44:Src/dac.c     ****   DacWrite.value = 0b10000111;
+  77              		.loc 1 44 0
+  78 003c 2E46     		mov	r6, r5
+  79 003e 8723     		movs	r3, #135
+  80 0040 06F8013F 		strb	r3, [r6, #1]!
+  45:Src/dac.c     ****   // I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  46:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+  81              		.loc 1 46 0
+  82 0044 4FF0FF39 		mov	r9, #-1
+  83 0048 CDF80890 		str	r9, [sp, #8]
+  84 004c 0824     		movs	r4, #8
+  85 004e 0194     		str	r4, [sp, #4]
+  86 0050 0096     		str	r6, [sp]
+  87 0052 2346     		mov	r3, r4
+  88 0054 3A46     		mov	r2, r7
+  89 0056 1021     		movs	r1, #16
+  90 0058 D8F80000 		ldr	r0, [r8]
+  91 005c FFF7FEFF 		bl	HAL_I2C_Mem_Write
+  92              	.LVL6:
+  47:Src/dac.c     **** 
+  48:Src/dac.c     ****   DacWrite.address = DAC_CTRL_2;
+  93              		.loc 1 48 0
+  94 0060 4FF0010B 		mov	fp, #1
+  95 0064 85F800B0 		strb	fp, [r5]
+  49:Src/dac.c     ****   DacWrite.value = 0b00100010;
+  96              		.loc 1 49 0
+  97 0068 2223     		movs	r3, #34
+  98 006a 6B70     		strb	r3, [r5, #1]
+  50:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  51:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+  99              		.loc 1 51 0
+ 100 006c CDF80890 		str	r9, [sp, #8]
+ 101 0070 0194     		str	r4, [sp, #4]
+ 102 0072 0096     		str	r6, [sp]
+ 103 0074 2346     		mov	r3, r4
+ 104 0076 5A46     		mov	r2, fp
+ 105 0078 1021     		movs	r1, #16
+ 106 007a D8F80000 		ldr	r0, [r8]
+ 107 007e FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 108              	.LVL7:
+  52:Src/dac.c     **** 
+  53:Src/dac.c     ****   DacWrite.address = DAC_CTRL_3;
+ 109              		.loc 1 53 0
+ 110 0082 0222     		movs	r2, #2
+ 111 0084 2A70     		strb	r2, [r5]
+  54:Src/dac.c     ****   DacWrite.value = 0b00000000;
+ 112              		.loc 1 54 0
+ 113 0086 6F70     		strb	r7, [r5, #1]
+  55:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  56:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+ 114              		.loc 1 56 0
+ 115 0088 CDF80890 		str	r9, [sp, #8]
+ 116 008c 0194     		str	r4, [sp, #4]
+ARM GAS  /tmp/ccpiw8q0.s 			page 4
 
 
- 108              		.cfi_endproc
- 109              	.LFE131:
- 111              		.section	.text.Dac_ResetOverI2C,"ax",%progbits
- 112              		.align	1
- 113              		.global	Dac_ResetOverI2C
- 114              		.syntax unified
- 115              		.thumb
- 116              		.thumb_func
- 117              		.fpu fpv4-sp-d16
- 119              	Dac_ResetOverI2C:
- 120              	.LFB132:
+ 117 008e 0096     		str	r6, [sp]
+ 118 0090 2346     		mov	r3, r4
+ 119 0092 1021     		movs	r1, #16
+ 120 0094 D8F80000 		ldr	r0, [r8]
+ 121 0098 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 122              	.LVL8:
+  57:Src/dac.c     **** 
+  58:Src/dac.c     ****   DacWrite.address = DAC_LCH_ATT;
+ 123              		.loc 1 58 0
+ 124 009c 0322     		movs	r2, #3
+ 125 009e 2A70     		strb	r2, [r5]
+  59:Src/dac.c     ****   DacWrite.value = 0xE9;
+ 126              		.loc 1 59 0
+ 127 00a0 E923     		movs	r3, #233
+ 128 00a2 6B70     		strb	r3, [r5, #1]
+  60:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  61:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+ 129              		.loc 1 61 0
+ 130 00a4 CDF80890 		str	r9, [sp, #8]
+ 131 00a8 0194     		str	r4, [sp, #4]
+ 132 00aa 0096     		str	r6, [sp]
+ 133 00ac 2346     		mov	r3, r4
+ 134 00ae 1021     		movs	r1, #16
+ 135 00b0 D8F80000 		ldr	r0, [r8]
+ 136 00b4 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 137              	.LVL9:
+  62:Src/dac.c     **** 
+  63:Src/dac.c     ****   DacWrite.address = DAC_RCH_ATT;
+ 138              		.loc 1 63 0
+ 139 00b8 0422     		movs	r2, #4
+ 140 00ba 2A70     		strb	r2, [r5]
+  64:Src/dac.c     ****   DacWrite.value = 0xE1;
+ 141              		.loc 1 64 0
+ 142 00bc E123     		movs	r3, #225
+ 143 00be 6B70     		strb	r3, [r5, #1]
+  65:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  66:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+ 144              		.loc 1 66 0
+ 145 00c0 CDF80890 		str	r9, [sp, #8]
+ 146 00c4 0194     		str	r4, [sp, #4]
+ 147 00c6 0096     		str	r6, [sp]
+ 148 00c8 2346     		mov	r3, r4
+ 149 00ca 1021     		movs	r1, #16
+ 150 00cc D8F80000 		ldr	r0, [r8]
+ 151 00d0 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 152              	.LVL10:
+  67:Src/dac.c     **** 
+  68:Src/dac.c     ****   DacWrite.address = DAC_CTRL_4;
+ 153              		.loc 1 68 0
+ 154 00d4 0522     		movs	r2, #5
+ 155 00d6 2A70     		strb	r2, [r5]
+  69:Src/dac.c     ****   DacWrite.value = 0b00000000;
+ 156              		.loc 1 69 0
+ 157 00d8 6F70     		strb	r7, [r5, #1]
+  70:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  71:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+ 158              		.loc 1 71 0
+ARM GAS  /tmp/ccpiw8q0.s 			page 5
+
+
+ 159 00da CDF80890 		str	r9, [sp, #8]
+ 160 00de 0194     		str	r4, [sp, #4]
+ 161 00e0 0096     		str	r6, [sp]
+ 162 00e2 2346     		mov	r3, r4
+ 163 00e4 1021     		movs	r1, #16
+ 164 00e6 D8F80000 		ldr	r0, [r8]
+ 165 00ea FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 166              	.LVL11:
+  72:Src/dac.c     **** 
+  73:Src/dac.c     ****   DacWrite.address = DAC_CTRL_7;
+ 167              		.loc 1 73 0
+ 168 00ee 2C70     		strb	r4, [r5]
+  74:Src/dac.c     ****   DacWrite.value = 0b00000000;
+ 169              		.loc 1 74 0
+ 170 00f0 6F70     		strb	r7, [r5, #1]
+  75:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  76:Src/dac.c     ****   HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+ 171              		.loc 1 76 0
+ 172 00f2 D8F80000 		ldr	r0, [r8]
+ 173 00f6 CDF80890 		str	r9, [sp, #8]
+ 174 00fa 0194     		str	r4, [sp, #4]
+ 175 00fc 0096     		str	r6, [sp]
+ 176 00fe 2346     		mov	r3, r4
+ 177 0100 2246     		mov	r2, r4
+ 178 0102 1021     		movs	r1, #16
+ 179 0104 FFF7FEFF 		bl	HAL_I2C_Mem_Write
+ 180              	.LVL12:
+  77:Src/dac.c     **** 
+  78:Src/dac.c     ****   // /Testing
+  79:Src/dac.c     **** 
+  80:Src/dac.c     ****   /* Lower gain to avoid clipping issue */
+  81:Src/dac.c     ****   //DacWrite.value = AK4558_OUT_VOL_MAX;
+  82:Src/dac.c     **** 
+  83:Src/dac.c     ****   //DacWrite.address = AK4558_LOUT_VOL;
+  84:Src/dac.c     ****   //I2C_WriteToSlave(AK4558_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  85:Src/dac.c     **** 
+  86:Src/dac.c     ****   //DacWrite.address = AK4558_ROUT_VOL;
+  87:Src/dac.c     ****   //I2C_WriteToSlave(AK4558_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  88:Src/dac.c     **** 
+  89:Src/dac.c     ****   // Set sample rate to 512*fs
+  90:Src/dac.c     ****   // I think this is only for when dac is Master mode?
+  91:Src/dac.c     ****   //DacWrite.address = DAC_REG_MASTER_MODE_CTRL;
+  92:Src/dac.c     ****   //DacWrite.value = DAC_DEF_MASTER_MODE_CTRL;
+  93:Src/dac.c     ****   //I2C_WriteToSlave(WM8776_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  94:Src/dac.c     **** 
+  95:Src/dac.c     ****   //UpdateDacVolume(255);
+  96:Src/dac.c     **** 
+  97:Src/dac.c     **** 
+  98:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
+ 181              		.loc 1 98 0
+ 182 0108 3A46     		mov	r2, r7
+ 183 010a 4FF40071 		mov	r1, #512
+ 184 010e 5046     		mov	r0, r10
+ 185 0110 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 186              	.LVL13:
+  99:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
+ 187              		.loc 1 99 0
+ARM GAS  /tmp/ccpiw8q0.s 			page 6
+
+
+ 188 0114 3A46     		mov	r2, r7
+ 189 0116 4FF48051 		mov	r1, #4096
+ 190 011a 5046     		mov	r0, r10
+ 191 011c FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 192              	.LVL14:
+ 100:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
+ 193              		.loc 1 100 0
+ 194 0120 3A46     		mov	r2, r7
+ 195 0122 8021     		movs	r1, #128
+ 196 0124 5046     		mov	r0, r10
+ 197 0126 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 198              	.LVL15:
+ 101:Src/dac.c     **** 
+ 102:Src/dac.c     ****   dacInit = true;
+ 199              		.loc 1 102 0
+ 200 012a 044B     		ldr	r3, .L3+4
+ 201 012c 83F800B0 		strb	fp, [r3]
+ 103:Src/dac.c     **** }
+ 202              		.loc 1 103 0
+ 203 0130 05B0     		add	sp, sp, #20
+ 204              	.LCFI2:
+ 205              		.cfi_def_cfa_offset 36
+ 206              		@ sp needed
+ 207 0132 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 208              	.L4:
+ 209 0136 00BF     		.align	2
+ 210              	.L3:
+ 211 0138 00000000 		.word	DacWrite
+ 212 013c 00000000 		.word	.LANCHOR1
+ 213 0140 00000000 		.word	.LANCHOR0
+ 214 0144 00100240 		.word	1073876992
+ 215              		.cfi_endproc
+ 216              	.LFE130:
+ 218              		.section	.text.UpdateDacAttenuation,"ax",%progbits
+ 219              		.align	1
+ 220              		.global	UpdateDacAttenuation
+ 221              		.syntax unified
+ 222              		.thumb
+ 223              		.thumb_func
+ 224              		.fpu fpv4-sp-d16
+ 226              	UpdateDacAttenuation:
+ 227              	.LFB132:
+ 104:Src/dac.c     **** 
+ 105:Src/dac.c     **** /*******************************************************************************
+ 106:Src/dac.c     ****  * Function Name: UpdateDacVolume
+ 107:Src/dac.c     ****  ********************************************************************************
+ 108:Src/dac.c     ****  * Summary: Updates the actual dac volume control with the volume parameter
+ 109:Src/dac.c     ****  *          passed
+ 110:Src/dac.c     ****  *
+ 111:Src/dac.c     ****  * Parameters:
+ 112:Src/dac.c     ****  *  volume - value of volume to be written to the dac register
+ 113:Src/dac.c     ****  *
+ 114:Src/dac.c     ****  * Return:
+ 115:Src/dac.c     ****  *  void
+ 116:Src/dac.c     ****  *
+ 117:Src/dac.c     ****  *******************************************************************************/
+ 118:Src/dac.c     **** void UpdateDacVolume(uint8_t volume)
+ARM GAS  /tmp/ccpiw8q0.s 			page 7
+
+
+ 119:Src/dac.c     **** {
+ 120:Src/dac.c     ****   uint8_t volumeMapper;
+ 121:Src/dac.c     ****   /* Change from -127 to +127 range to 0 to 255 range */
+ 122:Src/dac.c     ****   volume += 127;
+ 123:Src/dac.c     **** 
+ 124:Src/dac.c     ****   /* Remap from volume control to 8-bit attenuation */
+ 125:Src/dac.c     ****   volumeMapper = 255 - (volume);
+ 126:Src/dac.c     **** 
+ 127:Src/dac.c     ****   volumeMapper = (USB_currentMute | (volume == 255)) ? \
+ 128:Src/dac.c     ****     DAC_MAXIMUM_ATTENUATION : volumeMapper;
+ 129:Src/dac.c     ****   UpdateDacAttenuation(volumeMapper);
+ 130:Src/dac.c     **** }
+ 131:Src/dac.c     **** 
+ 132:Src/dac.c     **** /*******************************************************************************
+ 133:Src/dac.c     ****  * Function Name: UpdateDacAttenuation
+ 134:Src/dac.c     ****  ********************************************************************************
+ 135:Src/dac.c     ****  * Summary: Updates the actual DAC DAC attenuator with the attenuation parameter
+ 136:Src/dac.c     ****  *          passed
+ 137:Src/dac.c     ****  *
+ 138:Src/dac.c     ****  * Parameters:
+ 139:Src/dac.c     ****  *  attenuation - value of attenuation to be written to the DAC register
+ 140:Src/dac.c     ****  *
+ 141:Src/dac.c     ****  * Return:
+ 142:Src/dac.c     ****  *  void
+ 143:Src/dac.c     ****  *
+ 144:Src/dac.c     ****  *******************************************************************************/
+ 145:Src/dac.c     **** void UpdateDacAttenuation(uint8_t attenuation)
+ 146:Src/dac.c     **** {
+ 228              		.loc 1 146 0
+ 229              		.cfi_startproc
+ 230              		@ args = 0, pretend = 0, frame = 0
+ 231              		@ frame_needed = 0, uses_anonymous_args = 0
+ 232              		@ link register save eliminated.
+ 233              	.LVL16:
+ 147:Src/dac.c     ****   // Analog attenuation headphone left
+ 148:Src/dac.c     ****   DacWrite.address = DAC_LCH_ATT;
+ 149:Src/dac.c     ****   DacWrite.value = attenuation;
+ 234              		.loc 1 149 0
+ 235 0000 024B     		ldr	r3, .L6
+ 236 0002 5870     		strb	r0, [r3, #1]
+ 150:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+ 151:Src/dac.c     **** 
+ 152:Src/dac.c     ****   // Analog attenuation headphone right
+ 153:Src/dac.c     ****   DacWrite.address = DAC_RCH_ATT;
+ 237              		.loc 1 153 0
+ 238 0004 0422     		movs	r2, #4
+ 239 0006 1A70     		strb	r2, [r3]
+ 240 0008 7047     		bx	lr
+ 241              	.L7:
+ 242 000a 00BF     		.align	2
+ 243              	.L6:
+ 244 000c 00000000 		.word	DacWrite
+ 245              		.cfi_endproc
+ 246              	.LFE132:
+ 248              		.section	.text.UpdateDacVolume,"ax",%progbits
+ 249              		.align	1
+ 250              		.global	UpdateDacVolume
+ARM GAS  /tmp/ccpiw8q0.s 			page 8
+
+
+ 251              		.syntax unified
+ 252              		.thumb
+ 253              		.thumb_func
+ 254              		.fpu fpv4-sp-d16
+ 256              	UpdateDacVolume:
+ 257              	.LFB131:
+ 119:Src/dac.c     ****   uint8_t volumeMapper;
+ 258              		.loc 1 119 0
+ 259              		.cfi_startproc
+ 260              		@ args = 0, pretend = 0, frame = 0
+ 261              		@ frame_needed = 0, uses_anonymous_args = 0
+ 262              	.LVL17:
+ 263 0000 08B5     		push	{r3, lr}
+ 264              	.LCFI3:
+ 265              		.cfi_def_cfa_offset 8
+ 266              		.cfi_offset 3, -8
+ 267              		.cfi_offset 14, -4
  122:Src/dac.c     **** 
- 123:Src/dac.c     **** /*******************************************************************************
- 124:Src/dac.c     **** * Function Name: Dac_SetSamplingRate
- 125:Src/dac.c     **** ********************************************************************************
- 126:Src/dac.c     **** * Summary:
- 127:Src/dac.c     **** *   This function sets the sampling rate of the codec. Note that the codec must be deactivated 
- 128:Src/dac.c     **** *	before configuring the sample rate.
- 129:Src/dac.c     **** *
- 130:Src/dac.c     **** *
- 131:Src/dac.c     **** * Parameters:  
- 132:Src/dac.c     **** *	srCtrlField - Sampling control register settings 
- 133:Src/dac.c     **** *					
- 134:Src/dac.c     **** *
- 135:Src/dac.c     **** * Return:
- 136:Src/dac.c     **** *   uint8_t - I2C master transaction error status
- 137:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
- 138:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
- 139:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
- 140:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
- 141:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
- 142:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
- 143:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
- 144:Src/dac.c     **** *
- 145:Src/dac.c     **** *******************************************************************************
- 146:Src/dac.c     **** uint8_t Dac_SetSamplingRate(uint8_t srCtrlField)
- 147:Src/dac.c     **** {		
- 148:Src/dac.c     **** 	 This function modifies the BOSR & SR bits of sampling rate control register.
- 149:Src/dac.c     ****      * srCtrlField : bit[0] - BOSR, bit[1:4] - SR.
- 150:Src/dac.c     ****      
- 151:Src/dac.c     ****     return Dac_SendData(DAC_REG_SAMPLING_CTRL, srCtrlField);;
- 152:Src/dac.c     **** }
- 153:Src/dac.c     **** */
- 154:Src/dac.c     **** 
- 155:Src/dac.c     **** /*******************************************************************************
- 156:Src/dac.c     **** * Function Name: Dac_AdjustBothHeadphoneVolume
- 157:Src/dac.c     **** ********************************************************************************
- 158:Src/dac.c     **** * Summary:
- 159:Src/dac.c     **** *   This function updates the volume of both the left and right channels of the
- 160:Src/dac.c     **** * 	headphone output.
- 161:Src/dac.c     **** *
- 162:Src/dac.c     **** *
- 163:Src/dac.c     **** * Parameters:  
- 164:Src/dac.c     **** *	volume - 0 - Mute
- 165:Src/dac.c     **** *			 1 to DAC_HP_VOLUME_MAX levels
- 166:Src/dac.c     **** *
- 167:Src/dac.c     **** * Return:
-ARM GAS  /tmp/ccdyiyl6.s 			page 6
+ 268              		.loc 1 122 0
+ 269 0002 7F30     		adds	r0, r0, #127
+ 270              	.LVL18:
+ 271 0004 C3B2     		uxtb	r3, r0
+ 272              	.LVL19:
+ 125:Src/dac.c     **** 
+ 273              		.loc 1 125 0
+ 274 0006 D843     		mvns	r0, r3
+ 275 0008 C0B2     		uxtb	r0, r0
+ 276              	.LVL20:
+ 127:Src/dac.c     ****     DAC_MAXIMUM_ATTENUATION : volumeMapper;
+ 277              		.loc 1 127 0
+ 278 000a 064A     		ldr	r2, .L12
+ 279 000c 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 280 000e FF2B     		cmp	r3, #255
+ 281 0010 14BF     		ite	ne
+ 282 0012 1346     		movne	r3, r2
+ 283 0014 42F00103 		orreq	r3, r2, #1
+ 284              	.LVL21:
+ 285 0018 03B1     		cbz	r3, .L9
+ 286 001a FF20     		movs	r0, #255
+ 287              	.LVL22:
+ 288              	.L9:
+ 129:Src/dac.c     **** }
+ 289              		.loc 1 129 0 discriminator 4
+ 290 001c FFF7FEFF 		bl	UpdateDacAttenuation
+ 291              	.LVL23:
+ 292 0020 08BD     		pop	{r3, pc}
+ 293              	.L13:
+ 294 0022 00BF     		.align	2
+ 295              	.L12:
+ 296 0024 00000000 		.word	USB_currentMute
+ 297              		.cfi_endproc
+ 298              	.LFE131:
+ 300              		.section	.text.DacPowerDown,"ax",%progbits
+ 301              		.align	1
+ 302              		.global	DacPowerDown
+ 303              		.syntax unified
+ 304              		.thumb
+ARM GAS  /tmp/ccpiw8q0.s 			page 9
 
 
- 168:Src/dac.c     **** *   uint8_t - I2C master transaction error status
- 169:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
- 170:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
- 171:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
- 172:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
- 173:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
- 174:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
- 175:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
- 176:Src/dac.c     **** *
- 177:Src/dac.c     **** *******************************************************************************
- 178:Src/dac.c     **** 
- 179:Src/dac.c     **** uint8_t Dac_AdjustBothHeadphoneVolume(uint8_t volume)
- 180:Src/dac.c     **** {
- 181:Src/dac.c     **** 	if(volume > DAC_HP_VOLUME_MAX)
- 182:Src/dac.c     **** 	{
- 183:Src/dac.c     **** 		volume = DAC_HP_VOLUME_MAX;
- 184:Src/dac.c     **** 	}
- 185:Src/dac.c     **** 	
- 186:Src/dac.c     **** 	return Dac_SendData(DAC_REG_LCH_VOLUME, (volume + (DAC_LHPOUT_BOTH + DAC_LHPOUT_LZCEN + DAC_HP_MUT
- 187:Src/dac.c     **** }
- 188:Src/dac.c     **** 
- 189:Src/dac.c     **** 
- 190:Src/dac.c     **** *******************************************************************************
- 191:Src/dac.c     **** * Function Name: Dac_Activate
- 192:Src/dac.c     **** ********************************************************************************
- 193:Src/dac.c     **** * Summary:
- 194:Src/dac.c     **** *   Activates the codec - This function is called in conjunction with Dac_Deactivate API
- 195:Src/dac.c     **** *	after successful configuration update of the codec.
- 196:Src/dac.c     **** *
- 197:Src/dac.c     **** *
- 198:Src/dac.c     **** * Parameters:  
- 199:Src/dac.c     **** *	None
- 200:Src/dac.c     **** *
- 201:Src/dac.c     **** * Return:
- 202:Src/dac.c     **** *   uint8_t - I2C master transaction error status
- 203:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
- 204:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
- 205:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
- 206:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
- 207:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
- 208:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
- 209:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
- 210:Src/dac.c     **** *
- 211:Src/dac.c     **** *******************************************************************************
- 212:Src/dac.c     **** uint8_t Dac_Activate(void)
- 213:Src/dac.c     **** {
- 214:Src/dac.c     **** 	return Dac_SendData(DAC_REG_ACTIVATE, DAC_CTRL_ACTIVATE); 
- 215:Src/dac.c     **** }
- 216:Src/dac.c     **** */
- 217:Src/dac.c     **** /*******************************************************************************
- 218:Src/dac.c     **** * Function Name: Dac_Deactivate
- 219:Src/dac.c     **** ********************************************************************************
- 220:Src/dac.c     **** * Summary:
- 221:Src/dac.c     **** *   Deactivates the DAC - the configuration is retained, just the DAC input/outputs are
- 222:Src/dac.c     **** *	disabled. The function should be called before changing any setting in the codec over I2C
- 223:Src/dac.c     **** *
- 224:Src/dac.c     **** *
-ARM GAS  /tmp/ccdyiyl6.s 			page 7
+ 305              		.thumb_func
+ 306              		.fpu fpv4-sp-d16
+ 308              	DacPowerDown:
+ 309              	.LFB133:
+ 154:Src/dac.c     ****   DacWrite.value = attenuation;
+ 155:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+ 156:Src/dac.c     **** 
+ 157:Src/dac.c     ****   // Master analog attenuation
+ 158:Src/dac.c     ****   //DacWrite.address = DAC_REG_HP_MASTER_ATTENUATION;
+ 159:Src/dac.c     ****   //DacWrite.value = attenuation;
+ 160:Src/dac.c     ****   //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+ 161:Src/dac.c     **** }
+ 162:Src/dac.c     **** 
+ 163:Src/dac.c     **** 
+ 164:Src/dac.c     **** /*******************************************************************************
+ 165:Src/dac.c     ****  * Function Name: DacPowerDown
+ 166:Src/dac.c     ****  ********************************************************************************
+ 167:Src/dac.c     ****  * Summary: Powers down dac through I2C
+ 168:Src/dac.c     ****  *
+ 169:Src/dac.c     ****  * Parameters:
+ 170:Src/dac.c     ****  *  None
+ 171:Src/dac.c     ****  *
+ 172:Src/dac.c     ****  * Return:
+ 173:Src/dac.c     ****  *  void
+ 174:Src/dac.c     ****  *
+ 175:Src/dac.c     ****  *******************************************************************************/
+ 176:Src/dac.c     **** void DacPowerDown(void)
+ 177:Src/dac.c     **** {
+ 310              		.loc 1 177 0
+ 311              		.cfi_startproc
+ 312              		@ args = 0, pretend = 0, frame = 0
+ 313              		@ frame_needed = 0, uses_anonymous_args = 0
+ 314              		@ link register save eliminated.
+ 315 0000 7047     		bx	lr
+ 316              		.cfi_endproc
+ 317              	.LFE133:
+ 319              		.section	.text.DacUpdateSampleRate,"ax",%progbits
+ 320              		.align	1
+ 321              		.global	DacUpdateSampleRate
+ 322              		.syntax unified
+ 323              		.thumb
+ 324              		.thumb_func
+ 325              		.fpu fpv4-sp-d16
+ 327              	DacUpdateSampleRate:
+ 328              	.LFB134:
+ 178:Src/dac.c     ****   //DacWrite.address = DAC_REG_POWER_CTRL;
+ 179:Src/dac.c     ****   //DacWrite.value = DAC_POWER_DOWN;
+ 180:Src/dac.c     ****   //I2C_WriteToSlave(WM8776_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+ 181:Src/dac.c     **** }
+ 182:Src/dac.c     **** 
+ 183:Src/dac.c     **** 
+ 184:Src/dac.c     **** /*******************************************************************************
+ 185:Src/dac.c     ****  * Function Name: DacUpdateSampleRate
+ 186:Src/dac.c     ****  ********************************************************************************
+ 187:Src/dac.c     ****  * Summary: Updates DAC's sample rate through I2C.  With DAC in Manual mode,
+ 188:Src/dac.c     ****  *          THD is better, but we need to set DFS manually.
+ 189:Src/dac.c     ****  *
+ARM GAS  /tmp/ccpiw8q0.s 			page 10
 
 
- 225:Src/dac.c     **** * Parameters:  
- 226:Src/dac.c     **** *	None
- 227:Src/dac.c     **** *
- 228:Src/dac.c     **** * Return:
- 229:Src/dac.c     **** *   uint8_t - I2C master transaction error status
- 230:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
- 231:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
- 232:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
- 233:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
- 234:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
- 235:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
- 236:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
- 237:Src/dac.c     **** *
- 238:Src/dac.c     **** *******************************************************************************
- 239:Src/dac.c     **** uint8_t Dac_Deactivate(void)
- 240:Src/dac.c     **** {
- 241:Src/dac.c     **** 	return Dac_SendData(DAC_REG_ACTIVATE, DAC_CTRL_DEACTIVATE); 
- 242:Src/dac.c     **** }
- 243:Src/dac.c     **** */
- 244:Src/dac.c     **** 
- 245:Src/dac.c     **** /*******************************************************************************
- 246:Src/dac.c     **** * Function Name: Dac_ResetOverI2C
- 247:Src/dac.c     **** ********************************************************************************
- 248:Src/dac.c     **** * Summary:
- 249:Src/dac.c     **** *   Resets the codec by sending an I2C command
- 250:Src/dac.c     **** *
- 251:Src/dac.c     **** * Parameters:  
- 252:Src/dac.c     **** *	None
- 253:Src/dac.c     **** *
- 254:Src/dac.c     **** * Return:
- 255:Src/dac.c     **** *   uint8_t - I2C master transaction error status
- 256:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
- 257:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
- 258:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
- 259:Src/dac.c     **** *				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
- 260:Src/dac.c     **** *				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
- 261:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
- 262:Src/dac.c     **** *				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
- 263:Src/dac.c     **** *
- 264:Src/dac.c     **** *******************************************************************************/
- 265:Src/dac.c     **** uint8_t Dac_ResetOverI2C(void)
- 266:Src/dac.c     **** {
- 121              		.loc 1 266 0
- 122              		.cfi_startproc
- 123              		@ args = 0, pretend = 0, frame = 0
- 124              		@ frame_needed = 0, uses_anonymous_args = 0
- 125 0000 08B5     		push	{r3, lr}
- 126              	.LCFI4:
- 127              		.cfi_def_cfa_offset 8
- 128              		.cfi_offset 3, -8
- 129              		.cfi_offset 14, -4
- 267:Src/dac.c     **** 	return Dac_SendData(DAC_REG_RESET, DAC_CTRL_RESET);
- 130              		.loc 1 267 0
- 131 0002 0021     		movs	r1, #0
- 132 0004 0846     		mov	r0, r1
- 133 0006 FFF7FEFF 		bl	Dac_SendData
- 134              	.LVL9:
-ARM GAS  /tmp/ccdyiyl6.s 			page 8
+ 190:Src/dac.c     ****  * Parameters:
+ 191:Src/dac.c     ****  *  uint
+ 192:Src/dac.c     ****  *
+ 193:Src/dac.c     ****  * Return:
+ 194:Src/dac.c     ****  *  void
+ 195:Src/dac.c     ****  *
+ 196:Src/dac.c     ****  *******************************************************************************/
+ 197:Src/dac.c     **** void DacUpdateSampleRate(uint8_t rate)
+ 198:Src/dac.c     **** {
+ 329              		.loc 1 198 0
+ 330              		.cfi_startproc
+ 331              		@ args = 0, pretend = 0, frame = 0
+ 332              		@ frame_needed = 0, uses_anonymous_args = 0
+ 333              		@ link register save eliminated.
+ 334              	.LVL24:
+ 199:Src/dac.c     ****   // Control 2
+ 200:Src/dac.c     ****   //DacWrite.address = DAC_REG_MASTER_MODE_CTRL;
+ 201:Src/dac.c     **** 
+ 202:Src/dac.c     ****   switch (rate)
+ 335              		.loc 1 202 0
+ 336 0000 0338     		subs	r0, r0, #3
+ 337              	.LVL25:
+ 338 0002 0528     		cmp	r0, #5
+ 339 0004 08D8     		bhi	.L15
+ 340 0006 DFE800F0 		tbb	[pc, r0]
+ 341              	.L18:
+ 342 000a 03       		.byte	(.L17-.L18)/2
+ 343 000b 03       		.byte	(.L17-.L18)/2
+ 344 000c 03       		.byte	(.L17-.L18)/2
+ 345 000d 03       		.byte	(.L17-.L18)/2
+ 346 000e 04       		.byte	(.L19-.L18)/2
+ 347 000f 04       		.byte	(.L19-.L18)/2
+ 348              		.p2align 1
+ 349              	.L17:
+ 350 0010 FEE7     		b	.L17
+ 351              	.L19:
+ 203:Src/dac.c     ****     {
+ 204:Src/dac.c     **** 		case RATE_8KHZ:
+ 205:Src/dac.c     **** 		case RATE_11KHZ:
+ 206:Src/dac.c     ****     case RATE_16KHZ:
+ 207:Src/dac.c     **** 		case RATE_22KHZ:
+ 208:Src/dac.c     ****       // Not in our descriptors, so should never happen
+ 209:Src/dac.c     ****       //Mute_LED_Write(true);
+ 210:Src/dac.c     ****       while(1);
+ 211:Src/dac.c     **** 
+ 212:Src/dac.c     ****     case RATE_32KHZ:
+ 213:Src/dac.c     **** 		case RATE_44KHZ:
+ 214:Src/dac.c     **** 		case RATE_48KHZ:
+ 215:Src/dac.c     ****       //DacWrite.value = DAC_ADCRATE | DAC_DACRATE;
+ 216:Src/dac.c     **** 			break;
+ 217:Src/dac.c     **** 
+ 218:Src/dac.c     ****     case RATE_88KHZ:
+ 219:Src/dac.c     **** 		case RATE_96KHZ:
+ 220:Src/dac.c     ****       DacWrite.value = 0x22;
+ 352              		.loc 1 220 0
+ 353 0012 2222     		movs	r2, #34
+ 354 0014 014B     		ldr	r3, .L20
+ARM GAS  /tmp/ccpiw8q0.s 			page 11
 
 
- 268:Src/dac.c     **** }
- 135              		.loc 1 268 0
- 136 000a 08BD     		pop	{r3, pc}
- 137              		.cfi_endproc
- 138              	.LFE132:
- 140              		.section	.text.Dac_Init,"ax",%progbits
- 141              		.align	1
- 142              		.global	Dac_Init
- 143              		.syntax unified
- 144              		.thumb
- 145              		.thumb_func
- 146              		.fpu fpv4-sp-d16
- 148              	Dac_Init:
- 149              	.LFB130:
-  35:Src/dac.c     ****   hi2c = i2c_handle;
- 150              		.loc 1 35 0
- 151              		.cfi_startproc
- 152              		@ args = 0, pretend = 0, frame = 0
- 153              		@ frame_needed = 0, uses_anonymous_args = 0
- 154              	.LVL10:
- 155 0000 38B5     		push	{r3, r4, r5, lr}
- 156              	.LCFI5:
- 157              		.cfi_def_cfa_offset 16
- 158              		.cfi_offset 3, -16
- 159              		.cfi_offset 4, -12
- 160              		.cfi_offset 5, -8
- 161              		.cfi_offset 14, -4
-  36:Src/dac.c     **** 
- 162              		.loc 1 36 0
- 163 0002 134D     		ldr	r5, .L13
- 164 0004 2860     		str	r0, [r5]
-  43:Src/dac.c     ****   HAL_Delay(10);
- 165              		.loc 1 43 0
- 166 0006 134C     		ldr	r4, .L13+4
- 167 0008 0022     		movs	r2, #0
- 168 000a 4FF40051 		mov	r1, #8192
- 169 000e 2046     		mov	r0, r4
- 170              	.LVL11:
- 171 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 172              	.LVL12:
-  44:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET);
- 173              		.loc 1 44 0
- 174 0014 0A20     		movs	r0, #10
- 175 0016 FFF7FEFF 		bl	HAL_Delay
- 176              	.LVL13:
-  45:Src/dac.c     ****   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
- 177              		.loc 1 45 0
- 178 001a 0122     		movs	r2, #1
- 179 001c 4FF40051 		mov	r1, #8192
- 180 0020 2046     		mov	r0, r4
- 181 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
- 182              	.LVL14:
-  46:Src/dac.c     **** 
- 183              		.loc 1 46 0
- 184 0026 0022     		movs	r2, #0
- 185 0028 4FF48051 		mov	r1, #4096
- 186 002c 2046     		mov	r0, r4
-ARM GAS  /tmp/ccdyiyl6.s 			page 9
-
-
- 187 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
- 188              	.LVL15:
-  50:Src/dac.c     ****     ret = Dac_ResetOverI2C();
- 189              		.loc 1 50 0
- 190 0032 2B68     		ldr	r3, [r5]
- 191 0034 4BB1     		cbz	r3, .L11
-  51:Src/dac.c     ****     //CyDelay(DAC_RESET_WAIT_DELAY);
- 192              		.loc 1 51 0
- 193 0036 FFF7FEFF 		bl	Dac_ResetOverI2C
- 194              	.LVL16:
-  53:Src/dac.c     **** 
- 195              		.loc 1 53 0
- 196 003a 0A20     		movs	r0, #10
- 197 003c FFF7FEFF 		bl	HAL_Delay
- 198              	.LVL17:
-  55:Src/dac.c     ****   }
- 199              		.loc 1 55 0
- 200 0040 8721     		movs	r1, #135
- 201 0042 0020     		movs	r0, #0
- 202 0044 FFF7FEFF 		bl	Dac_SendData
- 203              	.LVL18:
- 204 0048 38BD     		pop	{r3, r4, r5, pc}
- 205              	.LVL19:
- 206              	.L11:
-  48:Src/dac.c     **** 
- 207              		.loc 1 48 0
- 208 004a 0020     		movs	r0, #0
- 209              	.LVL20:
-  59:Src/dac.c     **** 
- 210              		.loc 1 59 0
- 211 004c 38BD     		pop	{r3, r4, r5, pc}
- 212              	.L14:
- 213 004e 00BF     		.align	2
- 214              	.L13:
- 215 0050 00000000 		.word	hi2c
- 216 0054 00100240 		.word	1073876992
- 217              		.cfi_endproc
- 218              	.LFE130:
- 220              		.comm	hi2c,4,4
- 221              		.text
- 222              	.Letext0:
- 223              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 224              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 225              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 226              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 227              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 228              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 229              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
- 230              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 231              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
- 232              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 233              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 234              		.file 13 "Inc/globals.h"
- 235              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
-ARM GAS  /tmp/ccdyiyl6.s 			page 10
+ 355 0016 5A70     		strb	r2, [r3, #1]
+ 356              	.L15:
+ 357 0018 7047     		bx	lr
+ 358              	.L21:
+ 359 001a 00BF     		.align	2
+ 360              	.L20:
+ 361 001c 00000000 		.word	DacWrite
+ 362              		.cfi_endproc
+ 363              	.LFE134:
+ 365              		.global	dacInit
+ 366              		.comm	DacWrite,2,4
+ 367              		.section	.bss.dacInit,"aw",%nobits
+ 368              		.set	.LANCHOR1,. + 0
+ 371              	dacInit:
+ 372 0000 00       		.space	1
+ 373              		.section	.bss.hi2c,"aw",%nobits
+ 374              		.align	2
+ 375              		.set	.LANCHOR0,. + 0
+ 378              	hi2c:
+ 379 0000 00000000 		.space	4
+ 380              		.text
+ 381              	.Letext0:
+ 382              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 383              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 384              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 385              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 386              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 387              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 388              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 389              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 390              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 391              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 392              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 393              		.file 13 "Inc/globals.h"
+ 394              		.file 14 "Inc/dac.h"
+ 395              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  /tmp/ccpiw8q0.s 			page 12
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 dac.c
-     /tmp/ccdyiyl6.s:18     .text.Dac_SendData:0000000000000000 $t
-     /tmp/ccdyiyl6.s:25     .text.Dac_SendData:0000000000000000 Dac_SendData
-     /tmp/ccdyiyl6.s:107    .text.Dac_SendData:0000000000000060 $d
-                            *COM*:0000000000000004 hi2c
-     /tmp/ccdyiyl6.s:112    .text.Dac_ResetOverI2C:0000000000000000 $t
-     /tmp/ccdyiyl6.s:119    .text.Dac_ResetOverI2C:0000000000000000 Dac_ResetOverI2C
-     /tmp/ccdyiyl6.s:141    .text.Dac_Init:0000000000000000 $t
-     /tmp/ccdyiyl6.s:148    .text.Dac_Init:0000000000000000 Dac_Init
-     /tmp/ccdyiyl6.s:215    .text.Dac_Init:0000000000000050 $d
+     /tmp/ccpiw8q0.s:18     .text.InitDac:0000000000000000 $t
+     /tmp/ccpiw8q0.s:25     .text.InitDac:0000000000000000 InitDac
+     /tmp/ccpiw8q0.s:211    .text.InitDac:0000000000000138 $d
+                            *COM*:0000000000000002 DacWrite
+     /tmp/ccpiw8q0.s:219    .text.UpdateDacAttenuation:0000000000000000 $t
+     /tmp/ccpiw8q0.s:226    .text.UpdateDacAttenuation:0000000000000000 UpdateDacAttenuation
+     /tmp/ccpiw8q0.s:244    .text.UpdateDacAttenuation:000000000000000c $d
+     /tmp/ccpiw8q0.s:249    .text.UpdateDacVolume:0000000000000000 $t
+     /tmp/ccpiw8q0.s:256    .text.UpdateDacVolume:0000000000000000 UpdateDacVolume
+     /tmp/ccpiw8q0.s:296    .text.UpdateDacVolume:0000000000000024 $d
+     /tmp/ccpiw8q0.s:301    .text.DacPowerDown:0000000000000000 $t
+     /tmp/ccpiw8q0.s:308    .text.DacPowerDown:0000000000000000 DacPowerDown
+     /tmp/ccpiw8q0.s:320    .text.DacUpdateSampleRate:0000000000000000 $t
+     /tmp/ccpiw8q0.s:327    .text.DacUpdateSampleRate:0000000000000000 DacUpdateSampleRate
+     /tmp/ccpiw8q0.s:342    .text.DacUpdateSampleRate:000000000000000a $d
+     /tmp/ccpiw8q0.s:348    .text.DacUpdateSampleRate:0000000000000010 $t
+     /tmp/ccpiw8q0.s:361    .text.DacUpdateSampleRate:000000000000001c $d
+     /tmp/ccpiw8q0.s:371    .bss.dacInit:0000000000000000 dacInit
+     /tmp/ccpiw8q0.s:372    .bss.dacInit:0000000000000000 $d
+     /tmp/ccpiw8q0.s:374    .bss.hi2c:0000000000000000 $d
+     /tmp/ccpiw8q0.s:378    .bss.hi2c:0000000000000000 hi2c
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
-HAL_I2C_Master_Transmit
 HAL_GPIO_WritePin
 HAL_Delay
+HAL_I2C_Mem_Write
+USB_currentMute

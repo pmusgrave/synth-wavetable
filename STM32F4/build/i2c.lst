@@ -1,0 +1,246 @@
+ARM GAS  /tmp/ccsPx6vB.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.eabi_attribute 27, 1
+   3              		.eabi_attribute 28, 1
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.file	"i2c.c"
+  14              		.text
+  15              	.Ltext0:
+  16              		.cfi_sections	.debug_frame
+  17              		.section	.text.I2C_WriteToSlave,"ax",%progbits
+  18              		.align	1
+  19              		.global	I2C_WriteToSlave
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  23              		.fpu fpv4-sp-d16
+  25              	I2C_WriteToSlave:
+  26              	.LFB130:
+  27              		.file 1 "Src/i2c.c"
+   1:Src/i2c.c     **** #include "i2c.h"
+   2:Src/i2c.c     **** #include "globals.h"
+   3:Src/i2c.c     **** #include <stdint.h>
+   4:Src/i2c.c     **** 
+   5:Src/i2c.c     **** void I2C_WriteToSlave(I2C_HandleTypeDef* i2c_handle, uint8_t address, uint8_t* writeBuffer, uint8_t
+  28              		.loc 1 5 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              	.LVL0:
+  33 0000 2DE9F041 		push	{r4, r5, r6, r7, r8, lr}
+  34              	.LCFI0:
+  35              		.cfi_def_cfa_offset 24
+  36              		.cfi_offset 4, -24
+  37              		.cfi_offset 5, -20
+  38              		.cfi_offset 6, -16
+  39              		.cfi_offset 7, -12
+  40              		.cfi_offset 8, -8
+  41              		.cfi_offset 14, -4
+  42 0004 82B0     		sub	sp, sp, #8
+  43              	.LCFI1:
+  44              		.cfi_def_cfa_offset 32
+  45 0006 8046     		mov	r8, r0
+  46 0008 0F46     		mov	r7, r1
+  47 000a 1646     		mov	r6, r2
+  48 000c 1D46     		mov	r5, r3
+  49              	.LVL1:
+  50              	.LBB2:
+   6:Src/i2c.c     ****   //while (HAL_I2C_GetState(i2c_handle) != HAL_OK)
+   7:Src/i2c.c     ****   //  ;
+   8:Src/i2c.c     **** 
+ARM GAS  /tmp/ccsPx6vB.s 			page 2
+
+
+   9:Src/i2c.c     ****   //HAL_I2C_Master_Transmit(i2c_handle, address, writeBuffer, 8, 100);
+  10:Src/i2c.c     ****   //count = DELAY_COUNT;
+  11:Src/i2c.c     ****   //HAL_Delay(100);
+  12:Src/i2c.c     **** 
+  13:Src/i2c.c     ****   for (int i = 0; i < length; i++) {
+  51              		.loc 1 13 0
+  52 000e 0024     		movs	r4, #0
+  53 0010 08E0     		b	.L2
+  54              	.LVL2:
+  55              	.L3:
+  14:Src/i2c.c     ****     HAL_I2C_Master_Transmit(i2c_handle, address, writeBuffer+i, 8, 100);
+  56              		.loc 1 14 0 discriminator 3
+  57 0012 6423     		movs	r3, #100
+  58 0014 0093     		str	r3, [sp]
+  59 0016 0823     		movs	r3, #8
+  60 0018 3219     		adds	r2, r6, r4
+  61 001a 3946     		mov	r1, r7
+  62 001c 4046     		mov	r0, r8
+  63 001e FFF7FEFF 		bl	HAL_I2C_Master_Transmit
+  64              	.LVL3:
+  13:Src/i2c.c     ****     HAL_I2C_Master_Transmit(i2c_handle, address, writeBuffer+i, 8, 100);
+  65              		.loc 1 13 0 discriminator 3
+  66 0022 0134     		adds	r4, r4, #1
+  67              	.LVL4:
+  68              	.L2:
+  13:Src/i2c.c     ****     HAL_I2C_Master_Transmit(i2c_handle, address, writeBuffer+i, 8, 100);
+  69              		.loc 1 13 0 is_stmt 0 discriminator 1
+  70 0024 AC42     		cmp	r4, r5
+  71 0026 F4DB     		blt	.L3
+  72              	.LBE2:
+  15:Src/i2c.c     ****   }
+  16:Src/i2c.c     **** }
+  73              		.loc 1 16 0 is_stmt 1
+  74 0028 02B0     		add	sp, sp, #8
+  75              	.LCFI2:
+  76              		.cfi_def_cfa_offset 24
+  77              		@ sp needed
+  78 002a BDE8F081 		pop	{r4, r5, r6, r7, r8, pc}
+  79              		.cfi_endproc
+  80              	.LFE130:
+  82              		.section	.text.I2C_ReadFromSlave,"ax",%progbits
+  83              		.align	1
+  84              		.global	I2C_ReadFromSlave
+  85              		.syntax unified
+  86              		.thumb
+  87              		.thumb_func
+  88              		.fpu fpv4-sp-d16
+  90              	I2C_ReadFromSlave:
+  91              	.LFB131:
+  17:Src/i2c.c     **** 
+  18:Src/i2c.c     **** 
+  19:Src/i2c.c     **** /*******************************************************************************
+  20:Src/i2c.c     ****  * Function Name: I2C_ReadFromSlave
+  21:Src/i2c.c     ****  ********************************************************************************
+  22:Src/i2c.c     ****  * Summary:
+  23:Src/i2c.c     ****  *      This function reads length number of bytes of data from the I2C slave
+  24:Src/i2c.c     ****  *      device starting from the Index specified by the bStartIndex, the data read
+ARM GAS  /tmp/ccsPx6vB.s 			page 3
+
+
+  25:Src/i2c.c     ****  *      would be stored in the abI2CBuffer
+  26:Src/i2c.c     ****  *
+  27:Src/i2c.c     ****  * Parameters:
+  28:Src/i2c.c     ****  *  address - I2C slave address
+  29:Src/i2c.c     ****  *  startIndex - Start Index of the Slave buffer from where data is to be read
+  30:Src/i2c.c     ****  *  length - and the length of the data to be read
+  31:Src/i2c.c     ****  *  readBuffer - Pointer to buffer which would hold the I2S read data
+  32:Src/i2c.c     ****  *
+  33:Src/i2c.c     ****  * Return:
+  34:Src/i2c.c     ****  *  Comes out of the function if the read is successful, otherwise just stays
+  35:Src/i2c.c     ****  *  in the function (blocking call)
+  36:Src/i2c.c     ****  *
+  37:Src/i2c.c     ****  *******************************************************************************/
+  38:Src/i2c.c     **** void I2C_ReadFromSlave(I2C_HandleTypeDef* i2c_handle, uint8_t address, uint8_t startIndex, uint8_t 
+  39:Src/i2c.c     **** {
+  92              		.loc 1 39 0
+  93              		.cfi_startproc
+  94              		@ args = 4, pretend = 0, frame = 8
+  95              		@ frame_needed = 0, uses_anonymous_args = 0
+  96              	.LVL5:
+  97 0000 10B5     		push	{r4, lr}
+  98              	.LCFI3:
+  99              		.cfi_def_cfa_offset 8
+ 100              		.cfi_offset 4, -8
+ 101              		.cfi_offset 14, -4
+ 102 0002 82B0     		sub	sp, sp, #8
+ 103              	.LCFI4:
+ 104              		.cfi_def_cfa_offset 16
+ 105 0004 02AC     		add	r4, sp, #8
+ 106 0006 04F8012D 		strb	r2, [r4, #-1]!
+  40:Src/i2c.c     **** 	uint8_t count;
+  41:Src/i2c.c     ****   uint8_t status;
+  42:Src/i2c.c     **** 
+  43:Src/i2c.c     ****   /* Set the Read pointer to bStartIndex on the slave buffer */
+  44:Src/i2c.c     ****   I2C_WriteToSlave(i2c_handle, address, &startIndex, 1);
+ 107              		.loc 1 44 0
+ 108 000a 0123     		movs	r3, #1
+ 109              	.LVL6:
+ 110 000c 2246     		mov	r2, r4
+ 111              	.LVL7:
+ 112 000e FFF7FEFF 		bl	I2C_WriteToSlave
+ 113              	.LVL8:
+  45:Src/i2c.c     **** 
+  46:Src/i2c.c     ****   HAL_Delay(1);
+ 114              		.loc 1 46 0
+ 115 0012 0120     		movs	r0, #1
+ 116 0014 FFF7FEFF 		bl	HAL_Delay
+ 117              	.LVL9:
+  47:Src/i2c.c     **** 
+  48:Src/i2c.c     ****   // come back to this later
+  49:Src/i2c.c     ****   /*
+  50:Src/i2c.c     ****     do
+  51:Src/i2c.c     ****     {
+  52:Src/i2c.c     **** 
+  53:Src/i2c.c     ****     I2C_Master_I2CMasterClearStatus();
+  54:Src/i2c.c     **** 
+  55:Src/i2c.c     **** 
+ARM GAS  /tmp/ccsPx6vB.s 			page 4
+
+
+  56:Src/i2c.c     ****     I2C_Master_I2CMasterReadBuf(address, readBuffer, length, I2C_Master_I2C_MODE_COMPLETE_XFER);
+  57:Src/i2c.c     **** 
+  58:Src/i2c.c     ****     count = DELAY_COUNT;
+  59:Src/i2c.c     **** 
+  60:Src/i2c.c     ****     status = 0;
+  61:Src/i2c.c     **** 
+  62:Src/i2c.c     **** 
+  63:Src/i2c.c     ****     while ((status & (I2C_Master_I2C_MSTAT_RD_CMPLT | I2C_Master_I2C_MSTAT_ERR_MASK)) == 0)
+  64:Src/i2c.c     ****     {
+  65:Src/i2c.c     ****     status = I2C_Master_I2CMasterStatus();
+  66:Src/i2c.c     **** 
+  67:Src/i2c.c     ****     if(count == 0)
+  68:Src/i2c.c     ****     {
+  69:Src/i2c.c     ****     break;
+  70:Src/i2c.c     ****     }
+  71:Src/i2c.c     ****     else;
+  72:Src/i2c.c     ****     {
+  73:Src/i2c.c     ****     count--;
+  74:Src/i2c.c     ****     }
+  75:Src/i2c.c     **** 
+  76:Src/i2c.c     ****     CyDelayUs(length);
+  77:Src/i2c.c     ****     }
+  78:Src/i2c.c     **** 
+  79:Src/i2c.c     **** 
+  80:Src/i2c.c     ****     }while ((status != I2C_Master_I2C_MSTAT_RD_CMPLT));
+  81:Src/i2c.c     ****   */
+  82:Src/i2c.c     **** }
+ 118              		.loc 1 82 0
+ 119 0018 02B0     		add	sp, sp, #8
+ 120              	.LCFI5:
+ 121              		.cfi_def_cfa_offset 8
+ 122              		@ sp needed
+ 123 001a 10BD     		pop	{r4, pc}
+ 124              		.cfi_endproc
+ 125              	.LFE131:
+ 127              		.text
+ 128              	.Letext0:
+ 129              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 130              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 131              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 132              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 133              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 134              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 135              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 136              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 137              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 138              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 139              		.file 12 "Inc/globals.h"
+ 140              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ARM GAS  /tmp/ccsPx6vB.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 i2c.c
+     /tmp/ccsPx6vB.s:18     .text.I2C_WriteToSlave:0000000000000000 $t
+     /tmp/ccsPx6vB.s:25     .text.I2C_WriteToSlave:0000000000000000 I2C_WriteToSlave
+     /tmp/ccsPx6vB.s:83     .text.I2C_ReadFromSlave:0000000000000000 $t
+     /tmp/ccsPx6vB.s:90     .text.I2C_ReadFromSlave:0000000000000000 I2C_ReadFromSlave
+                     .debug_frame:0000000000000010 $d
+
+UNDEFINED SYMBOLS
+HAL_I2C_Master_Transmit
+HAL_Delay

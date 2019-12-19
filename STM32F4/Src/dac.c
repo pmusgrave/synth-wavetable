@@ -5,290 +5,225 @@
 
 #define I2C_WRITE_OPERATION		(0x00)
 
-I2C_HandleTypeDef* hi2c;
+static I2C_HandleTypeDef* hi2c;
 
-//static uint16_t Dac_analogPathSetting = DAC_DEF_ANALOG_CTRL;
-//uint32 Dac_powerControlSetting = DAC_DEF_POWER_CTRL;
+DacRegister DacWrite;
+uint8_t dacInit = 0;
+
+extern volatile uint8_t USB_currentVolume[];
+extern volatile uint8_t USB_currentMute;
 
 /*******************************************************************************
-* Function Name: Dac_Init
-********************************************************************************
-* Summary:
-*   Initializes the codec with default settings.
-*
-*
-* Parameters:
-*	None
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR
-*
-*******************************************************************************/
-uint8_t Dac_Init(I2C_HandleTypeDef* i2c_handle)
+ * Function Name: InitDac
+ ********************************************************************************
+ * Summary: Initializes the dac as per the datasheet to enable
+ *          audio output DAC (with volume control support enabled) and audio input
+ *          ADC
+ *
+ * Parameters:
+ *  void
+ *
+ * Return:
+ *  void
+ *
+ *******************************************************************************/
+void InitDac(I2C_HandleTypeDef* i2c_handle)
 {
   hi2c = i2c_handle;
 
-  //PDN_Write(0);
-  //CyDelay(10);
-  //PDN_Write(1);
-  //CSN_Write(0);
-
+  // Make sure DAC is reset
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_RESET);
-  HAL_Delay(10);
+  // '“L” time of 150ns or more is needed to reset the DAC.'  1 us should be fine.
+  HAL_Delay(DAC_RESET_WAIT_DELAY);
+
+  // Power on DAC
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_13, GPIO_PIN_SET);
+  HAL_Delay(DAC_RESET_WAIT_DELAY + 100);
+
+  DacWrite.address = DAC_CTRL_1;
+  DacWrite.value = 0b10000111;
+  // I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  DacWrite.address = DAC_CTRL_2;
+  DacWrite.value = 0b00100010;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  DacWrite.address = DAC_CTRL_3;
+  DacWrite.value = 0b00000000;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  DacWrite.address = DAC_LCH_ATT;
+  DacWrite.value = 0xE9;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  DacWrite.address = DAC_RCH_ATT;
+  DacWrite.value = 0xE1;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  DacWrite.address = DAC_CTRL_4;
+  DacWrite.value = 0b00000000;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  DacWrite.address = DAC_CTRL_7;
+  DacWrite.value = 0b00000000;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+  HAL_I2C_Mem_Write(hi2c, DAC_I2C_ADDR, DacWrite.address, 8, &DacWrite.value, 8, HAL_MAX_DELAY);
+
+  // /Testing
+
+  /* Lower gain to avoid clipping issue */
+  //DacWrite.value = AK4558_OUT_VOL_MAX;
+
+  //DacWrite.address = AK4558_LOUT_VOL;
+  //I2C_WriteToSlave(AK4558_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+
+  //DacWrite.address = AK4558_ROUT_VOL;
+  //I2C_WriteToSlave(AK4558_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+
+  // Set sample rate to 512*fs
+  // I think this is only for when dac is Master mode?
+  //DacWrite.address = DAC_REG_MASTER_MODE_CTRL;
+  //DacWrite.value = DAC_DEF_MASTER_MODE_CTRL;
+  //I2C_WriteToSlave(WM8776_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+
+  //UpdateDacVolume(255);
+
+
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_9, GPIO_PIN_RESET);
   HAL_GPIO_WritePin(GPIOE, GPIO_PIN_12, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOE, GPIO_PIN_7, GPIO_PIN_RESET);
 
-	uint8_t ret = 0;
-
-  if(hi2c){
-    ret = Dac_ResetOverI2C();
-    //CyDelay(DAC_RESET_WAIT_DELAY);
-    HAL_Delay(DAC_RESET_WAIT_DELAY);
-
-    ret = Dac_SendData(DAC_REG_INTERFACE_SET, 0b10000111);
-  }
-
-	return ret;
+  dacInit = true;
 }
 
 /*******************************************************************************
-* Function Name: Dac_SendData
-********************************************************************************
-* Summary:
-*   Low level API to send data to codec over I2C.
-*
-*
-* Parameters:  
-*	regAddr - Address of the codec register to be updated
-*	data - 16-bit data to be updated in the register
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************/
-uint8_t Dac_SendData(uint8_t regAddr, uint16_t data)
+ * Function Name: UpdateDacVolume
+ ********************************************************************************
+ * Summary: Updates the actual dac volume control with the volume parameter
+ *          passed
+ *
+ * Parameters:
+ *  volume - value of volume to be written to the dac register
+ *
+ * Return:
+ *  void
+ *
+ *******************************************************************************/
+void UpdateDacVolume(uint8_t volume)
 {
-  uint8_t temp = 0;
-  uint8_t byte = I2C_WRITE_OPERATION;
-  if(hi2c){
-    temp = HAL_I2C_Master_Transmit(hi2c, DAC_I2C_ADDR, &byte, 8, 100);
-    //    if(temp == HAL_OK) {
-      byte = ((regAddr << 0x01) | ((data>>8) & 0x01));
-      temp = HAL_I2C_Master_Transmit(hi2c, DAC_I2C_ADDR, &byte, 8, 100);
-      //if(temp == HAL_OK) {
-        byte = (data&0xFF);
-        temp = HAL_I2C_Master_Transmit(hi2c, DAC_I2C_ADDR, &byte, 8, 100);
-        //}
-        // }
-  }
+  uint8_t volumeMapper;
+  /* Change from -127 to +127 range to 0 to 255 range */
+  volume += 127;
 
-  return temp;
+  /* Remap from volume control to 8-bit attenuation */
+  volumeMapper = 255 - (volume);
 
-  /*
-  temp = DacI2CM_I2CMasterSendStart(DAC_I2C_ADDR, I2C_WRITE_OPERATION);
-
-	if(temp == DacI2CM_I2C_MSTR_NO_ERROR)
-	{
-		temp = DacI2CM_I2CMasterWriteByte(((regAddr << 0x01) | (HI8(data) & 0x01)));
-
-		if(temp == DacI2CM_I2C_MSTR_NO_ERROR)
-		{
-			temp = DacI2CM_I2CMasterWriteByte(LO8(data));
-
-			if(temp == DacI2CM_I2C_MSTR_NO_ERROR)
-			{
-				temp = DacI2CM_I2CMasterSendStop();
-			}
-		}
-	}
-
-	return temp;
-  */
+  volumeMapper = (USB_currentMute | (volume == 255)) ? \
+    DAC_MAXIMUM_ATTENUATION : volumeMapper;
+  UpdateDacAttenuation(volumeMapper);
 }
 
 /*******************************************************************************
-* Function Name: Dac_SetSamplingRate
-********************************************************************************
-* Summary:
-*   This function sets the sampling rate of the codec. Note that the codec must be deactivated 
-*	before configuring the sample rate.
-*
-*
-* Parameters:  
-*	srCtrlField - Sampling control register settings 
-*					
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************
-uint8_t Dac_SetSamplingRate(uint8_t srCtrlField)
-{		
-	 This function modifies the BOSR & SR bits of sampling rate control register.
-     * srCtrlField : bit[0] - BOSR, bit[1:4] - SR.
-     
-    return Dac_SendData(DAC_REG_SAMPLING_CTRL, srCtrlField);;
-}
-*/
-
-/*******************************************************************************
-* Function Name: Dac_AdjustBothHeadphoneVolume
-********************************************************************************
-* Summary:
-*   This function updates the volume of both the left and right channels of the
-* 	headphone output.
-*
-*
-* Parameters:  
-*	volume - 0 - Mute
-*			 1 to DAC_HP_VOLUME_MAX levels
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************
-
-uint8_t Dac_AdjustBothHeadphoneVolume(uint8_t volume)
+ * Function Name: UpdateDacAttenuation
+ ********************************************************************************
+ * Summary: Updates the actual DAC DAC attenuator with the attenuation parameter
+ *          passed
+ *
+ * Parameters:
+ *  attenuation - value of attenuation to be written to the DAC register
+ *
+ * Return:
+ *  void
+ *
+ *******************************************************************************/
+void UpdateDacAttenuation(uint8_t attenuation)
 {
-	if(volume > DAC_HP_VOLUME_MAX)
-	{
-		volume = DAC_HP_VOLUME_MAX;
-	}
-	
-	return Dac_SendData(DAC_REG_LCH_VOLUME, (volume + (DAC_LHPOUT_BOTH + DAC_LHPOUT_LZCEN + DAC_HP_MUTE_VALUE)));
+  // Analog attenuation headphone left
+  DacWrite.address = DAC_LCH_ATT;
+  DacWrite.value = attenuation;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+
+  // Analog attenuation headphone right
+  DacWrite.address = DAC_RCH_ATT;
+  DacWrite.value = attenuation;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+
+  // Master analog attenuation
+  //DacWrite.address = DAC_REG_HP_MASTER_ATTENUATION;
+  //DacWrite.value = attenuation;
+  //I2C_WriteToSlave(DAC_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
 }
 
-
-*******************************************************************************
-* Function Name: Dac_Activate
-********************************************************************************
-* Summary:
-*   Activates the codec - This function is called in conjunction with Dac_Deactivate API
-*	after successful configuration update of the codec.
-*
-*
-* Parameters:  
-*	None
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************
-uint8_t Dac_Activate(void)
-{
-	return Dac_SendData(DAC_REG_ACTIVATE, DAC_CTRL_ACTIVATE); 
-}
-*/
-/*******************************************************************************
-* Function Name: Dac_Deactivate
-********************************************************************************
-* Summary:
-*   Deactivates the DAC - the configuration is retained, just the DAC input/outputs are
-*	disabled. The function should be called before changing any setting in the codec over I2C
-*
-*
-* Parameters:  
-*	None
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************
-uint8_t Dac_Deactivate(void)
-{
-	return Dac_SendData(DAC_REG_ACTIVATE, DAC_CTRL_DEACTIVATE); 
-}
-*/
 
 /*******************************************************************************
-* Function Name: Dac_ResetOverI2C
-********************************************************************************
-* Summary:
-*   Resets the codec by sending an I2C command
-*
-* Parameters:  
-*	None
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************/
-uint8_t Dac_ResetOverI2C(void)
+ * Function Name: DacPowerDown
+ ********************************************************************************
+ * Summary: Powers down dac through I2C
+ *
+ * Parameters:
+ *  None
+ *
+ * Return:
+ *  void
+ *
+ *******************************************************************************/
+void DacPowerDown(void)
 {
-	return Dac_SendData(DAC_REG_RESET, DAC_CTRL_RESET);
+  //DacWrite.address = DAC_REG_POWER_CTRL;
+  //DacWrite.value = DAC_POWER_DOWN;
+  //I2C_WriteToSlave(WM8776_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
 }
 
+
 /*******************************************************************************
-* Function Name: Dac_PowerOffControl
-********************************************************************************
-* Summary:
-*   Disables power for various blocks in the codec
-*
-*
-* Parameters:  
-*	powerOffMask - Bit(s) mask for the power off control 
-*                   Refer to bit settings available for DAC_REG_POWER_CTRL in 
-*                   Dac.h
-*
-* Return:
-*   uint8_t - I2C master transaction error status
-*				DacI2CM_I2C_MSTR_NO_ERROR - Function complete without error                       
-*				DacI2CM_I2C_MSTR_ERR_ARB_LOST - Master lost arbitration: INTR_MASTER_I2C_ARB_LOST    
-*				DacI2CM_I2C_MSTR_ERR_LB_NAK - Last Byte NACKed: INTR_MASTER_I2C_NACK               
-*				DacI2CM_I2C_MSTR_NOT_READY - Master on the bus or Slave operation is in progress  
-*				DacI2CM_I2C_MSTR_BUS_BUSY - Bus is busy, process not started
-*				DacI2CM_I2C_MSTR_ERR_ABORT_START - Slave was addressed before master begin Start
-*				DacI2CM_I2C_MSTR_ERR_BUS_ERR - Bus error has: INTR_MASTER_I2C_BUS_ERROR 
-*
-*******************************************************************************/
+ * Function Name: DacUpdateSampleRate
+ ********************************************************************************
+ * Summary: Updates DAC's sample rate through I2C.  With DAC in Manual mode,
+ *          THD is better, but we need to set DFS manually.
+ *
+ * Parameters:
+ *  uint
+ *
+ * Return:
+ *  void
+ *
+ *******************************************************************************/
+void DacUpdateSampleRate(uint8_t rate)
+{
+  // Control 2
+  //DacWrite.address = DAC_REG_MASTER_MODE_CTRL;
+
+  switch (rate)
+    {
+		case RATE_8KHZ:
+		case RATE_11KHZ:
+    case RATE_16KHZ:
+		case RATE_22KHZ:
+      // Not in our descriptors, so should never happen
+      //Mute_LED_Write(true);
+      while(1);
+
+    case RATE_32KHZ:
+		case RATE_44KHZ:
+		case RATE_48KHZ:
+      //DacWrite.value = DAC_ADCRATE | DAC_DACRATE;
+			break;
+
+    case RATE_88KHZ:
+		case RATE_96KHZ:
+      DacWrite.value = 0x22;
+			break;
+		default:
+			break;
+    }
+
+  //I2C_WriteToSlave(WM8776_I2C_ADDR, &DacWrite.address, sizeof(DacWrite));
+}
 
 /* [] END OF FILE */

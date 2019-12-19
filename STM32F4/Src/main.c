@@ -120,10 +120,10 @@ int main(void)
   // uint8_t init_msg[20] = {"\nSTM32F429!\n"};
   // HAL_UART_Transmit(&huart4, init_msg, 20, 50);
   HAL_Delay(1000);
-  Dac_Init(&hi2c1);
+  InitDac(&hi2c1);
   init_wavetable();
   HAL_TIM_Base_Start_IT(&htim6);
-  HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
+  //HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
 
   for(int i = 0; i < VOICES; i++) {
     env_state[i] = NOT_TRIGGERED;

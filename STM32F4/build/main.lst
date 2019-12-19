@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccwdWAeX.s 			page 1
+ARM GAS  /tmp/ccESnNa9.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
   30:Src/main.c    **** #include "oscillator.h"
   31:Src/main.c    **** #include "lfo.h"
   32:Src/main.c    **** #include "envelopes.h"
-ARM GAS  /tmp/ccwdWAeX.s 			page 2
+ARM GAS  /tmp/ccESnNa9.s 			page 2
 
 
   33:Src/main.c    **** //#include "r2rdac.h"
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
   87:Src/main.c    ****   */
   88:Src/main.c    **** int main(void)
   89:Src/main.c    **** {
-ARM GAS  /tmp/ccwdWAeX.s 			page 3
+ARM GAS  /tmp/ccESnNa9.s 			page 3
 
 
   90:Src/main.c    ****   /* USER CODE BEGIN 1 */
@@ -154,10 +154,10 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  120:Src/main.c    ****   // uint8_t init_msg[20] = {"\nSTM32F429!\n"};
  121:Src/main.c    ****   // HAL_UART_Transmit(&huart4, init_msg, 20, 50);
  122:Src/main.c    ****   HAL_Delay(1000);
- 123:Src/main.c    ****   Dac_Init(&hi2c1);
+ 123:Src/main.c    ****   InitDac(&hi2c1);
  124:Src/main.c    ****   init_wavetable();
  125:Src/main.c    ****   HAL_TIM_Base_Start_IT(&htim6);
- 126:Src/main.c    ****   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
+ 126:Src/main.c    ****   //HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
  127:Src/main.c    **** 
  128:Src/main.c    ****   for(int i = 0; i < VOICES; i++) {
  129:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  144:Src/main.c    **** 
  145:Src/main.c    ****   //  uint8_t process_msg_flag  = 0;
  146:Src/main.c    ****   /* USER CODE END 2 */
-ARM GAS  /tmp/ccwdWAeX.s 			page 4
+ARM GAS  /tmp/ccESnNa9.s 			page 4
 
 
  147:Src/main.c    **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  201:Src/main.c    ****   /** Initializes the CPU, AHB and APB busses clocks 
  202:Src/main.c    ****   */
  203:Src/main.c    ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-ARM GAS  /tmp/ccwdWAeX.s 			page 5
+ARM GAS  /tmp/ccESnNa9.s 			page 5
 
 
  204:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  258:Src/main.c    ****   {
  259:Src/main.c    ****     Error_Handler();
  260:Src/main.c    ****   }
-ARM GAS  /tmp/ccwdWAeX.s 			page 6
+ARM GAS  /tmp/ccESnNa9.s 			page 6
 
 
  261:Src/main.c    ****   /* USER CODE BEGIN DAC_Init 2 */
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  315:Src/main.c    ****   * @param None
  316:Src/main.c    ****   * @retval None
  317:Src/main.c    ****   */
-ARM GAS  /tmp/ccwdWAeX.s 			page 7
+ARM GAS  /tmp/ccESnNa9.s 			page 7
 
 
  318:Src/main.c    **** static void MX_I2S2_Init(void)
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  372:Src/main.c    ****   hspi1.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
  373:Src/main.c    ****   hspi1.Init.CRCPolynomial = 10;
  374:Src/main.c    ****   if (HAL_SPI_Init(&hspi1) != HAL_OK)
-ARM GAS  /tmp/ccwdWAeX.s 			page 8
+ARM GAS  /tmp/ccESnNa9.s 			page 8
 
 
  375:Src/main.c    ****   {
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  429:Src/main.c    **** 
  430:Src/main.c    ****   /* USER CODE BEGIN UART4_Init 0 */
  431:Src/main.c    **** 
-ARM GAS  /tmp/ccwdWAeX.s 			page 9
+ARM GAS  /tmp/ccESnNa9.s 			page 9
 
 
  432:Src/main.c    ****   /* USER CODE END UART4_Init 0 */
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  465:Src/main.c    ****   __HAL_RCC_GPIOC_CLK_ENABLE();
   48              		.loc 1 465 0
   49 0010 0194     		str	r4, [sp, #4]
-ARM GAS  /tmp/ccwdWAeX.s 			page 10
+ARM GAS  /tmp/ccESnNa9.s 			page 10
 
 
   50 0012 1E4B     		ldr	r3, .L3
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
   98              	.LVL0:
  472:Src/main.c    ****                           |GPIO_PIN_11|GPIO_PIN_12|GPIO_PIN_13, GPIO_PIN_RESET);
  473:Src/main.c    **** 
-ARM GAS  /tmp/ccwdWAeX.s 			page 11
+ARM GAS  /tmp/ccESnNa9.s 			page 11
 
 
  474:Src/main.c    ****   /*Configure GPIO pins : PE7 PE8 PE9 PE10 
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  144              		.cfi_offset 4, -12
  145              		.cfi_offset 5, -8
  146              		.cfi_offset 14, -4
-ARM GAS  /tmp/ccwdWAeX.s 			page 12
+ARM GAS  /tmp/ccESnNa9.s 			page 12
 
 
  147 0002 83B0     		sub	sp, sp, #12
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  194              		.syntax unified
  195              		.thumb
  196              		.thumb_func
-ARM GAS  /tmp/ccwdWAeX.s 			page 13
+ARM GAS  /tmp/ccESnNa9.s 			page 13
 
 
  197              		.fpu fpv4-sp-d16
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  240 0026 2946     		mov	r1, r5
  241 0028 2046     		mov	r0, r4
  242 002a FFF7FEFF 		bl	HAL_I2CEx_ConfigAnalogFilter
-ARM GAS  /tmp/ccwdWAeX.s 			page 14
+ARM GAS  /tmp/ccESnNa9.s 			page 14
 
 
  243              	.LVL6:
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  333:Src/main.c    ****   hi2s2.Init.CPOL = I2S_CPOL_LOW;
  292              		.loc 1 333 0
  293 0018 4AF64442 		movw	r2, #44100
-ARM GAS  /tmp/ccwdWAeX.s 			page 15
+ARM GAS  /tmp/ccESnNa9.s 			page 15
 
 
  294 001c 4261     		str	r2, [r0, #20]
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  341              		.loc 1 366 0
  342 000e C360     		str	r3, [r0, #12]
  367:Src/main.c    ****   hspi1.Init.CLKPhase = SPI_PHASE_1EDGE;
-ARM GAS  /tmp/ccwdWAeX.s 			page 16
+ARM GAS  /tmp/ccESnNa9.s 			page 16
 
 
  343              		.loc 1 367 0
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  391              		.cfi_def_cfa_offset 24
  396:Src/main.c    **** 
  392              		.loc 1 396 0
-ARM GAS  /tmp/ccwdWAeX.s 			page 17
+ARM GAS  /tmp/ccESnNa9.s 			page 17
 
 
  393 0004 0025     		movs	r5, #0
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  438              		.syntax unified
  439              		.thumb
  440              		.thumb_func
-ARM GAS  /tmp/ccwdWAeX.s 			page 18
+ARM GAS  /tmp/ccESnNa9.s 			page 18
 
 
  441              		.fpu fpv4-sp-d16
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  487              		.section	.text.SystemClock_Config,"ax",%progbits
  488              		.align	1
  489              		.global	SystemClock_Config
-ARM GAS  /tmp/ccwdWAeX.s 			page 19
+ARM GAS  /tmp/ccESnNa9.s 			page 19
 
 
  490              		.syntax unified
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  540 0034 03F08053 		and	r3, r3, #268435456
  541 0038 0193     		str	r3, [sp, #4]
  542 003a 019B     		ldr	r3, [sp, #4]
-ARM GAS  /tmp/ccwdWAeX.s 			page 20
+ARM GAS  /tmp/ccESnNa9.s 			page 20
 
 
  543              	.LBE6:
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  585              		.loc 1 203 0
  586 007a 0F23     		movs	r3, #15
  587 007c 0F93     		str	r3, [sp, #60]
-ARM GAS  /tmp/ccwdWAeX.s 			page 21
+ARM GAS  /tmp/ccESnNa9.s 			page 21
 
 
  205:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  633              		.thumb_func
  634              		.fpu fpv4-sp-d16
  636              	HAL_UART_RxCpltCallback:
-ARM GAS  /tmp/ccwdWAeX.s 			page 22
+ARM GAS  /tmp/ccESnNa9.s 			page 22
 
 
  637              	.LFB139:
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  683              	.LVL21:
  494:Src/main.c    ****   if(htim->Instance == TIM6){
  684              		.loc 1 494 0
-ARM GAS  /tmp/ccwdWAeX.s 			page 23
+ARM GAS  /tmp/ccESnNa9.s 			page 23
 
 
  685 0000 0268     		ldr	r2, [r0]
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  725 0008 00F0E380 		beq	.L63
  499:Src/main.c    ****   // probably need to refactor these SPI flags
  726              		.loc 1 499 0
-ARM GAS  /tmp/ccwdWAeX.s 			page 24
+ARM GAS  /tmp/ccESnNa9.s 			page 24
 
 
  727 000c 10B5     		push	{r4, lr}
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  751              		.loc 1 540 0
  752 0026 6E4B     		ldr	r3, .L74+12
  753 0028 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
-ARM GAS  /tmp/ccwdWAeX.s 			page 25
+ARM GAS  /tmp/ccESnNa9.s 			page 25
 
 
  754 002a 002B     		cmp	r3, #0
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  578:Src/main.c    ****       struct midi_msg new_midi_msg =
  579:Src/main.c    ****         {
  580:Src/main.c    ****          MIDI_NOTE_OFF,
-ARM GAS  /tmp/ccwdWAeX.s 			page 26
+ARM GAS  /tmp/ccESnNa9.s 			page 26
 
 
  581:Src/main.c    ****          value,
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  610:Src/main.c    ****       skip_command = 1;
  796              		.loc 1 610 0
  797 0076 0123     		movs	r3, #1
-ARM GAS  /tmp/ccwdWAeX.s 			page 27
+ARM GAS  /tmp/ccESnNa9.s 			page 27
 
 
  798 0078 0FE0     		b	.L46
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  622:Src/main.c    ****         sustain_cc_flag = 1;
  623:Src/main.c    ****         break;
  624:Src/main.c    ****       case RELEASE_CC:
-ARM GAS  /tmp/ccwdWAeX.s 			page 28
+ARM GAS  /tmp/ccESnNa9.s 			page 28
 
 
  625:Src/main.c    ****         release_cc_flag = 1;
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  879              		.loc 1 549 0
  880 00fc 0198     		ldr	r0, [sp, #4]
  881              	.LVL35:
-ARM GAS  /tmp/ccwdWAeX.s 			page 29
+ARM GAS  /tmp/ccESnNa9.s 			page 29
 
 
  882 00fe FFF7FEFF 		bl	enqueue
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  574:Src/main.c    ****     }
  928              		.loc 1 574 0
  929 0146 0123     		movs	r3, #1
-ARM GAS  /tmp/ccwdWAeX.s 			page 30
+ARM GAS  /tmp/ccESnNa9.s 			page 30
 
 
  930              	.LBE14:
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  976              	.LVL49:
  977              	.L73:
  614:Src/main.c    ****       case ATTACK_CC:
-ARM GAS  /tmp/ccwdWAeX.s 			page 31
+ARM GAS  /tmp/ccESnNa9.s 			page 31
 
 
  978              		.loc 1 614 0
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1016 01ae 1A70     		strb	r2, [r3]
  623:Src/main.c    ****       case RELEASE_CC:
  1017              		.loc 1 623 0
-ARM GAS  /tmp/ccwdWAeX.s 			page 32
+ARM GAS  /tmp/ccESnNa9.s 			page 32
 
 
  1018 01b0 F5E7     		b	.L43
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1065 01d4 00000000 		.word	spi_byte_queue
  1066 01d8 00000000 		.word	.LANCHOR1
  1067 01dc 00000000 		.word	.LANCHOR2
-ARM GAS  /tmp/ccwdWAeX.s 			page 33
+ARM GAS  /tmp/ccESnNa9.s 			page 33
 
 
  1068 01e0 00000000 		.word	.LANCHOR3
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1114 001a 0BD9     		bls	.L96
  1115 001c 8028     		cmp	r0, #128
  1116 001e 49D0     		beq	.L90
-ARM GAS  /tmp/ccwdWAeX.s 			page 34
+ARM GAS  /tmp/ccESnNa9.s 			page 34
 
 
  1117 0020 9028     		cmp	r0, #144
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  669:Src/main.c    ****         if(note_on[i] == MIDI_NOTE_OFF){
  670:Src/main.c    ****           note_on[i] = MIDI_NOTE_ON;
  671:Src/main.c    ****           note_freq[i] = current_midi_msg.byte1;
-ARM GAS  /tmp/ccwdWAeX.s 			page 35
+ARM GAS  /tmp/ccESnNa9.s 			page 35
 
 
  672:Src/main.c    ****           env_state[i] = ATTACK_MODE;
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  660:Src/main.c    ****       //UART_PrintADSR(&huart1);
  1160              		.loc 1 660 0
  1161 0058 9DF80530 		ldrb	r3, [sp, #5]	@ zero_extendqisi2
-ARM GAS  /tmp/ccwdWAeX.s 			page 36
+ARM GAS  /tmp/ccESnNa9.s 			page 36
 
 
  1162 005c 5B00     		lsls	r3, r3, #1
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1207              	.LBE20:
  1208              	.LBB21:
  678:Src/main.c    ****         if (note_on[i] == MIDI_NOTE_ON && note_freq[i] == current_midi_msg.byte1){
-ARM GAS  /tmp/ccwdWAeX.s 			page 37
+ARM GAS  /tmp/ccESnNa9.s 			page 37
 
 
  1209              		.loc 1 678 0 discriminator 2
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1258              	.LFE142:
  1260              		.section	.text.main,"ax",%progbits
  1261              		.align	1
-ARM GAS  /tmp/ccwdWAeX.s 			page 38
+ARM GAS  /tmp/ccESnNa9.s 			page 38
 
 
  1262              		.global	main
@@ -2276,9 +2276,9 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1305              		.loc 1 117 0
  1306 0024 FFF7FEFF 		bl	MX_UART4_Init
  1307              	.LVL79:
- 122:Src/main.c    ****   Dac_Init(&hi2c1);
+ 122:Src/main.c    ****   InitDac(&hi2c1);
  1308              		.loc 1 122 0
-ARM GAS  /tmp/ccwdWAeX.s 			page 39
+ARM GAS  /tmp/ccESnNa9.s 			page 39
 
 
  1309 0028 4FF47A70 		mov	r0, #1000
@@ -2286,151 +2286,144 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  1311              	.LVL80:
  123:Src/main.c    ****   init_wavetable();
  1312              		.loc 1 123 0
- 1313 0030 1F48     		ldr	r0, .L107
- 1314 0032 FFF7FEFF 		bl	Dac_Init
+ 1313 0030 1D48     		ldr	r0, .L107
+ 1314 0032 FFF7FEFF 		bl	InitDac
  1315              	.LVL81:
  124:Src/main.c    ****   HAL_TIM_Base_Start_IT(&htim6);
  1316              		.loc 1 124 0
  1317 0036 FFF7FEFF 		bl	init_wavetable
  1318              	.LVL82:
- 125:Src/main.c    ****   HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
+ 125:Src/main.c    ****   //HAL_DAC_Start(&hdac, DAC_CHANNEL_2);
  1319              		.loc 1 125 0
- 1320 003a 1E48     		ldr	r0, .L107+4
+ 1320 003a 1C48     		ldr	r0, .L107+4
  1321 003c FFF7FEFF 		bl	HAL_TIM_Base_Start_IT
  1322              	.LVL83:
- 126:Src/main.c    **** 
- 1323              		.loc 1 126 0
- 1324 0040 1021     		movs	r1, #16
- 1325 0042 1D48     		ldr	r0, .L107+8
- 1326 0044 FFF7FEFF 		bl	HAL_DAC_Start
- 1327              	.LVL84:
- 1328              	.LBB23:
+ 1323              	.LBB23:
  128:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
- 1329              		.loc 1 128 0
- 1330 0048 0023     		movs	r3, #0
- 1331              	.LVL85:
- 1332              	.L101:
+ 1324              		.loc 1 128 0
+ 1325 0040 0023     		movs	r3, #0
+ 1326              	.LVL84:
+ 1327              	.L101:
  128:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
- 1333              		.loc 1 128 0 is_stmt 0 discriminator 1
- 1334 004a 0F2B     		cmp	r3, #15
- 1335 004c 0DDC     		bgt	.L106
+ 1328              		.loc 1 128 0 is_stmt 0 discriminator 1
+ 1329 0042 0F2B     		cmp	r3, #15
+ 1330 0044 0DDC     		bgt	.L106
  129:Src/main.c    ****     note_on[i] = MIDI_NOTE_OFF;
- 1336              		.loc 1 129 0 is_stmt 1 discriminator 3
- 1337 004e 0022     		movs	r2, #0
- 1338 0050 1A49     		ldr	r1, .L107+12
- 1339 0052 CA54     		strb	r2, [r1, r3]
+ 1331              		.loc 1 129 0 is_stmt 1 discriminator 3
+ 1332 0046 0022     		movs	r2, #0
+ 1333 0048 1949     		ldr	r1, .L107+8
+ 1334 004a CA54     		strb	r2, [r1, r3]
  130:Src/main.c    ****     note_freq[i] = 0;
- 1340              		.loc 1 130 0 discriminator 3
- 1341 0054 8020     		movs	r0, #128
- 1342 0056 1A49     		ldr	r1, .L107+16
- 1343 0058 C854     		strb	r0, [r1, r3]
+ 1335              		.loc 1 130 0 discriminator 3
+ 1336 004c 8020     		movs	r0, #128
+ 1337 004e 1949     		ldr	r1, .L107+12
+ 1338 0050 C854     		strb	r0, [r1, r3]
  131:Src/main.c    ****     lfo_freq[i] = 20;
- 1344              		.loc 1 131 0 discriminator 3
- 1345 005a 1A49     		ldr	r1, .L107+20
- 1346 005c CA54     		strb	r2, [r1, r3]
+ 1339              		.loc 1 131 0 discriminator 3
+ 1340 0052 1949     		ldr	r1, .L107+16
+ 1341 0054 CA54     		strb	r2, [r1, r3]
  132:Src/main.c    ****   }
- 1347              		.loc 1 132 0 discriminator 3
- 1348 005e 1421     		movs	r1, #20
- 1349 0060 194A     		ldr	r2, .L107+24
- 1350 0062 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
+ 1342              		.loc 1 132 0 discriminator 3
+ 1343 0056 1421     		movs	r1, #20
+ 1344 0058 184A     		ldr	r2, .L107+20
+ 1345 005a 22F81310 		strh	r1, [r2, r3, lsl #1]	@ movhi
  128:Src/main.c    ****     env_state[i] = NOT_TRIGGERED;
- 1351              		.loc 1 128 0 discriminator 3
- 1352 0066 0133     		adds	r3, r3, #1
- 1353              	.LVL86:
- 1354 0068 EFE7     		b	.L101
-ARM GAS  /tmp/ccwdWAeX.s 			page 40
-
-
- 1355              	.L106:
- 1356              	.LBE23:
+ 1346              		.loc 1 128 0 discriminator 3
+ 1347 005e 0133     		adds	r3, r3, #1
+ 1348              	.LVL85:
+ 1349 0060 EFE7     		b	.L101
+ 1350              	.L106:
+ 1351              	.LBE23:
  136:Src/main.c    ****                               0x90,
- 1357              		.loc 1 136 0
- 1358 006a 184B     		ldr	r3, .L107+28
- 1359              	.LVL87:
- 1360 006c 1868     		ldr	r0, [r3]
- 1361 006e 0190     		str	r0, [sp, #4]
+ 1352              		.loc 1 136 0
+ 1353 0062 174B     		ldr	r3, .L107+24
+ 1354              	.LVL86:
+ARM GAS  /tmp/ccESnNa9.s 			page 40
+
+
+ 1355 0064 1868     		ldr	r0, [r3]
+ 1356 0066 0190     		str	r0, [sp, #4]
  142:Src/main.c    ****   // END DAC TEST NOTE
- 1362              		.loc 1 142 0
- 1363 0070 FFF7FEFF 		bl	enqueue
- 1364              	.LVL88:
- 1365              	.L103:
+ 1357              		.loc 1 142 0
+ 1358 0068 FFF7FEFF 		bl	enqueue
+ 1359              	.LVL87:
+ 1360              	.L103:
  156:Src/main.c    ****     handle_byte_queue();
- 1366              		.loc 1 156 0
- 1367 0074 0122     		movs	r2, #1
- 1368 0076 1649     		ldr	r1, .L107+32
- 1369 0078 1648     		ldr	r0, .L107+36
- 1370 007a FFF7FEFF 		bl	HAL_UART_Receive_IT
- 1371              	.LVL89:
+ 1361              		.loc 1 156 0
+ 1362 006c 0122     		movs	r2, #1
+ 1363 006e 1549     		ldr	r1, .L107+28
+ 1364 0070 1548     		ldr	r0, .L107+32
+ 1365 0072 FFF7FEFF 		bl	HAL_UART_Receive_IT
+ 1366              	.LVL88:
  157:Src/main.c    ****     handle_midi_queue();
- 1372              		.loc 1 157 0
- 1373 007e FFF7FEFF 		bl	handle_byte_queue
- 1374              	.LVL90:
+ 1367              		.loc 1 157 0
+ 1368 0076 FFF7FEFF 		bl	handle_byte_queue
+ 1369              	.LVL89:
  158:Src/main.c    ****     if(update_value_flag){
- 1375              		.loc 1 158 0
- 1376 0082 FFF7FEFF 		bl	handle_midi_queue
- 1377              	.LVL91:
+ 1370              		.loc 1 158 0
+ 1371 007a FFF7FEFF 		bl	handle_midi_queue
+ 1372              	.LVL90:
  159:Src/main.c    ****       update_value_flag = 0;
- 1378              		.loc 1 159 0
- 1379 0086 144B     		ldr	r3, .L107+40
- 1380 0088 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 1381 008a 002B     		cmp	r3, #0
- 1382 008c F2D0     		beq	.L103
+ 1373              		.loc 1 159 0
+ 1374 007e 134B     		ldr	r3, .L107+36
+ 1375 0080 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 1376 0082 002B     		cmp	r3, #0
+ 1377 0084 F2D0     		beq	.L103
  160:Src/main.c    ****       update_lfos();
- 1383              		.loc 1 160 0
- 1384 008e 0022     		movs	r2, #0
- 1385 0090 114B     		ldr	r3, .L107+40
- 1386 0092 1A70     		strb	r2, [r3]
+ 1378              		.loc 1 160 0
+ 1379 0086 0022     		movs	r2, #0
+ 1380 0088 104B     		ldr	r3, .L107+36
+ 1381 008a 1A70     		strb	r2, [r3]
  161:Src/main.c    ****       update_envelope();
- 1387              		.loc 1 161 0
- 1388 0094 FFF7FEFF 		bl	update_lfos
- 1389              	.LVL92:
+ 1382              		.loc 1 161 0
+ 1383 008c FFF7FEFF 		bl	update_lfos
+ 1384              	.LVL91:
  162:Src/main.c    ****       update_output_value();
- 1390              		.loc 1 162 0
- 1391 0098 FFF7FEFF 		bl	update_envelope
- 1392              	.LVL93:
+ 1385              		.loc 1 162 0
+ 1386 0090 FFF7FEFF 		bl	update_envelope
+ 1387              	.LVL92:
  163:Src/main.c    ****       //HAL_DAC_SetValue(&hdac, DAC_CHANNEL_2, DAC_ALIGN_8B_R, output_val);
- 1393              		.loc 1 163 0
- 1394 009c FFF7FEFF 		bl	update_output_value
- 1395              	.LVL94:
+ 1388              		.loc 1 163 0
+ 1389 0094 FFF7FEFF 		bl	update_output_value
+ 1390              	.LVL93:
  166:Src/main.c    ****     }
- 1396              		.loc 1 166 0
- 1397 00a0 6423     		movs	r3, #100
- 1398 00a2 2022     		movs	r2, #32
- 1399 00a4 0D49     		ldr	r1, .L107+44
- 1400 00a6 0E48     		ldr	r0, .L107+48
-ARM GAS  /tmp/ccwdWAeX.s 			page 41
+ 1391              		.loc 1 166 0
+ 1392 0098 6423     		movs	r3, #100
+ 1393 009a 2022     		movs	r2, #32
+ 1394 009c 0C49     		ldr	r1, .L107+40
+ 1395 009e 0D48     		ldr	r0, .L107+44
+ 1396 00a0 FFF7FEFF 		bl	HAL_I2S_Transmit
+ 1397              	.LVL94:
+ 1398 00a4 E2E7     		b	.L103
+ 1399              	.L108:
+ 1400 00a6 00BF     		.align	2
+ 1401              	.L107:
+ARM GAS  /tmp/ccESnNa9.s 			page 41
 
 
- 1401 00a8 FFF7FEFF 		bl	HAL_I2S_Transmit
- 1402              	.LVL95:
- 1403 00ac E2E7     		b	.L103
- 1404              	.L108:
- 1405 00ae 00BF     		.align	2
- 1406              	.L107:
- 1407 00b0 00000000 		.word	hi2c1
- 1408 00b4 00000000 		.word	htim6
- 1409 00b8 00000000 		.word	hdac
- 1410 00bc 00000000 		.word	env_state
- 1411 00c0 00000000 		.word	note_on
- 1412 00c4 00000000 		.word	note_freq
- 1413 00c8 00000000 		.word	lfo_freq
- 1414 00cc 00000000 		.word	.LANCHOR9
- 1415 00d0 00000000 		.word	.LANCHOR0
- 1416 00d4 00000000 		.word	huart4
- 1417 00d8 00000000 		.word	update_value_flag
- 1418 00dc 00000000 		.word	output_val
- 1419 00e0 00000000 		.word	hi2s2
- 1420              		.cfi_endproc
- 1421              	.LFE130:
- 1423              		.section	.text.Error_Handler,"ax",%progbits
- 1424              		.align	1
- 1425              		.global	Error_Handler
- 1426              		.syntax unified
- 1427              		.thumb
- 1428              		.thumb_func
- 1429              		.fpu fpv4-sp-d16
- 1431              	Error_Handler:
- 1432              	.LFB143:
+ 1402 00a8 00000000 		.word	hi2c1
+ 1403 00ac 00000000 		.word	htim6
+ 1404 00b0 00000000 		.word	env_state
+ 1405 00b4 00000000 		.word	note_on
+ 1406 00b8 00000000 		.word	note_freq
+ 1407 00bc 00000000 		.word	lfo_freq
+ 1408 00c0 00000000 		.word	.LANCHOR9
+ 1409 00c4 00000000 		.word	.LANCHOR0
+ 1410 00c8 00000000 		.word	huart4
+ 1411 00cc 00000000 		.word	update_value_flag
+ 1412 00d0 00000000 		.word	output_val
+ 1413 00d4 00000000 		.word	hi2s2
+ 1414              		.cfi_endproc
+ 1415              	.LFE130:
+ 1417              		.section	.text.Error_Handler,"ax",%progbits
+ 1418              		.align	1
+ 1419              		.global	Error_Handler
+ 1420              		.syntax unified
+ 1421              		.thumb
+ 1422              		.thumb_func
+ 1423              		.fpu fpv4-sp-d16
+ 1425              	Error_Handler:
+ 1426              	.LFB143:
  715:Src/main.c    **** /* USER CODE END 4 */
  716:Src/main.c    **** 
  717:Src/main.c    **** /**
@@ -2439,191 +2432,191 @@ ARM GAS  /tmp/ccwdWAeX.s 			page 1
  720:Src/main.c    ****   */
  721:Src/main.c    **** void Error_Handler(void)
  722:Src/main.c    **** {
- 1433              		.loc 1 722 0
- 1434              		.cfi_startproc
- 1435              		@ args = 0, pretend = 0, frame = 0
- 1436              		@ frame_needed = 0, uses_anonymous_args = 0
- 1437              		@ link register save eliminated.
- 1438 0000 7047     		bx	lr
- 1439              		.cfi_endproc
- 1440              	.LFE143:
- 1442              		.global	uart_tx_data
- 1443              		.comm	huart4,64,4
- 1444              		.comm	htim6,64,4
- 1445              		.comm	hspi1,88,4
- 1446              		.comm	hi2s2,72,4
- 1447              		.comm	hi2c1,84,4
- 1448              		.comm	hdac,20,4
- 1449              		.comm	lfo_sine,256,4
- 1450              		.comm	base_sq,4096,4
- 1451              		.comm	base_tri,4096,4
- 1452              		.comm	base_neg_saw,4096,4
-ARM GAS  /tmp/ccwdWAeX.s 			page 42
+ 1427              		.loc 1 722 0
+ 1428              		.cfi_startproc
+ 1429              		@ args = 0, pretend = 0, frame = 0
+ 1430              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1431              		@ link register save eliminated.
+ 1432 0000 7047     		bx	lr
+ 1433              		.cfi_endproc
+ 1434              	.LFE143:
+ 1436              		.global	uart_tx_data
+ 1437              		.comm	huart4,64,4
+ 1438              		.comm	htim6,64,4
+ 1439              		.comm	hspi1,88,4
+ 1440              		.comm	hi2s2,72,4
+ 1441              		.comm	hi2c1,84,4
+ 1442              		.comm	hdac,20,4
+ 1443              		.comm	lfo_sine,256,4
+ 1444              		.comm	base_sq,4096,4
+ 1445              		.comm	base_tri,4096,4
+ 1446              		.comm	base_neg_saw,4096,4
+ 1447              		.comm	base_pos_saw,4096,4
+ 1448              		.comm	base_sine,4096,4
+ 1449              		.section	.rodata
+ 1450              		.align	2
+ 1451              		.set	.LANCHOR9,. + 0
+ 1452              	.LC0:
+ 1453 0000 90       		.byte	-112
+ARM GAS  /tmp/ccESnNa9.s 			page 42
 
 
- 1453              		.comm	base_pos_saw,4096,4
- 1454              		.comm	base_sine,4096,4
- 1455              		.section	.rodata
- 1456              		.align	2
- 1457              		.set	.LANCHOR9,. + 0
- 1458              	.LC0:
- 1459 0000 90       		.byte	-112
- 1460 0001 82       		.byte	-126
- 1461 0002 FF       		.byte	-1
- 1462 0003 00       		.byte	0
- 1463              		.section	.bss.attack_cc_flag.9366,"aw",%nobits
- 1464              		.set	.LANCHOR1,. + 0
- 1467              	attack_cc_flag.9366:
+ 1454 0001 82       		.byte	-126
+ 1455 0002 FF       		.byte	-1
+ 1456 0003 00       		.byte	0
+ 1457              		.section	.bss.attack_cc_flag.9356,"aw",%nobits
+ 1458              		.set	.LANCHOR1,. + 0
+ 1461              	attack_cc_flag.9356:
+ 1462 0000 00       		.space	1
+ 1463              		.section	.bss.decay_cc_flag.9357,"aw",%nobits
+ 1464              		.set	.LANCHOR2,. + 0
+ 1467              	decay_cc_flag.9357:
  1468 0000 00       		.space	1
- 1469              		.section	.bss.decay_cc_flag.9367,"aw",%nobits
- 1470              		.set	.LANCHOR2,. + 0
- 1473              	decay_cc_flag.9367:
+ 1469              		.section	.bss.lfo_cc_flag.9361,"aw",%nobits
+ 1470              		.set	.LANCHOR8,. + 0
+ 1473              	lfo_cc_flag.9361:
  1474 0000 00       		.space	1
- 1475              		.section	.bss.lfo_cc_flag.9371,"aw",%nobits
- 1476              		.set	.LANCHOR8,. + 0
- 1479              	lfo_cc_flag.9371:
+ 1475              		.section	.bss.note_off_flag.9355,"aw",%nobits
+ 1476              		.set	.LANCHOR6,. + 0
+ 1479              	note_off_flag.9355:
  1480 0000 00       		.space	1
- 1481              		.section	.bss.note_off_flag.9365,"aw",%nobits
- 1482              		.set	.LANCHOR6,. + 0
- 1485              	note_off_flag.9365:
+ 1481              		.section	.bss.note_on_flag.9354,"aw",%nobits
+ 1482              		.set	.LANCHOR5,. + 0
+ 1485              	note_on_flag.9354:
  1486 0000 00       		.space	1
- 1487              		.section	.bss.note_on_flag.9364,"aw",%nobits
- 1488              		.set	.LANCHOR5,. + 0
- 1491              	note_on_flag.9364:
+ 1487              		.section	.bss.release_cc_flag.9359,"aw",%nobits
+ 1488              		.set	.LANCHOR4,. + 0
+ 1491              	release_cc_flag.9359:
  1492 0000 00       		.space	1
- 1493              		.section	.bss.release_cc_flag.9369,"aw",%nobits
- 1494              		.set	.LANCHOR4,. + 0
- 1497              	release_cc_flag.9369:
+ 1493              		.section	.bss.sustain_cc_flag.9358,"aw",%nobits
+ 1494              		.set	.LANCHOR3,. + 0
+ 1497              	sustain_cc_flag.9358:
  1498 0000 00       		.space	1
- 1499              		.section	.bss.sustain_cc_flag.9368,"aw",%nobits
- 1500              		.set	.LANCHOR3,. + 0
- 1503              	sustain_cc_flag.9368:
+ 1499              		.section	.bss.uart_tx_data,"aw",%nobits
+ 1500              		.set	.LANCHOR0,. + 0
+ 1503              	uart_tx_data:
  1504 0000 00       		.space	1
- 1505              		.section	.bss.uart_tx_data,"aw",%nobits
- 1506              		.set	.LANCHOR0,. + 0
- 1509              	uart_tx_data:
+ 1505              		.section	.bss.waveshape_cc_flag.9360,"aw",%nobits
+ 1506              		.set	.LANCHOR7,. + 0
+ 1509              	waveshape_cc_flag.9360:
  1510 0000 00       		.space	1
- 1511              		.section	.bss.waveshape_cc_flag.9370,"aw",%nobits
- 1512              		.set	.LANCHOR7,. + 0
- 1515              	waveshape_cc_flag.9370:
- 1516 0000 00       		.space	1
- 1517              		.text
- 1518              	.Letext0:
- 1519              		.file 2 "/usr/include/newlib/machine/_default_types.h"
- 1520              		.file 3 "/usr/include/newlib/sys/_stdint.h"
- 1521              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 1522              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
- 1523              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
- 1524              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 1525              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
- 1526              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
- 1527              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
-ARM GAS  /tmp/ccwdWAeX.s 			page 43
+ 1511              		.text
+ 1512              	.Letext0:
+ 1513              		.file 2 "/usr/include/newlib/machine/_default_types.h"
+ 1514              		.file 3 "/usr/include/newlib/sys/_stdint.h"
+ 1515              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 1516              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h"
+ 1517              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f429xx.h"
+ 1518              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1519              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
+ 1520              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
+ 1521              		.file 10 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 1522              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1523              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
+ 1524              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+ 1525              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h"
+ 1526              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 1527              		.file 16 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 1528              		.file 17 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ARM GAS  /tmp/ccESnNa9.s 			page 43
 
 
- 1528              		.file 11 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 1529              		.file 12 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
- 1530              		.file 13 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
- 1531              		.file 14 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h"
- 1532              		.file 15 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 1533              		.file 16 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
- 1534              		.file 17 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 1535              		.file 18 "Inc/globals.h"
- 1536              		.file 19 "Inc/spi_handler.h"
- 1537              		.file 20 "Inc/midi.h"
- 1538              		.file 21 "/usr/include/newlib/sys/lock.h"
- 1539              		.file 22 "/usr/include/newlib/sys/_types.h"
- 1540              		.file 23 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
- 1541              		.file 24 "/usr/include/newlib/sys/reent.h"
- 1542              		.file 25 "/usr/include/newlib/stdlib.h"
- 1543              		.file 26 "Inc/waves.h"
- 1544              		.file 27 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h"
- 1545              		.file 28 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h"
- 1546              		.file 29 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
- 1547              		.file 30 "Inc/dac.h"
- 1548              		.file 31 "Inc/lfo.h"
- 1549              		.file 32 "Inc/envelopes.h"
- 1550              		.file 33 "Inc/oscillator.h"
-ARM GAS  /tmp/ccwdWAeX.s 			page 44
+ 1529              		.file 18 "Inc/globals.h"
+ 1530              		.file 19 "Inc/spi_handler.h"
+ 1531              		.file 20 "Inc/midi.h"
+ 1532              		.file 21 "/usr/include/newlib/sys/lock.h"
+ 1533              		.file 22 "/usr/include/newlib/sys/_types.h"
+ 1534              		.file 23 "/usr/lib/gcc/arm-none-eabi/6.3.1/include/stddef.h"
+ 1535              		.file 24 "/usr/include/newlib/sys/reent.h"
+ 1536              		.file 25 "/usr/include/newlib/stdlib.h"
+ 1537              		.file 26 "Inc/waves.h"
+ 1538              		.file 27 "Inc/dac.h"
+ 1539              		.file 28 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h"
+ 1540              		.file 29 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h"
+ 1541              		.file 30 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+ 1542              		.file 31 "Inc/lfo.h"
+ 1543              		.file 32 "Inc/envelopes.h"
+ 1544              		.file 33 "Inc/oscillator.h"
+ARM GAS  /tmp/ccESnNa9.s 			page 44
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 main.c
-     /tmp/ccwdWAeX.s:18     .text.MX_GPIO_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:24     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
-     /tmp/ccwdWAeX.s:123    .text.MX_GPIO_Init:000000000000008c $d
-     /tmp/ccwdWAeX.s:129    .text.MX_DAC_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:135    .text.MX_DAC_Init:0000000000000000 MX_DAC_Init
-     /tmp/ccwdWAeX.s:187    .text.MX_DAC_Init:0000000000000034 $d
+     /tmp/ccESnNa9.s:18     .text.MX_GPIO_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:24     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
+     /tmp/ccESnNa9.s:123    .text.MX_GPIO_Init:000000000000008c $d
+     /tmp/ccESnNa9.s:129    .text.MX_DAC_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:135    .text.MX_DAC_Init:0000000000000000 MX_DAC_Init
+     /tmp/ccESnNa9.s:187    .text.MX_DAC_Init:0000000000000034 $d
                             *COM*:0000000000000014 hdac
-     /tmp/ccwdWAeX.s:193    .text.MX_I2C1_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:199    .text.MX_I2C1_Init:0000000000000000 MX_I2C1_Init
-     /tmp/ccwdWAeX.s:253    .text.MX_I2C1_Init:0000000000000038 $d
+     /tmp/ccESnNa9.s:193    .text.MX_I2C1_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:199    .text.MX_I2C1_Init:0000000000000000 MX_I2C1_Init
+     /tmp/ccESnNa9.s:253    .text.MX_I2C1_Init:0000000000000038 $d
                             *COM*:0000000000000054 hi2c1
-     /tmp/ccwdWAeX.s:260    .text.MX_I2S2_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:266    .text.MX_I2S2_Init:0000000000000000 MX_I2S2_Init
-     /tmp/ccwdWAeX.s:309    .text.MX_I2S2_Init:000000000000002c $d
+     /tmp/ccESnNa9.s:260    .text.MX_I2S2_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:266    .text.MX_I2S2_Init:0000000000000000 MX_I2S2_Init
+     /tmp/ccESnNa9.s:309    .text.MX_I2S2_Init:000000000000002c $d
                             *COM*:0000000000000048 hi2s2
-     /tmp/ccwdWAeX.s:315    .text.MX_SPI1_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:321    .text.MX_SPI1_Init:0000000000000000 MX_SPI1_Init
-     /tmp/ccwdWAeX.s:365    .text.MX_SPI1_Init:0000000000000028 $d
+     /tmp/ccESnNa9.s:315    .text.MX_SPI1_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:321    .text.MX_SPI1_Init:0000000000000000 MX_SPI1_Init
+     /tmp/ccESnNa9.s:365    .text.MX_SPI1_Init:0000000000000028 $d
                             *COM*:0000000000000058 hspi1
-     /tmp/ccwdWAeX.s:371    .text.MX_TIM6_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:377    .text.MX_TIM6_Init:0000000000000000 MX_TIM6_Init
-     /tmp/ccwdWAeX.s:431    .text.MX_TIM6_Init:0000000000000034 $d
+     /tmp/ccESnNa9.s:371    .text.MX_TIM6_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:377    .text.MX_TIM6_Init:0000000000000000 MX_TIM6_Init
+     /tmp/ccESnNa9.s:431    .text.MX_TIM6_Init:0000000000000034 $d
                             *COM*:0000000000000040 htim6
-     /tmp/ccwdWAeX.s:437    .text.MX_UART4_Init:0000000000000000 $t
-     /tmp/ccwdWAeX.s:443    .text.MX_UART4_Init:0000000000000000 MX_UART4_Init
-     /tmp/ccwdWAeX.s:482    .text.MX_UART4_Init:0000000000000024 $d
+     /tmp/ccESnNa9.s:437    .text.MX_UART4_Init:0000000000000000 $t
+     /tmp/ccESnNa9.s:443    .text.MX_UART4_Init:0000000000000000 MX_UART4_Init
+     /tmp/ccESnNa9.s:482    .text.MX_UART4_Init:0000000000000024 $d
                             *COM*:0000000000000040 huart4
-     /tmp/ccwdWAeX.s:488    .text.SystemClock_Config:0000000000000000 $t
-     /tmp/ccwdWAeX.s:495    .text.SystemClock_Config:0000000000000000 SystemClock_Config
-     /tmp/ccwdWAeX.s:623    .text.SystemClock_Config:00000000000000a8 $d
-     /tmp/ccwdWAeX.s:629    .text.HAL_UART_RxCpltCallback:0000000000000000 $t
-     /tmp/ccwdWAeX.s:636    .text.HAL_UART_RxCpltCallback:0000000000000000 HAL_UART_RxCpltCallback
-     /tmp/ccwdWAeX.s:664    .text.HAL_UART_RxCpltCallback:0000000000000014 $d
-     /tmp/ccwdWAeX.s:669    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
-     /tmp/ccwdWAeX.s:676    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
-     /tmp/ccwdWAeX.s:701    .text.HAL_TIM_PeriodElapsedCallback:0000000000000014 $d
-     /tmp/ccwdWAeX.s:707    .text.handle_byte_queue:0000000000000000 $t
-     /tmp/ccwdWAeX.s:714    .text.handle_byte_queue:0000000000000000 handle_byte_queue
-     /tmp/ccwdWAeX.s:1065   .text.handle_byte_queue:00000000000001d4 $d
-     /tmp/ccwdWAeX.s:1078   .text.handle_midi_queue:0000000000000000 $t
-     /tmp/ccwdWAeX.s:1085   .text.handle_midi_queue:0000000000000000 handle_midi_queue
-     /tmp/ccwdWAeX.s:1248   .text.handle_midi_queue:00000000000000bc $d
-     /tmp/ccwdWAeX.s:1261   .text.main:0000000000000000 $t
-     /tmp/ccwdWAeX.s:1268   .text.main:0000000000000000 main
-     /tmp/ccwdWAeX.s:1407   .text.main:00000000000000b0 $d
-     /tmp/ccwdWAeX.s:1424   .text.Error_Handler:0000000000000000 $t
-     /tmp/ccwdWAeX.s:1431   .text.Error_Handler:0000000000000000 Error_Handler
-     /tmp/ccwdWAeX.s:1509   .bss.uart_tx_data:0000000000000000 uart_tx_data
+     /tmp/ccESnNa9.s:488    .text.SystemClock_Config:0000000000000000 $t
+     /tmp/ccESnNa9.s:495    .text.SystemClock_Config:0000000000000000 SystemClock_Config
+     /tmp/ccESnNa9.s:623    .text.SystemClock_Config:00000000000000a8 $d
+     /tmp/ccESnNa9.s:629    .text.HAL_UART_RxCpltCallback:0000000000000000 $t
+     /tmp/ccESnNa9.s:636    .text.HAL_UART_RxCpltCallback:0000000000000000 HAL_UART_RxCpltCallback
+     /tmp/ccESnNa9.s:664    .text.HAL_UART_RxCpltCallback:0000000000000014 $d
+     /tmp/ccESnNa9.s:669    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/ccESnNa9.s:676    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/ccESnNa9.s:701    .text.HAL_TIM_PeriodElapsedCallback:0000000000000014 $d
+     /tmp/ccESnNa9.s:707    .text.handle_byte_queue:0000000000000000 $t
+     /tmp/ccESnNa9.s:714    .text.handle_byte_queue:0000000000000000 handle_byte_queue
+     /tmp/ccESnNa9.s:1065   .text.handle_byte_queue:00000000000001d4 $d
+     /tmp/ccESnNa9.s:1078   .text.handle_midi_queue:0000000000000000 $t
+     /tmp/ccESnNa9.s:1085   .text.handle_midi_queue:0000000000000000 handle_midi_queue
+     /tmp/ccESnNa9.s:1248   .text.handle_midi_queue:00000000000000bc $d
+     /tmp/ccESnNa9.s:1261   .text.main:0000000000000000 $t
+     /tmp/ccESnNa9.s:1268   .text.main:0000000000000000 main
+     /tmp/ccESnNa9.s:1402   .text.main:00000000000000a8 $d
+     /tmp/ccESnNa9.s:1418   .text.Error_Handler:0000000000000000 $t
+     /tmp/ccESnNa9.s:1425   .text.Error_Handler:0000000000000000 Error_Handler
+     /tmp/ccESnNa9.s:1503   .bss.uart_tx_data:0000000000000000 uart_tx_data
                             *COM*:0000000000000100 lfo_sine
                             *COM*:0000000000001000 base_sq
                             *COM*:0000000000001000 base_tri
                             *COM*:0000000000001000 base_neg_saw
                             *COM*:0000000000001000 base_pos_saw
                             *COM*:0000000000001000 base_sine
-     /tmp/ccwdWAeX.s:1456   .rodata:0000000000000000 $d
-ARM GAS  /tmp/ccwdWAeX.s 			page 45
+     /tmp/ccESnNa9.s:1450   .rodata:0000000000000000 $d
+ARM GAS  /tmp/ccESnNa9.s 			page 45
 
 
-     /tmp/ccwdWAeX.s:1467   .bss.attack_cc_flag.9366:0000000000000000 attack_cc_flag.9366
-     /tmp/ccwdWAeX.s:1468   .bss.attack_cc_flag.9366:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1473   .bss.decay_cc_flag.9367:0000000000000000 decay_cc_flag.9367
-     /tmp/ccwdWAeX.s:1474   .bss.decay_cc_flag.9367:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1479   .bss.lfo_cc_flag.9371:0000000000000000 lfo_cc_flag.9371
-     /tmp/ccwdWAeX.s:1480   .bss.lfo_cc_flag.9371:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1485   .bss.note_off_flag.9365:0000000000000000 note_off_flag.9365
-     /tmp/ccwdWAeX.s:1486   .bss.note_off_flag.9365:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1491   .bss.note_on_flag.9364:0000000000000000 note_on_flag.9364
-     /tmp/ccwdWAeX.s:1492   .bss.note_on_flag.9364:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1497   .bss.release_cc_flag.9369:0000000000000000 release_cc_flag.9369
-     /tmp/ccwdWAeX.s:1498   .bss.release_cc_flag.9369:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1503   .bss.sustain_cc_flag.9368:0000000000000000 sustain_cc_flag.9368
-     /tmp/ccwdWAeX.s:1504   .bss.sustain_cc_flag.9368:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1510   .bss.uart_tx_data:0000000000000000 $d
-     /tmp/ccwdWAeX.s:1515   .bss.waveshape_cc_flag.9370:0000000000000000 waveshape_cc_flag.9370
-     /tmp/ccwdWAeX.s:1516   .bss.waveshape_cc_flag.9370:0000000000000000 $d
+     /tmp/ccESnNa9.s:1461   .bss.attack_cc_flag.9356:0000000000000000 attack_cc_flag.9356
+     /tmp/ccESnNa9.s:1462   .bss.attack_cc_flag.9356:0000000000000000 $d
+     /tmp/ccESnNa9.s:1467   .bss.decay_cc_flag.9357:0000000000000000 decay_cc_flag.9357
+     /tmp/ccESnNa9.s:1468   .bss.decay_cc_flag.9357:0000000000000000 $d
+     /tmp/ccESnNa9.s:1473   .bss.lfo_cc_flag.9361:0000000000000000 lfo_cc_flag.9361
+     /tmp/ccESnNa9.s:1474   .bss.lfo_cc_flag.9361:0000000000000000 $d
+     /tmp/ccESnNa9.s:1479   .bss.note_off_flag.9355:0000000000000000 note_off_flag.9355
+     /tmp/ccESnNa9.s:1480   .bss.note_off_flag.9355:0000000000000000 $d
+     /tmp/ccESnNa9.s:1485   .bss.note_on_flag.9354:0000000000000000 note_on_flag.9354
+     /tmp/ccESnNa9.s:1486   .bss.note_on_flag.9354:0000000000000000 $d
+     /tmp/ccESnNa9.s:1491   .bss.release_cc_flag.9359:0000000000000000 release_cc_flag.9359
+     /tmp/ccESnNa9.s:1492   .bss.release_cc_flag.9359:0000000000000000 $d
+     /tmp/ccESnNa9.s:1497   .bss.sustain_cc_flag.9358:0000000000000000 sustain_cc_flag.9358
+     /tmp/ccESnNa9.s:1498   .bss.sustain_cc_flag.9358:0000000000000000 $d
+     /tmp/ccESnNa9.s:1504   .bss.uart_tx_data:0000000000000000 $d
+     /tmp/ccESnNa9.s:1509   .bss.waveshape_cc_flag.9360:0000000000000000 waveshape_cc_flag.9360
+     /tmp/ccESnNa9.s:1510   .bss.waveshape_cc_flag.9360:0000000000000000 $d
                      .debug_frame:0000000000000010 $d
 
 UNDEFINED SYMBOLS
@@ -2659,15 +2652,14 @@ note_freq
 env_state
 HAL_Init
 HAL_Delay
-Dac_Init
+InitDac
 init_wavetable
 HAL_TIM_Base_Start_IT
-HAL_DAC_Start
 HAL_UART_Receive_IT
-ARM GAS  /tmp/ccwdWAeX.s 			page 46
-
-
 update_lfos
+ARM GAS  /tmp/ccESnNa9.s 			page 46
+
+
 update_envelope
 update_output_value
 HAL_I2S_Transmit

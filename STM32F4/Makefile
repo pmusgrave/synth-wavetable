@@ -45,6 +45,7 @@ Src/r2rdac.c \
 Src/spi_handler.c \
 Src/waves.c \
 Src/dac.c \
+Src/i2c.c \
 Src/stm32f4xx_it.c \
 Src/stm32f4xx_hal_msp.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c \
